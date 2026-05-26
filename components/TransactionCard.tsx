@@ -1,16 +1,30 @@
 'use client';
+import { useState } from 'react';
 import { Eyebrow } from './Eyebrow';
+import { PlaceholderImg } from './SmartImage';
 import { useTilt } from './useTilt';
 import type { PortfolioEntry } from '@/lib/portfolio';
 
 export function TransactionCard({ entry }: { entry: PortfolioEntry }) {
   const tiltRef = useTilt<HTMLDivElement>(3.5);
+  const [imgErrored, setImgErrored] = useState(false);
 
   return (
     <div ref={tiltRef} className="transaction-card">
       <div className="image-wrap">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={entry.image} alt={entry.titleLines.join(' ')} loading="lazy" />
+        {entry.image && !imgErrored ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={entry.image}
+            alt={entry.titleLines.join(' ')}
+            loading="lazy"
+            onError={() => setImgErrored(true)}
+          />
+        ) : (
+          <PlaceholderImg label={entry.titleLines.join(' ')} tone="deep">
+            {entry.titleLines[0].charAt(0)}
+          </PlaceholderImg>
+        )}
       </div>
 
       <div style={{ paddingTop: 22 }}>

@@ -28,7 +28,13 @@ export const IMAGES = {
   portrait4: IMG('1500648767791-00dcc994a43e', 800),
   detail_brick: IMG('1487958449943-2429e8be8625'),
   detail_door:  IMG('1469022563428-aa04fef9f5a2'),
-  detail_arch:  IMG('1503387762-abdef8da4d7c'),
+  detail_arch:  IMG('1430285561322-7808604715df'),
+  ext_apartment1: IMG('1502672023488-70e25813eb80'),
+  ext_apartment2: IMG('1416331108676-a22ccb276e35'),
+  ext_apartment3: IMG('1448630360428-65456885c650'),
+  ext_apartment4: IMG('1542621334-a254cf47733d'),
+  ext_apartment5: IMG('1460317442991-0ec209397118'),
+  ext_apartment6: IMG('1494522855154-9297ac14b55f'),
 } as const;
 
 export type CitySlug = 'saskatoon' | 'edmonton' | 'regina';
@@ -203,6 +209,8 @@ const HERO_POOL: string[] = [
   IMAGES.heritage1, IMAGES.heritage2, IMAGES.heritage3, IMAGES.heritage4,
   IMAGES.modern1, IMAGES.modern2, IMAGES.modern3, IMAGES.modern4,
   IMAGES.detail_brick, IMAGES.detail_door, IMAGES.detail_arch,
+  IMAGES.ext_apartment1, IMAGES.ext_apartment2, IMAGES.ext_apartment3,
+  IMAGES.ext_apartment4, IMAGES.ext_apartment5, IMAGES.ext_apartment6,
 ];
 
 const GALLERY_POOL: string[] = [

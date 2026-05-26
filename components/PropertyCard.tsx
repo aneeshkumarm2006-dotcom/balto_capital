@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Residence } from '@/lib/data';
 import { bedroomShort, formatPrice } from '@/lib/data';
@@ -19,6 +20,7 @@ interface Props {
 export function PropertyCard({ residence, tone, hideCity }: Props) {
   const router = useRouter();
   const tiltRef = useTilt<HTMLAnchorElement>(3.5);
+  const [imgErrored, setImgErrored] = useState(false);
   const r = residence;
   const to = `/residences/${r.city}/${r.slug}`;
   const cardTone = tone ?? TONES[(r.id.charCodeAt(2) + r.id.length) % 4];
@@ -35,9 +37,14 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
       aria-label={`${r.name} — ${r.cityLabel}`}
     >
       <div className="image-wrap">
-        {r.heroImage ? (
+        {r.heroImage && !imgErrored ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={r.heroImage} alt={r.name} loading="lazy" />
+          <img
+            src={r.heroImage}
+            alt={r.name}
+            loading="lazy"
+            onError={() => setImgErrored(true)}
+          />
         ) : (
           <PlaceholderImg label={`${r.name} · exterior`} tone={cardTone}>
             {r.name.charAt(0)}
