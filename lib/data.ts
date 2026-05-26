@@ -95,466 +95,174 @@ export interface Residence {
   nearbyPoints: string[];
 }
 
-export const RESIDENCES: Residence[] = [
-  {
-    id: 'r-royal',
-    slug: 'royal-apartments',
-    name: 'Royal Apartments',
-    city: 'edmonton',
-    cityLabel: 'Edmonton',
-    address: '10135 Saskatchewan Drive NW, Edmonton, AB T5W 1H1',
-    coordinates: { lat: 53.530, lng: -113.518 },
-    description: 'A handsomely restored 1920s brick residence overlooking the river valley.',
-    longDescription: 'Set on Saskatchewan Drive with uninterrupted views across the river valley, the Royal is a 1920s brick residence quietly restored to a modern standard. Original mouldings, cast-iron radiators, and oversized casement windows remain — paired with new oak floors, marble baths, and a thoughtful concierge layer that defines the Balto standard.',
-    bedrooms: 'Studio · 1 · 2 Bedrooms',
-    bedroomOptions: [0, 1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '480 – 1,180',
-    priceFrom: 1450,
-    availability: 'available',
-    featured: true,
-    heroImage: IMAGES.heritage1,
-    gallery: [IMAGES.int_living1, IMAGES.int_kitchen1, IMAGES.int_bed1, IMAGES.int_bath1, IMAGES.detail_brick],
-    features: [
-      'Original cast-iron casement windows',
-      'Quarter-sawn oak floors',
-      'Marble bathrooms with vintage fixtures',
-      'In-suite laundry',
-      'Restored fireplace mantels (select suites)',
-      'Bosch kitchen appliances',
-    ],
-    amenities: [
-      'River valley terrace',
-      'Reading room and library',
-      'Resident concierge',
-      'Bicycle storage',
-      'Pet-friendly',
-      'Heated underground parking',
-    ],
-    nearbyPoints: [
-      'High Level Bridge — 4 min walk',
-      'Whyte Avenue — 8 min walk',
-      'University of Alberta — 12 min walk',
-      'Mill Creek Ravine — 6 min walk',
-    ],
-  },
-  {
-    id: 'r-whyte-heritage',
-    slug: 'whyte-heritage',
-    name: 'Whyte Heritage',
-    city: 'edmonton',
-    cityLabel: 'Edmonton',
-    address: '10456 82 Avenue NW, Edmonton, AB T6E 2A2',
-    coordinates: { lat: 53.518, lng: -113.495 },
-    description: 'A restored Edwardian on the quiet end of Old Strathcona.',
-    longDescription: 'On a tree-lined block at the eastern edge of Old Strathcona, Whyte Heritage occupies a fully restored 1908 Edwardian. Wide-plank floors, brass hardware, and reading nooks built into every suite. A short walk to the avenue, with the privacy of a residential street.',
-    bedrooms: '1 · 2 Bedrooms',
-    bedroomOptions: [1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '620 – 1,050',
-    priceFrom: 1680,
-    availability: 'available',
-    featured: true,
-    heroImage: IMAGES.heritage2,
-    gallery: [IMAGES.int_living3, IMAGES.int_kitchen2, IMAGES.int_bed2, IMAGES.int_dining1, IMAGES.detail_door],
-    features: [
-      'Wide-plank reclaimed floors',
-      'Brass and bronze hardware',
-      'Built-in library shelving',
-      'Soaker tubs in primary baths',
-      'Quartz counters, panel-front appliances',
-    ],
-    amenities: [
-      'Private courtyard garden',
-      'Bike room',
-      'Pet-friendly',
-      'Resident lounge',
-      'Surface parking',
-    ],
-    nearbyPoints: [
-      'Whyte Avenue — 3 min walk',
-      'Mill Creek Ravine — 5 min walk',
-      "Old Strathcona Farmers' Market — 4 min walk",
-    ],
-  },
-  {
-    id: 'r-glenora',
-    slug: 'glenora-manor',
-    name: 'Glenora Manor',
-    city: 'edmonton',
-    cityLabel: 'Edmonton',
-    address: '13420 102 Avenue NW, Edmonton, AB T5N 0M2',
-    coordinates: { lat: 53.545, lng: -113.540 },
-    description: "A four-storey limestone in one of the city's most considered neighbourhoods.",
-    longDescription: 'Glenora Manor stands four storeys of limestone above 102 Avenue, in the considered company of estate homes and embassies. Suites are spacious — many with two exposures — and the building maintains a private library, a small fitness room, and a quiet, well-mannered front-of-house.',
-    bedrooms: '1 · 2 · 3 Bedrooms',
-    bedroomOptions: [1, 2, 3],
-    bathrooms: '1 – 2.5',
-    squareFeet: '720 – 1,640',
-    priceFrom: 2150,
-    availability: 'available',
-    featured: false,
-    heroImage: IMAGES.heritage3,
-    gallery: [IMAGES.int_living2, IMAGES.int_kitchen1, IMAGES.int_bed1, IMAGES.int_bath2],
-    features: [
-      'Two-exposure corner suites',
-      'Solid-core panelled doors',
-      'Gas fireplaces (select suites)',
-      'Walk-in wardrobes',
-      'European appliances',
-    ],
-    amenities: [
-      'Private library',
-      'Fitness room',
-      'Heated underground parking',
-      'Storage lockers',
-      'Concierge',
-    ],
-    nearbyPoints: [
-      'Royal Glenora Club — 6 min walk',
-      'River valley trails — 4 min walk',
-      'Government House Park — 5 min walk',
-    ],
-  },
-  {
-    id: 'r-rossdale',
-    slug: 'rossdale-residences',
-    name: 'Rossdale Residences',
-    city: 'edmonton',
-    cityLabel: 'Edmonton',
-    address: '9620 100A Street NW, Edmonton, AB T5K 0V3',
-    coordinates: { lat: 53.534, lng: -113.500 },
-    description: 'A small, river-facing building tucked into the Rossdale flats.',
-    longDescription: 'Twelve suites only, set against the river. Quiet by design. Large windows, soft southern light, and a courtyard that opens to the valley trail. The building keeps a single attendant at the front desk and a private gate for residents arriving on foot from the trail.',
-    bedrooms: '1 · 2 Bedrooms',
-    bedroomOptions: [1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '680 – 1,220',
-    priceFrom: 1890,
-    availability: 'coming-soon',
-    featured: false,
-    heroImage: IMAGES.heritage4,
-    gallery: [IMAGES.int_living1, IMAGES.int_bath1, IMAGES.detail_arch],
-    features: [
-      'River-facing windows in most suites',
-      'In-floor radiant heat',
-      'Custom walnut millwork',
-      'Marble vanities',
-    ],
-    amenities: [
-      'Courtyard with garden',
-      'Trail access',
-      'Front desk attendant (weekdays)',
-      'Bike storage',
-    ],
-    nearbyPoints: [
-      'Walterdale Bridge — 4 min walk',
-      'Louise McKinney Park — 10 min walk',
-      'Downtown core — 12 min walk',
-    ],
-  },
-  {
-    id: 'r-riversdale',
-    slug: 'the-riversdale',
-    name: 'The Riversdale',
-    city: 'saskatoon',
-    cityLabel: 'Saskatoon',
-    address: '244 Avenue B South, Saskatoon, SK S7M 1M2',
-    coordinates: { lat: 52.128, lng: -106.674 },
-    description: 'A converted warehouse with twenty-foot ceilings in Riversdale.',
-    longDescription: "A 1912 grain merchant's warehouse, reframed into eighteen residences. Twenty-foot ceilings, exposed brick, and steel sash windows that pull in the long prairie light. The ground floor keeps a small espresso counter and a bookbinder — neighbours, not amenities.",
-    bedrooms: 'Studio · 1 · 2 Bedrooms',
-    bedroomOptions: [0, 1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '520 – 1,340',
-    priceFrom: 1380,
-    availability: 'available',
-    featured: true,
-    heroImage: IMAGES.modern3,
-    gallery: [IMAGES.int_living2, IMAGES.int_kitchen2, IMAGES.int_bed2, IMAGES.detail_brick],
-    features: [
-      'Twenty-foot ceilings',
-      'Exposed brick and timber',
-      'Steel sash windows',
-      'Sub-zero refrigeration',
-      'Concrete soaker tubs',
-    ],
-    amenities: [
-      'Ground-floor espresso counter',
-      'Bookbinder atelier',
-      'Resident lounge',
-      'Bicycle storage',
-      'Pet-friendly',
-    ],
-    nearbyPoints: [
-      'Remai Modern — 8 min walk',
-      'Meewasin Trail — 5 min walk',
-      "Farmers' Market — 3 min walk",
-    ],
-  },
-  {
-    id: 'r-broadway',
-    slug: 'broadway-house',
-    name: 'Broadway House',
-    city: 'saskatoon',
-    cityLabel: 'Saskatoon',
-    address: '824 Broadway Avenue, Saskatoon, SK S7N 1B6',
-    coordinates: { lat: 52.123, lng: -106.652 },
-    description: 'Above Broadway, a narrow brick residence with a courtyard reading room.',
-    longDescription: "Six storeys of warm brick set above Broadway's most considered block. The reading room — open to all residents — fills the south-facing courtyard with afternoon light. Suites are modestly sized but generously detailed: oak parquet, French doors, and a building that asks for very little of you.",
-    bedrooms: '1 · 2 Bedrooms',
-    bedroomOptions: [1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '600 – 1,080',
-    priceFrom: 1560,
-    availability: 'available',
-    featured: true,
-    heroImage: IMAGES.detail_brick,
-    gallery: [IMAGES.int_living3, IMAGES.int_kitchen1, IMAGES.int_bed1, IMAGES.int_dining1],
-    features: [
-      'Oak parquet floors',
-      'French doors to small balconies',
-      'Bosch kitchen appliances',
-      'Marble fireplace mantels (select)',
-    ],
-    amenities: [
-      'Courtyard reading room',
-      'Bicycle storage',
-      'Pet-friendly',
-      'Mail and parcel concierge',
-    ],
-    nearbyPoints: [
-      'Broadway Theatre — 2 min walk',
-      'Meewasin Trail — 6 min walk',
-      'Nutana Library — 4 min walk',
-    ],
-  },
-  {
-    id: 'r-nutana',
-    slug: 'nutana-heights',
-    name: 'Nutana Heights',
-    city: 'saskatoon',
-    cityLabel: 'Saskatoon',
-    address: '1015 Temperance Street, Saskatoon, SK S7N 0M9',
-    coordinates: { lat: 52.131, lng: -106.642 },
-    description: 'A new building, quietly designed, on a leafy Nutana street.',
-    longDescription: 'A new three-storey residence on a quiet block of Nutana. The architecture defers to its neighbours — slim brick, deep eaves, a single ground-floor garden. Suites are larger than the city standard, with a den off the main hall in most plans.',
-    bedrooms: '1 · 2 · 3 Bedrooms',
-    bedroomOptions: [1, 2, 3],
-    bathrooms: '1.5 – 2.5',
-    squareFeet: '780 – 1,540',
-    priceFrom: 1840,
-    availability: 'available',
-    featured: false,
-    heroImage: IMAGES.modern1,
-    gallery: [IMAGES.int_living1, IMAGES.int_kitchen2, IMAGES.int_bed2, IMAGES.int_bath2],
-    features: [
-      'Dens in most plans',
-      'In-floor radiant heat',
-      'Quartz counters, panel-front appliances',
-      'Large balconies',
-    ],
-    amenities: [
-      'Ground-floor garden',
-      'Bicycle storage',
-      'Underground parking',
-      'Pet-friendly',
-    ],
-    nearbyPoints: [
-      'College Drive — 3 min walk',
-      'University of Saskatchewan — 10 min walk',
-      'Meewasin Trail — 8 min walk',
-    ],
-  },
-  {
-    id: 'r-bessborough',
-    slug: 'bessborough-place',
-    name: 'Bessborough Place',
-    city: 'saskatoon',
-    cityLabel: 'Saskatoon',
-    address: '410 Spadina Crescent East, Saskatoon, SK S7K 3G6',
-    coordinates: { lat: 52.135, lng: -106.660 },
-    description: 'A river-facing address two blocks from the Bessborough.',
-    longDescription: 'Steps from the Bessborough and the Meewasin, with two-thirds of the suites facing the river. A quiet limestone façade, a small lobby with a single attendant, and a roof terrace that looks east toward the morning.',
-    bedrooms: '1 · 2 · 3 Bedrooms',
-    bedroomOptions: [1, 2, 3],
-    bathrooms: '1 – 2.5',
-    squareFeet: '720 – 1,720',
-    priceFrom: 2080,
-    availability: 'coming-soon',
-    featured: false,
-    heroImage: IMAGES.modern2,
-    gallery: [IMAGES.int_living2, IMAGES.int_kitchen1, IMAGES.int_bath1],
-    features: [
-      'River-facing windows',
-      'Limestone façade',
-      'Oak floors',
-      'Soaker tubs',
-    ],
-    amenities: [
-      'Roof terrace',
-      'Front desk attendant',
-      'Heated parking',
-      'Storage lockers',
-    ],
-    nearbyPoints: [
-      'Delta Bessborough — 2 min walk',
-      'Remai Modern — 6 min walk',
-      'Meewasin Trail — 1 min walk',
-    ],
-  },
-  {
-    id: 'r-wascana',
-    slug: 'wascana-residences',
-    name: 'Wascana Residences',
-    city: 'regina',
-    cityLabel: 'Regina',
-    address: '2310 College Avenue, Regina, SK S4P 1C5',
-    coordinates: { lat: 50.444, lng: -104.617 },
-    description: 'Across the road from the lake, in the quiet of the park.',
-    longDescription: 'Wascana Residences sit across the road from the lake and the legislature grounds. A 1948 building, sympathetically updated. The lobby keeps its terrazzo, and the upper floors keep their cross breezes. Most suites look directly into the park.',
-    bedrooms: '1 · 2 Bedrooms',
-    bedroomOptions: [1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '660 – 1,180',
-    priceFrom: 1520,
-    availability: 'available',
-    featured: true,
-    heroImage: IMAGES.heritage2,
-    gallery: [IMAGES.int_living1, IMAGES.int_kitchen2, IMAGES.int_bed1, IMAGES.int_dining1],
-    features: [
-      'Park-facing windows',
-      'Original terrazzo in lobby',
-      'Oak strip floors',
-      'Updated kitchens and baths',
-    ],
-    amenities: [
-      'Lake and park trails',
-      'Bike storage',
-      'Surface parking',
-      'Pet-friendly',
-    ],
-    nearbyPoints: [
-      'Wascana Lake — 1 min walk',
-      'Legislative Building — 6 min walk',
-      'Conexus Arts Centre — 8 min walk',
-    ],
-  },
-  {
-    id: 'r-cathedral',
-    slug: 'cathedral-place',
-    name: 'Cathedral Place',
-    city: 'regina',
-    cityLabel: 'Regina',
-    address: '2840 13th Avenue, Regina, SK S4T 1N7',
-    coordinates: { lat: 50.450, lng: -104.633 },
-    description: 'A converted school in Cathedral, with the bell tower preserved.',
-    longDescription: 'A 1912 schoolhouse in the Cathedral neighbourhood, reframed as fourteen residences. The bell tower and chalkboards remain. Suites occupy the former classrooms — five-metre ceilings, tall arched windows, and a courtyard that was once the play yard.',
-    bedrooms: '1 · 2 · 3 Bedrooms',
-    bedroomOptions: [1, 2, 3],
-    bathrooms: '1 – 2.5',
-    squareFeet: '740 – 1,820',
-    priceFrom: 1780,
-    availability: 'available',
-    featured: true,
-    heroImage: IMAGES.heritage1,
-    gallery: [IMAGES.int_living3, IMAGES.int_kitchen1, IMAGES.int_bed2, IMAGES.int_bath2],
-    features: [
-      'Five-metre ceilings',
-      'Tall arched windows',
-      'Preserved chalkboards and millwork',
-      'In-floor radiant heat',
-    ],
-    amenities: [
-      'Courtyard garden',
-      'Library room (former office)',
-      'Bicycle storage',
-      'Pet-friendly',
-      'Surface parking',
-    ],
-    nearbyPoints: [
-      'Holy Rosary Cathedral — 3 min walk',
-      '13th Avenue shops — 1 min walk',
-      'Connaught Library — 5 min walk',
-    ],
-  },
-  {
-    id: 'r-albert',
-    slug: 'the-albert',
-    name: 'The Albert',
-    city: 'regina',
-    cityLabel: 'Regina',
-    address: '1925 Albert Street, Regina, SK S4P 2T3',
-    coordinates: { lat: 50.448, lng: -104.610 },
-    description: 'A slim brick mid-rise on Albert, near the legislature.',
-    longDescription: 'Seven storeys of warm brick on Albert Street, two blocks from the legislative grounds. The Albert keeps a small lobby, a fireplace lounge, and a roof terrace with a view down Wascana. Suites are well-proportioned, with bay windows in the front-facing plans.',
-    bedrooms: 'Studio · 1 · 2 Bedrooms',
-    bedroomOptions: [0, 1, 2],
-    bathrooms: '1 – 2',
-    squareFeet: '460 – 1,140',
-    priceFrom: 1320,
-    availability: 'available',
-    featured: false,
-    heroImage: IMAGES.heritage3,
-    gallery: [IMAGES.int_living2, IMAGES.int_kitchen2, IMAGES.int_bed1, IMAGES.int_bath1],
-    features: [
-      'Bay windows in front-facing suites',
-      'Oak floors',
-      'Quartz counters',
-      'Walk-in showers',
-    ],
-    amenities: [
-      'Fireplace lounge',
-      'Roof terrace',
-      'Bike storage',
-      'Heated parking',
-      'Pet-friendly',
-    ],
-    nearbyPoints: [
-      'Legislative Building — 5 min walk',
-      'Wascana Lake — 6 min walk',
-      'Cornwall Centre — 8 min walk',
-    ],
-  },
-  {
-    id: 'r-victoria',
-    slug: 'victoria-house',
-    name: 'Victoria House',
-    city: 'regina',
-    cityLabel: 'Regina',
-    address: '2155 Victoria Avenue, Regina, SK S4P 0S4',
-    coordinates: { lat: 50.452, lng: -104.625 },
-    description: 'A 1924 mansion block, eight residences only.',
-    longDescription: 'A 1924 mansion block on Victoria Avenue, sympathetically restored to eight residences. Most occupy a full floor; one occupies the attic with its original dormers. The building shares a back garden with the neighbouring rectory — a quiet courtyard most never see.',
-    bedrooms: '2 · 3 Bedrooms',
-    bedroomOptions: [2, 3],
-    bathrooms: '2 – 3',
-    squareFeet: '1,180 – 2,240',
-    priceFrom: 2680,
-    availability: 'coming-soon',
-    featured: false,
-    heroImage: IMAGES.modern2,
-    gallery: [IMAGES.int_living1, IMAGES.int_kitchen1, IMAGES.int_bed2, IMAGES.int_dining1],
-    features: [
-      'Full-floor plans',
-      'Original mouldings and mantels',
-      'Quarter-sawn oak floors',
-      'Marble baths',
-      'Working gas fireplaces',
-    ],
-    amenities: [
-      'Shared back garden',
-      'Storage in original cellar',
-      'Surface parking',
-      'Pet-friendly',
-    ],
-    nearbyPoints: [
-      'Victoria Park — 8 min walk',
-      'Casino Regina — 10 min walk',
-      'Wascana Lake — 12 min walk',
-    ],
-  },
+/* ============================================================
+   BALTO CAPITAL — assets (real portfolio, 28 residences)
+   Coordinates approximated by city centre + deterministic offset
+   from the asset slug. Refine per-asset as real geocodes arrive.
+   ============================================================ */
+interface RawAsset {
+  slug: string;
+  name: string;
+  city: CitySlug;
+  address: string;
+}
+
+const ASSETS: RawAsset[] = [
+  { slug: 'hamlet',           name: 'Hamlet',           city: 'edmonton',  address: '11647 124 ST NW, Edmonton, AB T5M 0K8' },
+  { slug: 'copper',           name: 'Copper',           city: 'edmonton',  address: '13011 83 ST NW, Edmonton, AB T5E 2W5' },
+  { slug: 'woodridge',        name: 'Woodridge',        city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9' },
+  { slug: 'kafa',             name: 'Kafa',             city: 'edmonton',  address: '12717 119 ST NW, Edmonton, AB T5E 5M2' },
+  { slug: 'royal-10746',      name: 'Royal 10746',      city: 'edmonton',  address: '10746 102 ST NW, Edmonton, AB T5H 2T7' },
+  { slug: 'catalina',         name: 'Catalina',         city: 'edmonton',  address: '5910 118 Ave NW, Edmonton, AB T5W 1E5' },
+  { slug: 'layali',           name: 'Layali',           city: 'edmonton',  address: '13710 64 ST NW, Edmonton, AB T5A 1R9' },
+  { slug: 'sky',              name: 'Sky',              city: 'edmonton',  address: '9612 156 ST NW, Edmonton, AB T5P 2N7' },
+  { slug: 'grandview',        name: 'Grandview',        city: 'edmonton',  address: '11705 83 ST NW, Edmonton, AB T5B 2Z1' },
+  { slug: 'cedar',            name: 'Cedar',            city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6' },
+  { slug: 'courts',           name: 'Courts',           city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9' },
+  { slug: 'oakwood',          name: 'Oakwood',          city: 'edmonton',  address: '11348 97 ST NW, Edmonton, AB T5G 1X4' },
+  { slug: 'palisades',        name: 'Palisades',        city: 'edmonton',  address: '10825 113 ST NW, Edmonton, AB T5H 3J1' },
+  { slug: 'royal-10215',      name: 'Royal 10215',      city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9' },
+  { slug: 'balwin',           name: 'Balwin',           city: 'edmonton',  address: '6704 131A AVE NW, Edmonton, AB T5C 1Z6' },
+  { slug: 'acadian',          name: 'Acadian',          city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5' },
+  { slug: 'parkdale',         name: 'Parkdale',         city: 'edmonton',  address: '8021 115 Ave NW, Edmonton, AB T5B 4W7' },
+  { slug: 'beverly',          name: 'Beverly',          city: 'edmonton',  address: '11312 34 ST NW, Edmonton, AB T5W 1Y9' },
+  { slug: 'strathearn',       name: 'Strathearn',       city: 'edmonton',  address: '9510 85 ST NW, Edmonton, AB T6C 3E2' },
+  { slug: 'pioneer',          name: 'Pioneer',          city: 'edmonton',  address: '12929 / 12921 127 ST NW, Edmonton, AB T5L 1B1' },
+  { slug: 'rivergate',        name: 'Rivergate',        city: 'edmonton',  address: '11040 82 ST NW, Edmonton, AB T5H 1L9' },
+  { slug: 'arbour-green',     name: 'Arbour Green',     city: 'edmonton',  address: '12036 - 66 Street, Edmonton, AB' },
+  { slug: 'ten-one-26-154',   name: '10126-154',        city: 'edmonton',  address: '10126 154 St, Edmonton, AB T5P 2H3' },
+  { slug: 'britnell-landing', name: 'Britnell Landing', city: 'edmonton',  address: '16255 51 St NW, Edmonton, AB T5Y 0V6' },
+  { slug: 'edge',             name: 'Edge',             city: 'edmonton',  address: '3005 – 3011 James Mowatt Trail SW, Edmonton, AB' },
+  { slug: 'cielo-greyson',    name: 'Cielo & Greyson',  city: 'saskatoon', address: '235 Willis Cres, Saskatoon, SK S7T 0W7' },
+  { slug: 'lawson',           name: 'Lawson',           city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
+  { slug: 'lockwood',         name: 'Lockwood',         city: 'regina',    address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
 ];
+
+const CITY_CENTERS: Record<CitySlug, { lat: number; lng: number; spreadLat: number; spreadLng: number }> = {
+  edmonton:  { lat: 53.545, lng: -113.493, spreadLat: 0.045, spreadLng: 0.070 },
+  saskatoon: { lat: 52.130, lng: -106.665, spreadLat: 0.025, spreadLng: 0.045 },
+  regina:    { lat: 50.445, lng: -104.620, spreadLat: 0.020, spreadLng: 0.040 },
+};
+
+function hashSeed(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function coordsFor(slug: string, city: CitySlug): { lat: number; lng: number } {
+  const c = CITY_CENTERS[city];
+  const h = hashSeed(slug);
+  const dLat = (((h % 997) / 997) - 0.5) * c.spreadLat * 2;
+  const dLng = ((((h * 13) % 1009) / 1009) - 0.5) * c.spreadLng * 2;
+  return { lat: +(c.lat + dLat).toFixed(5), lng: +(c.lng + dLng).toFixed(5) };
+}
+
+const BEDROOM_VARIANTS: number[][] = [
+  [0, 1, 2],
+  [1, 2],
+  [1, 2, 3],
+  [2, 3],
+  [0, 1],
+];
+
+const FEATURE_POOL = [
+  'Oak floors throughout',
+  'Tall casement windows',
+  'Updated kitchens and baths',
+  'Quartz counters, panel-front appliances',
+  'In-suite laundry',
+  'Soaker tubs in primary baths',
+  'Walk-in wardrobes',
+  'Restored mouldings and trim',
+  'Marble fireplace mantels (select suites)',
+  'Custom millwork',
+];
+
+const AMENITY_POOL = [
+  'Resident concierge',
+  'Bicycle storage',
+  'Heated underground parking',
+  'Surface parking',
+  'Pet-friendly',
+  'Storage lockers',
+  'Resident lounge',
+  'Roof terrace',
+  'Courtyard garden',
+  'Mail and parcel concierge',
+];
+
+function pickN<T>(pool: T[], n: number, seed: number): T[] {
+  const len = pool.length;
+  const count = Math.min(n, len);
+  const offset = Math.abs(seed) % len;
+  return Array.from({ length: count }, (_, k) => pool[(offset + k) % len]);
+}
+
+const HERO_POOL: string[] = [
+  IMAGES.heritage1, IMAGES.heritage2, IMAGES.heritage3, IMAGES.heritage4,
+  IMAGES.modern1, IMAGES.modern2, IMAGES.modern3, IMAGES.modern4,
+  IMAGES.detail_brick, IMAGES.detail_door, IMAGES.detail_arch,
+];
+
+const GALLERY_POOL: string[] = [
+  IMAGES.int_living1, IMAGES.int_living2, IMAGES.int_living3,
+  IMAGES.int_kitchen1, IMAGES.int_kitchen2,
+  IMAGES.int_bed1, IMAGES.int_bed2,
+  IMAGES.int_bath1, IMAGES.int_bath2,
+  IMAGES.int_dining1, IMAGES.int_detail1, IMAGES.int_detail2,
+];
+
+function bedroomLabel(opts: number[]): string {
+  const parts = opts.map((b) => (b === 0 ? 'Studio' : String(b)));
+  const onlyStudio = opts.length === 1 && opts[0] === 0;
+  return parts.join(' · ') + (onlyStudio ? '' : ' Bedrooms');
+}
+
+function makeResidence(raw: RawAsset, idx: number): Residence {
+  const seed = hashSeed(raw.slug);
+  const cityLabel = CITIES[raw.city].label;
+  const bedroomOptions = BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length];
+  const priceFrom = 1280 + ((seed >> 3) % 32) * 50; // 1280..2830
+  const heroImage = HERO_POOL[seed % HERO_POOL.length];
+  const gallery = pickN(GALLERY_POOL, 5, seed);
+  const features = pickN(FEATURE_POOL, 6, seed >> 1);
+  const amenities = pickN(AMENITY_POOL, 6, seed >> 2);
+  const availability: Availability = (seed % 8 === 0) ? 'coming-soon' : 'available';
+  const featured = idx % 4 === 0;
+
+  const streetLine = raw.address.split(',')[0];
+
+  return {
+    id: `r-${raw.slug}`,
+    slug: raw.slug,
+    name: raw.name,
+    city: raw.city,
+    cityLabel,
+    address: raw.address,
+    coordinates: coordsFor(raw.slug, raw.city),
+    description: `${raw.name} — a Balto residence at ${streetLine} in ${cityLabel}.`,
+    longDescription: `${raw.name} is held within the Balto portfolio at ${raw.address}. The building is operated to the Balto standard — restored where appropriate, maintained by a resident manager, and let on terms intended to favour long stays. Detailed unit plans, finishes, and current availability are released on request.`,
+    bedrooms: bedroomLabel(bedroomOptions),
+    bedroomOptions,
+    bathrooms: '1 – 2',
+    squareFeet: 'Varies by plan',
+    priceFrom,
+    availability,
+    featured,
+    heroImage,
+    gallery,
+    features,
+    amenities,
+    nearbyPoints: [
+      'Within walking distance of local shops and cafés',
+      'Public transit within a short walk',
+      'Quiet residential setting',
+    ],
+  };
+}
+
+export const RESIDENCES: Residence[] = ASSETS.map((raw, idx) => makeResidence(raw, idx));
 
 export const getCity = (slug: string): City | undefined =>
   (CITIES as Record<string, City>)[slug];
