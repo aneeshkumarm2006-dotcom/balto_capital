@@ -236,7 +236,7 @@ function makeResidence(raw: RawAsset, idx: number): Residence {
   const gallery = pickN(GALLERY_POOL, 5, seed);
   const features = pickN(FEATURE_POOL, 6, seed >> 1);
   const amenities = pickN(AMENITY_POOL, 6, seed >> 2);
-  const availability: Availability = (seed % 8 === 0) ? 'coming-soon' : 'available';
+  const availability: Availability = 'available';
   const featured = idx % 4 === 0;
 
   const streetLine = raw.address.split(',')[0];

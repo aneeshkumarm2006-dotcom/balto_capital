@@ -183,25 +183,6 @@ export function FiltersPanel({
         />
         <div style={{ height: 24 }} />
 
-        <h3 className="h3 serif" style={{ marginBottom: 16 }}>Availability</h3>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 36 }}>
-          {(
-            [
-              { v: 'any', label: 'Any' },
-              { v: 'available', label: 'Available now' },
-              { v: 'coming-soon', label: 'Coming soon' },
-            ] as const
-          ).map(({ v, label }) => (
-            <button
-              key={v}
-              className={'pill' + (filters.availability === v ? ' active' : '')}
-              onClick={() => update({ availability: v })}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
         <h3 className="h3 serif" style={{ marginBottom: 16 }}>Amenities</h3>
         <div
           style={{
