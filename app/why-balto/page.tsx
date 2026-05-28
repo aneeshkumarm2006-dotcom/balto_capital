@@ -10,7 +10,7 @@ const PILLARS = [
   {
     eyebrow: 'I — HERITAGE',
     title: 'A portfolio built one residence at a time.',
-    body: 'Sixty years ago, Balto began with a single building. We are still operated by the same family, and we still buy slowly. Every residence in the portfolio has been kept — never flipped, never refinanced into anonymity.',
+    body: 'Balto began in 2023 with a single building. We are operated by one family, and we buy slowly. Every residence in the portfolio has been kept — never flipped, never refinanced into anonymity.',
     align: 'left' as const,
   },
   {
@@ -97,13 +97,13 @@ export default function WhyBaltoPage() {
                   maxWidth: 460,
                 }}
               >
-                &ldquo;We did not build a portfolio. We kept one — for sixty years, and counting.&rdquo;
+                &ldquo;We did not build a portfolio. We kept one — from year one, and counting.&rdquo;
               </p>
               <p
                 className="caption muted"
                 style={{ marginTop: 24, letterSpacing: '0.1em' }}
               >
-                — FROM THE FOUNDER&apos;S NOTES, 1968
+                — FROM THE FOUNDER&apos;S NOTES, 2023
               </p>
             </div>
             <div>
@@ -184,8 +184,8 @@ export default function WhyBaltoPage() {
             className="grid-3-md1"
           >
             {[
-              { n: '60+', label: 'Years stewarding the portfolio' },
-              { n: '3', label: 'Cities across Western Canada' },
+              { n: '2023', label: 'Year the portfolio was founded' },
+              { n: '4', label: 'Cities across Western Canada' },
               { n: '24/7', label: 'Concierge & maintenance' },
             ].map((s) => (
               <div key={s.n}>

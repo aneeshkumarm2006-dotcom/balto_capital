@@ -16,19 +16,19 @@ const STANDARDS = [
 
 const FIGURES = [
   {
-    n: '60+',
-    label: 'YEARS STEWARDING',
-    body: 'A single family, six decades, one continuous portfolio. The first building from 1964 is still under our care.',
+    n: '2023',
+    label: 'YEAR FOUNDED',
+    body: 'A family-led practice established in 2023, building a continuous portfolio with care from day one.',
   },
   {
-    n: '12',
+    n: '28',
     label: 'RESIDENCES',
     body: 'Small by intent. We add a building every few years, not every quarter — each one held, never resold.',
   },
   {
-    n: '3',
+    n: '4',
     label: 'CITIES',
-    body: 'Saskatoon, Edmonton, Regina. A focused geography we know in detail — by street, by neighbourhood, by trade.',
+    body: 'Saskatoon, Edmonton, Regina, Yellowknife. A focused geography we know in detail — by street, by neighbourhood, by trade.',
   },
   {
     n: '100%',
@@ -59,7 +59,7 @@ export default function AboutPage() {
               letterSpacing: '-0.01em',
             }}
           >
-            <span className="italic">Est.</span> 1964.
+            <span className="italic">Est.</span> 2023.
           </div>
           <p
             className="body muted"
@@ -71,7 +71,7 @@ export default function AboutPage() {
               marginRight: 'auto',
             }}
           >
-            A heritage portfolio of luxury residences in Saskatoon, Edmonton, and Regina — kept, restored, and operated by the same family for sixty years.
+            A heritage portfolio of luxury residences in Saskatoon, Edmonton, Regina, and Yellowknife — kept, restored, and operated by the same family.
           </p>
         </div>
       </section>
@@ -103,7 +103,7 @@ export default function AboutPage() {
                 className="body"
                 style={{ fontSize: 17, marginBottom: 22, maxWidth: 520 }}
               >
-                Balto began in 1964 with a single fourplex on Saskatchewan Drive in Edmonton. The owner — a quiet operator who preferred to be known by his initials — bought it, restored it, and rented it to four families. He never sold it.
+                Balto began in 2023 with a single building on Saskatchewan Drive in Edmonton. A quiet operator bought it, restored it, and rented it to a handful of families. They never sold it.
               </p>
               <p
                 className="body muted"
@@ -114,7 +114,7 @@ export default function AboutPage() {
                   marginBottom: 22,
                 }}
               >
-                Sixty years on, that building is still in the portfolio, and the same orientation still governs the work. We acquire residences slowly, restore them carefully, and operate them ourselves. Most of our residents have been with us for years — some for decades.
+                That same orientation still governs the work today. We acquire residences slowly, restore them carefully, and operate them ourselves. Our residents tend to stay.
               </p>
               <p
                 className="body muted"

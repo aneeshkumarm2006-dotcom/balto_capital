@@ -75,11 +75,12 @@ export default function ResidenceDetailPage({
 
   if (!r) return null;
 
-  const plans = r.bedroomOptions.map((b, i) => ({
-    label: b === 0 ? 'Studio' : `${b} Bedroom`,
-    sqft: 480 + i * 260,
-    price: r.priceFrom + i * 320,
-  }));
+  const plans = r.bedroomOptions
+    .filter((b) => r.prices[b as 0 | 1 | 2 | 3] !== undefined)
+    .map((b) => ({
+      label: b === 0 ? 'Studio' : `${b} Bedroom`,
+      price: r.prices[b as 0 | 1 | 2 | 3] as number,
+    }));
 
   const others = residencesByCity(r.city)
     .filter((x) => x.id !== r.id)
@@ -106,6 +107,7 @@ export default function ResidenceDetailPage({
         </div>
       </div>
 
+      {!r.hideDetailGallery && (
       <div className="container" style={{ marginBottom: 64 }}>
         <div
           style={{
@@ -197,8 +199,9 @@ export default function ResidenceDetailPage({
           </button>
         </div>
       </div>
+      )}
 
-      <div className="container">
+      <div className="container" style={r.hideDetailGallery ? { marginTop: 32 } : undefined}>
         <div
           style={{
             display: 'grid',
@@ -221,7 +224,7 @@ export default function ResidenceDetailPage({
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: 24,
               }}
               className="quick-stats"
@@ -232,7 +235,6 @@ export default function ResidenceDetailPage({
                   val: r.bedrooms.replace(' Bedrooms', '').replace(' Bedroom', ''),
                 },
                 { label: 'Bathrooms', val: r.bathrooms },
-                { label: 'Sq. Ft.', val: r.squareFeet },
                 {
                   label: 'Available',
                   val: r.availability === 'available' ? 'Now' : 'Soon',
@@ -266,16 +268,16 @@ export default function ResidenceDetailPage({
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
             <h2 className="h2 serif" style={{ marginBottom: 32 }}>
-              Residence features
+              {r.incentives ? 'Incentives' : 'Residence features'}
             </h2>
-            <FeatureList items={r.features} />
+            <FeatureList items={r.incentives ?? r.features} />
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
             <h2 className="h2 serif" style={{ marginBottom: 32 }}>
-              Building amenities
+              {r.unitLabels ? 'Unit Photos' : 'Building amenities'}
             </h2>
-            <FeatureList items={r.amenities} />
+            <FeatureList items={r.unitLabels ?? r.amenities} />
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
@@ -391,16 +393,21 @@ export default function ResidenceDetailPage({
                       transition: 'all 200ms var(--ease)',
                     }}
                   >
-                    <div>
-                      <div
-                        className="serif"
-                        style={{ fontSize: 17, fontWeight: 500 }}
-                      >
-                        {p.label}
-                      </div>
-                      <div className="caption muted">{p.sqft} sq. ft.</div>
+                    <div
+                      className="serif"
+                      style={{ fontSize: 17, fontWeight: 500 }}
+                    >
+                      {p.label}
                     </div>
-                    <div className="small">{formatPrice(p.price)}</div>
+                    <div className="small serif" style={{ fontWeight: 500 }}>
+                      {formatPrice(p.price)}
+                      <span
+                        className="caption muted"
+                        style={{ fontFamily: 'var(--sans)', marginLeft: 4 }}
+                      >
+                        /mo
+                      </span>
+                    </div>
                   </button>
                 ))}
               </div>

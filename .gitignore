@@ -5,3 +5,9 @@ out/
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# Raw image masters — keep local, ship resized copies via public/assets/
+Images/Edmonton/
+Images/Saskatoon/
+Images/Regina/
+Images/Yellowknife/

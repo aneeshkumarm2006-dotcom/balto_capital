@@ -98,7 +98,9 @@ export interface Residence {
   bedrooms: string;
   bedroomOptions: number[];
   bathrooms: string;
-  squareFeet: string;
+  /** Monthly rent by bedroom count. Keys: 0=Studio, 1..3=Bedroom count. */
+  prices: Partial<Record<0 | 1 | 2 | 3, number>>;
+  /** Minimum across `prices` — used on cards / "From $X/mo" labels. */
   priceFrom: number;
   availability: Availability;
   featured: boolean;
@@ -107,7 +109,20 @@ export interface Residence {
   features: string[];
   amenities: string[];
   nearbyPoints: string[];
+  /** Per-asset alternate views (currently only Palisades uses these). */
+  hideDetailGallery?: boolean;
+  incentives?: string[];
+  unitLabels?: string[];
 }
+
+/** Standard Edmonton rate card — applies to every Edmonton property except
+ *  Woodridge. Studio / 1BR / 2BR / 3BR. */
+const EDMONTON_RATES: Record<0 | 1 | 2 | 3, number> = {
+  0: 1100, 1: 1300, 2: 1500, 3: 1600,
+};
+const WOODRIDGE_RATES: Record<0 | 1 | 2 | 3, number> = {
+  0: 1150, 1: 1350, 2: 1550, 3: 1700,
+};
 
 /* ============================================================
    BALTO CAPITAL — assets (real portfolio, 28 residences)
@@ -119,22 +134,40 @@ interface RawAsset {
   name: string;
   city: CitySlug;
   address: string;
+  /** Explicit feature flag. Replaces the old `idx % 4 === 0` heuristic
+   *  so reordering the array doesn't accidentally re-shuffle featured cards. */
+  featured?: boolean;
+  /** Per-asset alternate views — see Palisades for the canonical example. */
+  hideDetailGallery?: boolean;
+  incentives?: string[];
+  unitLabels?: string[];
 }
 
 const ASSETS: RawAsset[] = [
+  // Woodridge first, Palisades second per portfolio ordering. Palisades runs an
+  // alternate text-forward view (no imagery, Incentives + Unit Photos blocks).
+  { slug: 'woodridge',        name: 'Woodridge',        city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9', featured: true },
+  {
+    slug: 'palisades',        name: 'Palisades',        city: 'edmonton',  address: '10825 113 ST NW, Edmonton, AB T5H 3J1', featured: true,
+    hideDetailGallery: true,
+    incentives: [
+      'Early move-in opportunity.',
+      'Up to 2 months free.',
+      'In-suite washer/dryer adds units for +$100/month.',
+    ],
+    unitLabels: ['Unit 102', 'Unit 104', 'Unit 105', 'Unit 204', 'Unit 303', 'Unit 306'],
+  },
   { slug: 'hamlet',           name: 'Hamlet',           city: 'edmonton',  address: '11647 124 ST NW, Edmonton, AB T5M 0K8' },
   { slug: 'copper',           name: 'Copper',           city: 'edmonton',  address: '13011 83 ST NW, Edmonton, AB T5E 2W5' },
-  { slug: 'woodridge',        name: 'Woodridge',        city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9' },
   { slug: 'kafa',             name: 'Kafa',             city: 'edmonton',  address: '12717 119 ST NW, Edmonton, AB T5E 5M2' },
-  { slug: 'royal-10746',      name: 'Royal 10746',      city: 'edmonton',  address: '10746 102 ST NW, Edmonton, AB T5H 2T7' },
-  { slug: 'catalina',         name: 'Catalina',         city: 'edmonton',  address: '5910 118 Ave NW, Edmonton, AB T5W 1E5' },
+  { slug: 'royal-lady',       name: 'Royal Lady',       city: 'edmonton',  address: '10746 102 ST NW, Edmonton, AB T5H 2T7', featured: true },
+  { slug: 'catalina-estates', name: 'Catalina Estates', city: 'edmonton',  address: '5910 118 Ave NW, Edmonton, AB T5W 1E5' },
   { slug: 'layali',           name: 'Layali',           city: 'edmonton',  address: '13710 64 ST NW, Edmonton, AB T5A 1R9' },
-  { slug: 'sky',              name: 'Sky',              city: 'edmonton',  address: '9612 156 ST NW, Edmonton, AB T5P 2N7' },
-  { slug: 'grandview',        name: 'Grandview',        city: 'edmonton',  address: '11705 83 ST NW, Edmonton, AB T5B 2Z1' },
-  { slug: 'cedar',            name: 'Cedar',            city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6' },
+  { slug: 'sky-manor',        name: 'Sky Manor',        city: 'edmonton',  address: '9612 156 ST NW, Edmonton, AB T5P 2N7' },
+  { slug: 'grandview',        name: 'Grandview',        city: 'edmonton',  address: '11705 83 ST NW, Edmonton, AB T5B 2Z1', featured: true },
+  { slug: 'cedar-manor',      name: 'Cedar Manor',      city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6' },
   { slug: 'courts',           name: 'Courts',           city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9' },
   { slug: 'oakwood',          name: 'Oakwood',          city: 'edmonton',  address: '11348 97 ST NW, Edmonton, AB T5G 1X4' },
-  { slug: 'palisades',        name: 'Palisades',        city: 'edmonton',  address: '10825 113 ST NW, Edmonton, AB T5H 3J1' },
   { slug: 'royal-10215',      name: 'Royal 10215',      city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9' },
   { slug: 'balwin',           name: 'Balwin',           city: 'edmonton',  address: '6704 131A AVE NW, Edmonton, AB T5C 1Z6' },
   { slug: 'acadian',          name: 'Acadian',          city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5' },
@@ -236,17 +269,147 @@ function bedroomLabel(opts: number[]): string {
   return parts.join(' · ') + (onlyStudio ? '' : ' Bedrooms');
 }
 
-function makeResidence(raw: RawAsset, idx: number): Residence {
+/** Per-asset overrides for real photos that have been synced into
+ *  public/assets/<slug>/. Anything not listed here falls back to the
+ *  Unsplash pool. Generated/maintained via npm run sync-images. */
+const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
+  woodridge: {
+    hero: '/assets/woodridge/01-main.jpg',
+    gallery: [
+      '/assets/woodridge/02.jpg',
+      '/assets/woodridge/03.jpg',
+      '/assets/woodridge/04.jpg',
+      '/assets/woodridge/05.jpg',
+      '/assets/woodridge/06.jpg',
+      '/assets/woodridge/07.jpg',
+      '/assets/woodridge/08.jpg',
+      '/assets/woodridge/09.jpg',
+      '/assets/woodridge/10.jpg',
+    ],
+  },
+  acadian: {
+    hero: '/assets/acadian/01-main.jpg',
+    gallery: [
+      '/assets/acadian/02.jpg',
+      '/assets/acadian/03.jpg',
+      '/assets/acadian/04.jpg',
+      '/assets/acadian/05.jpg',
+      '/assets/acadian/06.jpg',
+      '/assets/acadian/07.jpg',
+      '/assets/acadian/08.jpg',
+    ],
+  },
+  // Hamlet — no hero yet (waiting on a photo from the client). Falling back
+  // to the Unsplash pool for the hero; user-supplied photos populate gallery.
+  hamlet: {
+    gallery: [
+      '/assets/hamlet/01.jpg',
+      '/assets/hamlet/02.jpg',
+      '/assets/hamlet/03.jpg',
+      '/assets/hamlet/04.jpg',
+      '/assets/hamlet/05.jpg',
+    ],
+  },
+  'royal-lady': {
+    hero: '/assets/royal-lady/01-main.jpg',
+    gallery: [
+      '/assets/royal-lady/02.jpg',
+      '/assets/royal-lady/03.jpg',
+      '/assets/royal-lady/04.jpg',
+      '/assets/royal-lady/05.jpg',
+      '/assets/royal-lady/06.jpg',
+      '/assets/royal-lady/07.jpg',
+      '/assets/royal-lady/08.jpg',
+    ],
+  },
+  'catalina-estates': {
+    hero: '/assets/catalina-estates/01-main.jpg',
+    gallery: [],
+  },
+  layali: {
+    hero: '/assets/layali/01-main.jpg',
+    gallery: [
+      '/assets/layali/02.jpg',
+      '/assets/layali/03.jpg',
+      '/assets/layali/04.jpg',
+      '/assets/layali/05.jpg',
+      '/assets/layali/06.jpg',
+    ],
+  },
+  'sky-manor': {
+    hero: '/assets/sky-manor/01-main.jpg',
+    gallery: [
+      '/assets/sky-manor/02.jpg',
+      '/assets/sky-manor/03.jpg',
+      '/assets/sky-manor/04.jpg',
+      '/assets/sky-manor/05.jpg',
+      '/assets/sky-manor/06.jpg',
+      '/assets/sky-manor/07.jpg',
+    ],
+  },
+  'cedar-manor': {
+    hero: '/assets/cedar-manor/01-main.jpg',
+    gallery: [
+      '/assets/cedar-manor/02.jpg',
+      '/assets/cedar-manor/03.jpg',
+      '/assets/cedar-manor/04.jpg',
+      '/assets/cedar-manor/05.jpg',
+      '/assets/cedar-manor/06.jpg',
+      '/assets/cedar-manor/07.jpg',
+      '/assets/cedar-manor/08.jpg',
+    ],
+  },
+  kafa: {
+    hero: '/assets/kafa/01-main.jpg',
+    gallery: [],
+  },
+  // Palisades — card-only image. Detail page stays text-forward via
+  // hideDetailGallery on the raw asset.
+  palisades: {
+    hero: '/assets/palisades/01-main.jpg',
+    gallery: [],
+  },
+};
+
+/** Pricing per asset. Edmonton uses the standard rate card except for
+ *  Woodridge which has its own. Other cities still use deterministic
+ *  placeholders until real rates arrive. */
+function pricesFor(raw: RawAsset, seed: number): Partial<Record<0 | 1 | 2 | 3, number>> {
+  if (raw.slug === 'woodridge') return WOODRIDGE_RATES;
+  if (raw.city === 'edmonton') return EDMONTON_RATES;
+  // Placeholder for Saskatoon / Regina / Yellowknife — deterministic per-slug.
+  const base = 1280 + ((seed >> 3) % 24) * 50; // 1280..2430
+  return {
+    0: base,
+    1: base + 200,
+    2: base + 400,
+    3: base + 500,
+  };
+}
+
+function makeResidence(raw: RawAsset, _idx: number): Residence {
   const seed = hashSeed(raw.slug);
   const cityLabel = CITIES[raw.city].label;
-  const bedroomOptions = BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length];
-  const priceFrom = 1280 + ((seed >> 3) % 32) * 50; // 1280..2830
-  const heroImage = HERO_POOL[seed % HERO_POOL.length];
-  const gallery = pickN(GALLERY_POOL, 5, seed);
+  // Every Edmonton property offers all four configs. Other cities keep
+  // the deterministic variation until we know better.
+  const bedroomOptions = raw.city === 'edmonton'
+    ? [0, 1, 2, 3]
+    : BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length];
+  const prices = pricesFor(raw, seed);
+  const priceFrom = Math.min(...Object.values(prices) as number[]);
+
+  const real = REAL_PHOTOS[raw.slug];
+  // Card image: always honour real photo if present. hideDetailGallery
+  // only skips the gallery on the detail page, not the listing card.
+  const heroImage = real?.hero || HERO_POOL[seed % HERO_POOL.length];
+  const gallery = raw.hideDetailGallery
+    ? []
+    : (real?.gallery ?? pickN(GALLERY_POOL, 5, seed));
+
   const features = pickN(FEATURE_POOL, 6, seed >> 1);
   const amenities = pickN(AMENITY_POOL, 6, seed >> 2);
   const availability: Availability = 'available';
-  const featured = idx % 4 === 0;
+  const featured = raw.featured ?? false;
 
   const streetLine = raw.address.split(',')[0];
 
@@ -263,10 +426,13 @@ function makeResidence(raw: RawAsset, idx: number): Residence {
     bedrooms: bedroomLabel(bedroomOptions),
     bedroomOptions,
     bathrooms: '1 – 2',
-    squareFeet: 'Varies by plan',
+    prices,
     priceFrom,
     availability,
     featured,
+    hideDetailGallery: raw.hideDetailGallery,
+    incentives: raw.incentives,
+    unitLabels: raw.unitLabels,
     heroImage,
     gallery,
     features,

@@ -1,0 +1,114 @@
+[
+  {
+    "city": "edmonton",
+    "slug": "acadian",
+    "hero": "/assets/acadian/01-main.jpg",
+    "gallery": [
+      "/assets/acadian/02.jpg",
+      "/assets/acadian/03.jpg",
+      "/assets/acadian/04.jpg",
+      "/assets/acadian/05.jpg",
+      "/assets/acadian/06.jpg",
+      "/assets/acadian/07.jpg",
+      "/assets/acadian/08.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "catalina-estates",
+    "hero": "/assets/catalina-estates/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "cedar-manor",
+    "hero": "/assets/cedar-manor/01-main.jpg",
+    "gallery": [
+      "/assets/cedar-manor/02.jpg",
+      "/assets/cedar-manor/03.jpg",
+      "/assets/cedar-manor/04.jpg",
+      "/assets/cedar-manor/05.jpg",
+      "/assets/cedar-manor/06.jpg",
+      "/assets/cedar-manor/07.jpg",
+      "/assets/cedar-manor/08.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "hamlet",
+    "gallery": [
+      "/assets/hamlet/01.jpg",
+      "/assets/hamlet/02.jpg",
+      "/assets/hamlet/03.jpg",
+      "/assets/hamlet/04.jpg",
+      "/assets/hamlet/05.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "palisades",
+    "hero": "/assets/palisades/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "royal-lady",
+    "hero": "/assets/royal-lady/01-main.jpg",
+    "gallery": [
+      "/assets/royal-lady/02.jpg",
+      "/assets/royal-lady/03.jpg",
+      "/assets/royal-lady/04.jpg",
+      "/assets/royal-lady/05.jpg",
+      "/assets/royal-lady/06.jpg",
+      "/assets/royal-lady/07.jpg",
+      "/assets/royal-lady/08.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "sky-manor",
+    "hero": "/assets/sky-manor/01-main.jpg",
+    "gallery": [
+      "/assets/sky-manor/02.jpg",
+      "/assets/sky-manor/03.jpg",
+      "/assets/sky-manor/04.jpg",
+      "/assets/sky-manor/05.jpg",
+      "/assets/sky-manor/06.jpg",
+      "/assets/sky-manor/07.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "woodridge",
+    "hero": "/assets/woodridge/01-main.jpg",
+    "gallery": [
+      "/assets/woodridge/02.jpg",
+      "/assets/woodridge/03.jpg",
+      "/assets/woodridge/04.jpg",
+      "/assets/woodridge/05.jpg",
+      "/assets/woodridge/06.jpg",
+      "/assets/woodridge/07.jpg",
+      "/assets/woodridge/08.jpg",
+      "/assets/woodridge/09.jpg",
+      "/assets/woodridge/10.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "kafa",
+    "hero": "/assets/kafa/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "layali",
+    "hero": "/assets/layali/01-main.jpg",
+    "gallery": [
+      "/assets/layali/02.jpg",
+      "/assets/layali/03.jpg",
+      "/assets/layali/04.jpg",
+      "/assets/layali/05.jpg",
+      "/assets/layali/06.jpg"
+    ]
+  }
+]

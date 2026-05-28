@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:fresh": "rm -rf .next && next dev",
+    "sync-images": "node scripts/sync-images.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

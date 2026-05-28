@@ -20,7 +20,7 @@ export function Footer() {
                 marginBottom: 18,
               }}
             />
-            <div className="footer-est">Est. 1964</div>
+            <div className="footer-est">Est. 2023</div>
             <p
               style={{
                 fontSize: 14,
@@ -49,15 +49,38 @@ export function Footer() {
               <li><a onClick={() => go('/why-balto')}>Why Balto</a></li>
               <li><a onClick={() => go('/about')}>About</a></li>
               <li><a onClick={() => go('/inquire')}>Inquire</a></li>
-              <li><a>Careers</a></li>
             </ul>
           </div>
           <div>
             <h4>Connect</h4>
             <ul>
-              <li><a>Facebook</a></li>
-              <li><a>Instagram</a></li>
-              <li><a>LinkedIn</a></li>
+              <li>
+                <a
+                  href="https://www.facebook.com/p/Balto-Capital-61583216199874/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/baltocapital/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://ca.linkedin.com/company/balto-capital-inc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </a>
+              </li>
             </ul>
             <div style={{ marginTop: 24 }}>
               <h4 style={{ marginBottom: 10 }}>Inquiries</h4>

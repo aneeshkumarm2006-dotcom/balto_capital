@@ -70,7 +70,7 @@ function CinematicHero({
             letterSpacing: '0.18em',
           }}
         >
-          Est. 1964
+          Est. 2023
         </div>
         <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 980 }}>
           Find your residence.
@@ -245,15 +245,15 @@ function HeritageStrip() {
             />
           </div>
           <div>
-            <Eyebrow style={{ marginBottom: 24 }}>EST. 1964</Eyebrow>
+            <Eyebrow style={{ marginBottom: 24 }}>EST. 2023</Eyebrow>
             <h2 className="h2 serif" style={{ marginBottom: 28 }}>
-              Six decades of building trust.
+              Building trust from year one.
             </h2>
             <p
               className="body muted"
               style={{ fontSize: 17, maxWidth: 520, marginBottom: 36 }}
             >
-              Since 1964, Balto Capital has built a portfolio defined by quality, longevity, and an uncompromising standard. Today, we open our residences to those who recognize the difference.
+              Since 2023, Balto Capital has built a portfolio defined by quality and an uncompromising standard. Today, we open our residences to those who recognize the difference.
             </p>
             <button className="btn btn-ghost" onClick={() => router.push('/about')}>
               Our story <ArrowRight size={14} />
@@ -314,7 +314,7 @@ function ValuePropsStrip() {
     {
       n: '01',
       t: 'Heritage.',
-      d: 'Sixty years of stewardship. A portfolio built one residence at a time.',
+      d: 'A practice founded in 2023. A portfolio built one residence at a time.',
     },
     {
       n: '02',
