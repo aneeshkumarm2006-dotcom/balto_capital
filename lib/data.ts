@@ -299,15 +299,14 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/acadian/08.jpg',
     ],
   },
-  // Hamlet — no hero yet (waiting on a photo from the client). Falling back
-  // to the Unsplash pool for the hero; user-supplied photos populate gallery.
   hamlet: {
+    hero: '/assets/hamlet/01-main.jpg',
     gallery: [
-      '/assets/hamlet/01.jpg',
       '/assets/hamlet/02.jpg',
       '/assets/hamlet/03.jpg',
       '/assets/hamlet/04.jpg',
       '/assets/hamlet/05.jpg',
+      '/assets/hamlet/06.jpg',
     ],
   },
   'royal-lady': {

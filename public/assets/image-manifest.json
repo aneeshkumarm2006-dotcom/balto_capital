@@ -36,12 +36,13 @@
   {
     "city": "edmonton",
     "slug": "hamlet",
+    "hero": "/assets/hamlet/01-main.jpg",
     "gallery": [
-      "/assets/hamlet/01.jpg",
       "/assets/hamlet/02.jpg",
       "/assets/hamlet/03.jpg",
       "/assets/hamlet/04.jpg",
-      "/assets/hamlet/05.jpg"
+      "/assets/hamlet/05.jpg",
+      "/assets/hamlet/06.jpg"
     ]
   },
   {
