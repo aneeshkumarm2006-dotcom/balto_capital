@@ -24,7 +24,7 @@ export function Header() {
       <header className="site-header">
         <div className="inner">
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo variant="light" height={36} />
+            <Logo variant="light" height={60} />
           </div>
 
           <nav className="nav" aria-label="Primary">

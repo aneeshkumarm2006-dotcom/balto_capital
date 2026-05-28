@@ -27,7 +27,7 @@
   --fs-small:   0.875rem;
   --fs-caption: 0.75rem;
 
-  --header-h: 76px;
+  --header-h: 92px;
   --section-py: clamp(4rem, 9vw, 7.5rem);
 
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
