@@ -27,6 +27,9 @@ const SLUG_OVERRIDES = {
   '10126-154': 'ten-one-26-154',
   'cielo & greyson': 'cielo-greyson',
   'cielo and greyson': 'cielo-greyson',
+  // Folders that don't kebab-case cleanly:
+  'courtsmanor': 'courts-manor',
+  'balwin_manor:ace': 'balwin-manor',
 };
 function toSlug(name) {
   const lower = name.trim().toLowerCase();

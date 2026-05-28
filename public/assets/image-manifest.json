@@ -15,6 +15,12 @@
   },
   {
     "city": "edmonton",
+    "slug": "balwin-manor",
+    "hero": "/assets/balwin-manor/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
     "slug": "catalina-estates",
     "hero": "/assets/catalina-estates/01-main.jpg",
     "gallery": []
@@ -35,6 +41,24 @@
   },
   {
     "city": "edmonton",
+    "slug": "copper-manor",
+    "hero": "/assets/copper-manor/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "courts-manor",
+    "hero": "/assets/courts-manor/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "grandview-manor",
+    "hero": "/assets/grandview-manor/01-main.jpg",
+    "gallery": []
+  },
+  {
+    "city": "edmonton",
     "slug": "hamlet",
     "hero": "/assets/hamlet/01-main.jpg",
     "gallery": [
@@ -44,6 +68,12 @@
       "/assets/hamlet/05.jpg",
       "/assets/hamlet/06.jpg"
     ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "oakwood-manor",
+    "hero": "/assets/oakwood-manor/01-main.jpg",
+    "gallery": []
   },
   {
     "city": "edmonton",
