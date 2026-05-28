@@ -11,7 +11,7 @@ interface LogoProps {
 export function Logo({ variant = 'light', height = 30 }: LogoProps) {
   const router = useRouter();
   const isDark = variant === 'dark';
-  const src = isDark ? '/brand/balto-logo-white.jpg' : '/brand/balto-logo-navy.jpg';
+  const src = isDark ? '/brand/balto-logo-white.png' : '/brand/balto-logo-navy.png';
   return (
     <button
       type="button"
@@ -35,7 +35,6 @@ export function Logo({ variant = 'light', height = 30 }: LogoProps) {
           height,
           width: 'auto',
           display: 'block',
-          mixBlendMode: isDark ? 'screen' : 'multiply',
         }}
       />
     </button>

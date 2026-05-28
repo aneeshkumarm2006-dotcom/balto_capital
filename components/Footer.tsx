@@ -11,14 +11,13 @@ export function Footer() {
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/brand/balto-logo-white.jpg"
+              src="/brand/balto-logo-white.png"
               alt="Balto Capital"
               style={{
                 height: 64,
                 width: 'auto',
                 display: 'block',
                 marginBottom: 18,
-                mixBlendMode: 'screen',
               }}
             />
             <div className="footer-est">Est. 1964</div>
