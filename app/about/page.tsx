@@ -1,9 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
-import { ParallaxImage } from '@/components/ParallaxImage';
 import { ArrowRight } from '@/components/icons';
-import { IMAGES } from '@/lib/data';
 
 const STANDARDS = [
   'Restoration over renovation — original detail is preserved where it exists.',
@@ -71,59 +69,180 @@ export default function AboutPage() {
               marginRight: 'auto',
             }}
           >
-            A heritage portfolio of luxury residences in Saskatoon, Edmonton, Regina, and Yellowknife — kept, restored, and operated by the same family.
+            A portfolio of residences in Saskatoon, Edmonton, Regina, and Yellowknife — kept, restored, and operated by the same family.
           </p>
         </div>
       </section>
 
       <section className="section bg-ivory">
-        <div className="container">
+        <div
+          className="container-narrow"
+          style={{ textAlign: 'center', maxWidth: 720 }}
+        >
+          <Eyebrow style={{ marginBottom: 44, display: 'inline-block' }}>
+            OUR STORY
+          </Eyebrow>
+
+          {/* Lead — manifesto in serif italic */}
+          <p
+            className="serif italic"
+            style={{
+              fontSize: 'clamp(1.4rem, 2.4vw, 1.95rem)',
+              lineHeight: 1.4,
+              color: 'var(--ink)',
+              maxWidth: 660,
+              margin: '0 auto',
+              letterSpacing: '-0.005em',
+            }}
+          >
+            At Balto Capital Montreal, we believe real estate is about more than buildings. It’s about creating spaces where people feel connected, supported, and inspired to grow.
+          </p>
+
+          {/* Gold divider */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1.2fr',
-              gap: 'clamp(40px, 7vw, 110px)',
-              alignItems: 'center',
+              width: 44,
+              height: 1,
+              background: 'var(--gold)',
+              opacity: 0.6,
+              margin: 'clamp(48px, 6vw, 72px) auto',
             }}
-            className="grid-3-md1"
+          />
+        </div>
+
+        {/* Pull-quote cards — 2×2 grid */}
+        <div
+          className="container"
+          style={{
+            maxWidth: 1040,
+            paddingLeft: 'clamp(20px, 5vw, 64px)',
+            paddingRight: 'clamp(20px, 5vw, 64px)',
+          }}
+        >
+          <div
+            className="grid grid-residences"
+            style={{
+              gap: 'clamp(20px, 2.4vw, 32px)',
+              textAlign: 'left',
+            }}
           >
-            <div style={{ aspectRatio: '4 / 5', overflow: 'hidden' }}>
-              <ParallaxImage
-                src={IMAGES.heritage3}
-                alt="Founder's first building"
-                speed={0.12}
-              />
-            </div>
-            <div>
-              <Eyebrow style={{ marginBottom: 22 }}>OUR STORY</Eyebrow>
-              <h2 className="h2 serif" style={{ marginBottom: 32 }}>
-                One building. Then another.
-              </h2>
-              <p
-                className="body"
-                style={{ fontSize: 17, marginBottom: 22, maxWidth: 520 }}
-              >
-                Balto began in 2023 with a single building on Saskatchewan Drive in Edmonton. A quiet operator bought it, restored it, and rented it to a handful of families. They never sold it.
-              </p>
-              <p
-                className="body muted"
+            {[
+              {
+                numeral: 'I',
+                eyebrow: 'VISION',
+                quote: 'Long-term value to the people and communities we serve.',
+                body: 'From our foundation to where we are today, our vision continues to guide everything we do: to develop and invest in properties that bring long-term value to the people and communities we serve.',
+              },
+              {
+                numeral: 'II',
+                eyebrow: 'APPROACH',
+                quote: 'Lasting impressions of comfort, opportunity, and trust.',
+                body: 'We strive to create spaces that leave lasting impressions of comfort, opportunity, and trust. Whether residential, commercial, or mixed-use, each property is designed to be purposeful, welcoming, and future-focused.',
+              },
+              {
+                numeral: 'III',
+                eyebrow: 'STANDARD',
+                quote: 'A standard of quality and service to rely on.',
+                body: 'Across Montreal and beyond, tenants, partners, and communities benefit from a standard of quality and service they can rely on. Through thoughtful management, strategic investment, and strong relationships, we create environments where people want to live, work, and build their future.',
+              },
+              {
+                numeral: 'IV',
+                eyebrow: 'GROWTH',
+                quote: 'Shaped by the needs of those we serve.',
+                body: 'As we grow, our commitment to quality is shaped by the needs of those we serve. We listen, learn, and improve continuously. Guided by experience and community insight, we enhance every aspect of our work, from property development to daily service. Through each project, we aim to create spaces and opportunities with lasting impact. This is our purpose.',
+              },
+            ].map((c) => (
+              <div
+                key={c.numeral}
+                className="card"
                 style={{
-                  fontSize: 16,
-                  lineHeight: 1.8,
-                  maxWidth: 520,
-                  marginBottom: 22,
+                  padding: 'clamp(28px, 2.6vw, 44px)',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                That same orientation still governs the work today. We acquire residences slowly, restore them carefully, and operate them ourselves. Our residents tend to stay.
-              </p>
-              <p
-                className="body muted"
-                style={{ fontSize: 16, lineHeight: 1.8, maxWidth: 520 }}
-              >
-                The company is small. The portfolio is small. The standard is not.
-              </p>
-            </div>
+                <div
+                  className="serif italic"
+                  style={{
+                    fontSize: 22,
+                    color: 'var(--gold)',
+                    letterSpacing: '0.02em',
+                    marginBottom: 12,
+                  }}
+                >
+                  {c.numeral}
+                </div>
+                <div
+                  className="eyebrow"
+                  style={{ marginBottom: 20 }}
+                >
+                  {c.eyebrow}
+                </div>
+                <p
+                  className="serif"
+                  style={{
+                    fontSize: 'clamp(1.2rem, 1.4vw, 1.4rem)',
+                    fontWeight: 500,
+                    lineHeight: 1.35,
+                    color: 'var(--ink)',
+                    letterSpacing: '-0.005em',
+                    margin: '0 0 24px',
+                  }}
+                >
+                  &ldquo;{c.quote}&rdquo;
+                </p>
+                <div
+                  style={{
+                    width: 28,
+                    height: 1,
+                    background: 'var(--gold)',
+                    opacity: 0.5,
+                    marginBottom: 22,
+                  }}
+                />
+                <p
+                  style={{
+                    fontSize: 14.5,
+                    lineHeight: 1.8,
+                    color: 'var(--muted)',
+                    margin: 0,
+                  }}
+                >
+                  {c.body}
+                </p>
+              </div>
+            ))}
           </div>
+        </div>
+
+        <div
+          className="container-narrow"
+          style={{ textAlign: 'center', maxWidth: 720 }}
+        >
+          {/* Gold divider */}
+          <div
+            style={{
+              width: 44,
+              height: 1,
+              background: 'var(--gold)',
+              opacity: 0.6,
+              margin: 'clamp(56px, 6vw, 72px) auto clamp(40px, 5vw, 56px)',
+            }}
+          />
+
+          {/* Close — serif italic, smaller than the lead */}
+          <p
+            className="serif italic"
+            style={{
+              fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)',
+              lineHeight: 1.55,
+              color: 'var(--ink)',
+              maxWidth: 580,
+              margin: '0 auto',
+            }}
+          >
+            Every day, we move forward together, making daily experiences more meaningful, collaborative, and inspiring. Our community is built on vision, partnership, and trust.
+          </p>
         </div>
       </section>
 

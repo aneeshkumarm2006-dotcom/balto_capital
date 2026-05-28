@@ -25,7 +25,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Balto Capital — Residences across Western Canada',
   description:
-    'A heritage portfolio of luxury residences in Saskatoon, Edmonton, Regina, and Yellowknife. Established 2023.',
+    'A portfolio of residences in Saskatoon, Edmonton, Regina, and Yellowknife — kept, restored, and operated by the same family. Established 2023.',
 };
 
 export default function RootLayout({
