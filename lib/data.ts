@@ -37,7 +37,7 @@ export const IMAGES = {
   ext_apartment6: IMG('1494522855154-9297ac14b55f'),
 } as const;
 
-export type CitySlug = 'saskatoon' | 'edmonton' | 'regina';
+export type CitySlug = 'saskatoon' | 'edmonton' | 'regina' | 'yellowknife';
 
 export interface City {
   slug: CitySlug;
@@ -72,6 +72,14 @@ export const CITIES: Record<CitySlug, City> = {
     image: '/assets/city-regina.png',
     blurb: 'Wide skies, ordered streets, and Wascana — the lake-park that anchors the city. A quiet capital with conviction.',
     bounds: { minLng: -104.640, maxLng: -104.580, minLat: 50.430, maxLat: 50.460 },
+  },
+  yellowknife: {
+    slug: 'yellowknife',
+    label: 'Yellowknife',
+    province: 'Northwest Territories',
+    image: '/assets/city-yellowknife.avif',
+    blurb: 'Aurora-touched, lakeside, gold-quiet — the capital of the Northwest Territories, where Great Slave Lake meets the long Northern night.',
+    bounds: { minLng: -114.420, maxLng: -114.330, minLat: 62.430, maxLat: 62.475 },
   },
 };
 
@@ -145,9 +153,10 @@ const ASSETS: RawAsset[] = [
 ];
 
 const CITY_CENTERS: Record<CitySlug, { lat: number; lng: number; spreadLat: number; spreadLng: number }> = {
-  edmonton:  { lat: 53.545, lng: -113.493, spreadLat: 0.045, spreadLng: 0.070 },
-  saskatoon: { lat: 52.130, lng: -106.665, spreadLat: 0.025, spreadLng: 0.045 },
-  regina:    { lat: 50.445, lng: -104.620, spreadLat: 0.020, spreadLng: 0.040 },
+  edmonton:    { lat: 53.545,  lng: -113.493, spreadLat: 0.045, spreadLng: 0.070 },
+  saskatoon:   { lat: 52.130,  lng: -106.665, spreadLat: 0.025, spreadLng: 0.045 },
+  regina:      { lat: 50.445,  lng: -104.620, spreadLat: 0.020, spreadLng: 0.040 },
+  yellowknife: { lat: 62.4540, lng: -114.3718, spreadLat: 0.022, spreadLng: 0.040 },
 };
 
 function hashSeed(s: string): number {

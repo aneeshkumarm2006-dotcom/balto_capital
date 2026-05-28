@@ -9,7 +9,18 @@ export function Footer() {
       <div className="inner">
         <div className="footer-grid">
           <div>
-            <div className="footer-wordmark">BALTO&nbsp;CAPITAL</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/balto-logo-white.jpg"
+              alt="Balto Capital"
+              style={{
+                height: 44,
+                width: 'auto',
+                display: 'block',
+                marginBottom: 16,
+                mixBlendMode: 'screen',
+              }}
+            />
             <div className="footer-est">Est. 1964</div>
             <p
               style={{
@@ -29,6 +40,7 @@ export function Footer() {
               <li><a onClick={() => go('/residences/saskatoon')}>Saskatoon</a></li>
               <li><a onClick={() => go('/residences/edmonton')}>Edmonton</a></li>
               <li><a onClick={() => go('/residences/regina')}>Regina</a></li>
+              <li><a onClick={() => go('/residences/yellowknife')}>Yellowknife</a></li>
               <li><a onClick={() => go('/residences')}>All residences</a></li>
             </ul>
           </div>

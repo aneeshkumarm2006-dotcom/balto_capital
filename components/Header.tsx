@@ -24,7 +24,7 @@ export function Header() {
       <header className="site-header">
         <div className="inner">
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo size="md" />
+            <Logo variant="light" height={36} />
           </div>
 
           <nav className="nav" aria-label="Primary">
@@ -59,6 +59,9 @@ export function Header() {
                 </Link>
                 <Link className="dropdown-item" href="/residences/regina">
                   Regina
+                </Link>
+                <Link className="dropdown-item" href="/residences/yellowknife">
+                  Yellowknife
                 </Link>
               </div>
             </div>
@@ -128,6 +131,7 @@ export function Header() {
           <Link className="sub" href="/residences/saskatoon">— Saskatoon</Link>
           <Link className="sub" href="/residences/edmonton">— Edmonton</Link>
           <Link className="sub" href="/residences/regina">— Regina</Link>
+          <Link className="sub" href="/residences/yellowknife">— Yellowknife</Link>
           <Link href="/why-balto">Why Balto</Link>
           <Link href="/about">About</Link>
           <Link href="/inquire">Inquire</Link>

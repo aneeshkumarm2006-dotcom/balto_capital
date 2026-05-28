@@ -202,14 +202,14 @@ function CityCard({ c }: { c: City }) {
 }
 
 function CityCarousel() {
-  const cities = (['saskatoon', 'edmonton', 'regina'] as const).map(
+  const cities = (['saskatoon', 'edmonton', 'regina', 'yellowknife'] as const).map(
     (s) => CITIES[s]
   );
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridTemplateColumns: 'repeat(4, 1fr)',
         gap: 24,
       }}
       className="city-carousel-grid"
@@ -441,7 +441,7 @@ export default function HomePage() {
           >
             <div>
               <Eyebrow style={{ marginBottom: 18 }}>OUR CITIES</Eyebrow>
-              <h2 className="h2 serif">Three cities. One standard.</h2>
+              <h2 className="h2 serif">Four cities. One standard.</h2>
             </div>
             <p
               className="body muted"

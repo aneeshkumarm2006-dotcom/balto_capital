@@ -2,29 +2,42 @@
 import { useRouter } from 'next/navigation';
 
 interface LogoProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  color?: string;
+  /** "light" = navy mark on ivory/light bg, "dark" = white mark on navy/dark bg */
+  variant?: 'light' | 'dark';
+  /** Pixel height of the mark; width scales by aspect ratio (~2.34:1 horizontal). */
+  height?: number;
 }
 
-const SIZES = { sm: 14, md: 17, lg: 22, xl: 28 } as const;
-
-export function Logo({ size = 'md', color }: LogoProps) {
+export function Logo({ variant = 'light', height = 30 }: LogoProps) {
   const router = useRouter();
+  const isDark = variant === 'dark';
+  const src = isDark ? '/brand/balto-logo-white.jpg' : '/brand/balto-logo-navy.jpg';
   return (
-    <div
+    <button
+      type="button"
       onClick={() => router.push('/')}
-      style={{ cursor: 'pointer', color: color || 'var(--ink)' }}
+      aria-label="Balto Capital — home"
+      style={{
+        background: 'transparent',
+        border: 0,
+        padding: 0,
+        margin: 0,
+        cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+      }}
     >
-      <div
-        className="serif"
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt="Balto Capital"
         style={{
-          fontWeight: 500,
-          fontSize: SIZES[size],
-          letterSpacing: '0.18em',
+          height,
+          width: 'auto',
+          display: 'block',
+          mixBlendMode: isDark ? 'screen' : 'multiply',
         }}
-      >
-        BALTO&nbsp;CAPITAL
-      </div>
-    </div>
+      />
+    </button>
   );
 }
