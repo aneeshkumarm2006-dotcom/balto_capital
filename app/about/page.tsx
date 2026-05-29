@@ -95,7 +95,7 @@ export default function AboutPage() {
               letterSpacing: '-0.005em',
             }}
           >
-            At Balto Capital Montreal, we believe real estate is about more than buildings. It’s about creating spaces where people feel connected, supported, and inspired to grow.
+            At Balto Capital, we believe real estate is about more than buildings. It’s about creating spaces where people feel connected, supported, and inspired to grow.
           </p>
 
           {/* Gold divider */}
