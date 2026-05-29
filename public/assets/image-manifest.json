@@ -17,7 +17,15 @@
     "city": "edmonton",
     "slug": "balwin-manor",
     "hero": "/assets/balwin-manor/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/balwin-manor/02.jpg",
+      "/assets/balwin-manor/03.jpg",
+      "/assets/balwin-manor/04.jpg",
+      "/assets/balwin-manor/05.jpg",
+      "/assets/balwin-manor/06.jpg",
+      "/assets/balwin-manor/07.jpg",
+      "/assets/balwin-manor/08.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -55,7 +63,13 @@
     "city": "edmonton",
     "slug": "courts-manor",
     "hero": "/assets/courts-manor/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/courts-manor/02.jpg",
+      "/assets/courts-manor/03.jpg",
+      "/assets/courts-manor/04.jpg",
+      "/assets/courts-manor/05.jpg",
+      "/assets/courts-manor/06.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -83,7 +97,12 @@
     "city": "edmonton",
     "slug": "oakwood-manor",
     "hero": "/assets/oakwood-manor/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/oakwood-manor/02.jpg",
+      "/assets/oakwood-manor/03.jpg",
+      "/assets/oakwood-manor/04.jpg",
+      "/assets/oakwood-manor/05.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -145,17 +164,6 @@
   },
   {
     "city": "edmonton",
-    "slug": "courts",
-    "gallery": [
-      "/assets/courts/01.jpg",
-      "/assets/courts/02.jpg",
-      "/assets/courts/03.jpg",
-      "/assets/courts/04.jpg",
-      "/assets/courts/05.jpg"
-    ]
-  },
-  {
-    "city": "edmonton",
     "slug": "kafa",
     "hero": "/assets/kafa/01-main.jpg",
     "gallery": [
@@ -178,6 +186,20 @@
       "/assets/layali/04.jpg",
       "/assets/layali/05.jpg",
       "/assets/layali/06.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "parkdale",
+    "gallery": [
+      "/assets/parkdale/01.jpg",
+      "/assets/parkdale/02.jpg",
+      "/assets/parkdale/03.jpg",
+      "/assets/parkdale/04.jpg",
+      "/assets/parkdale/05.jpg",
+      "/assets/parkdale/06.jpg",
+      "/assets/parkdale/07.jpg",
+      "/assets/parkdale/08.jpg"
     ]
   }
 ]

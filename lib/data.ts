@@ -323,7 +323,13 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   },
   'catalina-estates': {
     hero: '/assets/catalina-estates/01-main.jpg',
-    gallery: [],
+    gallery: [
+      '/assets/catalina-estates/02.jpg',
+      '/assets/catalina-estates/03.jpg',
+      '/assets/catalina-estates/04.jpg',
+      '/assets/catalina-estates/05.jpg',
+      '/assets/catalina-estates/06.jpg',
+    ],
   },
   layali: {
     hero: '/assets/layali/01-main.jpg',
@@ -360,7 +366,15 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   },
   kafa: {
     hero: '/assets/kafa/01-main.jpg',
-    gallery: [],
+    gallery: [
+      '/assets/kafa/02.jpg',
+      '/assets/kafa/03.jpg',
+      '/assets/kafa/04.jpg',
+      '/assets/kafa/05.jpg',
+      '/assets/kafa/06.jpg',
+      '/assets/kafa/07.jpg',
+      '/assets/kafa/08.jpg',
+    ],
   },
   // Palisades — card-only image. Detail page stays text-forward via
   // hideDetailGallery on the raw asset.
@@ -369,10 +383,40 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     gallery: [],
   },
   'copper-manor':    { hero: '/assets/copper-manor/01-main.jpg',    gallery: [] },
-  'grandview-manor': { hero: '/assets/grandview-manor/01-main.jpg', gallery: [] },
-  'courts-manor':    { hero: '/assets/courts-manor/01-main.jpg',    gallery: [] },
+  'grandview-manor': {
+    hero: '/assets/grandview-manor/01-main.jpg',
+    gallery: [
+      '/assets/grandview-manor/02.jpg',
+      '/assets/grandview-manor/03.jpg',
+      '/assets/grandview-manor/04.jpg',
+    ],
+  },
+  'courts-manor': {
+    hero: '/assets/courts-manor/01-main.jpg',
+    gallery: [
+      '/assets/courts-manor/02.jpg',
+      '/assets/courts-manor/03.jpg',
+      '/assets/courts-manor/04.jpg',
+      '/assets/courts-manor/05.jpg',
+      '/assets/courts-manor/06.jpg',
+    ],
+  },
   'oakwood-manor':   { hero: '/assets/oakwood-manor/01-main.jpg',   gallery: [] },
   'balwin-manor':    { hero: '/assets/balwin-manor/01-main.jpg',    gallery: [] },
+  // Parkdale — gallery photos provided, hero still falls back to Unsplash
+  // (waiting on a Main shot for the card).
+  parkdale: {
+    gallery: [
+      '/assets/parkdale/01.jpg',
+      '/assets/parkdale/02.jpg',
+      '/assets/parkdale/03.jpg',
+      '/assets/parkdale/04.jpg',
+      '/assets/parkdale/05.jpg',
+      '/assets/parkdale/06.jpg',
+      '/assets/parkdale/07.jpg',
+      '/assets/parkdale/08.jpg',
+    ],
+  },
   'royal-manor': {
     hero: '/assets/royal-manor/01-main.jpg',
     gallery: [
