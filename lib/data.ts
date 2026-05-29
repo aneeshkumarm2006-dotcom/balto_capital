@@ -401,8 +401,27 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/courts-manor/06.jpg',
     ],
   },
-  'oakwood-manor':   { hero: '/assets/oakwood-manor/01-main.jpg',   gallery: [] },
-  'balwin-manor':    { hero: '/assets/balwin-manor/01-main.jpg',    gallery: [] },
+  'oakwood-manor': {
+    hero: '/assets/oakwood-manor/01-main.jpg',
+    gallery: [
+      '/assets/oakwood-manor/02.jpg',
+      '/assets/oakwood-manor/03.jpg',
+      '/assets/oakwood-manor/04.jpg',
+      '/assets/oakwood-manor/05.jpg',
+    ],
+  },
+  'balwin-manor': {
+    hero: '/assets/balwin-manor/01-main.jpg',
+    gallery: [
+      '/assets/balwin-manor/02.jpg',
+      '/assets/balwin-manor/03.jpg',
+      '/assets/balwin-manor/04.jpg',
+      '/assets/balwin-manor/05.jpg',
+      '/assets/balwin-manor/06.jpg',
+      '/assets/balwin-manor/07.jpg',
+      '/assets/balwin-manor/08.jpg',
+    ],
+  },
   // Parkdale — gallery photos provided, hero still falls back to Unsplash
   // (waiting on a Main shot for the card).
   parkdale: {
