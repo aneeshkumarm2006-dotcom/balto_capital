@@ -24,7 +24,9 @@ const nextConfig = {
       // Saskatoon / Regina renames + Cielo & Greyson split.
       { source: '/residences/saskatoon/cielo-greyson', destination: '/residences/saskatoon/cielo',          permanent: true },
       { source: '/residences/saskatoon/lawson',        destination: '/residences/saskatoon/lawson-village', permanent: true },
-      { source: '/residences/regina/lockwood',         destination: '/residences/regina/lockwood-arms',     permanent: true },
+      { source: '/residences/regina/lockwood',         destination: '/residences/saskatoon/lockwood-arms',  permanent: true },
+      { source: '/residences/regina/lockwood-arms',    destination: '/residences/saskatoon/lockwood-arms',  permanent: true },
+      { source: '/residences/saskatoon/edge-living',   destination: '/residences/edmonton/edge-living',     permanent: true },
     ];
   },
 };

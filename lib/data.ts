@@ -183,10 +183,10 @@ const ASSETS: RawAsset[] = [
   // Cielo & Greyson — separate buildings, adjacent addresses on Willis Cres.
   { slug: 'cielo',            name: 'Cielo',            city: 'saskatoon', address: '235 Willis Crescent, Saskatoon, SK S7T 0W7' },
   { slug: 'greyson',          name: 'Greyson',          city: 'saskatoon', address: '241 Willis Crescent, Saskatoon, SK' },
-  // Edge Living — Saskatoon, address forthcoming from client.
-  { slug: 'edge-living',      name: 'Edge Living',      city: 'saskatoon', address: 'Saskatoon, SK · address to be confirmed' },
+  // Edge Living — Edmonton (kept separate from the existing 'edge' entry).
+  { slug: 'edge-living',      name: 'Edge Living',      city: 'edmonton',  address: 'Edmonton, AB · address to be confirmed' },
   { slug: 'lawson-village',   name: 'Lawson Village',   city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
-  { slug: 'lockwood-arms',    name: 'Lockwood Arms',    city: 'regina',    address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
+  { slug: 'lockwood-arms',    name: 'Lockwood Arms',    city: 'saskatoon', address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
 ];
 
 const CITY_CENTERS: Record<CitySlug, { lat: number; lng: number; spreadLat: number; spreadLng: number }> = {

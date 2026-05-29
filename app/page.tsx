@@ -167,6 +167,14 @@ function CinematicHero({
           >
             Regina
           </a>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <a
+            className="text-link"
+            style={{ color: 'var(--ivory)' }}
+            onClick={() => goCity('yellowknife')}
+          >
+            Yellowknife
+          </a>
         </div>
       </div>
     </section>
