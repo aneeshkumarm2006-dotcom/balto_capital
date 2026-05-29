@@ -23,7 +23,13 @@
     "city": "edmonton",
     "slug": "catalina-estates",
     "hero": "/assets/catalina-estates/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/catalina-estates/02.jpg",
+      "/assets/catalina-estates/03.jpg",
+      "/assets/catalina-estates/04.jpg",
+      "/assets/catalina-estates/05.jpg",
+      "/assets/catalina-estates/06.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -55,7 +61,11 @@
     "city": "edmonton",
     "slug": "grandview-manor",
     "hero": "/assets/grandview-manor/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/grandview-manor/02.jpg",
+      "/assets/grandview-manor/03.jpg",
+      "/assets/grandview-manor/04.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -80,6 +90,15 @@
     "slug": "palisades",
     "hero": "/assets/palisades/01-main.jpg",
     "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "royal-manor",
+    "hero": "/assets/royal-manor/01-main.jpg",
+    "gallery": [
+      "/assets/royal-manor/02.jpg",
+      "/assets/royal-manor/03.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -126,9 +145,28 @@
   },
   {
     "city": "edmonton",
+    "slug": "courts",
+    "gallery": [
+      "/assets/courts/01.jpg",
+      "/assets/courts/02.jpg",
+      "/assets/courts/03.jpg",
+      "/assets/courts/04.jpg",
+      "/assets/courts/05.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
     "slug": "kafa",
     "hero": "/assets/kafa/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/kafa/02.jpg",
+      "/assets/kafa/03.jpg",
+      "/assets/kafa/04.jpg",
+      "/assets/kafa/05.jpg",
+      "/assets/kafa/06.jpg",
+      "/assets/kafa/07.jpg",
+      "/assets/kafa/08.jpg"
+    ]
   },
   {
     "city": "edmonton",

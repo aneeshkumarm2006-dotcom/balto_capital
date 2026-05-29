@@ -168,7 +168,7 @@ const ASSETS: RawAsset[] = [
   { slug: 'cedar-manor',      name: 'Cedar Manor',      city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6' },
   { slug: 'courts-manor',     name: 'Courts Manor',     city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9' },
   { slug: 'oakwood-manor',    name: 'Oakwood Manor',    city: 'edmonton',  address: '11348 97 ST NW, Edmonton, AB T5G 1X4' },
-  { slug: 'royal-10215',      name: 'Royal 10215',      city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9' },
+  { slug: 'royal-manor',      name: 'Royal Manor',      city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9' },
   { slug: 'balwin-manor',     name: 'Balwin Manor',     city: 'edmonton',  address: '6704 131A AVE NW, Edmonton, AB T5C 1Z6' },
   { slug: 'acadian',          name: 'Acadian',          city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5' },
   { slug: 'parkdale',         name: 'Parkdale',         city: 'edmonton',  address: '8021 115 Ave NW, Edmonton, AB T5B 4W7' },
@@ -373,6 +373,13 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   'courts-manor':    { hero: '/assets/courts-manor/01-main.jpg',    gallery: [] },
   'oakwood-manor':   { hero: '/assets/oakwood-manor/01-main.jpg',   gallery: [] },
   'balwin-manor':    { hero: '/assets/balwin-manor/01-main.jpg',    gallery: [] },
+  'royal-manor': {
+    hero: '/assets/royal-manor/01-main.jpg',
+    gallery: [
+      '/assets/royal-manor/02.jpg',
+      '/assets/royal-manor/03.jpg',
+    ],
+  },
 };
 
 /** Pricing per asset. Edmonton uses the standard rate card except for

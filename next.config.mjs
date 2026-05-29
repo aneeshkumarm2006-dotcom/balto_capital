@@ -20,6 +20,7 @@ const nextConfig = {
       { source: '/residences/edmonton/courts',      destination: '/residences/edmonton/courts-manor',     permanent: true },
       { source: '/residences/edmonton/oakwood',     destination: '/residences/edmonton/oakwood-manor',    permanent: true },
       { source: '/residences/edmonton/balwin',      destination: '/residences/edmonton/balwin-manor',     permanent: true },
+      { source: '/residences/edmonton/royal-10215', destination: '/residences/edmonton/royal-manor',      permanent: true },
     ];
   },
 };

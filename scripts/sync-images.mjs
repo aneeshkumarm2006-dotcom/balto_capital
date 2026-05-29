@@ -29,6 +29,7 @@ const SLUG_OVERRIDES = {
   'cielo and greyson': 'cielo-greyson',
   // Folders that don't kebab-case cleanly:
   'courtsmanor': 'courts-manor',
+  'royalmanor':  'royal-manor',
   'balwin_manor:ace': 'balwin-manor',
 };
 function toSlug(name) {
