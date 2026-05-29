@@ -30,8 +30,8 @@
   {
     "city": "edmonton",
     "slug": "beverly",
+    "hero": "/assets/beverly/01-main.jpg",
     "gallery": [
-      "/assets/beverly/01.jpg",
       "/assets/beverly/02.jpg",
       "/assets/beverly/03.jpg",
       "/assets/beverly/04.jpg",
@@ -125,8 +125,8 @@
   {
     "city": "edmonton",
     "slug": "rivergate",
+    "hero": "/assets/rivergate/01-main.jpg",
     "gallery": [
-      "/assets/rivergate/01.jpg",
       "/assets/rivergate/02.jpg",
       "/assets/rivergate/03.jpg",
       "/assets/rivergate/04.jpg",
@@ -214,8 +214,8 @@
   {
     "city": "edmonton",
     "slug": "parkdale",
+    "hero": "/assets/parkdale/01-main.jpg",
     "gallery": [
-      "/assets/parkdale/01.jpg",
       "/assets/parkdale/02.jpg",
       "/assets/parkdale/03.jpg",
       "/assets/parkdale/04.jpg",
@@ -228,12 +228,111 @@
   {
     "city": "edmonton",
     "slug": "strathearn",
+    "hero": "/assets/strathearn/01-main.jpg",
     "gallery": [
-      "/assets/strathearn/01.jpg",
       "/assets/strathearn/02.jpg",
       "/assets/strathearn/03.jpg",
       "/assets/strathearn/04.jpg",
       "/assets/strathearn/05.jpg"
+    ]
+  },
+  {
+    "city": "saskatoon",
+    "slug": "cielo",
+    "hero": "/assets/cielo/01-main.jpg",
+    "gallery": [
+      "/assets/cielo/02.jpg",
+      "/assets/cielo/03.jpg",
+      "/assets/cielo/04.jpg",
+      "/assets/cielo/05.jpg",
+      "/assets/cielo/06.jpg",
+      "/assets/cielo/07.jpg",
+      "/assets/cielo/08.jpg",
+      "/assets/cielo/09.jpg",
+      "/assets/cielo/10.jpg",
+      "/assets/cielo/11.jpg",
+      "/assets/cielo/12.jpg",
+      "/assets/cielo/13.jpg",
+      "/assets/cielo/14.jpg",
+      "/assets/cielo/15.jpg",
+      "/assets/cielo/16.jpg",
+      "/assets/cielo/17.jpg",
+      "/assets/cielo/18.jpg"
+    ]
+  },
+  {
+    "city": "saskatoon",
+    "slug": "edge-living",
+    "gallery": [
+      "/assets/edge-living/01.jpg",
+      "/assets/edge-living/02.jpg",
+      "/assets/edge-living/03.jpg",
+      "/assets/edge-living/04.jpg",
+      "/assets/edge-living/05.jpg",
+      "/assets/edge-living/06.jpg",
+      "/assets/edge-living/07.jpg",
+      "/assets/edge-living/08.jpg",
+      "/assets/edge-living/09.jpg",
+      "/assets/edge-living/10.jpg",
+      "/assets/edge-living/11.jpg",
+      "/assets/edge-living/12.jpg"
+    ]
+  },
+  {
+    "city": "saskatoon",
+    "slug": "greyson",
+    "hero": "/assets/greyson/01-main.jpg",
+    "gallery": [
+      "/assets/greyson/02.jpg",
+      "/assets/greyson/03.jpg",
+      "/assets/greyson/04.jpg",
+      "/assets/greyson/05.jpg",
+      "/assets/greyson/06.jpg",
+      "/assets/greyson/07.jpg",
+      "/assets/greyson/08.jpg",
+      "/assets/greyson/09.jpg",
+      "/assets/greyson/10.jpg",
+      "/assets/greyson/11.jpg",
+      "/assets/greyson/12.jpg",
+      "/assets/greyson/13.jpg",
+      "/assets/greyson/14.jpg",
+      "/assets/greyson/15.jpg",
+      "/assets/greyson/16.jpg",
+      "/assets/greyson/17.jpg",
+      "/assets/greyson/18.jpg",
+      "/assets/greyson/19.jpg",
+      "/assets/greyson/20.jpg",
+      "/assets/greyson/21.jpg",
+      "/assets/greyson/22.jpg",
+      "/assets/greyson/23.jpg",
+      "/assets/greyson/24.jpg",
+      "/assets/greyson/25.jpg",
+      "/assets/greyson/26.jpg",
+      "/assets/greyson/27.jpg",
+      "/assets/greyson/28.jpg",
+      "/assets/greyson/29.jpg"
+    ]
+  },
+  {
+    "city": "saskatoon",
+    "slug": "lawson-village",
+    "hero": "/assets/lawson-village/01-main.jpg",
+    "gallery": [
+      "/assets/lawson-village/02.jpg",
+      "/assets/lawson-village/03.jpg",
+      "/assets/lawson-village/04.jpg",
+      "/assets/lawson-village/05.jpg"
+    ]
+  },
+  {
+    "city": "saskatoon",
+    "slug": "lockwood-arms",
+    "hero": "/assets/lockwood-arms/01-main.jpg",
+    "gallery": [
+      "/assets/lockwood-arms/02.jpg",
+      "/assets/lockwood-arms/03.jpg",
+      "/assets/lockwood-arms/04.jpg",
+      "/assets/lockwood-arms/05.jpg"
     ]
   }
 ]

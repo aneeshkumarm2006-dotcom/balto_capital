@@ -43,24 +43,62 @@ function toSlug(name) {
 
 const IMG_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.heic']);
 
+/** Recursively walk a property folder and return relative paths to every
+ *  image found, including those nested in subfolders like
+ *  "External Pics/" / "Amenity Pics/" / "Unit Pics/" / "Floorplans/". */
+async function walkImages(root, prefix = '') {
+  const entries = await fs.readdir(path.join(root, prefix), { withFileTypes: true });
+  const out = [];
+  for (const e of entries) {
+    if (e.name.startsWith('.')) continue;
+    const rel = path.join(prefix, e.name);
+    if (e.isDirectory()) {
+      out.push(...(await walkImages(root, rel)));
+    } else if (IMG_EXT.has(path.extname(e.name).toLowerCase())) {
+      out.push(rel);
+    }
+  }
+  return out;
+}
+
+/** Subfolder priority for gallery ordering — External shots first, then
+ *  Unit, Amenity, Floorplans, then anything else. */
+function categorize(rel) {
+  const lower = rel.toLowerCase();
+  if (lower.includes('external')) return 0;
+  if (lower.includes('unit'))     return 1;
+  if (lower.includes('amenit'))   return 2;
+  if (lower.includes('floorplan') || lower.includes('floor plan')) return 3;
+  return 4;
+}
+
 async function syncProperty(slug, srcDir) {
-  const files = (await fs.readdir(srcDir, { withFileTypes: true }))
-    .filter((d) => d.isFile() && IMG_EXT.has(path.extname(d.name).toLowerCase()))
-    .map((d) => d.name);
+  const files = await walkImages(srcDir);
   if (files.length === 0) {
     console.log(`  - ${slug}  (no images, skipping)`);
     return null;
   }
 
-  // Pick hero — filenames containing "main" or "exterior" become the hero.
-  // If the folder has a single image, that image is the hero (covers the
-  // case where the source file is just a screenshot or a one-off shot).
-  // Otherwise no hero — every file is gallery.
-  const heroIdx = files.findIndex((f) => /(main|exterior)/i.test(f));
-  const hero = heroIdx >= 0
-    ? files[heroIdx]
-    : (files.length === 1 ? files[0] : null);
-  const rest = files.filter((f) => f !== hero).sort();
+  // Hero priority:
+  //   1. file whose basename contains "main" or "exterior"
+  //   2. first file inside a subfolder named like "External*"
+  //   3. first top-level file (no subfolder in its relative path)
+  //   4. if only one file at all, that one file
+  //   5. else no hero — every file is gallery
+  let hero =
+    files.find((f) => /(main|exterior)/i.test(path.basename(f))) ||
+    files.find((f) => /external/i.test(path.dirname(f))) ||
+    files.find((f) => !f.includes(path.sep)) ||
+    (files.length === 1 ? files[0] : null);
+
+  const rest = files
+    .filter((f) => f !== hero)
+    .sort((a, b) => {
+      const ca = categorize(a);
+      const cb = categorize(b);
+      if (ca !== cb) return ca - cb;
+      return a.localeCompare(b);
+    });
   const ordered = hero ? [hero, ...rest] : rest;
 
   const outDir = path.join(DST, slug);

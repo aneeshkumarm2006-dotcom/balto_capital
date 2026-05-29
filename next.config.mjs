@@ -21,6 +21,10 @@ const nextConfig = {
       { source: '/residences/edmonton/oakwood',     destination: '/residences/edmonton/oakwood-manor',    permanent: true },
       { source: '/residences/edmonton/balwin',      destination: '/residences/edmonton/balwin-manor',     permanent: true },
       { source: '/residences/edmonton/royal-10215', destination: '/residences/edmonton/royal-manor',      permanent: true },
+      // Saskatoon / Regina renames + Cielo & Greyson split.
+      { source: '/residences/saskatoon/cielo-greyson', destination: '/residences/saskatoon/cielo',          permanent: true },
+      { source: '/residences/saskatoon/lawson',        destination: '/residences/saskatoon/lawson-village', permanent: true },
+      { source: '/residences/regina/lockwood',         destination: '/residences/regina/lockwood-arms',     permanent: true },
     ];
   },
 };

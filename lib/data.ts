@@ -180,9 +180,13 @@ const ASSETS: RawAsset[] = [
   { slug: 'ten-one-26-154',   name: '10126-154',        city: 'edmonton',  address: '10126 154 St, Edmonton, AB T5P 2H3' },
   { slug: 'britnell-landing', name: 'Britnell Landing', city: 'edmonton',  address: '16255 51 St NW, Edmonton, AB T5Y 0V6' },
   { slug: 'edge',             name: 'Edge',             city: 'edmonton',  address: '3005 – 3011 James Mowatt Trail SW, Edmonton, AB' },
-  { slug: 'cielo-greyson',    name: 'Cielo & Greyson',  city: 'saskatoon', address: '235 Willis Cres, Saskatoon, SK S7T 0W7' },
-  { slug: 'lawson',           name: 'Lawson',           city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
-  { slug: 'lockwood',         name: 'Lockwood',         city: 'regina',    address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
+  // Cielo & Greyson split into two properties at the same address.
+  { slug: 'cielo',            name: 'Cielo',            city: 'saskatoon', address: '235 Willis Cres, Saskatoon, SK S7T 0W7' },
+  { slug: 'greyson',          name: 'Greyson',          city: 'saskatoon', address: '235 Willis Cres, Saskatoon, SK S7T 0W7' },
+  // Edge Living — Saskatoon, address forthcoming from client.
+  { slug: 'edge-living',      name: 'Edge Living',      city: 'saskatoon', address: 'Saskatoon, SK · address to be confirmed' },
+  { slug: 'lawson-village',   name: 'Lawson Village',   city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
+  { slug: 'lockwood-arms',    name: 'Lockwood Arms',    city: 'regina',    address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
 ];
 
 const CITY_CENTERS: Record<CitySlug, { lat: number; lng: number; spreadLat: number; spreadLng: number }> = {
@@ -226,9 +230,14 @@ const GEOCODED: Record<string, { lat: number; lng: number }> = {
   'ten-one-26-154':   { lat: 53.54219, lng: -113.58721 },
   'britnell-landing': { lat: 53.62481, lng: -113.41321 },
   'edge':             { lat: 53.41544, lng: -113.52042 },
-  'cielo-greyson':    { lat: 52.08840, lng: -106.63143 },
-  'lawson':           { lat: 52.16912, lng: -106.62724 },
-  'lockwood':         { lat: 50.40151, lng: -104.62602 },
+  // Saskatoon — Cielo and Greyson share the 235 Willis Cres building, so
+  // they geocode to the same point.
+  'cielo':            { lat: 52.08840, lng: -106.63143 },
+  'greyson':          { lat: 52.08840, lng: -106.63143 },
+  'lawson-village':   { lat: 52.16912, lng: -106.62724 },
+  // Regina
+  'lockwood-arms':    { lat: 50.40151, lng: -104.62602 },
+  // edge-living: address forthcoming; falls back to Saskatoon centre.
 };
 
 function coordsFor(slug: string, city: CitySlug): { lat: number; lng: number } {
@@ -505,6 +514,41 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     gallery: [
       '/assets/royal-manor/02.jpg',
       '/assets/royal-manor/03.jpg',
+    ],
+  },
+  // Saskatoon — Cielo & Greyson split + new Edge Living + renames.
+  cielo: {
+    hero: '/assets/cielo/01-main.jpg',
+    gallery: Array.from({ length: 17 }, (_, i) =>
+      `/assets/cielo/${String(i + 2).padStart(2, '0')}.jpg`),
+  },
+  greyson: {
+    hero: '/assets/greyson/01-main.jpg',
+    gallery: Array.from({ length: 28 }, (_, i) =>
+      `/assets/greyson/${String(i + 2).padStart(2, '0')}.jpg`),
+  },
+  'edge-living': {
+    // No Main shot yet — hero falls back to Unsplash. All 12 Unit Pics
+    // populate the gallery.
+    gallery: Array.from({ length: 12 }, (_, i) =>
+      `/assets/edge-living/${String(i + 1).padStart(2, '0')}.jpg`),
+  },
+  'lawson-village': {
+    hero: '/assets/lawson-village/01-main.jpg',
+    gallery: [
+      '/assets/lawson-village/02.jpg',
+      '/assets/lawson-village/03.jpg',
+      '/assets/lawson-village/04.jpg',
+      '/assets/lawson-village/05.jpg',
+    ],
+  },
+  'lockwood-arms': {
+    hero: '/assets/lockwood-arms/01-main.jpg',
+    gallery: [
+      '/assets/lockwood-arms/02.jpg',
+      '/assets/lockwood-arms/03.jpg',
+      '/assets/lockwood-arms/04.jpg',
+      '/assets/lockwood-arms/05.jpg',
     ],
   },
 };
