@@ -14,13 +14,12 @@ export function Footer() {
               src="/brand/balto-logo-white.png"
               alt="Balto Capital"
               style={{
-                height: 64,
+                height: 96,
                 width: 'auto',
                 display: 'block',
-                marginBottom: 18,
+                marginBottom: 24,
               }}
             />
-            <div className="footer-est">Est. 2023</div>
             <p
               style={{
                 fontSize: 14,
