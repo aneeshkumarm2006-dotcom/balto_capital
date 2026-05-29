@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { FavoriteHeart } from '@/components/FavoriteHeart';
+import { MapView } from '@/components/MapViewClient';
 import { PropertyCard } from '@/components/PropertyCard';
 import { PlaceholderImg } from '@/components/SmartImage';
 import { InquireModal } from '@/components/InquireModal';
@@ -281,22 +282,44 @@ export default function ResidenceDetailPage({
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
             <h2 className="h2 serif" style={{ marginBottom: 32 }}>Location</h2>
-            <div style={{ maxWidth: 580 }}>
-              <Eyebrow style={{ marginBottom: 16 }}>NEARBY</Eyebrow>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {r.nearbyPoints.map((n, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      padding: '14px 0',
-                      borderBottom: '1px solid var(--hairline)',
-                      fontSize: 15,
-                    }}
-                  >
-                    {n}
-                  </li>
-                ))}
-              </ul>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1.2fr 1fr',
+                gap: 32,
+              }}
+              className="grid-3-md1"
+            >
+              <div
+                style={{
+                  aspectRatio: '4 / 3',
+                  border: '1px solid var(--hairline)',
+                }}
+              >
+                <MapView
+                  residences={[r]}
+                  selectedId={r.id}
+                  height="100%"
+                  showPreview={false}
+                />
+              </div>
+              <div>
+                <Eyebrow style={{ marginBottom: 16 }}>NEARBY</Eyebrow>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  {r.nearbyPoints.map((n, i) => (
+                    <li
+                      key={i}
+                      style={{
+                        padding: '14px 0',
+                        borderBottom: '1px solid var(--hairline)',
+                        fontSize: 15,
+                      }}
+                    >
+                      {n}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
 

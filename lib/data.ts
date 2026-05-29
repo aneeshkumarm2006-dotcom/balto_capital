@@ -198,7 +198,43 @@ function hashSeed(s: string): number {
   return Math.abs(h);
 }
 
+/** Real lat/lng per property — geocoded via OSM Nominatim by scripts/geocode.mjs.
+ *  Re-run `node scripts/geocode.mjs` when addresses change. */
+const GEOCODED: Record<string, { lat: number; lng: number }> = {
+  'woodridge':        { lat: 53.50777, lng: -113.59237 },
+  'palisades':        { lat: 53.55377, lng: -113.51541 },
+  'hamlet':           { lat: 53.56818, lng: -113.53571 },
+  'copper-manor':     { lat: 53.58946, lng: -113.46890 },
+  'kafa':             { lat: 53.58548, lng: -113.52637 },
+  'royal-lady':       { lat: 53.55253, lng: -113.49567 },
+  'catalina-estates': { lat: 53.57065, lng: -113.43269 },
+  'layali':           { lat: 53.60011, lng: -113.44043 },
+  'sky-manor':        { lat: 53.53347, lng: -113.59051 },
+  'grandview-manor':  { lat: 53.56902, lng: -113.46863 },
+  'cedar-manor':      { lat: 53.64296, lng: -113.46738 },
+  'courts-manor':     { lat: 53.57766, lng: -113.46717 },
+  'oakwood-manor':    { lat: 53.56408, lng: -113.49233 },
+  'royal-manor':      { lat: 53.55293, lng: -113.49664 },
+  'balwin-manor':     { lat: 53.59132, lng: -113.44544 },
+  'acadian':          { lat: 53.59792, lng: -113.53657 },
+  'parkdale':         { lat: 53.56570, lng: -113.46520 },
+  'beverly':          { lat: 53.56629, lng: -113.39384 },
+  'strathearn':       { lat: 53.53202, lng: -113.45802 },
+  'pioneer':          { lat: 53.58853, lng: -113.54084 },
+  'rivergate':        { lat: 53.55941, lng: -113.46769 },
+  'arbour-green':     { lat: 53.57439, lng: -113.44324 },
+  'ten-one-26-154':   { lat: 53.54219, lng: -113.58721 },
+  'britnell-landing': { lat: 53.62481, lng: -113.41321 },
+  'edge':             { lat: 53.41544, lng: -113.52042 },
+  'cielo-greyson':    { lat: 52.08840, lng: -106.63143 },
+  'lawson':           { lat: 52.16912, lng: -106.62724 },
+  'lockwood':         { lat: 50.40151, lng: -104.62602 },
+};
+
 function coordsFor(slug: string, city: CitySlug): { lat: number; lng: number } {
+  const real = GEOCODED[slug];
+  if (real) return real;
+  // Fallback for new properties added before re-running geocode.mjs.
   const c = CITY_CENTERS[city];
   const h = hashSeed(slug);
   const dLat = (((h % 997) / 997) - 0.5) * c.spreadLat * 2;
