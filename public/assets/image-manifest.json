@@ -29,6 +29,18 @@
   },
   {
     "city": "edmonton",
+    "slug": "beverly",
+    "gallery": [
+      "/assets/beverly/01.jpg",
+      "/assets/beverly/02.jpg",
+      "/assets/beverly/03.jpg",
+      "/assets/beverly/04.jpg",
+      "/assets/beverly/05.jpg",
+      "/assets/beverly/06.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
     "slug": "catalina-estates",
     "hero": "/assets/catalina-estates/01-main.jpg",
     "gallery": [
@@ -109,6 +121,17 @@
     "slug": "palisades",
     "hero": "/assets/palisades/01-main.jpg",
     "gallery": []
+  },
+  {
+    "city": "edmonton",
+    "slug": "rivergate",
+    "gallery": [
+      "/assets/rivergate/01.jpg",
+      "/assets/rivergate/02.jpg",
+      "/assets/rivergate/03.jpg",
+      "/assets/rivergate/04.jpg",
+      "/assets/rivergate/05.jpg"
+    ]
   },
   {
     "city": "edmonton",
@@ -200,6 +223,17 @@
       "/assets/parkdale/06.jpg",
       "/assets/parkdale/07.jpg",
       "/assets/parkdale/08.jpg"
+    ]
+  },
+  {
+    "city": "edmonton",
+    "slug": "strathearn",
+    "gallery": [
+      "/assets/strathearn/01.jpg",
+      "/assets/strathearn/02.jpg",
+      "/assets/strathearn/03.jpg",
+      "/assets/strathearn/04.jpg",
+      "/assets/strathearn/05.jpg"
     ]
   }
 ]

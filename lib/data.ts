@@ -436,6 +436,34 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/parkdale/08.jpg',
     ],
   },
+  strathearn: {
+    gallery: [
+      '/assets/strathearn/01.jpg',
+      '/assets/strathearn/02.jpg',
+      '/assets/strathearn/03.jpg',
+      '/assets/strathearn/04.jpg',
+      '/assets/strathearn/05.jpg',
+    ],
+  },
+  rivergate: {
+    gallery: [
+      '/assets/rivergate/01.jpg',
+      '/assets/rivergate/02.jpg',
+      '/assets/rivergate/03.jpg',
+      '/assets/rivergate/04.jpg',
+      '/assets/rivergate/05.jpg',
+    ],
+  },
+  beverly: {
+    gallery: [
+      '/assets/beverly/01.jpg',
+      '/assets/beverly/02.jpg',
+      '/assets/beverly/03.jpg',
+      '/assets/beverly/04.jpg',
+      '/assets/beverly/05.jpg',
+      '/assets/beverly/06.jpg',
+    ],
+  },
   'royal-manor': {
     hero: '/assets/royal-manor/01-main.jpg',
     gallery: [
