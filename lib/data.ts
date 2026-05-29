@@ -467,11 +467,14 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/balwin-manor/08.jpg',
     ],
   },
-  // Parkdale — gallery photos provided, hero still falls back to Unsplash
-  // (waiting on a Main shot for the card).
+  // Parkdale / Strathearn / Rivergate / Beverly — the sync script auto-
+  // promoted the first photo to 01-main.jpg since there's no dedicated
+  // Main shot from the client yet. Hero comes from that file; the rest
+  // populate the gallery. When a proper Main arrives, the file naming
+  // re-sorts automatically on next sync.
   parkdale: {
+    hero: '/assets/parkdale/01-main.jpg',
     gallery: [
-      '/assets/parkdale/01.jpg',
       '/assets/parkdale/02.jpg',
       '/assets/parkdale/03.jpg',
       '/assets/parkdale/04.jpg',
@@ -482,8 +485,8 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   strathearn: {
+    hero: '/assets/strathearn/01-main.jpg',
     gallery: [
-      '/assets/strathearn/01.jpg',
       '/assets/strathearn/02.jpg',
       '/assets/strathearn/03.jpg',
       '/assets/strathearn/04.jpg',
@@ -491,8 +494,8 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   rivergate: {
+    hero: '/assets/rivergate/01-main.jpg',
     gallery: [
-      '/assets/rivergate/01.jpg',
       '/assets/rivergate/02.jpg',
       '/assets/rivergate/03.jpg',
       '/assets/rivergate/04.jpg',
@@ -500,8 +503,8 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   beverly: {
+    hero: '/assets/beverly/01-main.jpg',
     gallery: [
-      '/assets/beverly/01.jpg',
       '/assets/beverly/02.jpg',
       '/assets/beverly/03.jpg',
       '/assets/beverly/04.jpg',
