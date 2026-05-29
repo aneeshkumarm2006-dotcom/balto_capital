@@ -684,6 +684,10 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .featured-grid { grid-template-columns: 1fr; }
   .city-carousel-grid { grid-template-columns: 1fr !important; }
   .grid-4-md2 { grid-template-columns: repeat(2, 1fr); }
+  .gallery-modal-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .gallery-modal-grid { grid-template-columns: 1fr !important; }
 }
 
 .detail-sidebar > .card { position: sticky; top: calc(var(--header-h) + 24px); }
