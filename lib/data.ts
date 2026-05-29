@@ -180,9 +180,9 @@ const ASSETS: RawAsset[] = [
   { slug: 'ten-one-26-154',   name: '10126-154',        city: 'edmonton',  address: '10126 154 St, Edmonton, AB T5P 2H3' },
   { slug: 'britnell-landing', name: 'Britnell Landing', city: 'edmonton',  address: '16255 51 St NW, Edmonton, AB T5Y 0V6' },
   { slug: 'edge',             name: 'Edge',             city: 'edmonton',  address: '3005 – 3011 James Mowatt Trail SW, Edmonton, AB' },
-  // Cielo & Greyson split into two properties at the same address.
-  { slug: 'cielo',            name: 'Cielo',            city: 'saskatoon', address: '235 Willis Cres, Saskatoon, SK S7T 0W7' },
-  { slug: 'greyson',          name: 'Greyson',          city: 'saskatoon', address: '235 Willis Cres, Saskatoon, SK S7T 0W7' },
+  // Cielo & Greyson — separate buildings, adjacent addresses on Willis Cres.
+  { slug: 'cielo',            name: 'Cielo',            city: 'saskatoon', address: '235 Willis Crescent, Saskatoon, SK S7T 0W7' },
+  { slug: 'greyson',          name: 'Greyson',          city: 'saskatoon', address: '241 Willis Crescent, Saskatoon, SK' },
   // Edge Living — Saskatoon, address forthcoming from client.
   { slug: 'edge-living',      name: 'Edge Living',      city: 'saskatoon', address: 'Saskatoon, SK · address to be confirmed' },
   { slug: 'lawson-village',   name: 'Lawson Village',   city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
@@ -230,10 +230,9 @@ const GEOCODED: Record<string, { lat: number; lng: number }> = {
   'ten-one-26-154':   { lat: 53.54219, lng: -113.58721 },
   'britnell-landing': { lat: 53.62481, lng: -113.41321 },
   'edge':             { lat: 53.41544, lng: -113.52042 },
-  // Saskatoon — Cielo and Greyson share the 235 Willis Cres building, so
-  // they geocode to the same point.
+  // Saskatoon — Cielo at 235 Willis, Greyson at 241 Willis (separate buildings).
   'cielo':            { lat: 52.08840, lng: -106.63143 },
-  'greyson':          { lat: 52.08840, lng: -106.63143 },
+  'greyson':          { lat: 52.08835, lng: -106.62955 },
   'lawson-village':   { lat: 52.16912, lng: -106.62724 },
   // Regina
   'lockwood-arms':    { lat: 50.40151, lng: -104.62602 },
