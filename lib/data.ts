@@ -154,7 +154,6 @@ const ASSETS: RawAsset[] = [
       'Up to 2 months free.',
       'In-suite washer/dryer adds units for +$100/month.',
     ],
-    unitLabels: ['Unit 102', 'Unit 104', 'Unit 105', 'Unit 204', 'Unit 303', 'Unit 306'],
   },
   { slug: 'hamlet',           name: 'Hamlet',           city: 'edmonton',  address: '11647 124 ST NW, Edmonton, AB T5M 0K8' },
   { slug: 'copper-manor',     name: 'Copper Manor',     city: 'edmonton',  address: '13011 83 ST NW, Edmonton, AB T5E 2W5' },
