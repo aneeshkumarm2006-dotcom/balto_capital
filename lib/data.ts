@@ -149,7 +149,6 @@ const ASSETS: RawAsset[] = [
   { slug: 'woodridge',        name: 'Woodridge',        city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9', featured: true },
   {
     slug: 'palisades',        name: 'Palisades',        city: 'edmonton',  address: '10825 113 ST NW, Edmonton, AB T5H 3J1', featured: true,
-    hideDetailGallery: true,
     incentives: [
       'Early move-in opportunity.',
       'Up to 2 months free.',
@@ -420,11 +419,16 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/kafa/08.jpg',
     ],
   },
-  // Palisades — card-only image. Detail page stays text-forward via
-  // hideDetailGallery on the raw asset.
   palisades: {
     hero: '/assets/palisades/01-main.jpg',
-    gallery: [],
+    gallery: [
+      '/assets/palisades/02.jpg',
+      '/assets/palisades/03.jpg',
+      '/assets/palisades/04.jpg',
+      '/assets/palisades/05.jpg',
+      '/assets/palisades/06.jpg',
+      '/assets/palisades/07.jpg',
+    ],
   },
   'copper-manor':    { hero: '/assets/copper-manor/01-main.jpg',    gallery: [] },
   'grandview-manor': {

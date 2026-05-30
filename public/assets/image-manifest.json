@@ -120,7 +120,14 @@
     "city": "edmonton",
     "slug": "palisades",
     "hero": "/assets/palisades/01-main.jpg",
-    "gallery": []
+    "gallery": [
+      "/assets/palisades/02.jpg",
+      "/assets/palisades/03.jpg",
+      "/assets/palisades/04.jpg",
+      "/assets/palisades/05.jpg",
+      "/assets/palisades/06.jpg",
+      "/assets/palisades/07.jpg"
+    ]
   },
   {
     "city": "edmonton",
