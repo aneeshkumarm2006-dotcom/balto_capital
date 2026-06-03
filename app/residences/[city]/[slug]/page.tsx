@@ -442,7 +442,7 @@ export default function ResidenceDetailPage({
               <div className="small" style={{ marginBottom: 4 }}>
                 inquire@baltocapital.com
               </div>
-              <div className="small muted">+1 (XXX) XXX-XXXX</div>
+              <div className="small muted">+1 (XXX) XXX-XXX</div>
             </div>
           </aside>
         </div>

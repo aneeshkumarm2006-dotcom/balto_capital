@@ -57,7 +57,7 @@ export default function ContactPage() {
               <div style={{ marginBottom: 28 }}>
                 <Eyebrow style={{ marginBottom: 8 }}>TELEPHONE</Eyebrow>
                 <div className="serif" style={{ fontSize: 19 }}>
-                  +1 (XXX) XXX-XXXX
+                  +1 (XXX) XXX-XXX
                 </div>
               </div>
               <div style={{ marginBottom: 28 }}>

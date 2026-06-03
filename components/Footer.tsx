@@ -87,7 +87,7 @@ export function Footer() {
                 inquire@baltocapital.com
               </div>
               <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
-                +1 (XXX) XXX-XXXX
+                +1 (XXX) XXX-XXX
               </div>
             </div>
           </div>
