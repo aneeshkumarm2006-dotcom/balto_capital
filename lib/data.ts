@@ -361,6 +361,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/royal-lady/06.jpg',
       '/assets/royal-lady/07.jpg',
       '/assets/royal-lady/08.jpg',
+      '/assets/royal-lady/09.jpg',
+      '/assets/royal-lady/10.jpg',
+      '/assets/royal-lady/11.jpg',
     ],
   },
   'catalina-estates': {
