@@ -522,6 +522,12 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     gallery: [
       '/assets/royal-manor/02.jpg',
       '/assets/royal-manor/03.jpg',
+      '/assets/royal-manor/04.jpg',
+      '/assets/royal-manor/05.jpg',
+      '/assets/royal-manor/06.jpg',
+      '/assets/royal-manor/07.jpg',
+      '/assets/royal-manor/08.jpg',
+      '/assets/royal-manor/09.jpg',
     ],
   },
   // Saskatoon — Cielo & Greyson split + new Edge Living + renames.
