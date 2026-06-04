@@ -4,7 +4,6 @@ import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
 import { ParallaxImage } from '@/components/ParallaxImage';
 import { ArrowRight } from '@/components/icons';
-import { IMAGES } from '@/lib/data';
 
 const PILLARS = [
   {
@@ -27,7 +26,7 @@ const PILLARS = [
   },
 ];
 
-const PILLAR_IMAGES = [IMAGES.heritage2, IMAGES.detail_door, IMAGES.int_living1];
+const PILLAR_IMAGES = ['/assets/city-saskatoon.png', '/assets/city-edmonton.png', '/assets/city-yellowknife.avif'];
 const PILLAR_TONES = ['warm', 'cool', 'deep'] as const;
 const PILLAR_CHARS = ['I', 'II', 'III'];
 
@@ -44,7 +43,7 @@ export default function WhyBaltoPage() {
         }}
       >
         <ParallaxImage
-          src={IMAGES.heritage1}
+          src="/assets/city-regina.png"
           alt="Heritage architecture"
           kenBurns
           eager
