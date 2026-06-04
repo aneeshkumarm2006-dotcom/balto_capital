@@ -44,6 +44,7 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
             alt={r.name}
             loading="lazy"
             onError={() => setImgErrored(true)}
+            style={r.heroImage === '/assets/placeholder.jpeg' ? { objectFit: 'contain', background: '#fff' } : undefined}
           />
         ) : (
           <PlaceholderImg label={`${r.name} · exterior`} tone={cardTone}>

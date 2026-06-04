@@ -166,7 +166,7 @@ const ASSETS: RawAsset[] = [
   { slug: 'cedar-manor',      name: 'Cedar Manor',      city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6' },
   { slug: 'courts-manor',     name: 'Courts Manor',     city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9' },
   { slug: 'oakwood-manor',    name: 'Oakwood Manor',    city: 'edmonton',  address: '11348 97 ST NW, Edmonton, AB T5G 1X4' },
-  { slug: 'royal-manor',      name: 'Royal Manor',      city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9' },
+  { slug: 'royal-manor',      name: 'Royal Manor',      city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9', featured: true },
   { slug: 'balwin-manor',     name: 'Balwin Manor',     city: 'edmonton',  address: '6704 131A AVE NW, Edmonton, AB T5C 1Z6' },
   { slug: 'acadian',          name: 'Acadian',          city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5' },
   { slug: 'parkdale',         name: 'Parkdale',         city: 'edmonton',  address: '8021 115 Ave NW, Edmonton, AB T5B 4W7' },
@@ -182,7 +182,7 @@ const ASSETS: RawAsset[] = [
   { slug: 'cielo',            name: 'Cielo',            city: 'saskatoon', address: '235 Willis Crescent, Saskatoon, SK S7T 0W7' },
   { slug: 'greyson',          name: 'Greyson',          city: 'saskatoon', address: '241 Willis Crescent, Saskatoon, SK' },
   // Edge Living — Edmonton (kept separate from the existing 'edge' entry).
-  { slug: 'edge-living',      name: 'Edge Living',      city: 'edmonton',  address: 'Edmonton, AB · address to be confirmed' },
+  { slug: 'edge-living',      name: 'Edge Living',      city: 'edmonton',  address: 'Edmonton, AB · address to be confirmed', featured: true },
   { slug: 'lawson-village',   name: 'Lawson Village',   city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
   { slug: 'lockwood-arms',    name: 'Lockwood Arms',    city: 'saskatoon', address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
 ];
@@ -478,8 +478,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   // populate the gallery. When a proper Main arrives, the file naming
   // re-sorts automatically on next sync.
   parkdale: {
-    hero: '/assets/parkdale/01-main.jpg',
+    hero: '/assets/placeholder.jpeg',
     gallery: [
+      '/assets/parkdale/01-main.jpg',
       '/assets/parkdale/02.jpg',
       '/assets/parkdale/03.jpg',
       '/assets/parkdale/04.jpg',
@@ -490,8 +491,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   strathearn: {
-    hero: '/assets/strathearn/01-main.jpg',
+    hero: '/assets/placeholder.jpeg',
     gallery: [
+      '/assets/strathearn/01-main.jpg',
       '/assets/strathearn/02.jpg',
       '/assets/strathearn/03.jpg',
       '/assets/strathearn/04.jpg',
@@ -499,8 +501,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   rivergate: {
-    hero: '/assets/rivergate/01-main.jpg',
+    hero: '/assets/placeholder.jpeg',
     gallery: [
+      '/assets/rivergate/01-main.jpg',
       '/assets/rivergate/02.jpg',
       '/assets/rivergate/03.jpg',
       '/assets/rivergate/04.jpg',
@@ -508,8 +511,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   beverly: {
-    hero: '/assets/beverly/01-main.jpg',
+    hero: '/assets/placeholder.jpeg',
     gallery: [
+      '/assets/beverly/01-main.jpg',
       '/assets/beverly/02.jpg',
       '/assets/beverly/03.jpg',
       '/assets/beverly/04.jpg',
@@ -542,9 +546,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       `/assets/greyson/${String(i + 2).padStart(2, '0')}.jpg`),
   },
   'edge-living': {
-    hero: '/assets/edge-living/01.jpg',
-    gallery: Array.from({ length: 11 }, (_, i) =>
-      `/assets/edge-living/${String(i + 2).padStart(2, '0')}.jpg`),
+    hero: '/assets/edge-living/01-main.jpg',
+    gallery: Array.from({ length: 12 }, (_, i) =>
+      `/assets/edge-living/${String(i + 1).padStart(2, '0')}.jpg`),
   },
   pioneer:           { hero: '/assets/placeholder.jpeg', gallery: [] },
   'arbour-green':    { hero: '/assets/placeholder.jpeg', gallery: [] },
