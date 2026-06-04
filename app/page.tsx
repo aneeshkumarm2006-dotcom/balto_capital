@@ -4,11 +4,9 @@ import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
 import { ParallaxImage } from '@/components/ParallaxImage';
-import { TransactionCard } from '@/components/TransactionCard';
 import { useTilt } from '@/components/useTilt';
 import { ArrowRight, SearchIcon } from '@/components/icons';
 import { CITIES, IMAGES, RESIDENCES, type City } from '@/lib/data';
-import { PORTFOLIO } from '@/lib/portfolio';
 
 function CinematicHero({
   query,
@@ -274,42 +272,56 @@ function HeritageStrip() {
 }
 
 function PortfolioStrip() {
-  const router = useRouter();
+  const stats = [
+    { value: '30+', label: 'Properties', sub: 'Across Western Canada' },
+    { value: '2',   label: 'Cities',     sub: 'Edmonton & Saskatoon' },
+    { value: '2023', label: 'Founded',   sub: 'Built one residence at a time' },
+    { value: '100%', label: 'In-house',  sub: 'Managed & maintained' },
+  ];
   return (
     <section className="section bg-ivory">
       <div className="container">
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'end',
-            marginBottom: 56,
-            flexWrap: 'wrap',
-            gap: 16,
-          }}
-        >
-          <div>
-            <Eyebrow style={{ marginBottom: 18 }}>PORTFOLIO</Eyebrow>
-            <h2 className="h2 serif">Recent transactions.</h2>
-          </div>
-          <a className="text-link" onClick={() => router.push('/residences')}>
-            View all residences{' '}
-            <ArrowRight
-              size={14}
-              style={{ verticalAlign: 'middle', marginLeft: 6 }}
-            />
-          </a>
+        <div style={{ textAlign: 'center', marginBottom: 64 }}>
+          <Eyebrow style={{ marginBottom: 18 }}>BY THE NUMBERS</Eyebrow>
+          <h2 className="h2 serif">The portfolio, at a glance.</h2>
         </div>
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 'clamp(28px, 3vw, 44px)',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: 'clamp(24px, 4vw, 56px)',
           }}
-          className="portfolio-grid"
+          className="stats-grid"
         >
-          {PORTFOLIO.map((entry) => (
-            <TransactionCard key={entry.id} entry={entry} />
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              style={{
+                textAlign: 'center',
+                padding: 'clamp(28px, 4vw, 48px) 16px',
+                borderTop: '2px solid var(--gold)',
+              }}
+            >
+              <div
+                className="serif"
+                style={{
+                  fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  color: 'var(--ink)',
+                  marginBottom: 12,
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="serif"
+                style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}
+              >
+                {s.label}
+              </div>
+              <div className="small muted">{s.sub}</div>
+            </div>
           ))}
         </div>
       </div>
