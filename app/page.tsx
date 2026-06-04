@@ -1,5 +1,5 @@
 'use client';
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, useRef, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
@@ -271,13 +271,53 @@ function HeritageStrip() {
   );
 }
 
+const STATS = [
+  { target: 30, suffix: '+', label: 'Properties', sub: 'Across Western Canada' },
+  { target: 4,  suffix: '',  label: 'Cities',     sub: 'Edmonton, Saskatoon, Regina & Yellowknife' },
+  { target: 2023, suffix: '', label: 'Founded',   sub: 'Built one residence at a time' },
+  { target: 100, suffix: '%', label: 'In-house',  sub: 'Managed & maintained' },
+];
+
+function StatCounter({ target, suffix, duration = 1400 }: { target: number; suffix: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const start = target > 100 ? target - 30 : 0;
+          const range = target - start;
+          const startTime = performance.now();
+          const tick = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(start + range * eased));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return (
+    <div ref={ref} className="serif" style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)', fontWeight: 500, lineHeight: 1, color: 'var(--ink)', marginBottom: 12 }}>
+      {count}{suffix}
+    </div>
+  );
+}
+
 function PortfolioStrip() {
-  const stats = [
-    { value: '30+', label: 'Properties', sub: 'Across Western Canada' },
-    { value: '2',   label: 'Cities',     sub: 'Edmonton & Saskatoon' },
-    { value: '2023', label: 'Founded',   sub: 'Built one residence at a time' },
-    { value: '100%', label: 'In-house',  sub: 'Managed & maintained' },
-  ];
   return (
     <section className="section bg-ivory">
       <div className="container">
@@ -293,7 +333,7 @@ function PortfolioStrip() {
           }}
           className="stats-grid"
         >
-          {stats.map((s) => (
+          {STATS.map((s) => (
             <div
               key={s.label}
               style={{
@@ -302,24 +342,8 @@ function PortfolioStrip() {
                 borderTop: '2px solid var(--gold)',
               }}
             >
-              <div
-                className="serif"
-                style={{
-                  fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  color: 'var(--ink)',
-                  marginBottom: 12,
-                }}
-              >
-                {s.value}
-              </div>
-              <div
-                className="serif"
-                style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}
-              >
-                {s.label}
-              </div>
+              <StatCounter target={s.target} suffix={s.suffix} />
+              <div className="serif" style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>{s.label}</div>
               <div className="small muted">{s.sub}</div>
             </div>
           ))}
