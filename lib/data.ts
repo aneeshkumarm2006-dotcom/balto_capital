@@ -542,11 +542,15 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       `/assets/greyson/${String(i + 2).padStart(2, '0')}.jpg`),
   },
   'edge-living': {
-    // No Main shot yet — hero falls back to Unsplash. All 12 Unit Pics
-    // populate the gallery.
-    gallery: Array.from({ length: 12 }, (_, i) =>
-      `/assets/edge-living/${String(i + 1).padStart(2, '0')}.jpg`),
+    hero: '/assets/edge-living/01.jpg',
+    gallery: Array.from({ length: 11 }, (_, i) =>
+      `/assets/edge-living/${String(i + 2).padStart(2, '0')}.jpg`),
   },
+  pioneer:           { hero: '/assets/placeholder.jpeg', gallery: [] },
+  'arbour-green':    { hero: '/assets/placeholder.jpeg', gallery: [] },
+  'ten-one-26-154':  { hero: '/assets/placeholder.jpeg', gallery: [] },
+  'britnell-landing':{ hero: '/assets/placeholder.jpeg', gallery: [] },
+  edge:              { hero: '/assets/placeholder.jpeg', gallery: [] },
   'lawson-village': {
     hero: '/assets/lawson-village/01-main.jpg',
     gallery: [
