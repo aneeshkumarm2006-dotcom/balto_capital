@@ -113,11 +113,17 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
                 className="caption muted"
                 style={{ marginLeft: 4, fontFamily: 'var(--sans)' }}
               >
-                /mo
+                /mo net
               </span>
             </div>
             <FavoriteHeart id={r.id} size={18} />
           </div>
+        </div>
+        <div
+          className="caption"
+          style={{ marginTop: 16, color: 'var(--gold)', letterSpacing: '0.04em' }}
+        >
+          Book a viewing →
         </div>
       </div>
     </a>

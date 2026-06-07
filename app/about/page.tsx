@@ -8,30 +8,30 @@ const STANDARDS = [
   'A single resident manager per building, hired locally.',
   'Maintenance requests addressed within one business day.',
   'Long-term leases preferred; lease terms structured to incentivize stability.',
-  'Annual building inspections by a heritage architect of record.',
+  'Regular building inspections and preventative maintenance.',
   'No third-party leasing agents — we represent every residence directly.',
 ];
 
 const FIGURES = [
   {
     n: '2023',
-    label: 'YEAR FOUNDED',
-    body: 'A family-led practice established in 2023, building a continuous portfolio with care from day one.',
+    label: 'IN REAL ESTATE FINANCE',
+    body: 'Balto began in 2023 as a private and mezzanine real estate lender — learning buildings from the capital side first.',
   },
   {
-    n: '28',
-    label: 'RESIDENCES',
-    body: 'Small by intent. We add a building every few years, not every quarter — each one held, never resold.',
+    n: '2025',
+    label: 'DIRECT OWNERSHIP',
+    body: 'In 2025 we moved into direct ownership — acquiring, renovating, and operating apartment communities ourselves.',
   },
   {
-    n: '4',
-    label: 'CITIES',
-    body: 'Saskatoon, Edmonton, Regina, Yellowknife. A focused geography we know in detail — by street, by neighbourhood, by trade.',
+    n: '1,500+',
+    label: 'DOORS, AND GROWING',
+    body: 'Apartment homes across Western Canada, with local teams in every city — a portfolio that keeps growing.',
   },
   {
     n: '100%',
     label: 'OPERATED IN-HOUSE',
-    body: 'No third-party managers, no leasing agents. Every resident speaks with someone employed by Balto.',
+    body: 'No third-party managers, no leasing agents. Every resident speaks with someone at Balto.',
   },
 ];
 
@@ -69,7 +69,7 @@ export default function AboutPage() {
               marginRight: 'auto',
             }}
           >
-            A portfolio of residences in Saskatoon, Edmonton, Regina, and Yellowknife — kept, restored, and operated by the same family.
+            A private real estate lender since 2023, owner-operator since 2025 — today a growing portfolio of family-operated apartment homes across Western Canada.
           </p>
         </div>
       </section>
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 numeral: 'III',
                 eyebrow: 'STANDARD',
                 quote: 'A standard of quality and service to rely on.',
-                body: 'Across Montreal and beyond, tenants, partners, and communities benefit from a standard of quality and service they can rely on. Through thoughtful management, strategic investment, and strong relationships, we create environments where people want to live, work, and build their future.',
+                body: 'Across Western Canada, residents, partners, and communities benefit from a standard of quality and service they can rely on. Through thoughtful management, strategic investment, and strong relationships, we create environments where people want to live, work, and build their future.',
               },
               {
                 numeral: 'IV',
@@ -312,7 +312,7 @@ export default function AboutPage() {
               className="body muted"
               style={{ maxWidth: 380, margin: 0 }}
             >
-              Four figures that describe how Balto operates — and how it has, for the better part of a lifetime.
+              Four figures that describe how Balto came to be — and how it operates today.
             </p>
           </div>
           <div

@@ -7,21 +7,21 @@ import { ArrowRight } from '@/components/icons';
 
 const PILLARS = [
   {
-    eyebrow: 'I — HERITAGE',
-    title: 'A portfolio built one residence at a time.',
-    body: 'Balto began in 2023 with a single building. We are operated by one family, and we buy slowly. Every residence in the portfolio has been kept — never flipped, never refinanced into anonymity.',
+    eyebrow: 'I — OWNERSHIP',
+    title: 'We own what we manage.',
+    body: 'Balto is run by a brother-and-sister team that owns the buildings outright — no third-party manager between you and your home. The people who answer your call are the people who own the building. It is our single biggest difference.',
     align: 'left' as const,
   },
   {
-    eyebrow: 'II — CURATION',
-    title: 'Selected with intent. Restored, not renovated.',
-    body: 'We acquire residences that already have something to offer: a façade worth preserving, a floor plan worth keeping, a neighbourhood worth living in. Our work is to remove what was added in error and reinstate what was original. The result is a building that feels older and newer at once.',
+    eyebrow: 'II — RENOVATION',
+    title: 'Renovated, updated, and secured.',
+    body: 'We buy buildings to keep them, then invest in them: modernized suites, refreshed kitchens and baths, and upgraded building security. Most of the portfolio is value-add — older buildings brought up to a standard worth staying in for years.',
     align: 'right' as const,
   },
   {
     eyebrow: 'III — SERVICE',
-    title: 'Concierge-level care. One person who knows your name.',
-    body: 'A single resident manager lives in each building. Maintenance requests are answered the same day. Mail is signed for. The lobby is kept like a library. It is the kind of service that used to be standard, and is now rare.',
+    title: 'One business day. Local in every city.',
+    body: 'Maintenance requests are answered within one business day, by a local team in your city — not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.',
     align: 'left' as const,
   },
 ];
@@ -96,13 +96,13 @@ export default function WhyBaltoPage() {
                   maxWidth: 460,
                 }}
               >
-                &ldquo;We did not build a portfolio. We kept one — from year one, and counting.&rdquo;
+                &ldquo;We buy buildings to keep them — which is why we treat every resident as a long-term relationship, not a transaction.&rdquo;
               </p>
               <p
                 className="caption muted"
                 style={{ marginTop: 24, letterSpacing: '0.1em' }}
               >
-                — FROM THE FOUNDER&apos;S NOTES, 2023
+                — THE BALTO FAMILY
               </p>
             </div>
             <div>
@@ -116,7 +116,7 @@ export default function WhyBaltoPage() {
                 className="body muted"
                 style={{ fontSize: 16, lineHeight: 1.8, maxWidth: 580 }}
               >
-                That orientation produces a different kind of building. Quieter lobbies. Better-considered finishes. A standing relationship with the trades who maintain the property. And a portfolio that grows by a building or two each decade, never more.
+                Balto began in 2023 as a private and mezzanine real estate lender, and moved into direct ownership in 2025. Today the portfolio is more than 1,500 doors across Western Canada — and growing — every one of them owned, renovated, and operated in-house.
               </p>
             </div>
           </div>
@@ -183,9 +183,9 @@ export default function WhyBaltoPage() {
             className="grid-3-md1"
           >
             {[
-              { n: '2023', label: 'Year the portfolio was founded' },
-              { n: '4', label: 'Cities across Western Canada' },
-              { n: '24/7', label: 'Concierge & maintenance' },
+              { n: '1,500+', label: 'Doors across Western Canada' },
+              { n: '1 day', label: 'Maintenance response standard' },
+              { n: '100%', label: 'Owned & operated in-house' },
             ].map((s) => (
               <div key={s.n}>
                 <div

@@ -1,6 +1,10 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
+// TODO: real Resident Portal / Maintenance Request URLs pending from client.
+const RESIDENT_PORTAL_URL = '#';
+const MAINTENANCE_REQUEST_URL = '#';
+
 export function Footer() {
   const router = useRouter();
   const go = (to: string) => router.push(to);
@@ -29,7 +33,7 @@ export function Footer() {
                 margin: 0,
               }}
             >
-              A heritage portfolio of residences across Western Canada — selected, restored, and stewarded by hand.
+              Apartment homes owned and operated across Western Canada — kept and cared for by the same family team that answers your call.
             </p>
           </div>
           <div>
@@ -38,12 +42,17 @@ export function Footer() {
               <li><a onClick={() => go('/residences/saskatoon')}>Saskatoon</a></li>
               <li><a onClick={() => go('/residences/edmonton')}>Edmonton</a></li>
               <li><a onClick={() => go('/residences/regina')}>Regina</a></li>
-              <li><a onClick={() => go('/residences/yellowknife')}>Yellowknife</a></li>
+              <li><a onClick={() => go('/residences/yellowknife')}>Yellowknife · Coming soon</a></li>
               <li><a onClick={() => go('/residences')}>All residences</a></li>
             </ul>
           </div>
           <div>
-            <h4>Company</h4>
+            <h4>Residents</h4>
+            <ul>
+              <li><a href={RESIDENT_PORTAL_URL}>Resident Portal</a></li>
+              <li><a href={MAINTENANCE_REQUEST_URL}>Maintenance Request</a></li>
+            </ul>
+            <h4 style={{ marginTop: 24 }}>Company</h4>
             <ul>
               <li><a onClick={() => go('/why-balto')}>Why Balto</a></li>
               <li><a onClick={() => go('/about')}>About</a></li>

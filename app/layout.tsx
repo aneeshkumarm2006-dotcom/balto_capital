@@ -23,9 +23,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Balto Capital — Residences across Western Canada',
+  title: 'Balto Capital — Apartment homes across Western Canada',
   description:
-    'A portfolio of residences in Saskatoon, Edmonton, Regina, and Yellowknife — kept, restored, and operated by the same family. Established 2023.',
+    'Family-operated apartment homes across Western Canada — renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way.',
 };
 
 export default function RootLayout({

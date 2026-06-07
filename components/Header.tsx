@@ -6,6 +6,9 @@ import { Logo } from './Logo';
 import { useFavorites } from './FavoritesContext';
 import { HeartIcon, MenuIcon, CloseIcon, ChevronDown } from './icons';
 
+// TODO: real Resident Portal URL pending from client.
+const RESIDENT_PORTAL_URL = '#';
+
 export function Header() {
   const pathname = usePathname();
   const { count } = useFavorites();
@@ -61,7 +64,7 @@ export function Header() {
                   Regina
                 </Link>
                 <Link className="dropdown-item" href="/residences/yellowknife">
-                  Yellowknife
+                  Yellowknife <span style={{ color: 'var(--muted)', fontSize: 11 }}>· Coming soon</span>
                 </Link>
               </div>
             </div>
@@ -77,15 +80,15 @@ export function Header() {
             >
               About
             </Link>
-            <Link
-              href="/inquire"
-              className={'nav-item ' + (isActive('/inquire') ? 'active' : '')}
-            >
-              Inquire
-            </Link>
           </nav>
 
           <div className="nav-right">
+            <a
+              href={RESIDENT_PORTAL_URL}
+              className="btn btn-ghost btn-sm resident-portal-btn"
+            >
+              Resident Portal
+            </a>
             <Link
               href="/favorites"
               className="favorites-link"
@@ -131,10 +134,11 @@ export function Header() {
           <Link className="sub" href="/residences/saskatoon">— Saskatoon</Link>
           <Link className="sub" href="/residences/edmonton">— Edmonton</Link>
           <Link className="sub" href="/residences/regina">— Regina</Link>
-          <Link className="sub" href="/residences/yellowknife">— Yellowknife</Link>
+          <Link className="sub" href="/residences/yellowknife">— Yellowknife (Coming soon)</Link>
           <Link href="/why-balto">Why Balto</Link>
           <Link href="/about">About</Link>
           <Link href="/inquire">Inquire</Link>
+          <a href={RESIDENT_PORTAL_URL}>Resident Portal</a>
           <Link href="/favorites">
             Favorites{' '}
             <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>

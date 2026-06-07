@@ -21,7 +21,19 @@ function ResidencesAllInner() {
   const router = useRouter();
   const search = useSearchParams();
   const initialQuery = search.get('q') ?? '';
-  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+  // Seed filters from the homepage rental search bar (maxRent / beds).
+  const initMaxRent = Number(search.get('maxRent'));
+  const initBeds = search.get('beds');
+  const [filters, setFilters] = useState<Filters>(() => ({
+    ...DEFAULT_FILTERS,
+    priceMax:
+      initMaxRent && initMaxRent >= DEFAULT_FILTERS.priceMin
+        ? initMaxRent
+        : DEFAULT_FILTERS.priceMax,
+    beds: initBeds
+      ? initBeds.split(',').map(Number).filter((n) => !Number.isNaN(n))
+      : [],
+  }));
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [query, setQuery] = useState(initialQuery);
@@ -61,7 +73,7 @@ function ResidencesAllInner() {
             All residences.
           </h1>
           <p className="small muted" style={{ marginBottom: 36 }}>
-            {filtered.length} of {RESIDENCES.length} residences across three cities
+            {filtered.length} of {RESIDENCES.length} residences across Western Canada
           </p>
 
           {query && (

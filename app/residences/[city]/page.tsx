@@ -6,9 +6,92 @@ import { SortDropdown } from '@/components/SortDropdown';
 import { PropertyCard } from '@/components/PropertyCard';
 import { MapView } from '@/components/MapViewClient';
 import { Eyebrow } from '@/components/Eyebrow';
-import { SlidersIcon } from '@/components/icons';
-import { CITIES, residencesByCity, type CitySlug } from '@/lib/data';
+import { SlidersIcon, ArrowRight } from '@/components/icons';
+import { CITIES, residencesByCity, type City, type CitySlug } from '@/lib/data';
 import { applyFilters } from '@/lib/filter';
+
+/* Announced-but-not-live market (Yellowknife): register-interest email capture. */
+function ComingSoonCity({ city }: { city: City }) {
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
+  return (
+    <main className="page-enter">
+      <section
+        style={{
+          position: 'relative',
+          minHeight: 'calc(100vh - var(--header-h))',
+          display: 'flex',
+          alignItems: 'center',
+          overflow: 'hidden',
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={city.image}
+          alt={city.label}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', filter: 'grayscale(0.4)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to bottom, rgba(10,25,41,0.62), rgba(10,25,41,0.80))',
+          }}
+        />
+        <div className="container" style={{ position: 'relative', color: 'var(--ivory)' }}>
+          <div style={{ maxWidth: 640 }}>
+            <Eyebrow color="gold" style={{ marginBottom: 24 }}>
+              COMING SOON · {city.province}
+            </Eyebrow>
+            <h1 className="display" style={{ color: 'var(--ivory)', marginBottom: 24 }}>
+              {city.label}.
+            </h1>
+            <p
+              className="body"
+              style={{ color: 'rgba(247,243,236,0.88)', fontSize: 18, maxWidth: 540, marginBottom: 28 }}
+            >
+              Balto is expanding north. We&apos;re bringing our family-operated,
+              locally-managed approach to the Northwest Territories. Register your
+              interest and we&apos;ll be in touch as homes become available.
+            </p>
+
+            {sent ? (
+              <p className="serif" style={{ color: 'var(--gold)', fontSize: 20 }}>
+                Thank you — we&apos;ll be in touch as homes become available.
+              </p>
+            ) : (
+              <form
+                onSubmit={(e) => { e.preventDefault(); if (email.trim()) setSent(true); }}
+                style={{
+                  display: 'flex', gap: 8, maxWidth: 460, flexWrap: 'wrap',
+                  background: 'var(--ivory)', padding: 8, border: '1px solid var(--hairline)',
+                }}
+              >
+                <input
+                  type="email"
+                  required
+                  className="input"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{ border: 0, flex: 1, minWidth: 200, padding: '12px 16px', color: 'var(--ink)' }}
+                />
+                <button type="submit" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  Register interest <ArrowRight size={14} />
+                </button>
+              </form>
+            )}
+            <p className="small" style={{ color: 'rgba(247,243,236,0.55)', marginTop: 16 }}>
+              Closing on 129 units · register interest only
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
 
 export default function CityListingPage({
   params,
@@ -35,6 +118,9 @@ export default function CityListingPage({
   }, [city, router]);
 
   if (!city) return null;
+
+  // Announced-but-not-live markets (Yellowknife): register-interest, not listings.
+  if (city.comingSoon) return <ComingSoonCity city={city} />;
 
   return (
     <main className="page-enter">

@@ -1,30 +1,44 @@
 'use client';
-import { useState, useEffect, useRef, type FormEvent } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
 import { ParallaxImage } from '@/components/ParallaxImage';
+import { PropertyCard } from '@/components/PropertyCard';
 import { useTilt } from '@/components/useTilt';
 import { ArrowRight, SearchIcon } from '@/components/icons';
-import { CITIES, IMAGES, RESIDENCES, type City } from '@/lib/data';
+import { CITIES, IMAGES, featuredResidences, type City } from '@/lib/data';
 
+/* ------------------------------------------------------------------ */
+/* 02 · Hero + rental search bar                                       */
+/* ------------------------------------------------------------------ */
 function CinematicHero({
-  query,
-  setQuery,
   onSearch,
-  goCity,
 }: {
-  query: string;
-  setQuery: (v: string) => void;
-  onSearch: () => void;
-  goCity: (slug: string) => void;
+  onSearch: (v: { city: string; maxRent: string; beds: string }) => void;
 }) {
+  const [city, setCity] = useState('');
+  const [maxRent, setMaxRent] = useState('');
+  const [beds, setBeds] = useState('');
+
+  const selectStyle: React.CSSProperties = {
+    border: 0,
+    background: 'transparent',
+    font: 'inherit',
+    color: 'var(--ink)',
+    fontSize: 15,
+    width: '100%',
+    padding: '14px 16px',
+    appearance: 'none',
+    cursor: 'pointer',
+  };
+
   return (
     <section
       style={{
         position: 'relative',
         height: 'calc(100vh - var(--header-h))',
-        minHeight: 620,
+        minHeight: 640,
         overflow: 'hidden',
       }}
     >
@@ -42,7 +56,7 @@ function CinematicHero({
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to bottom, rgba(10,25,41,0.45) 0%, rgba(10,25,41,0.10) 35%, rgba(10,25,41,0.55) 100%)',
+            'linear-gradient(to bottom, rgba(10,25,41,0.50) 0%, rgba(10,25,41,0.12) 35%, rgba(10,25,41,0.58) 100%)',
         }}
       />
       <div
@@ -60,7 +74,7 @@ function CinematicHero({
         <div
           className="eyebrow gold"
           style={{
-            marginBottom: 28,
+            marginBottom: 26,
             fontFamily: 'var(--serif)',
             fontStyle: 'italic',
             textTransform: 'none',
@@ -68,176 +82,402 @@ function CinematicHero({
             letterSpacing: '0.18em',
           }}
         >
-          Est. 2023
+          Family-operated · Western Canada
         </div>
-        <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 980 }}>
-          Find your residence.
+        <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 1040 }}>
+          Homes across Western Canada. One standard.
         </h1>
         <p
           className="body"
           style={{
-            color: 'rgba(247,243,236,0.86)',
+            color: 'rgba(247,243,236,0.88)',
             fontWeight: 300,
             marginTop: 22,
             fontSize: 19,
-            maxWidth: 560,
+            maxWidth: 600,
           }}
         >
-          A curated collection across Western Canada.
+          Thoughtfully maintained apartment homes across Western Canada — owned and
+          run by the same family team that answers your call.
         </p>
 
+        {/* Rental search bar — City · Max Rent · Bedrooms · Search */}
         <form
-          onSubmit={(e: FormEvent) => {
+          onSubmit={(e) => {
             e.preventDefault();
-            onSearch();
+            onSearch({ city, maxRent, beds });
           }}
+          className="hero-search"
           style={{
             marginTop: 44,
             background: 'var(--ivory)',
-            width: 'min(620px, 92%)',
+            width: 'min(880px, 96%)',
             padding: 8,
             display: 'flex',
-            gap: 8,
+            alignItems: 'stretch',
+            gap: 0,
             border: '1px solid var(--hairline)',
+            flexWrap: 'wrap',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flex: 1,
-              padding: '0 16px',
-            }}
-          >
-            <SearchIcon size={16} style={{ color: 'var(--muted)' }} />
-            <input
-              className="input"
-              style={{ border: 0, marginLeft: 12 }}
-              placeholder="Search by city or residence"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
+          <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
+            <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>City</span>
+            <select style={selectStyle} value={city} onChange={(e) => setCity(e.target.value)}>
+              <option value="">Any city</option>
+              <option value="Edmonton">Edmonton</option>
+              <option value="Saskatoon">Saskatoon</option>
+              <option value="Regina">Regina</option>
+            </select>
+          </label>
+          <span className="hero-search-div" />
+          <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
+            <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>Max rent</span>
+            <select style={selectStyle} value={maxRent} onChange={(e) => setMaxRent(e.target.value)}>
+              <option value="">Any</option>
+              <option value="1400">Up to $1,400</option>
+              <option value="1600">Up to $1,600</option>
+              <option value="1800">Up to $1,800</option>
+              <option value="2200">Up to $2,200</option>
+            </select>
+          </label>
+          <span className="hero-search-div" />
+          <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
+            <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>Bedrooms</span>
+            <select style={selectStyle} value={beds} onChange={(e) => setBeds(e.target.value)}>
+              <option value="">Any</option>
+              <option value="0">Studio</option>
+              <option value="1">1 Bedroom</option>
+              <option value="2">2 Bedrooms</option>
+              <option value="3">3+ Bedrooms</option>
+            </select>
+          </label>
           <button
             type="submit"
-            className="btn btn-ghost btn-sm"
-            style={{ border: '1px solid var(--ink)' }}
+            className="btn btn-primary"
+            style={{ margin: 4, display: 'inline-flex', alignItems: 'center', gap: 8 }}
           >
-            Discover
+            <SearchIcon size={16} /> Search homes
           </button>
         </form>
+        <p style={{ marginTop: 14, color: 'rgba(247,243,236,0.7)', fontSize: 12.5 }}>
+          Prices shown are net effective rent — what you actually pay after any promotion.
+        </p>
+      </div>
+    </section>
+  );
+}
 
-        <div
-          style={{
-            marginTop: 28,
-            color: 'rgba(247,243,236,0.78)',
-            fontSize: 13,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16,
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}
-        >
-          <span className="italic serif" style={{ fontSize: 15 }}>
-            or explore by city —
-          </span>
-          <a
-            className="text-link"
-            style={{ color: 'var(--ivory)' }}
-            onClick={() => goCity('saskatoon')}
-          >
-            Saskatoon
-          </a>
-          <span style={{ opacity: 0.4 }}>·</span>
-          <a
-            className="text-link"
-            style={{ color: 'var(--ivory)' }}
-            onClick={() => goCity('edmonton')}
-          >
-            Edmonton
-          </a>
-          <span style={{ opacity: 0.4 }}>·</span>
-          <a
-            className="text-link"
-            style={{ color: 'var(--ivory)' }}
-            onClick={() => goCity('regina')}
-          >
-            Regina
-          </a>
-          <span style={{ opacity: 0.4 }}>·</span>
-          <a
-            className="text-link"
-            style={{ color: 'var(--ivory)' }}
-            onClick={() => goCity('yellowknife')}
-          >
-            Yellowknife
-          </a>
+/* ------------------------------------------------------------------ */
+/* 03 · Proof band                                                     */
+/* ------------------------------------------------------------------ */
+function StatCounter({ target, suffix, duration = 1400 }: { target: number; suffix: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const start = target > 100 ? target - 40 : 0;
+          const range = target - start;
+          const startTime = performance.now();
+          const tick = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(start + range * eased));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return <span ref={ref}>{count.toLocaleString('en-US')}{suffix}</span>;
+}
+
+const PROOF = [
+  { value: 1500, suffix: '+', label: 'Doors across Western Canada' },
+  { text: 'Western Canada', label: 'Local teams in every city, growing — Yellowknife coming soon' },
+  { text: 'Since 2023', label: 'In real estate finance — direct ownership since 2025' },
+  { value: 1, suffix: ' day', label: 'Maintenance response standard' },
+];
+
+function ProofBand() {
+  return (
+    <section className="bg-ink" style={{ padding: 'clamp(40px, 6vw, 72px) 0' }}>
+      <div className="container">
+        <div className="home-cards-4">
+          {PROOF.map((s) => (
+            <div key={s.label} style={{ textAlign: 'center' }}>
+              <div
+                className="serif"
+                style={{
+                  fontSize: 'clamp(2rem, 3.6vw, 3.2rem)',
+                  fontWeight: 500,
+                  lineHeight: 1.05,
+                  color: 'var(--ivory)',
+                  marginBottom: 12,
+                }}
+              >
+                {'value' in s ? <StatCounter target={s.value!} suffix={s.suffix!} /> : s.text}
+              </div>
+              <div className="small" style={{ color: 'rgba(247,243,236,0.62)', maxWidth: 220, margin: '0 auto' }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function CityCard({ c }: { c: City }) {
+/* ------------------------------------------------------------------ */
+/* 04 · Our cities                                                     */
+/* ------------------------------------------------------------------ */
+function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
   const router = useRouter();
-  const tiltRef = useTilt<HTMLAnchorElement>(4);
+  const tiltRef = useTilt<HTMLAnchorElement>(comingSoon ? 0 : 4);
   return (
     <a
       ref={tiltRef}
       onClick={() => router.push(`/residences/${c.slug}`)}
       className="city-card"
+      style={comingSoon ? { filter: 'grayscale(0.7)', opacity: 0.82 } : undefined}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={c.image} alt={c.label} />
       <div className="overlay" />
+      {comingSoon && (
+        <div
+          className="eyebrow"
+          style={{
+            position: 'absolute', top: 16, left: 16, zIndex: 2,
+            background: 'rgba(10,25,41,0.72)', color: 'var(--gold)',
+            padding: '6px 12px', fontSize: 10,
+          }}
+        >
+          Coming soon
+        </div>
+      )}
       <div className="label">
         <div className="eyebrow" style={{ color: 'rgba(247,243,236,0.7)' }}>
           {c.province}
         </div>
-        <div
-          className="serif"
-          style={{ fontSize: 32, fontWeight: 500, marginTop: 4 }}
-        >
+        <div className="serif" style={{ fontSize: 32, fontWeight: 500, marginTop: 4 }}>
           {c.label}
         </div>
         <div className="gold-rule" />
+        <div className="small" style={{ color: 'rgba(247,243,236,0.82)', marginTop: 6 }}>
+          {comingSoon ? 'Register your interest →' : 'View residences →'}
+        </div>
       </div>
     </a>
   );
 }
 
-function CityCarousel() {
-  const cities = (['saskatoon', 'edmonton', 'regina', 'yellowknife'] as const).map(
-    (s) => CITIES[s]
-  );
+function OurCities() {
+  const cities = (['saskatoon', 'edmonton', 'regina'] as const).map((s) => CITIES[s]);
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: 24,
-      }}
-      className="city-carousel-grid"
-    >
-      {cities.map((c) => (
-        <CityCard key={c.slug} c={c} />
-      ))}
-    </div>
+    <section className="section bg-ivory">
+      <div className="container">
+        <div
+          style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'end',
+            marginBottom: 56, flexWrap: 'wrap', gap: 16,
+          }}
+        >
+          <div>
+            <Eyebrow style={{ marginBottom: 18 }}>OUR CITIES</Eyebrow>
+            <h2 className="h2 serif">Across Western Canada, and growing.</h2>
+          </div>
+          <p className="body muted" style={{ maxWidth: 400, margin: 0 }}>
+            A focused portfolio across Western Canada — and growing. Every building
+            chosen, kept, and cared for with intent. Start with your city.
+          </p>
+        </div>
+        <div
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}
+          className="city-carousel-grid"
+        >
+          {cities.map((c) => (
+            <CityCard key={c.slug} c={c} />
+          ))}
+          <CityCard c={CITIES.yellowknife} comingSoon />
+        </div>
+      </div>
+    </section>
   );
 }
 
-function HeritageStrip() {
+/* ------------------------------------------------------------------ */
+/* 05 · Featured residences                                            */
+/* ------------------------------------------------------------------ */
+function FeaturedResidences() {
   const router = useRouter();
+  const featured = featuredResidences().slice(0, 6);
   return (
     <section className="section bg-cream">
       <div className="container">
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1.05fr 1fr',
-            gap: 'clamp(40px, 7vw, 96px)',
-            alignItems: 'center',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'end',
+            marginBottom: 48, flexWrap: 'wrap', gap: 16,
+          }}
+        >
+          <div>
+            <Eyebrow style={{ marginBottom: 18 }}>FEATURED RESIDENCES</Eyebrow>
+            <h2 className="h2 serif">Homes available now.</h2>
+          </div>
+          <button className="btn btn-ghost" onClick={() => router.push('/residences')}>
+            View all residences <ArrowRight size={14} />
+          </button>
+        </div>
+        <div className="home-cards-3">
+          {featured.map((r) => (
+            <PropertyCard key={r.id} residence={r} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 06 · Why rent with Balto                                            */
+/* ------------------------------------------------------------------ */
+const BENEFITS = [
+  { t: 'Family-operated', d: 'A brother-and-sister team that owns and runs the buildings.' },
+  { t: 'One-day response', d: 'Maintenance answered within one business day.' },
+  { t: 'Renovated & secured', d: 'Updated suites and upgraded building security.' },
+  { t: 'Pet-friendly homes', d: 'Many of our residences welcome pets.' },
+];
+
+function WhyRent() {
+  return (
+    <section className="section bg-ivory">
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: 56, maxWidth: 680, margin: '0 auto 56px' }}>
+          <Eyebrow style={{ marginBottom: 18 }}>WHY RENT WITH BALTO</Eyebrow>
+          <h2 className="h2 serif" style={{ marginBottom: 18 }}>We own what we manage.</h2>
+          <p className="body muted" style={{ fontSize: 17 }}>
+            No third-party manager between you and your home — the family that owns
+            the building is the one that looks after it.
+          </p>
+        </div>
+        <div className="home-cards-4">
+          {BENEFITS.map((b, i) => (
+            <div key={b.t} style={{ borderTop: '2px solid var(--gold)', paddingTop: 24 }}>
+              <div className="serif italic" style={{ fontSize: 20, color: 'var(--gold)', marginBottom: 16 }}>
+                0{i + 1}
+              </div>
+              <h3 className="h3 serif" style={{ marginBottom: 12 }}>{b.t}</h3>
+              <p className="body muted" style={{ fontSize: 15, lineHeight: 1.7 }}>{b.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 07 · How to rent                                                    */
+/* ------------------------------------------------------------------ */
+const STEPS = ['Search', 'Book a viewing', 'Apply', 'Get approved', 'Move in'];
+
+function HowToRent() {
+  return (
+    <section className="section bg-ink">
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+          <Eyebrow style={{ marginBottom: 18 }}>HOW TO RENT</Eyebrow>
+          <h2 className="h2 serif" style={{ color: 'var(--ivory)' }}>Five steps to your new home.</h2>
+        </div>
+        <div className="steps-grid">
+          {STEPS.map((s, i) => (
+            <div key={s} style={{ textAlign: 'center' }}>
+              <div
+                className="serif"
+                style={{
+                  width: 56, height: 56, borderRadius: '50%', margin: '0 auto 18px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  border: '1px solid var(--gold)', color: 'var(--gold)', fontSize: 22,
+                }}
+              >
+                {i + 1}
+              </div>
+              <div className="serif" style={{ color: 'var(--ivory)', fontSize: 17, fontWeight: 500 }}>{s}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 08 · Resident reviews                                               */
+/* PLACEHOLDER copy — replace with real Google reviews before launch.  */
+/* ------------------------------------------------------------------ */
+const REVIEWS = [
+  { name: 'Resident review', city: 'Edmonton', stars: 5, body: 'Maintenance is quick and the team actually answers. Best rental experience I’ve had in the city.' },
+  { name: 'Resident review', city: 'Saskatoon', stars: 5, body: 'The suite was freshly renovated and move-in was easy. You can tell the owners care about the building.' },
+  { name: 'Resident review', city: 'Regina', stars: 5, body: 'Quiet, secure, and well-kept. Great location near campus and Wascana — happy to have renewed.' },
+];
+
+function ResidentReviews() {
+  return (
+    <section className="section bg-cream">
+      <div className="container">
+        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+          <Eyebrow style={{ marginBottom: 18 }}>RESIDENT REVIEWS</Eyebrow>
+          <h2 className="h2 serif">What residents say.</h2>
+        </div>
+        <div className="home-cards-3">
+          {REVIEWS.map((r, i) => (
+            <figure
+              key={i}
+              style={{ margin: 0, background: 'var(--ivory)', border: '1px solid var(--hairline)', padding: 32 }}
+            >
+              <div style={{ color: 'var(--gold)', letterSpacing: 2, marginBottom: 16 }}>
+                {'★'.repeat(r.stars)}
+              </div>
+              <blockquote className="body" style={{ margin: 0, fontSize: 16, lineHeight: 1.75 }}>
+                “{r.body}”
+              </blockquote>
+              <figcaption className="small muted" style={{ marginTop: 20 }}>
+                <span className="serif" style={{ color: 'var(--ink)' }}>{r.name}</span> · {r.city}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 10 · Our story / heritage                                           */
+/* ------------------------------------------------------------------ */
+function StoryStrip() {
+  const router = useRouter();
+  return (
+    <section className="section bg-ivory">
+      <div className="container">
+        <div
+          style={{
+            display: 'grid', gridTemplateColumns: '1.05fr 1fr',
+            gap: 'clamp(40px, 7vw, 96px)', alignItems: 'center',
           }}
           className="grid-3-md1"
         >
@@ -251,16 +491,32 @@ function HeritageStrip() {
             />
           </div>
           <div>
-            <Eyebrow style={{ marginBottom: 24 }}>EST. 2023</Eyebrow>
+            <Eyebrow style={{ marginBottom: 24 }}>OUR STORY</Eyebrow>
             <h2 className="h2 serif" style={{ marginBottom: 28 }}>
-              Building trust from year one.
+              We buy buildings to keep them.
             </h2>
-            <p
-              className="body muted"
-              style={{ fontSize: 17, maxWidth: 520, marginBottom: 36 }}
-            >
-              Since 2023, Balto Capital has built a portfolio defined by quality and an uncompromising standard. Today, we open our residences to those who recognize the difference.
+            <p className="body muted" style={{ fontSize: 17, maxWidth: 540, marginBottom: 28 }}>
+              Balto began in 2023 as a private and mezzanine real estate lender. In
+              2025 we moved into direct ownership — acquiring, renovating, and
+              operating apartment communities across Western Canada, a portfolio that
+              continues to grow. We buy buildings to keep them, which is why we treat
+              every resident as a long-term relationship, not a transaction.
             </p>
+            <div
+              style={{ display: 'flex', gap: 28, flexWrap: 'wrap', marginBottom: 36 }}
+              className="story-timeline"
+            >
+              {[
+                { y: '2023', t: 'Private & mezzanine lending' },
+                { y: '2025', t: 'First acquisitions · direct ownership' },
+                { y: 'Today', t: '1,500+ doors, growing' },
+              ].map((m) => (
+                <div key={m.y} style={{ borderLeft: '2px solid var(--gold)', paddingLeft: 14 }}>
+                  <div className="serif" style={{ fontSize: 20, fontWeight: 500 }}>{m.y}</div>
+                  <div className="small muted" style={{ maxWidth: 150 }}>{m.t}</div>
+                </div>
+              ))}
+            </div>
             <button className="btn btn-ghost" onClick={() => router.push('/about')}>
               Our story <ArrowRight size={14} />
             </button>
@@ -271,236 +527,57 @@ function HeritageStrip() {
   );
 }
 
-const STATS = [
-  { target: 30, suffix: '+', label: 'Properties', sub: 'Across Western Canada' },
-  { target: 4,  suffix: '',  label: 'Cities',     sub: 'Edmonton, Saskatoon, Regina & Yellowknife' },
-  { target: 2023, suffix: '', label: 'Founded',   sub: 'Built one residence at a time' },
-  { target: 100, suffix: '%', label: 'In-house',  sub: 'Managed & maintained' },
-];
-
-function StatCounter({ target, suffix, duration = 1400 }: { target: number; suffix: string; duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const start = target > 100 ? target - 30 : 0;
-          const range = target - start;
-          const startTime = performance.now();
-          const tick = (now: number) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // ease-out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.round(start + range * eased));
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [target, duration]);
-
-  return (
-    <div ref={ref} className="serif" style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)', fontWeight: 500, lineHeight: 1, color: 'var(--ink)', marginBottom: 12 }}>
-      {count}{suffix}
-    </div>
-  );
-}
-
-function PortfolioStrip() {
-  return (
-    <section className="section bg-ivory">
-      <div className="container">
-        <div style={{ textAlign: 'center', marginBottom: 64 }}>
-          <Eyebrow style={{ marginBottom: 18 }}>BY THE NUMBERS</Eyebrow>
-          <h2 className="h2 serif">The portfolio, at a glance.</h2>
-        </div>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 'clamp(24px, 4vw, 56px)',
-          }}
-          className="stats-grid"
-        >
-          {STATS.map((s) => (
-            <div
-              key={s.label}
-              style={{
-                textAlign: 'center',
-                padding: 'clamp(28px, 4vw, 48px) 16px',
-                borderTop: '2px solid var(--gold)',
-              }}
-            >
-              <StatCounter target={s.target} suffix={s.suffix} />
-              <div className="serif" style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>{s.label}</div>
-              <div className="small muted">{s.sub}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ValuePropsStrip() {
-  const props = [
-    {
-      n: '01',
-      t: 'Heritage.',
-      d: 'A practice founded in 2023. A portfolio built one residence at a time.',
-    },
-    {
-      n: '02',
-      t: 'Curation.',
-      d: 'Each residence selected with intent — restored, not renovated.',
-    },
-    {
-      n: '03',
-      t: 'Service.',
-      d: 'Concierge-level care, always. A single resident manager per building.',
-    },
-  ];
-  return (
-    <section className="section bg-ink">
-      <div className="container">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 'clamp(32px, 5vw, 80px)',
-          }}
-          className="grid-3-md1"
-        >
-          {props.map((p) => (
-            <div key={p.n}>
-              <div
-                className="serif italic"
-                style={{ fontSize: 22, color: 'var(--gold)', marginBottom: 28 }}
-              >
-                {p.n}
-              </div>
-              <h3
-                className="h3 serif"
-                style={{ color: 'var(--ivory)', marginBottom: 16 }}
-              >
-                {p.t}
-              </h3>
-              <p
-                style={{
-                  color: 'rgba(247,243,236,0.7)',
-                  lineHeight: 1.7,
-                  fontSize: 15,
-                }}
-              >
-                {p.d}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
+/* ------------------------------------------------------------------ */
+/* 11 · Inquiry CTA                                                    */
+/* ------------------------------------------------------------------ */
 function InquireCTA() {
   const router = useRouter();
   return (
-    <section className="section bg-ivory" style={{ textAlign: 'center' }}>
+    <section className="section bg-cream" style={{ textAlign: 'center' }}>
       <div className="container-narrow">
         <Eyebrow style={{ marginBottom: 22 }}>BEGIN AN INQUIRY</Eyebrow>
-        <h2 className="h2 serif" style={{ marginBottom: 24 }}>
-          Begin your inquiry.
-        </h2>
-        <p
-          className="body muted"
-          style={{
-            fontSize: 18,
-            marginBottom: 40,
-            maxWidth: 520,
-            margin: '0 auto 40px',
-          }}
-        >
-          Tell us what you&apos;re looking for. We&apos;ll find it.
+        <h2 className="h2 serif" style={{ marginBottom: 24 }}>Begin your inquiry.</h2>
+        <p className="body muted" style={{ fontSize: 18, maxWidth: 520, margin: '0 auto 40px' }}>
+          Tell us the city, the budget, and the move-in date — we’ll find the right home for you.
         </p>
-        <button className="btn btn-primary" onClick={() => router.push('/inquire')}>
-          Inquire <ArrowRight size={14} />
-        </button>
+        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button className="btn btn-primary" onClick={() => router.push('/residences')}>
+            Browse residences <ArrowRight size={14} />
+          </button>
+          <button className="btn btn-ghost" onClick={() => router.push('/inquire')}>
+            Contact us
+          </button>
+        </div>
       </div>
     </section>
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Page                                                                */
+/* ------------------------------------------------------------------ */
 export default function HomePage() {
   const router = useRouter();
-  const [query, setQuery] = useState('');
 
-  const onSearch = () => {
-    const q = query.trim().toLowerCase();
-    if (!q) {
-      router.push('/residences');
-      return;
-    }
-    if (['saskatoon', 'edmonton', 'regina'].includes(q)) {
-      router.push(`/residences/${q}`);
-      return;
-    }
-    const r = RESIDENCES.find(
-      (r) => r.name.toLowerCase().includes(q) || r.slug.includes(q)
-    );
-    if (r) router.push(`/residences/${r.city}/${r.slug}`);
-    else router.push(`/residences?q=${encodeURIComponent(query)}`);
+  const onSearch = ({ city, maxRent, beds }: { city: string; maxRent: string; beds: string }) => {
+    const sp = new URLSearchParams();
+    if (city) sp.set('q', city);
+    if (maxRent) sp.set('maxRent', maxRent);
+    if (beds) sp.set('beds', beds);
+    const qs = sp.toString();
+    router.push(qs ? `/residences?${qs}` : '/residences');
   };
 
   return (
     <main className="page-enter">
-      <CinematicHero
-        query={query}
-        setQuery={setQuery}
-        onSearch={onSearch}
-        goCity={(slug) => router.push(`/residences/${slug}`)}
-      />
-
-      <section className="section bg-ivory">
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'end',
-              marginBottom: 56,
-              flexWrap: 'wrap',
-              gap: 16,
-            }}
-          >
-            <div>
-              <Eyebrow style={{ marginBottom: 18 }}>OUR CITIES</Eyebrow>
-              <h2 className="h2 serif">Four cities. One standard.</h2>
-            </div>
-            <p
-              className="body muted"
-              style={{ maxWidth: 380, margin: 0 }}
-            >
-              The portfolio runs across Western Canada — each city represented by considered residences, never collected indiscriminately.
-            </p>
-          </div>
-          <CityCarousel />
-        </div>
-      </section>
-
-      <HeritageStrip />
-      <PortfolioStrip />
-      <ValuePropsStrip />
+      <CinematicHero onSearch={onSearch} />
+      <ProofBand />
+      <OurCities />
+      <FeaturedResidences />
+      <WhyRent />
+      <HowToRent />
+      <ResidentReviews />
+      <StoryStrip />
       <InquireCTA />
     </main>
   );

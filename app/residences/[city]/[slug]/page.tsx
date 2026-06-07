@@ -9,6 +9,7 @@ import { PlaceholderImg } from '@/components/SmartImage';
 import { InquireModal } from '@/components/InquireModal';
 import { GalleryModal } from '@/components/GalleryModal';
 import {
+  bedroomShort,
   formatPrice,
   getResidence,
   residencesByCity,
@@ -211,12 +212,20 @@ export default function ResidenceDetailPage({
           className="detail-grid"
         >
           <div>
-            <Eyebrow style={{ marginBottom: 14 }}>{r.cityLabel}</Eyebrow>
+            <Eyebrow style={{ marginBottom: 14 }}>
+              {r.cityLabel}{r.neighbourhood ? ` · ${r.neighbourhood}` : ''}
+            </Eyebrow>
             <h1 className="h1 serif" style={{ marginBottom: 12 }}>
               {r.name}.
             </h1>
-            <p className="body muted" style={{ fontSize: 16 }}>
+            <p className="body muted" style={{ fontSize: 16, marginBottom: 12 }}>
               {r.address}
+            </p>
+            <p style={{ fontSize: 15 }}>
+              <span className="serif" style={{ fontSize: 19, fontWeight: 500 }}>
+                From {formatPrice(r.priceFrom)}
+              </span>
+              <span className="muted"> /month net · {bedroomShort(r.bedroomOptions)}</span>
             </p>
 
             <div className="divider" style={{ margin: '36px 0 32px' }} />
@@ -278,6 +287,47 @@ export default function ResidenceDetailPage({
               {r.unitLabels ? 'Unit Photos' : 'Building amenities'}
             </h2>
             <FeatureList items={r.unitLabels ?? r.amenities} />
+
+            <div className="divider" style={{ margin: '64px 0 40px' }} />
+
+            <h2 className="h2 serif" style={{ marginBottom: 12 }}>Suites</h2>
+            <p className="small muted" style={{ marginBottom: 28 }}>
+              Rents shown are net effective — what you pay after any promotion. Square
+              footage and live availability are confirmed at viewing.
+            </p>
+            <div className="suites-table" role="table">
+              <div className="suites-row suites-head" role="row">
+                <span role="columnheader">Suite</span>
+                <span role="columnheader">Bath</span>
+                <span role="columnheader">Sq ft</span>
+                <span role="columnheader">Rent (net)</span>
+                <span role="columnheader">Availability</span>
+                <span role="columnheader" aria-label="Apply" />
+              </div>
+              {plans.map((p, i) => (
+                <div className="suites-row" role="row" key={i}>
+                  <span role="cell" className="serif" style={{ fontSize: 16, fontWeight: 500 }}>
+                    {p.label}
+                  </span>
+                  <span role="cell" className="muted">{r.bathrooms}</span>
+                  <span role="cell" className="muted">—</span>
+                  <span role="cell" className="serif" style={{ fontWeight: 500 }}>
+                    {formatPrice(p.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>
+                  </span>
+                  <span role="cell" className="muted">
+                    {r.availability === 'available' ? 'Available' : 'Coming soon'}
+                  </span>
+                  <span role="cell" style={{ textAlign: 'right' }}>
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => { setSelectedPlan(i); setInquireOpen(true); }}
+                    >
+                      Apply
+                    </button>
+                  </span>
+                </div>
+              ))}
+            </div>
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
@@ -357,8 +407,11 @@ export default function ResidenceDetailPage({
                   /month
                 </span>
               </div>
-              <div className="small muted" style={{ marginBottom: 28 }}>
+              <div className="small muted" style={{ marginBottom: 6 }}>
                 {r.availability === 'available' ? 'Available now' : 'Coming soon'}
+              </div>
+              <div className="caption muted" style={{ marginBottom: 28 }}>
+                Net effective rent — what you pay after any promotion.
               </div>
 
               <div className="divider" style={{ marginBottom: 22 }} />
@@ -419,7 +472,7 @@ export default function ResidenceDetailPage({
                 style={{ width: '100%', marginBottom: 12 }}
                 onClick={() => setInquireOpen(true)}
               >
-                Inquire about this residence
+                Book a viewing
               </button>
 
               <div
