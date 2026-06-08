@@ -18,6 +18,9 @@ import {
 
 const TONES = ['warm', 'cool', 'deep', 'light', 'warm', 'cool'] as const;
 
+/** Capitalize the first letter of each NEARBY item (e.g. "downtown" → "Downtown"). */
+const capFirst = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+
 function FeatureList({ items }: { items: string[] }) {
   const mid = Math.ceil(items.length / 2);
   const left = items.slice(0, mid);
@@ -202,7 +205,13 @@ export default function ResidenceDetailPage({
       </div>
       )}
 
-      <div className="container" style={r.hideDetailGallery ? { marginTop: 32 } : undefined}>
+      <div
+        className="container"
+        style={{
+          paddingBottom: 'clamp(96px, 12vw, 160px)',
+          ...(r.hideDetailGallery ? { marginTop: 32 } : null),
+        }}
+      >
         <div
           style={{
             display: 'grid',
@@ -365,7 +374,7 @@ export default function ResidenceDetailPage({
                         fontSize: 15,
                       }}
                     >
-                      {n}
+                      {capFirst(n)}
                     </li>
                   ))}
                 </ul>
@@ -509,10 +518,7 @@ export default function ResidenceDetailPage({
             </h2>
             <div
               className="grid grid-residences-city"
-              style={{
-                gap: 'clamp(28px, 3vw, 44px)',
-                marginBottom: 'clamp(80px, 10vw, 140px)',
-              }}
+              style={{ gap: 'clamp(28px, 3vw, 44px)' }}
             >
               {others.map((o) => (
                 <PropertyCard key={o.id} residence={o} hideCity />

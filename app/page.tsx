@@ -503,17 +503,17 @@ function StoryStrip() {
               every resident as a long-term relationship, not a transaction.
             </p>
             <div
-              style={{ display: 'flex', gap: 28, flexWrap: 'wrap', marginBottom: 36 }}
+              style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 36 }}
               className="story-timeline"
             >
               {[
                 { y: '2023', t: 'Private & mezzanine lending' },
-                { y: '2025', t: 'First acquisitions · direct ownership' },
-                { y: 'Today', t: '1,500+ doors, growing' },
+                { y: '2025', t: 'First property acquisitions · direct ownership' },
+                { y: 'Today', t: '1,500+ doors across Western Canada, growing.' },
               ].map((m) => (
                 <div key={m.y} style={{ borderLeft: '2px solid var(--gold)', paddingLeft: 14 }}>
                   <div className="serif" style={{ fontSize: 20, fontWeight: 500 }}>{m.y}</div>
-                  <div className="small muted" style={{ maxWidth: 150 }}>{m.t}</div>
+                  <div className="small muted">{m.t}</div>
                 </div>
               ))}
             </div>
