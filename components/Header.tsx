@@ -27,7 +27,7 @@ export function Header() {
       <header className="site-header">
         <div className="inner">
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo variant="light" height={60} />
+            <Logo variant="light" height={80} />
           </div>
 
           <nav className="nav" aria-label="Primary">
@@ -45,7 +45,7 @@ export function Header() {
                   color: 'inherit',
                 }}
               >
-                Residences <ChevronDown size={14} />
+                Properties <ChevronDown size={14} />
               </Link>
               <div
                 className="dropdown"
@@ -79,6 +79,16 @@ export function Header() {
               className={'nav-item ' + (isActive('/about') ? 'active' : '')}
             >
               About
+            </Link>
+            {/* Placeholder — destination pending client direction on content. */}
+            <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
+              Community Involvement
+            </span>
+            <Link
+              href="/inquire"
+              className={'nav-item ' + (isActive('/inquire') ? 'active' : '')}
+            >
+              Contact Us
             </Link>
           </nav>
 
@@ -130,14 +140,16 @@ export function Header() {
           </button>
         </div>
         <nav>
-          <Link href="/residences">Residences</Link>
+          <Link href="/residences">Properties</Link>
           <Link className="sub" href="/residences/saskatoon">— Saskatoon</Link>
           <Link className="sub" href="/residences/edmonton">— Edmonton</Link>
           <Link className="sub" href="/residences/regina">— Regina</Link>
           <Link className="sub" href="/residences/yellowknife">— Yellowknife (Coming soon)</Link>
           <Link href="/why-balto">Why Balto</Link>
           <Link href="/about">About</Link>
-          <Link href="/inquire">Inquire</Link>
+          {/* Placeholder — destination pending client direction on content. */}
+          <span aria-disabled="true">Community Involvement</span>
+          <Link href="/inquire">Contact Us</Link>
           <a href={RESIDENT_PORTAL_URL}>Resident Portal</a>
           <Link href="/favorites">
             Favorites{' '}

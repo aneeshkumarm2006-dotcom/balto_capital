@@ -104,11 +104,13 @@ export interface Residence {
   longDescription: string;
   bedrooms: string;
   bedroomOptions: number[];
-  bathrooms: string;
   /** Monthly rent by bedroom count. Keys: 0=Studio, 1..3=Bedroom count. */
   prices: Partial<Record<0 | 1 | 2 | 3, number>>;
   /** Minimum across `prices` — used on cards / "From $X/mo" labels. */
   priceFrom: number;
+  /** Short note explaining the advertised net-effective basis (incentive +
+   *  lease term). Undefined for Woodridge, which is on its own rate card. */
+  priceBasis?: string;
   availability: Availability;
   featured: boolean;
   /** Build Spec neighbourhood label (shown as the property-page tag). */
@@ -126,11 +128,30 @@ export interface Residence {
   unitLabels?: string[];
 }
 
-/** Standard Edmonton rate card — applies to every Edmonton property except
- *  Woodridge. Studio / 1BR / 2BR / 3BR. */
-const EDMONTON_RATES: Record<0 | 1 | 2 | 3, number> = {
+/** Non-renovated base rate card — applies to every property except Woodridge
+ *  (across all cities). Studio / 1BR / 2BR / 3BR. */
+const NON_RENOVATED_RATES: Record<0 | 1 | 2 | 3, number> = {
   0: 1100, 1: 1300, 2: 1500, 3: 1600,
 };
+
+/** Standard non-renovated incentive: up to this many months free, advertised
+ *  as net effective rent over a (12 + freeMonths)-month lease —
+ *  base × 12 / (12 + freeMonths). e.g. $1,100 × 12 / 14 = $942. */
+const NON_RENOVATED_FREE_MONTHS = 2;
+export const NON_RENOVATED_INCENTIVE = `Up to ${NON_RENOVATED_FREE_MONTHS} months free`;
+const netEffective = (base: number): number =>
+  Math.floor((base * 12) / (12 + NON_RENOVATED_FREE_MONTHS));
+
+/** Net effective non-renovated card — what we advertise. */
+const NON_RENOVATED_NET: Record<0 | 1 | 2 | 3, number> = {
+  0: netEffective(NON_RENOVATED_RATES[0]),
+  1: netEffective(NON_RENOVATED_RATES[1]),
+  2: netEffective(NON_RENOVATED_RATES[2]),
+  3: netEffective(NON_RENOVATED_RATES[3]),
+};
+
+/** Woodridge keeps its own (renovated-tier) rate card — excluded from the
+ *  non-renovated net-effective scheme above. */
 const WOODRIDGE_RATES: Record<0 | 1 | 2 | 3, number> = {
   0: 1150, 1: 1350, 2: 1550, 3: 1700,
 };
@@ -215,8 +236,8 @@ function hashSeed(s: string): number {
 /** Real lat/lng per property — geocoded via OSM Nominatim by scripts/geocode.mjs.
  *  Re-run `node scripts/geocode.mjs` when addresses change. */
 const GEOCODED: Record<string, { lat: number; lng: number }> = {
-  'chicklet-house':   { lat: 53.56195, lng: -113.49980 }, // approx — re-run geocode.mjs to confirm
-  'woodridge':        { lat: 53.50777, lng: -113.59237 },
+  'chicklet-house':   { lat: 53.55151, lng: -113.49765 }, // 10304 107 Ave — exact house match
+  'woodridge':        { lat: 53.54850, lng: -113.59388 }, // 10139 158 St — corrected to Britannia-Youngstown
   'palisades':        { lat: 53.55377, lng: -113.51541 },
   'hamlet':           { lat: 53.56818, lng: -113.53571 },
   'copper-manor':     { lat: 53.58946, lng: -113.46890 },
@@ -226,7 +247,7 @@ const GEOCODED: Record<string, { lat: number; lng: number }> = {
   'layali':           { lat: 53.60011, lng: -113.44043 },
   'sky-manor':        { lat: 53.53347, lng: -113.59051 },
   'grandview-manor':  { lat: 53.56902, lng: -113.46863 },
-  'cedar-manor':      { lat: 53.64296, lng: -113.46738 },
+  'cedar-manor':      { lat: 53.57453, lng: -113.46720 }, // 12040 82 St — corrected (anchored to Courts Manor, same street)
   'courts-manor':     { lat: 53.57766, lng: -113.46717 },
   'oakwood-manor':    { lat: 53.56408, lng: -113.49233 },
   'royal-manor':      { lat: 53.55293, lng: -113.49664 },
@@ -588,20 +609,11 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   },
 };
 
-/** Pricing per asset. Edmonton uses the standard rate card except for
- *  Woodridge which has its own. Other cities still use deterministic
- *  placeholders until real rates arrive. */
-function pricesFor(raw: RawAsset, seed: number): Partial<Record<0 | 1 | 2 | 3, number>> {
+/** Pricing per asset. Every property except Woodridge uses the non-renovated
+ *  net-effective card (all cities); Woodridge keeps its own rates. */
+function pricesFor(raw: RawAsset): Partial<Record<0 | 1 | 2 | 3, number>> {
   if (raw.slug === 'woodridge') return WOODRIDGE_RATES;
-  if (raw.city === 'edmonton') return EDMONTON_RATES;
-  // Placeholder for Saskatoon / Regina / Yellowknife — deterministic per-slug.
-  const base = 1280 + ((seed >> 3) % 24) * 50; // 1280..2430
-  return {
-    0: base,
-    1: base + 200,
-    2: base + 400,
-    3: base + 500,
-  };
+  return NON_RENOVATED_NET;
 }
 
 /** Per-building copy from the Build Spec, Part Two. `description` is the
@@ -786,8 +798,20 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
   const bedroomOptions = raw.city === 'edmonton'
     ? [0, 1, 2, 3]
     : BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length];
-  const prices = pricesFor(raw, seed);
-  const priceFrom = Math.min(...Object.values(prices) as number[]);
+  // Rate card may carry all four configs; keep only the bedrooms this
+  // building actually offers so "From $X" reflects an available suite.
+  const card = pricesFor(raw);
+  const prices: Partial<Record<0 | 1 | 2 | 3, number>> = {};
+  bedroomOptions.forEach((b) => {
+    const v = card[b as 0 | 1 | 2 | 3];
+    if (v !== undefined) prices[b as 0 | 1 | 2 | 3] = v;
+  });
+  const priceFrom = Math.min(...(Object.values(prices) as number[]));
+  // Non-renovated net-effective pricing carries the standard incentive basis;
+  // Woodridge is on its own card and keeps the generic note.
+  const priceBasis = raw.slug === 'woodridge'
+    ? undefined
+    : `Reflects ${NON_RENOVATED_INCENTIVE.toLowerCase()} on a ${12 + NON_RENOVATED_FREE_MONTHS}-month lease.`;
 
   const real = REAL_PHOTOS[raw.slug];
   // Card image: always honour real photo if present. hideDetailGallery
@@ -822,9 +846,9 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
       : `${raw.name} is held within the Balto portfolio at ${raw.address}. The building is operated to the Balto standard — restored where appropriate, maintained by a resident manager, and let on terms intended to favour long stays. Detailed unit plans, finishes, and current availability are released on request.`,
     bedrooms: bedroomLabel(bedroomOptions),
     bedroomOptions,
-    bathrooms: '1 – 2',
     prices,
     priceFrom,
+    priceBasis,
     availability,
     featured,
     hideDetailGallery: raw.hideDetailGallery,

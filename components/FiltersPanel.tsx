@@ -10,16 +10,16 @@ export interface Filters {
   priceMax: number;
   availability: 'any' | 'available' | 'coming-soon';
   amenities: string[];
-  sort: 'featured' | 'price-asc' | 'price-desc' | 'bedrooms';
+  sort: 'name' | 'price-asc' | 'price-desc' | 'bedrooms';
 }
 
 export const DEFAULT_FILTERS: Filters = {
   beds: [],
-  priceMin: 1000,
+  priceMin: 800,
   priceMax: 3500,
   availability: 'any',
   amenities: [],
-  sort: 'featured',
+  sort: 'name',
 };
 
 const ALL_AMENITIES = [
@@ -175,7 +175,7 @@ export function FiltersPanel({
           <span style={{ fontFamily: 'var(--sans)' }}> /mo</span>
         </div>
         <PriceRange
-          min={1000}
+          min={800}
           max={3500}
           step={50}
           value={[filters.priceMin, filters.priceMax]}

@@ -4,7 +4,7 @@ import { ChevronDown } from './icons';
 import type { Filters } from './FiltersPanel';
 
 const OPTIONS: { v: Filters['sort']; label: string }[] = [
-  { v: 'featured', label: 'Featured' },
+  { v: 'name', label: 'Alphabetical (A–Z)' },
   { v: 'price-asc', label: 'Price — ascending' },
   { v: 'price-desc', label: 'Price — descending' },
   { v: 'bedrooms', label: 'Bedrooms' },

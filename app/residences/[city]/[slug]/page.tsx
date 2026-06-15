@@ -236,13 +236,18 @@ export default function ResidenceDetailPage({
               </span>
               <span className="muted"> /month net · {bedroomShort(r.bedroomOptions)}</span>
             </p>
+            {r.priceBasis && (
+              <p className="caption muted" style={{ fontSize: 12.5, marginTop: 6 }}>
+                {r.priceBasis}
+              </p>
+            )}
 
             <div className="divider" style={{ margin: '36px 0 32px' }} />
 
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
+                gridTemplateColumns: 'repeat(2, 1fr)',
                 gap: 24,
               }}
               className="quick-stats"
@@ -252,7 +257,6 @@ export default function ResidenceDetailPage({
                   label: 'Bedrooms',
                   val: r.bedrooms.replace(' Bedrooms', '').replace(' Bedroom', ''),
                 },
-                { label: 'Bathrooms', val: r.bathrooms },
                 {
                   label: 'Available',
                   val: r.availability === 'available' ? 'Now' : 'Soon',
@@ -307,7 +311,6 @@ export default function ResidenceDetailPage({
             <div className="suites-table" role="table">
               <div className="suites-row suites-head" role="row">
                 <span role="columnheader">Suite</span>
-                <span role="columnheader">Bath</span>
                 <span role="columnheader">Sq ft</span>
                 <span role="columnheader">Rent (net)</span>
                 <span role="columnheader">Availability</span>
@@ -318,7 +321,6 @@ export default function ResidenceDetailPage({
                   <span role="cell" className="serif" style={{ fontSize: 16, fontWeight: 500 }}>
                     {p.label}
                   </span>
-                  <span role="cell" className="muted">{r.bathrooms}</span>
                   <span role="cell" className="muted">—</span>
                   <span role="cell" className="serif" style={{ fontWeight: 500 }}>
                     {formatPrice(p.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>

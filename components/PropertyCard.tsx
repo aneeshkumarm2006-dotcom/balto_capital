@@ -51,23 +51,6 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
             {r.name.charAt(0)}
           </PlaceholderImg>
         )}
-        {r.featured && (
-          <div
-            style={{
-              position: 'absolute',
-              top: 18,
-              left: 18,
-              fontFamily: 'var(--serif)',
-              fontStyle: 'italic',
-              fontSize: 14,
-              color: 'var(--ivory)',
-              textShadow: '0 1px 12px rgba(10,25,41,0.4)',
-              letterSpacing: '0.01em',
-            }}
-          >
-            Featured residence
-          </div>
-        )}
         {r.availability === 'coming-soon' && (
           <div
             style={{

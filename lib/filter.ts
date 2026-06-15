@@ -51,8 +51,9 @@ export function applyFilters(
         (a, b) => Math.max(...a.bedroomOptions) - Math.max(...b.bedroomOptions)
       );
       break;
+    case 'name':
     default:
-      out.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      out.sort((a, b) => a.name.localeCompare(b.name));
       break;
   }
   return out;

@@ -110,6 +110,8 @@ export default function MapView({
     return () => ro.disconnect();
   }, [ready]);
 
+  // Build markers and fit the map to them. Runs only when the residence set
+  // changes — NOT on hover/select, so user zoom/pan is never reset.
   useEffect(() => {
     const m = mapRef.current;
     if (!m) return;
@@ -165,7 +167,38 @@ export default function MapView({
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [residences, selectedId, hoverId, ready]);
+  }, [residences, ready]);
+
+  // Update marker styling for hover/selection without re-fitting the view.
+  useEffect(() => {
+    if (!mapRef.current) return;
+    let cancelled = false;
+
+    (async () => {
+      const L = (await import('leaflet')).default;
+      if (cancelled || !mapRef.current) return;
+
+      residences.forEach((r) => {
+        const mk = markersRef.current[r.id];
+        if (!mk) return;
+        const active = r.id === selectedId || r.id === hoverId;
+        mk.setIcon(
+          L.divIcon({
+            className: 'balto-pin-wrap' + (active ? ' active' : ''),
+            html: pinSvg(active),
+            iconSize: active ? [38, 52] : [32, 44],
+            iconAnchor: active ? [19, 52] : [16, 44],
+          })
+        );
+        mk.setZIndexOffset(active ? 1000 : 0);
+      });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId, hoverId, ready]);
 
   useEffect(() => {
     const m = mapRef.current;

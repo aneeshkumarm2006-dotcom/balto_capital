@@ -18,7 +18,7 @@ export function Footer() {
               src="/brand/balto-logo-white.png"
               alt="Balto Capital"
               style={{
-                height: 96,
+                height: 140,
                 width: 'auto',
                 display: 'block',
                 marginBottom: 24,

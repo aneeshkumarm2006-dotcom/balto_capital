@@ -40,14 +40,40 @@ export default function AboutPage() {
   return (
     <main className="page-enter">
       <section
-        className="section bg-cream"
         style={{
+          position: 'relative',
+          overflow: 'hidden',
+          background: 'var(--ink)',
           paddingTop: 'clamp(80px, 12vw, 160px)',
           paddingBottom: 'clamp(80px, 12vw, 160px)',
         }}
       >
-        <div className="container" style={{ textAlign: 'center' }}>
-          <Eyebrow style={{ marginBottom: 32 }}>ABOUT BALTO CAPITAL</Eyebrow>
+        <video
+          className="about-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/assets/city-edmonton.png"
+        >
+          <source src="/video/about-bg.mp4" type="video/mp4" />
+        </video>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(to bottom, rgba(10,25,41,0.62) 0%, rgba(10,25,41,0.38) 40%, rgba(10,25,41,0.72) 100%)',
+          }}
+        />
+        <div
+          className="container"
+          style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}
+        >
+          <Eyebrow color="ivory" style={{ marginBottom: 32 }}>
+            ABOUT BALTO CAPITAL
+          </Eyebrow>
           <div
             className="serif"
             style={{
@@ -55,18 +81,21 @@ export default function AboutPage() {
               fontWeight: 400,
               lineHeight: 0.95,
               letterSpacing: '-0.01em',
+              color: 'var(--ivory)',
             }}
           >
             <span className="italic">Est.</span> 2023.
           </div>
           <p
-            className="body muted"
+            className="body"
             style={{
               fontSize: 18,
               marginTop: 36,
               maxWidth: 540,
               marginLeft: 'auto',
               marginRight: 'auto',
+              color: 'rgba(247,243,236,0.88)',
+              fontWeight: 300,
             }}
           >
             A private real estate lender since 2023, owner-operator since 2025 — today a growing portfolio of family-operated apartment homes across Western Canada.

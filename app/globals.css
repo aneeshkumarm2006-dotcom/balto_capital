@@ -248,6 +248,16 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .property-card .image-wrap { transition: box-shadow 400ms var(--ease); }
 .property-card { transition: transform 500ms var(--ease); }
 
+/* ---------- About hero video ---------- */
+.about-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
 /* ---------- City card ---------- */
 .city-card { position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 3 / 4; background: var(--cream); display: block; }
 .city-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease); }
@@ -287,7 +297,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 }
 .nav {
   display: flex;
-  gap: 40px;
+  gap: 28px;
   justify-content: center;
 }
 .nav-item {
@@ -728,7 +738,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .suites-table { border-top: 1px solid var(--hairline-strong); }
 .suites-row {
   display: grid;
-  grid-template-columns: 1.4fr 0.8fr 0.8fr 1.1fr 1.1fr 0.9fr;
+  grid-template-columns: 1.4fr 0.8fr 1.1fr 1.1fr 0.9fr;
   align-items: center;
   gap: 16px;
   padding: 18px 0;

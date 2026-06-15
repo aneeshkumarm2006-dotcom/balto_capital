@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
@@ -162,80 +162,6 @@ function CinematicHero({
         <p style={{ marginTop: 14, color: 'rgba(247,243,236,0.7)', fontSize: 12.5 }}>
           Prices shown are net effective rent — what you actually pay after any promotion.
         </p>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* 03 · Proof band                                                     */
-/* ------------------------------------------------------------------ */
-function StatCounter({ target, suffix, duration = 1400 }: { target: number; suffix: string; duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const start = target > 100 ? target - 40 : 0;
-          const range = target - start;
-          const startTime = performance.now();
-          const tick = (now: number) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(Math.round(start + range * eased));
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.4 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [target, duration]);
-
-  return <span ref={ref}>{count.toLocaleString('en-US')}{suffix}</span>;
-}
-
-const PROOF = [
-  { value: 1500, suffix: '+', label: 'Doors across Western Canada' },
-  { text: 'Western Canada', label: 'Local teams in every city, growing — Yellowknife coming soon' },
-  { text: 'Since 2023', label: 'In real estate finance — direct ownership since 2025' },
-  { value: 1, suffix: ' day', label: 'Maintenance response standard' },
-];
-
-function ProofBand() {
-  return (
-    <section className="bg-ink" style={{ padding: 'clamp(40px, 6vw, 72px) 0' }}>
-      <div className="container">
-        <div className="home-cards-4">
-          {PROOF.map((s) => (
-            <div key={s.label} style={{ textAlign: 'center' }}>
-              <div
-                className="serif"
-                style={{
-                  fontSize: 'clamp(2rem, 3.6vw, 3.2rem)',
-                  fontWeight: 500,
-                  lineHeight: 1.05,
-                  color: 'var(--ivory)',
-                  marginBottom: 12,
-                }}
-              >
-                {'value' in s ? <StatCounter target={s.value!} suffix={s.suffix!} /> : s.text}
-              </div>
-              <div className="small" style={{ color: 'rgba(247,243,236,0.62)', maxWidth: 220, margin: '0 auto' }}>
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -426,47 +352,6 @@ function HowToRent() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 08 · Resident reviews                                               */
-/* PLACEHOLDER copy — replace with real Google reviews before launch.  */
-/* ------------------------------------------------------------------ */
-const REVIEWS = [
-  { name: 'Resident review', city: 'Edmonton', stars: 5, body: 'Maintenance is quick and the team actually answers. Best rental experience I’ve had in the city.' },
-  { name: 'Resident review', city: 'Saskatoon', stars: 5, body: 'The suite was freshly renovated and move-in was easy. You can tell the owners care about the building.' },
-  { name: 'Resident review', city: 'Regina', stars: 5, body: 'Quiet, secure, and well-kept. Great location near campus and Wascana — happy to have renewed.' },
-];
-
-function ResidentReviews() {
-  return (
-    <section className="section bg-cream">
-      <div className="container">
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
-          <Eyebrow style={{ marginBottom: 18 }}>RESIDENT REVIEWS</Eyebrow>
-          <h2 className="h2 serif">What residents say.</h2>
-        </div>
-        <div className="home-cards-3">
-          {REVIEWS.map((r, i) => (
-            <figure
-              key={i}
-              style={{ margin: 0, background: 'var(--ivory)', border: '1px solid var(--hairline)', padding: 32 }}
-            >
-              <div style={{ color: 'var(--gold)', letterSpacing: 2, marginBottom: 16 }}>
-                {'★'.repeat(r.stars)}
-              </div>
-              <blockquote className="body" style={{ margin: 0, fontSize: 16, lineHeight: 1.75 }}>
-                “{r.body}”
-              </blockquote>
-              <figcaption className="small muted" style={{ marginTop: 20 }}>
-                <span className="serif" style={{ color: 'var(--ink)' }}>{r.name}</span> · {r.city}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* 10 · Our story / heritage                                           */
 /* ------------------------------------------------------------------ */
 function StoryStrip() {
@@ -571,12 +456,10 @@ export default function HomePage() {
   return (
     <main className="page-enter">
       <CinematicHero onSearch={onSearch} />
-      <ProofBand />
       <OurCities />
       <FeaturedResidences />
       <WhyRent />
       <HowToRent />
-      <ResidentReviews />
       <StoryStrip />
       <InquireCTA />
     </main>
