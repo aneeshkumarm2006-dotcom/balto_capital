@@ -297,7 +297,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 }
 .nav {
   display: flex;
-  gap: 28px;
+  gap: 22px;
   justify-content: center;
 }
 .nav-item {

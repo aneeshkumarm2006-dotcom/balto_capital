@@ -56,6 +56,7 @@ export function Footer() {
             <ul>
               <li><a onClick={() => go('/why-balto')}>Why Balto</a></li>
               <li><a onClick={() => go('/about')}>About</a></li>
+              <li><a onClick={() => go('/careers')}>Careers</a></li>
               <li><a onClick={() => go('/inquire')}>Inquire</a></li>
             </ul>
           </div>
@@ -96,7 +97,7 @@ export function Footer() {
                 inquire@baltocapital.com
               </div>
               <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
-                +1 (XXX) XXX-XXX
+                +1 587-207-5171
               </div>
             </div>
           </div>

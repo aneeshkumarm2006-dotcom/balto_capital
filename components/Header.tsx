@@ -14,6 +14,7 @@ export function Header() {
   const { count } = useFavorites();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [careersOpen, setCareersOpen] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -84,6 +85,43 @@ export function Header() {
             <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
               Community Involvement
             </span>
+            <div
+              className={'nav-item has-dropdown ' + (isActive('/careers') ? 'active' : '')}
+              onMouseEnter={() => setCareersOpen(true)}
+              onMouseLeave={() => setCareersOpen(false)}
+            >
+              <Link
+                href="/careers"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  color: 'inherit',
+                }}
+              >
+                Careers <ChevronDown size={14} />
+              </Link>
+              <div
+                className="dropdown"
+                style={{
+                  opacity: careersOpen ? 1 : undefined,
+                  pointerEvents: careersOpen ? 'auto' : undefined,
+                  width: 260,
+                }}
+              >
+                <div
+                  style={{
+                    padding: '14px 18px',
+                    fontSize: 13,
+                    lineHeight: 1.5,
+                    color: 'var(--muted)',
+                  }}
+                >
+                  There are currently no job openings available. Please check
+                  back soon.
+                </div>
+              </div>
+            </div>
             <Link
               href="/inquire"
               className={'nav-item ' + (isActive('/inquire') ? 'active' : '')}
@@ -149,6 +187,10 @@ export function Header() {
           <Link href="/about">About</Link>
           {/* Placeholder — destination pending client direction on content. */}
           <span aria-disabled="true">Community Involvement</span>
+          <Link href="/careers">Careers</Link>
+          <span className="sub" aria-disabled="true">
+            — No openings — check back soon
+          </span>
           <Link href="/inquire">Contact Us</Link>
           <a href={RESIDENT_PORTAL_URL}>Resident Portal</a>
           <Link href="/favorites">
