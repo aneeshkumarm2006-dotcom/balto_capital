@@ -59,7 +59,7 @@ function ComingSoonCity({ city }: { city: City }) {
 
             {sent ? (
               <p className="serif" style={{ color: 'var(--gold)', fontSize: 20 }}>
-                Thank you — we&apos;ll be in touch as homes become available.
+                Thank you, we&apos;ll be in touch as homes become available.
               </p>
             ) : (
               <form

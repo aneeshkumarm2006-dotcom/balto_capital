@@ -4,29 +4,29 @@ import { Eyebrow } from '@/components/Eyebrow';
 import { ArrowRight } from '@/components/icons';
 
 const STANDARDS = [
-  'Restoration over renovation — original detail is preserved where it exists.',
+  'Restoration over renovation, original detail is preserved where it exists.',
   'A single resident manager per building, hired locally.',
   'Maintenance requests addressed within one business day.',
   'Long-term leases preferred; lease terms structured to incentivize stability.',
   'Regular building inspections and preventative maintenance.',
-  'No third-party leasing agents — we represent every residence directly.',
+  'No third-party leasing agents, we represent every residence directly.',
 ];
 
 const FIGURES = [
   {
     n: '2023',
     label: 'IN REAL ESTATE FINANCE',
-    body: 'Balto began in 2023 as a private and mezzanine real estate lender — learning buildings from the capital side first.',
+    body: 'Balto began in 2023 as a private and mezzanine real estate lender, learning buildings from the capital side first.',
   },
   {
     n: '2025',
     label: 'DIRECT OWNERSHIP',
-    body: 'In 2025 we moved into direct ownership — acquiring, renovating, and operating apartment communities ourselves.',
+    body: 'In 2025 we moved into direct ownership, acquiring, renovating, and operating apartment communities ourselves.',
   },
   {
     n: '1,500+',
     label: 'DOORS, AND GROWING',
-    body: 'Apartment homes across Western Canada, with local teams in every city — a portfolio that keeps growing.',
+    body: 'Apartment homes across Western Canada, with local teams in every city, a portfolio that keeps growing.',
   },
   {
     n: '100%',
@@ -98,7 +98,7 @@ export default function AboutPage() {
               fontWeight: 300,
             }}
           >
-            A private real estate lender since 2023, owner-operator since 2025 — today a growing portfolio of family-operated apartment homes across Western Canada.
+            A private real estate lender since 2023, owner-operator since 2025, today a growing portfolio of family-operated apartment homes across Western Canada.
           </p>
         </div>
       </section>
@@ -112,7 +112,7 @@ export default function AboutPage() {
             OUR STORY
           </Eyebrow>
 
-          {/* Lead — manifesto in serif italic */}
+          {/* Lead, manifesto in serif italic */}
           <p
             className="serif italic"
             style={{
@@ -139,7 +139,7 @@ export default function AboutPage() {
           />
         </div>
 
-        {/* Pull-quote cards — 2×2 grid */}
+        {/* Pull-quote cards, 2×2 grid */}
         <div
           className="container"
           style={{
@@ -259,7 +259,7 @@ export default function AboutPage() {
             }}
           />
 
-          {/* Close — serif italic, smaller than the lead */}
+          {/* Close, serif italic, smaller than the lead */}
           <p
             className="serif italic"
             style={{
@@ -341,7 +341,7 @@ export default function AboutPage() {
               className="body muted"
               style={{ maxWidth: 380, margin: 0 }}
             >
-              Four figures that describe how Balto came to be — and how it operates today.
+              Four figures that describe how Balto came to be, and how it operates today.
             </p>
           </div>
           <div

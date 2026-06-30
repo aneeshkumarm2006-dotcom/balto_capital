@@ -33,7 +33,7 @@ export function Footer() {
                 margin: 0,
               }}
             >
-              Apartment homes owned and operated across Western Canada — kept and cared for by the same family team that answers your call.
+              Apartment homes owned and operated across Western Canada, kept and cared for by the same family team that answers your call.
             </p>
           </div>
           <div>

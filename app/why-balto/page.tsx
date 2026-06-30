@@ -7,21 +7,21 @@ import { ArrowRight } from '@/components/icons';
 
 const PILLARS = [
   {
-    eyebrow: 'I — OWNERSHIP',
+    eyebrow: 'I · OWNERSHIP',
     title: 'We own what we manage.',
-    body: 'Balto is run by a brother-and-sister team that owns the buildings outright — no third-party manager between you and your home. The people who answer your call are the people who own the building. It is our single biggest difference.',
+    body: 'Balto is run by a brother-and-sister team that owns the buildings outright, no third-party manager between you and your home. The people who answer your call are the people who own the building. It is our single biggest difference.',
     align: 'left' as const,
   },
   {
-    eyebrow: 'II — RENOVATION',
+    eyebrow: 'II · RENOVATION',
     title: 'Renovated, updated, and secured.',
-    body: 'We buy buildings to keep them, then invest in them: modernized suites, refreshed kitchens and baths, and upgraded building security. Most of the portfolio is value-add — older buildings brought up to a standard worth staying in for years.',
+    body: 'We buy buildings to keep them, then invest in them: modernized suites, refreshed kitchens and baths, and upgraded building security. Most of the portfolio is value-add, older buildings brought up to a standard worth staying in for years.',
     align: 'right' as const,
   },
   {
-    eyebrow: 'III — SERVICE',
+    eyebrow: 'III · SERVICE',
     title: 'One business day. Local in every city.',
-    body: 'Maintenance requests are answered within one business day, by a local team in your city — not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.',
+    body: 'Maintenance requests are answered within one business day, by a local team in your city, not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.',
     align: 'left' as const,
   },
 ];
@@ -96,13 +96,13 @@ export default function WhyBaltoPage() {
                   maxWidth: 460,
                 }}
               >
-                &ldquo;We buy buildings to keep them — which is why we treat every resident as a long-term relationship, not a transaction.&rdquo;
+                &ldquo;We buy buildings to keep them, which is why we treat every resident as a long-term relationship, not a transaction.&rdquo;
               </p>
               <p
                 className="caption muted"
                 style={{ marginTop: 24, letterSpacing: '0.1em' }}
               >
-                — THE BALTO FAMILY
+                THE BALTO FAMILY
               </p>
             </div>
             <div>
@@ -116,7 +116,7 @@ export default function WhyBaltoPage() {
                 className="body muted"
                 style={{ fontSize: 16, lineHeight: 1.8, maxWidth: 580 }}
               >
-                Balto began in 2023 as a private and mezzanine real estate lender, and moved into direct ownership in 2025. Today the portfolio is more than 1,500 doors across Western Canada — and growing — every one of them owned, renovated, and operated in-house.
+                Balto began in 2023 as a private and mezzanine real estate lender, and moved into direct ownership in 2025. Today the portfolio is more than 1,500 doors across Western Canada, and growing, every one of them owned, renovated, and operated in-house.
               </p>
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function WhyBaltoPage() {
               >
                 <SmartImage
                   src={PILLAR_IMAGES[i]}
-                  alt={`${p.eyebrow} — imagery`}
+                  alt={`${p.eyebrow}, imagery`}
                   fallbackLabel={`Pillar ${i + 1} · imagery`}
                   fallbackTone={PILLAR_TONES[i]}
                   fallbackChar={PILLAR_CHARS[i]}

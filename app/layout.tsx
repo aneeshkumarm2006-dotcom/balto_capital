@@ -23,9 +23,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Balto Capital — Apartment homes across Western Canada',
+  title: 'Balto Capital | Apartment homes across Western Canada',
   description:
-    'Family-operated apartment homes across Western Canada — renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way.',
+    'Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way.',
 };
 
 export default function RootLayout({

@@ -97,11 +97,11 @@ function CinematicHero({
             maxWidth: 600,
           }}
         >
-          Thoughtfully maintained apartment homes across Western Canada — owned and
+          Thoughtfully maintained apartment homes across Western Canada, owned and
           run by the same family team that answers your call.
         </p>
 
-        {/* Rental search bar — City · Max Rent · Bedrooms · Search */}
+        {/* Rental search bar, City · Max Rent · Bedrooms · Search */}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -160,7 +160,7 @@ function CinematicHero({
           </button>
         </form>
         <p style={{ marginTop: 14, color: 'rgba(247,243,236,0.7)', fontSize: 12.5 }}>
-          Prices shown are net effective rent — what you actually pay after any promotion.
+          Prices shown are net effective rent, what you actually pay after any promotion.
         </p>
       </div>
     </section>
@@ -227,7 +227,7 @@ function OurCities() {
             <h2 className="h2 serif">Across Western Canada, and growing.</h2>
           </div>
           <p className="body muted" style={{ maxWidth: 400, margin: 0 }}>
-            A focused portfolio across Western Canada — and growing. Every building
+            A focused portfolio across Western Canada, and growing. Every building
             chosen, kept, and cared for with intent. Start with your city.
           </p>
         </div>
@@ -296,7 +296,7 @@ function WhyRent() {
           <Eyebrow style={{ marginBottom: 18 }}>WHY RENT WITH BALTO</Eyebrow>
           <h2 className="h2 serif" style={{ marginBottom: 18 }}>We own what we manage.</h2>
           <p className="body muted" style={{ fontSize: 17 }}>
-            No third-party manager between you and your home — the family that owns
+            No third-party manager between you and your home, the family that owns
             the building is the one that looks after it.
           </p>
         </div>
@@ -382,7 +382,7 @@ function StoryStrip() {
             </h2>
             <p className="body muted" style={{ fontSize: 17, maxWidth: 540, marginBottom: 28 }}>
               Balto began in 2023 as a private and mezzanine real estate lender. In
-              2025 we moved into direct ownership — acquiring, renovating, and
+              2025 we moved into direct ownership, acquiring, renovating, and
               operating apartment communities across Western Canada, a portfolio that
               continues to grow. We buy buildings to keep them, which is why we treat
               every resident as a long-term relationship, not a transaction.
@@ -423,7 +423,7 @@ function InquireCTA() {
         <Eyebrow style={{ marginBottom: 22 }}>BEGIN AN INQUIRY</Eyebrow>
         <h2 className="h2 serif" style={{ marginBottom: 24 }}>Begin your inquiry.</h2>
         <p className="body muted" style={{ fontSize: 18, maxWidth: 520, margin: '0 auto 40px' }}>
-          Tell us the city, the budget, and the move-in date — we’ll find the right home for you.
+          Tell us the city, the budget, and the move-in date, we’ll find the right home for you.
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <button className="btn btn-primary" onClick={() => router.push('/residences')}>

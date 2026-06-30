@@ -46,7 +46,7 @@ export interface City {
   image: string;
   blurb: string;
   bounds: { minLng: number; maxLng: number; minLat: number; maxLat: number };
-  /** Market is announced but not yet live — render as register-interest, not listings. */
+  /** Market is announced but not yet live, render as register-interest, not listings. */
   comingSoon?: boolean;
 }
 
@@ -64,7 +64,7 @@ export const CITIES: Record<CitySlug, City> = {
     label: 'Edmonton',
     province: 'Alberta',
     image: '/assets/city-edmonton.png',
-    blurb: 'The heart of the portfolio — renovated, updated residences across Edmonton’s most livable neighbourhoods, with local management in every building.',
+    blurb: 'The heart of the portfolio, renovated, updated residences across Edmonton’s most livable neighbourhoods, with local management in every building.',
     bounds: { minLng: -113.555, maxLng: -113.470, minLat: 53.520, maxLat: 53.560 },
   },
   regina: {
@@ -80,7 +80,7 @@ export const CITIES: Record<CitySlug, City> = {
     label: 'Yellowknife',
     province: 'Northwest Territories',
     image: '/assets/city-yellowknife.avif',
-    blurb: 'Aurora-touched, lakeside, gold-quiet — the capital of the Northwest Territories, where Great Slave Lake meets the long Northern night.',
+    blurb: 'Aurora-touched, lakeside, gold-quiet, the capital of the Northwest Territories, where Great Slave Lake meets the long Northern night.',
     bounds: { minLng: -114.420, maxLng: -114.330, minLat: 62.430, maxLat: 62.475 },
     comingSoon: true,
   },
@@ -106,7 +106,7 @@ export interface Residence {
   bedroomOptions: number[];
   /** Monthly rent by bedroom count. Keys: 0=Studio, 1..3=Bedroom count. */
   prices: Partial<Record<0 | 1 | 2 | 3, number>>;
-  /** Minimum across `prices` — used on cards / "From $X/mo" labels. */
+  /** Minimum across `prices`, used on cards / "From $X/mo" labels. */
   priceFrom: number;
   /** Short note explaining the advertised net-effective basis (incentive +
    *  lease term). Undefined for Woodridge, which is on its own rate card. */
@@ -115,7 +115,7 @@ export interface Residence {
   featured: boolean;
   /** Build Spec neighbourhood label (shown as the property-page tag). */
   neighbourhood?: string;
-  /** Description tier — drives the condition voice on the property page. */
+  /** Description tier, drives the condition voice on the property page. */
   tier?: Tier;
   heroImage: string;
   gallery: string[];
@@ -128,21 +128,21 @@ export interface Residence {
   unitLabels?: string[];
 }
 
-/** Non-renovated base rate card — applies to every property except Woodridge
+/** Non-renovated base rate card, applies to every property except Woodridge
  *  (across all cities). Studio / 1BR / 2BR / 3BR. */
 const NON_RENOVATED_RATES: Record<0 | 1 | 2 | 3, number> = {
   0: 1100, 1: 1300, 2: 1500, 3: 1600,
 };
 
 /** Standard non-renovated incentive: up to this many months free, advertised
- *  as net effective rent over a (12 + freeMonths)-month lease —
+ *  as net effective rent over a (12 + freeMonths)-month lease -
  *  base × 12 / (12 + freeMonths). e.g. $1,100 × 12 / 14 = $942. */
 const NON_RENOVATED_FREE_MONTHS = 2;
 export const NON_RENOVATED_INCENTIVE = `Up to ${NON_RENOVATED_FREE_MONTHS} months free`;
 const netEffective = (base: number): number =>
   Math.floor((base * 12) / (12 + NON_RENOVATED_FREE_MONTHS));
 
-/** Net effective non-renovated card — what we advertise. */
+/** Net effective non-renovated card, what we advertise. */
 const NON_RENOVATED_NET: Record<0 | 1 | 2 | 3, number> = {
   0: netEffective(NON_RENOVATED_RATES[0]),
   1: netEffective(NON_RENOVATED_RATES[1]),
@@ -150,14 +150,14 @@ const NON_RENOVATED_NET: Record<0 | 1 | 2 | 3, number> = {
   3: netEffective(NON_RENOVATED_RATES[3]),
 };
 
-/** Woodridge keeps its own (renovated-tier) rate card — excluded from the
+/** Woodridge keeps its own (renovated-tier) rate card, excluded from the
  *  non-renovated net-effective scheme above. */
 const WOODRIDGE_RATES: Record<0 | 1 | 2 | 3, number> = {
   0: 1150, 1: 1350, 2: 1550, 3: 1700,
 };
 
 /* ============================================================
-   BALTO CAPITAL — assets (real portfolio, 28 residences)
+   BALTO CAPITAL, assets (real portfolio, 28 residences)
    Coordinates approximated by city centre + deterministic offset
    from the asset slug. Refine per-asset as real geocodes arrive.
    ============================================================ */
@@ -169,13 +169,13 @@ interface RawAsset {
   /** Explicit feature flag. Replaces the old `idx % 4 === 0` heuristic
    *  so reordering the array doesn't accidentally re-shuffle featured cards. */
   featured?: boolean;
-  /** Per-asset alternate views — see Palisades for the canonical example. */
+  /** Per-asset alternate views, see Palisades for the canonical example. */
   hideDetailGallery?: boolean;
   incentives?: string[];
   unitLabels?: string[];
 }
 
-// NOTE: `slug` is the stable URL + asset-folder key — keep it fixed across
+// NOTE: `slug` is the stable URL + asset-folder key, keep it fixed across
 // renames. `name` is the public display name per the Build Spec (Part Two).
 const ASSETS: RawAsset[] = [
   { slug: 'chicklet-house',   name: 'Chicklet House',        city: 'edmonton',  address: '10304 107 Ave NW, Edmonton, AB T5H 0V8' },
@@ -210,10 +210,10 @@ const ASSETS: RawAsset[] = [
   { slug: 'arbour-green',     name: 'Arbour Green',          city: 'edmonton',  address: '12036 - 66 Street, Edmonton, AB' },
   { slug: 'ten-one-26-154',   name: 'Aurora West',           city: 'edmonton',  address: '10126 154 St, Edmonton, AB T5P 2H3' },
   { slug: 'britnell-landing', name: 'Brintnell Landing',     city: 'edmonton',  address: '16255 51 St NW, Edmonton, AB T5Y 0V6' },
-  // The Edge — consolidates the former 'edge' + 'edge-living' entries into one
+  // The Edge, consolidates the former 'edge' + 'edge-living' entries into one
   // premium building at 3005 James Mowatt Trail (Allard). Uses the edge-living photos.
   { slug: 'edge',             name: 'The Edge',              city: 'edmonton',  address: '3005 James Mowatt Trail SW, Edmonton, AB T6W 3P3', featured: true },
-  // Cielo & Greyson — separate buildings, adjacent addresses on Willis Cres.
+  // Cielo & Greyson, separate buildings, adjacent addresses on Willis Cres.
   { slug: 'cielo',            name: 'Cielo',                 city: 'saskatoon', address: '235 Willis Crescent, Saskatoon, SK S7T 0W7' },
   { slug: 'greyson',          name: 'Greyson',               city: 'saskatoon', address: '241 Willis Crescent, Saskatoon, SK' },
   { slug: 'lawson-village',   name: 'Lawson',                city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
@@ -233,11 +233,11 @@ function hashSeed(s: string): number {
   return Math.abs(h);
 }
 
-/** Real lat/lng per property — geocoded via OSM Nominatim by scripts/geocode.mjs.
+/** Real lat/lng per property, geocoded via OSM Nominatim by scripts/geocode.mjs.
  *  Re-run `node scripts/geocode.mjs` when addresses change. */
 const GEOCODED: Record<string, { lat: number; lng: number }> = {
-  'chicklet-house':   { lat: 53.55151, lng: -113.49765 }, // 10304 107 Ave — exact house match
-  'woodridge':        { lat: 53.54850, lng: -113.59388 }, // 10139 158 St — corrected to Britannia-Youngstown
+  'chicklet-house':   { lat: 53.55151, lng: -113.49765 }, // 10304 107 Ave, exact house match
+  'woodridge':        { lat: 53.54850, lng: -113.59388 }, // 10139 158 St, corrected to Britannia-Youngstown
   'palisades':        { lat: 53.55377, lng: -113.51541 },
   'hamlet':           { lat: 53.56818, lng: -113.53571 },
   'copper-manor':     { lat: 53.58946, lng: -113.46890 },
@@ -247,7 +247,7 @@ const GEOCODED: Record<string, { lat: number; lng: number }> = {
   'layali':           { lat: 53.60011, lng: -113.44043 },
   'sky-manor':        { lat: 53.53347, lng: -113.59051 },
   'grandview-manor':  { lat: 53.56902, lng: -113.46863 },
-  'cedar-manor':      { lat: 53.57453, lng: -113.46720 }, // 12040 82 St — corrected (anchored to Courts Manor, same street)
+  'cedar-manor':      { lat: 53.57453, lng: -113.46720 }, // 12040 82 St, corrected (anchored to Courts Manor, same street)
   'courts-manor':     { lat: 53.57766, lng: -113.46717 },
   'oakwood-manor':    { lat: 53.56408, lng: -113.49233 },
   'royal-manor':      { lat: 53.55293, lng: -113.49664 },
@@ -262,7 +262,7 @@ const GEOCODED: Record<string, { lat: number; lng: number }> = {
   'ten-one-26-154':   { lat: 53.54219, lng: -113.58721 },
   'britnell-landing': { lat: 53.62481, lng: -113.41321 },
   'edge':             { lat: 53.41544, lng: -113.52042 },
-  // Saskatoon — Cielo at 235 Willis, Greyson at 241 Willis (separate buildings).
+  // Saskatoon, Cielo at 235 Willis, Greyson at 241 Willis (separate buildings).
   'cielo':            { lat: 52.08840, lng: -106.63143 },
   'greyson':          { lat: 52.08835, lng: -106.62955 },
   'lawson-village':   { lat: 52.16912, lng: -106.62724 },
@@ -505,13 +505,13 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/balwin-manor/08.jpg',
     ],
   },
-  // Parkdale / Strathearn / Rivergate / Beverly — the sync script auto-
+  // Parkdale / Strathearn / Rivergate / Beverly, the sync script auto-
   // promoted the first photo to 01-main.jpg since there's no dedicated
   // Main shot from the client yet. Hero comes from that file; the rest
   // populate the gallery. When a proper Main arrives, the file naming
   // re-sorts automatically on next sync.
   parkdale: {
-    hero: '/assets/placeholder.jpeg',
+    hero: '/assets/coming-soon.png',
     gallery: [
       '/assets/parkdale/01-main.jpg',
       '/assets/parkdale/02.jpg',
@@ -524,7 +524,7 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   strathearn: {
-    hero: '/assets/placeholder.jpeg',
+    hero: '/assets/coming-soon.png',
     gallery: [
       '/assets/strathearn/01-main.jpg',
       '/assets/strathearn/02.jpg',
@@ -534,7 +534,7 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   rivergate: {
-    hero: '/assets/placeholder.jpeg',
+    hero: '/assets/coming-soon.png',
     gallery: [
       '/assets/rivergate/01-main.jpg',
       '/assets/rivergate/02.jpg',
@@ -544,7 +544,7 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   beverly: {
-    hero: '/assets/placeholder.jpeg',
+    hero: '/assets/coming-soon.png',
     gallery: [
       '/assets/beverly/01-main.jpg',
       '/assets/beverly/02.jpg',
@@ -567,7 +567,7 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
       '/assets/royal-manor/09.jpg',
     ],
   },
-  // Saskatoon — Cielo & Greyson split + new Edge Living + renames.
+  // Saskatoon, Cielo & Greyson split + new Edge Living + renames.
   cielo: {
     hero: '/assets/cielo/01-main.jpg',
     gallery: Array.from({ length: 17 }, (_, i) =>
@@ -578,17 +578,17 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     gallery: Array.from({ length: 28 }, (_, i) =>
       `/assets/greyson/${String(i + 2).padStart(2, '0')}.jpg`),
   },
-  // The Edge — photos live under /assets/edge-living/ (folder kept as-is).
+  // The Edge, photos live under /assets/edge-living/ (folder kept as-is).
   edge: {
     hero: '/assets/edge-living/01-main.jpg',
     gallery: Array.from({ length: 12 }, (_, i) =>
       `/assets/edge-living/${String(i + 1).padStart(2, '0')}.jpg`),
   },
-  pioneer:           { hero: '/assets/placeholder.jpeg', gallery: [] },
-  'arbour-green':    { hero: '/assets/placeholder.jpeg', gallery: [] },
-  'ten-one-26-154':  { hero: '/assets/placeholder.jpeg', gallery: [] },
-  'britnell-landing':{ hero: '/assets/placeholder.jpeg', gallery: [] },
-  'chicklet-house':  { hero: '/assets/placeholder.jpeg', gallery: [] },
+  pioneer:           { hero: '/assets/coming-soon.png', gallery: [] },
+  'arbour-green':    { hero: '/assets/coming-soon.png', gallery: [] },
+  'ten-one-26-154':  { hero: '/assets/coming-soon.png', gallery: [] },
+  'britnell-landing':{ hero: '/assets/coming-soon.png', gallery: [] },
+  'chicklet-house':  { hero: '/assets/coming-soon.png', gallery: [] },
   'lawson-village': {
     hero: '/assets/lawson-village/01-main.jpg',
     gallery: [
@@ -619,7 +619,7 @@ function pricesFor(raw: RawAsset): Partial<Record<0 | 1 | 2 | 3, number>> {
 /** Per-building copy from the Build Spec, Part Two. `description` is the
  *  ready-to-use blurb; `closeTo` populates the NEARBY list. Keyed by slug.
  *  NOTE: bed/bath, rents, and in-suite finishes still come from the
- *  management system — verify before publishing. */
+ *  management system, verify before publishing. */
 interface BuildingCopy {
   neighbourhood: string;
   tier: Tier;
@@ -630,27 +630,27 @@ interface BuildingCopy {
 const COPY: Record<string, BuildingCopy> = {
   'chicklet-house': {
     neighbourhood: 'Central McDougall', tier: 'value-add',
-    description: 'A renovated and updated residence on Edmonton’s multicultural “Avenue of Nations,” just north of downtown. Modernized suites and secured entry in a highly walkable, transit-rich pocket — steps from the diverse restaurants and shops of 107 Avenue, with MacEwan University, the Royal Alexandra Hospital, and the Metro Line LRT all close by.',
+    description: 'A renovated and updated residence on Edmonton’s multicultural “Avenue of Nations,” just north of downtown. Modernized suites and secured entry in a highly walkable, transit-rich pocket, steps from the diverse restaurants and shops of 107 Avenue, with MacEwan University, the Royal Alexandra Hospital, and the Metro Line LRT all close by.',
     closeTo: ['107 Ave “Avenue of Nations” dining', 'MacEwan University', 'Royal Alexandra Hospital', 'Kingsway Mall', 'Metro Line LRT', 'downtown'],
   },
   hamlet: {
     neighbourhood: '124 St / Westmount', tier: 'value-add',
-    description: 'A renovated character walk-up on Edmonton’s most celebrated independent shopping street. Updated suites pair handsome mid-century proportions with refreshed kitchens and baths, secured entry, and improved common areas. Step out the door into the 124 Street District — galleries, boutiques, and the city’s best-loved bakeries and cafés — with the river valley and downtown minutes away.',
+    description: 'A renovated character walk-up on Edmonton’s most celebrated independent shopping street. Updated suites pair handsome mid-century proportions with refreshed kitchens and baths, secured entry, and improved common areas. Step out the door into the 124 Street District, galleries, boutiques, and the city’s best-loved bakeries and cafés, with the river valley and downtown minutes away.',
     closeTo: ['Duchess Bake Shop', 'Roxy Theatre', '124 Grand Market', 'Government House Park & river valley', 'downtown', 'transit on 124 St'],
   },
   acadian: {
     neighbourhood: 'Inglewood', tier: 'value-add',
-    description: 'In Inglewood, an established central neighbourhood beside the 124 Street District. This renovated and updated building puts the corridor’s cafés, galleries, and boutiques within easy reach — modernized suites, upgraded security, and a quiet residential setting near one of Edmonton’s most walkable streets.',
+    description: 'In Inglewood, an established central neighbourhood beside the 124 Street District. This renovated and updated building puts the corridor’s cafés, galleries, and boutiques within easy reach, modernized suites, upgraded security, and a quiet residential setting near one of Edmonton’s most walkable streets.',
     closeTo: ['124 Street shops & restaurants', 'Duchess Bake Shop', 'art galleries', 'Westmount Centre', 'downtown & Jasper Avenue', 'transit'],
   },
   kafa: {
     neighbourhood: 'Calder', tier: 'value-add',
-    description: 'A renovated building in Calder, a quiet, established north-central neighbourhood. Updated suites and secured entry in a mature, tree-lined setting — close to NAIT, Kingsway Mall, and the Yellowhead, with easy transit and downtown access for commuters.',
+    description: 'A renovated building in Calder, a quiet, established north-central neighbourhood. Updated suites and secured entry in a mature, tree-lined setting, close to NAIT, Kingsway Mall, and the Yellowhead, with easy transit and downtown access for commuters.',
     closeTo: ['124 Street District (walk)', 'Westmount Centre', 'Kingsway Mall', 'Yellowhead Trail', 'downtown', 'transit'],
   },
   'royal-lady': {
     neighbourhood: 'Downtown / MacEwan', tier: 'value-add',
-    description: 'Steps from MacEwan University and the ICE District, on the northern edge of downtown. This renovated and updated building offers modernized suites and upgraded security in a location built for students and young professionals — walk to class, work, and Rogers Place, with LRT and Jasper Avenue minutes away.',
+    description: 'Steps from MacEwan University and the ICE District, on the northern edge of downtown. This renovated and updated building offers modernized suites and upgraded security in a location built for students and young professionals, walk to class, work, and Rogers Place, with LRT and Jasper Avenue minutes away.',
     closeTo: ['MacEwan University', 'ICE District & Rogers Place', 'downtown core', 'LRT', 'Jasper Avenue', 'river valley'],
   },
   'royal-manor': {
@@ -680,7 +680,7 @@ const COPY: Record<string, BuildingCopy> = {
   },
   'oakwood-manor': {
     neighbourhood: 'Spruce Avenue', tier: 'value-add',
-    description: 'In Spruce Avenue, a central neighbourhood on 97 Street near Kingsway and the 118 Avenue corridor. This renovated building offers updated suites and secured entry in a well-connected inner-city location — close to Kingsway Mall, NAIT, the Royal Alexandra Hospital, transit, and downtown.',
+    description: 'In Spruce Avenue, a central neighbourhood on 97 Street near Kingsway and the 118 Avenue corridor. This renovated building offers updated suites and secured entry in a well-connected inner-city location, close to Kingsway Mall, NAIT, the Royal Alexandra Hospital, transit, and downtown.',
     closeTo: ['118 Avenue', 'downtown (short drive)', 'Royal Alexandra Hospital', 'NAIT', 'transit'],
   },
   'catalina-estates': {
@@ -690,7 +690,7 @@ const COPY: Record<string, BuildingCopy> = {
   },
   rivergate: {
     neighbourhood: 'Cromdale', tier: 'value-add',
-    description: 'A renovated building in Cromdale, an established inner-city neighbourhood overlooking the river valley. Updated suites and secured entry in a central, well-connected pocket — steps from the 118 Avenue corridor’s cafés and arts spaces, with quick downtown and transit access.',
+    description: 'A renovated building in Cromdale, an established inner-city neighbourhood overlooking the river valley. Updated suites and secured entry in a central, well-connected pocket, steps from the 118 Avenue corridor’s cafés and arts spaces, with quick downtown and transit access.',
     closeTo: ['118 Avenue', 'downtown', 'Commonwealth Rec Centre', 'transit', 'NAIT'],
   },
   'copper-manor': {
@@ -710,12 +710,12 @@ const COPY: Record<string, BuildingCopy> = {
   },
   layali: {
     neighbourhood: 'York', tier: 'value-add',
-    description: 'A renovated building in York, a quiet northeast residential neighbourhood with good road access and nearby shopping and schools. Updated suites and secured entry — comfortable, practical value close to transit.',
+    description: 'A renovated building in York, a quiet northeast residential neighbourhood with good road access and nearby shopping and schools. Updated suites and secured entry, comfortable, practical value close to transit.',
     closeTo: ['Northgate & Clareview shopping', 'Clareview LRT (nearby)', 'schools', 'Anthony Henday access'],
   },
   beverly: {
     neighbourhood: 'Beverly Heights', tier: 'value-add',
-    description: 'A renovated and updated building in Beverly Heights, a mature northeast neighbourhood overlooking the river valley. Modernized suites and secured entry close to Rundle Park, the river valley golf courses, and transit — green space and connectivity at an accessible rent.',
+    description: 'A renovated and updated building in Beverly Heights, a mature northeast neighbourhood overlooking the river valley. Modernized suites and secured entry close to Rundle Park, the river valley golf courses, and transit, green space and connectivity at an accessible rent.',
     closeTo: ['Rundle Park', 'river valley & golf', 'Coliseum/Stadium LRT', 'downtown', 'transit'],
   },
   pioneer: {
@@ -725,7 +725,7 @@ const COPY: Record<string, BuildingCopy> = {
   },
   woodridge: {
     neighbourhood: 'Britannia-Youngstown', tier: 'value-add',
-    description: 'A renovated building in Britannia-Youngstown, an established west-end neighbourhood near the Stony Plain Road corridor. Updated suites and secured entry with quick routes to West Edmonton Mall and the Misericordia Hospital — practical value with everyday amenities close by and the future Valley Line West LRT nearby.',
+    description: 'A renovated building in Britannia-Youngstown, an established west-end neighbourhood near the Stony Plain Road corridor. Updated suites and secured entry with quick routes to West Edmonton Mall and the Misericordia Hospital, practical value with everyday amenities close by and the future Valley Line West LRT nearby.',
     closeTo: ['West Edmonton Mall', 'Misericordia Hospital', 'Stony Plain Road shops', 'Meadowlark', 'future Valley Line West LRT'],
   },
   'sky-manor': {
@@ -735,58 +735,58 @@ const COPY: Record<string, BuildingCopy> = {
   },
   'ten-one-26-154': {
     neighbourhood: 'Canora', tier: 'value-add',
-    description: 'A renovated and updated building in Canora, an established west-end neighbourhood near the Stony Plain Road corridor. Modernized suites and secured entry, close to shopping, schools, and Misericordia Hospital — with the coming Valley Line West LRT set to improve the commute downtown.',
+    description: 'A renovated and updated building in Canora, an established west-end neighbourhood near the Stony Plain Road corridor. Modernized suites and secured entry, close to shopping, schools, and Misericordia Hospital, with the coming Valley Line West LRT set to improve the commute downtown.',
     closeTo: ['Stony Plain Road', 'West Edmonton Mall', 'Misericordia Hospital', 'schools', 'future Valley Line West LRT'],
   },
   strathearn: {
     neighbourhood: 'Strathearn', tier: 'newer',
-    description: 'A standout address in Strathearn, a quiet, mature southeast neighbourhood perched above the river valley. Bright, updated suites with modern finishes and secured entry, moments from Mill Creek Ravine, the Bonnie Doon shopping area, and the Valley Line LRT — with downtown and the University of Alberta both a short hop across the river.',
+    description: 'A standout address in Strathearn, a quiet, mature southeast neighbourhood perched above the river valley. Bright, updated suites with modern finishes and secured entry, moments from Mill Creek Ravine, the Bonnie Doon shopping area, and the Valley Line LRT, with downtown and the University of Alberta both a short hop across the river.',
     closeTo: ['Mill Creek Ravine trails', 'Bonnie Doon shopping', 'Valley Line LRT', 'river valley', 'University of Alberta', 'downtown'],
   },
   'britnell-landing': {
     neighbourhood: 'Brintnell', tier: 'newer',
-    description: 'A newer building in the Brintnell area of northeast Edmonton, surrounded by established shopping, schools, and parks. Modern suites and secured entry with easy Manning Drive and Anthony Henday access — a fresh, family-friendly option with everyday amenities close by.',
+    description: 'A newer building in the Brintnell area of northeast Edmonton, surrounded by established shopping, schools, and parks. Modern suites and secured entry with easy Manning Drive and Anthony Henday access, a fresh, family-friendly option with everyday amenities close by.',
     closeTo: ['Anthony Henday Drive', 'new retail & schools', 'parks', 'transit'],
   },
   edge: {
     neighbourhood: 'Allard', tier: 'premium',
-    description: 'The Edge is a contemporary residence in Allard, one of Edmonton’s fast-growing southside communities. Modern open-concept suites, premium finishes, and secured building access, surrounded by new retail, parks, and schools — with quick Anthony Henday connections and the future Heritage Valley LRT planned nearby. Elevated rental living, built for how people live now.',
+    description: 'The Edge is a contemporary residence in Allard, one of Edmonton’s fast-growing southside communities. Modern open-concept suites, premium finishes, and secured building access, surrounded by new retail, parks, and schools, with quick Anthony Henday connections and the future Heritage Valley LRT planned nearby. Elevated rental living, built for how people live now.',
     closeTo: ['Heritage Valley shopping', 'parks & schools', 'Anthony Henday Drive', 'future Heritage Valley LRT', 'QEII to Calgary'],
   },
-  // Palisades: not in the Build Spec Part Two — copy below is drafted in-house
+  // Palisades: not in the Build Spec Part Two, copy below is drafted in-house
   // from the tier map (Oliver / Wîhkwêntôwin, value-add). VERIFY before publishing.
   palisades: {
     neighbourhood: 'Oliver / Wîhkwêntôwin', tier: 'value-add',
-    description: 'A renovated and updated building in Oliver (Wîhkwêntôwin), one of Edmonton’s most walkable downtown-edge neighbourhoods. Modernized suites and secured entry steps from the river valley, Jasper Avenue, and the Brewery District — with the Valley Line West LRT and the downtown core close at hand.',
+    description: 'A renovated and updated building in Oliver (Wîhkwêntôwin), one of Edmonton’s most walkable downtown-edge neighbourhoods. Modernized suites and secured entry steps from the river valley, Jasper Avenue, and the Brewery District, with the Valley Line West LRT and the downtown core close at hand.',
     closeTo: ['Jasper Avenue', 'Brewery District shopping', 'river valley', 'MacEwan University', 'downtown core', 'transit'],
   },
   cielo: {
     neighbourhood: 'Stonebridge', tier: 'newer',
-    description: 'A contemporary residence in Stonebridge, one of Saskatoon’s most popular newer neighbourhoods. Bright, modern suites and secured entry in a master-planned community built for easy living — walk to grocery, restaurants, parks, and pathways, with a direct University of Saskatchewan bus connection and quick Circle Drive access across the city.',
+    description: 'A contemporary residence in Stonebridge, one of Saskatoon’s most popular newer neighbourhoods. Bright, modern suites and secured entry in a master-planned community built for easy living, walk to grocery, restaurants, parks, and pathways, with a direct University of Saskatchewan bus connection and quick Circle Drive access across the city.',
     closeTo: ['Stonebridge shopping (Sobeys, restaurants)', 'parks & pathways', 'Stonebridge Library', 'direct U of S transit', 'Circle Drive', 'schools'],
   },
   greyson: {
     neighbourhood: 'Stonebridge', tier: 'newer',
-    description: 'A modern building in the heart of Stonebridge, steps from its shops, parks, and interconnected walking paths. Contemporary suites and secured entry in a vibrant, family-friendly south-end community — with a direct bus to the University of Saskatchewan and fast Circle Drive connections to downtown and beyond.',
+    description: 'A modern building in the heart of Stonebridge, steps from its shops, parks, and interconnected walking paths. Contemporary suites and secured entry in a vibrant, family-friendly south-end community, with a direct bus to the University of Saskatchewan and fast Circle Drive connections to downtown and beyond.',
     closeTo: ['Stonebridge amenities', 'grocery & dining', 'parks & pathways', 'direct U of S transit', 'Circle Drive', 'downtown access'],
   },
   'lawson-village': {
     neighbourhood: 'Lawson Heights', tier: 'value-add',
-    description: 'A well-positioned residence in established Lawson Heights, one of Saskatoon’s most convenient north-end neighbourhoods. Comfortable, updated suites and secured entry in a peaceful, tree-lined setting — with Lawson Heights Mall right across the way and the river trails minutes from your door.',
+    description: 'A well-positioned residence in established Lawson Heights, one of Saskatoon’s most convenient north-end neighbourhoods. Comfortable, updated suites and secured entry in a peaceful, tree-lined setting, with Lawson Heights Mall right across the way and the river trails minutes from your door.',
     closeTo: ['Lawson Heights Mall', 'groceries, dining, medical', 'Meewasin Valley Trail & South Saskatchewan River', 'schools', 'downtown (short commute)'],
   },
   'lockwood-arms': {
     neighbourhood: 'Whitmore Park', tier: 'value-add',
-    description: 'Two updated buildings in a settled southeast Regina neighbourhood, minutes from the University of Regina and the green expanse of Wascana Centre — one of North America’s largest urban parks. Comfortable suites and secured entry in a quiet residential setting, close to shopping, parks, and the lake, with the campus and downtown both within reach.',
+    description: 'Two updated buildings in a settled southeast Regina neighbourhood, minutes from the University of Regina and the green expanse of Wascana Centre, one of North America’s largest urban parks. Comfortable suites and secured entry in a quiet residential setting, close to shopping, parks, and the lake, with the campus and downtown both within reach.',
     closeTo: ['University of Regina', 'Wascana Centre & lake', 'Albert St / Gordon Rd shopping', 'schools', 'downtown access'],
   },
 };
 
-/** Standard condition line per tier — used as the second Overview paragraph. */
+/** Standard condition line per tier, used as the second Overview paragraph. */
 const TIER_LINE: Record<Tier, string> = {
-  'value-add': 'Renovated and updated under Balto — modernized suites, secured entry, and refreshed common areas, family-operated and locally managed with a one-business-day maintenance standard.',
-  newer: 'A newer building with bright, well-finished suites and secured entry — family-operated and locally managed, with a one-business-day maintenance standard.',
-  premium: 'Fully elevated rental living — premium finishes, open-concept suites, and secured building access, family-operated and locally managed.',
+  'value-add': 'Renovated and updated under Balto, modernized suites, secured entry, and refreshed common areas, family-operated and locally managed with a one-business-day maintenance standard.',
+  newer: 'A newer building with bright, well-finished suites and secured entry, family-operated and locally managed, with a one-business-day maintenance standard.',
+  premium: 'Fully elevated rental living, premium finishes, open-concept suites, and secured building access, family-operated and locally managed.',
   'coming-soon': 'Coming soon. Register your interest and we’ll be in touch as homes become available.',
 };
 
@@ -840,10 +840,10 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     neighbourhood: copy?.neighbourhood,
     tier: copy?.tier,
     description: copy?.description
-      ?? `${raw.name} — a Balto residence at ${streetLine} in ${cityLabel}.`,
+      ?? `${raw.name}, a Balto residence at ${streetLine} in ${cityLabel}.`,
     longDescription: copy
       ? TIER_LINE[copy.tier]
-      : `${raw.name} is held within the Balto portfolio at ${raw.address}. The building is operated to the Balto standard — restored where appropriate, maintained by a resident manager, and let on terms intended to favour long stays. Detailed unit plans, finishes, and current availability are released on request.`,
+      : `${raw.name} is held within the Balto portfolio at ${raw.address}. The building is operated to the Balto standard, restored where appropriate, maintained by a resident manager, and let on terms intended to favour long stays. Detailed unit plans, finishes, and current availability are released on request.`,
     bedrooms: bedroomLabel(bedroomOptions),
     bedroomOptions,
     prices,

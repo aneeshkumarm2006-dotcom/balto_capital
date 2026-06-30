@@ -111,7 +111,7 @@ export default function MapView({
   }, [ready]);
 
   // Build markers and fit the map to them. Runs only when the residence set
-  // changes — NOT on hover/select, so user zoom/pan is never reset.
+  // changes, NOT on hover/select, so user zoom/pan is never reset.
   useEffect(() => {
     const m = mapRef.current;
     if (!m) return;

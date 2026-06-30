@@ -1,5 +1,5 @@
 /* ============================================================
-   BALTO CAPITAL — design tokens & base styles
+   BALTO CAPITAL, design tokens & base styles
    Editorial / quiet / hardcover-monograph
    ============================================================ */
 
@@ -704,7 +704,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .hero-split { display: grid; }
 
 /* ============================================================
-   Homepage (Build Spec) — grids & hero search
+   Homepage (Build Spec), grids & hero search
    ============================================================ */
 .home-cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .home-cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 3vw, 48px); }
@@ -762,7 +762,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .detail-grid .map-controls { display: none; }
 
 /* ============================================================
-   MOTION — scroll-reveal + ken-burns + premium hovers
+   MOTION, scroll-reveal + ken-burns + premium hovers
    ============================================================ */
 .reveal-on-scroll {
   opacity: 0;
@@ -847,7 +847,7 @@ body.reveal-safety .reveal-on-scroll { opacity: 1 !important; transform: none !i
 }
 
 /* ============================================================
-   LEAFLET overrides — Balto styling
+   LEAFLET overrides, Balto styling
    ============================================================ */
 .balto-mapview { position: relative; overflow: hidden; }
 .balto-mapview .leaflet-container {

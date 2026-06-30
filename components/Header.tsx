@@ -81,7 +81,7 @@ export function Header() {
             >
               About
             </Link>
-            {/* Placeholder — destination pending client direction on content. */}
+            {/* Placeholder, destination pending client direction on content. */}
             <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
               Community Involvement
             </span>
@@ -179,17 +179,17 @@ export function Header() {
         </div>
         <nav>
           <Link href="/residences">Properties</Link>
-          <Link className="sub" href="/residences/saskatoon">— Saskatoon</Link>
-          <Link className="sub" href="/residences/edmonton">— Edmonton</Link>
-          <Link className="sub" href="/residences/regina">— Regina</Link>
-          <Link className="sub" href="/residences/yellowknife">— Yellowknife (Coming soon)</Link>
+          <Link className="sub" href="/residences/saskatoon">Saskatoon</Link>
+          <Link className="sub" href="/residences/edmonton">Edmonton</Link>
+          <Link className="sub" href="/residences/regina">Regina</Link>
+          <Link className="sub" href="/residences/yellowknife">Yellowknife (Coming soon)</Link>
           <Link href="/why-balto">Why Balto</Link>
           <Link href="/about">About</Link>
-          {/* Placeholder — destination pending client direction on content. */}
+          {/* Placeholder, destination pending client direction on content. */}
           <span aria-disabled="true">Community Involvement</span>
           <Link href="/careers">Careers</Link>
           <span className="sub" aria-disabled="true">
-            — No openings — check back soon
+            No openings · check back soon
           </span>
           <Link href="/inquire">Contact Us</Link>
           <a href={RESIDENT_PORTAL_URL}>Resident Portal</a>

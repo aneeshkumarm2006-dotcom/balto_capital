@@ -5,8 +5,8 @@ import type { Filters } from './FiltersPanel';
 
 const OPTIONS: { v: Filters['sort']; label: string }[] = [
   { v: 'name', label: 'Alphabetical (A–Z)' },
-  { v: 'price-asc', label: 'Price — ascending' },
-  { v: 'price-desc', label: 'Price — descending' },
+  { v: 'price-asc', label: 'Price (low to high)' },
+  { v: 'price-desc', label: 'Price (high to low)' },
   { v: 'bedrooms', label: 'Bedrooms' },
 ];
 

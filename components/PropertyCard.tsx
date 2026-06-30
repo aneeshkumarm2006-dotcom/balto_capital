@@ -34,7 +34,7 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
         router.push(to);
       }}
       className="property-card"
-      aria-label={`${r.name} — ${r.cityLabel}`}
+      aria-label={`${r.name}, ${r.cityLabel}`}
     >
       <div className="image-wrap">
         {r.heroImage && !imgErrored ? (
@@ -44,7 +44,7 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
             alt={r.name}
             loading="lazy"
             onError={() => setImgErrored(true)}
-            style={r.heroImage === '/assets/placeholder.jpeg' ? { objectFit: 'contain', background: '#fff' } : undefined}
+            style={r.heroImage === '/assets/coming-soon.png' ? { objectFit: 'contain', background: '#fff' } : undefined}
           />
         ) : (
           <PlaceholderImg label={`${r.name} · exterior`} tone={cardTone}>

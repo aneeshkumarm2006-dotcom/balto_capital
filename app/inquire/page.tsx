@@ -70,7 +70,7 @@ export default function ContactPage() {
               <div className="divider" style={{ margin: '32px 0' }} />
               <Eyebrow style={{ marginBottom: 8 }}>OFFICE HOURS</Eyebrow>
               <div className="small" style={{ marginBottom: 4 }}>
-                Monday — Friday · 9 to 6
+                Monday to Friday · 9 to 6
               </div>
               <div className="small muted">Saturday by appointment</div>
             </div>

@@ -138,9 +138,10 @@ export default function ResidenceDetailPage({
                 style={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: r.heroImage === '/assets/coming-soon.png' ? 'contain' : 'cover',
+                  background: r.heroImage === '/assets/coming-soon.png' ? '#fff' : undefined,
                 }}
-                className="ken-burns"
+                className={r.heroImage === '/assets/coming-soon.png' ? undefined : 'ken-burns'}
               />
             ) : (
               <PlaceholderImg label={`${r.name} · main`} tone={TONES[0]}>
@@ -305,7 +306,7 @@ export default function ResidenceDetailPage({
 
             <h2 className="h2 serif" style={{ marginBottom: 12 }}>Suites</h2>
             <p className="small muted" style={{ marginBottom: 28 }}>
-              Rents shown are net effective — what you pay after any promotion. Square
+              Rents shown are net effective, what you pay after any promotion. Square
               footage and live availability are confirmed at viewing.
             </p>
             <div className="suites-table" role="table">
@@ -321,7 +322,7 @@ export default function ResidenceDetailPage({
                   <span role="cell" className="serif" style={{ fontSize: 16, fontWeight: 500 }}>
                     {p.label}
                   </span>
-                  <span role="cell" className="muted">—</span>
+                  <span role="cell" className="muted">–</span>
                   <span role="cell" className="serif" style={{ fontWeight: 500 }}>
                     {formatPrice(p.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>
                   </span>
@@ -422,7 +423,7 @@ export default function ResidenceDetailPage({
                 {r.availability === 'available' ? 'Available now' : 'Coming soon'}
               </div>
               <div className="caption muted" style={{ marginBottom: 28 }}>
-                Net effective rent — what you pay after any promotion.
+                Net effective rent, what you pay after any promotion.
               </div>
 
               <div className="divider" style={{ marginBottom: 22 }} />

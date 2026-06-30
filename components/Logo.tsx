@@ -16,7 +16,7 @@ export function Logo({ variant = 'light', height = 30 }: LogoProps) {
     <button
       type="button"
       onClick={() => router.push('/')}
-      aria-label="Balto Capital — home"
+      aria-label="Balto Capital, home"
       style={{
         background: 'transparent',
         border: 0,
