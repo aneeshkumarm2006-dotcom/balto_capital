@@ -43,12 +43,12 @@ function CinematicHero({
       }}
     >
       <ParallaxImage
-        src="/assets/city-edmonton.png"
-        alt="Western Canadian skyline at twilight"
+        src="/assets/hero-home.png"
+        alt="A resident at home with her dog in a Balto apartment"
         kenBurns
         eager
         speed={0.16}
-        objectPosition="center 40%"
+        objectPosition="center center"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       />
       <div
@@ -56,7 +56,7 @@ function CinematicHero({
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to bottom, rgba(10,25,41,0.50) 0%, rgba(10,25,41,0.12) 35%, rgba(10,25,41,0.58) 100%)',
+            'linear-gradient(to bottom, rgba(10,25,41,0.58) 0%, rgba(10,25,41,0.40) 45%, rgba(10,25,41,0.66) 100%)',
         }}
       />
       <div
