@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
-import { ParallaxImage } from '@/components/ParallaxImage';
 import { PropertyCard } from '@/components/PropertyCard';
 import { useTilt } from '@/components/useTilt';
 import { ArrowRight, SearchIcon } from '@/components/icons';
@@ -42,14 +41,20 @@ function CinematicHero({
         overflow: 'hidden',
       }}
     >
-      <ParallaxImage
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src="/assets/hero-home.png"
         alt="A resident at home with her dog in a Balto apartment"
-        kenBurns
-        eager
-        speed={0.16}
-        objectPosition="center center"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        loading="eager"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          // Anchor near the top so the resident's head is always fully in frame.
+          objectPosition: 'center top',
+        }}
       />
       <div
         style={{
