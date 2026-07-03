@@ -628,18 +628,20 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   // populate the gallery. When a proper Main arrives, the file naming
   // re-sorts automatically on next sync.
   parkdale: {
-    // Cover + interiors replaced with Unit 202 AI Unfurnished renders (2026).
-    hero: '/assets/parkdale/01-main.png', // Living room
+    // No facade shot yet — keep the coming-soon cover; Unit 202 AI Unfurnished
+    // interiors populate the gallery (2026).
+    hero: '/assets/coming-soon.png',
     gallery: [
+      '/assets/parkdale/01-main.png', // Living room
       '/assets/parkdale/02.png', // Kitchen
       '/assets/parkdale/03.png', // Master bedroom
       '/assets/parkdale/04.png', // Bedroom
     ],
   },
   strathearn: {
-    // First interior promoted to cover (no coming-soon placeholder).
-    hero: '/assets/strathearn/01-main.jpg',
+    hero: '/assets/coming-soon.png',
     gallery: [
+      '/assets/strathearn/01-main.jpg',
       '/assets/strathearn/02.jpg',
       '/assets/strathearn/03.jpg',
       '/assets/strathearn/04.jpg',
@@ -647,9 +649,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   rivergate: {
-    // First interior promoted to cover (no coming-soon placeholder).
-    hero: '/assets/rivergate/01-main.jpg',
+    hero: '/assets/coming-soon.png',
     gallery: [
+      '/assets/rivergate/01-main.jpg',
       '/assets/rivergate/02.jpg',
       '/assets/rivergate/03.jpg',
       '/assets/rivergate/04.jpg',
@@ -657,9 +659,11 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   beverly: {
-    // Cover + interiors replaced with Unit 203 AI Unfurnished renders (2026).
-    hero: '/assets/beverly/01-main.png', // Living room
+    // No facade shot yet — keep the coming-soon cover; Unit 203 AI Unfurnished
+    // interiors populate the gallery (2026).
+    hero: '/assets/coming-soon.png',
     gallery: [
+      '/assets/beverly/01-main.png', // Living room
       '/assets/beverly/02.png', // Kitchen
       '/assets/beverly/03.png', // Bedroom
     ],
