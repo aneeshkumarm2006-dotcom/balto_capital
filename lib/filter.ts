@@ -24,11 +24,12 @@ export function applyFilters(
     out = out.filter((r) => r.availability === filters.availability);
   }
   if (filters.amenities.length) {
-    out = out.filter((r) =>
-      filters.amenities.every((a) =>
-        r.amenities.some((x) => x.toLowerCase().includes(a.toLowerCase()))
-      )
-    );
+    out = out.filter((r) => {
+      const haystack = [...r.amenities, ...r.features].map((x) => x.toLowerCase());
+      return filters.amenities.every((a) =>
+        haystack.some((x) => x.includes(a.toLowerCase()))
+      );
+    });
   }
   if (queryStr) {
     const q = queryStr.toLowerCase();

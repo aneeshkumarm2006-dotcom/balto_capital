@@ -587,6 +587,102 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 }
 .modal-backdrop.open .modal { transform: translateY(0); }
 
+/* ---------- Promotional offer banner ---------- */
+.promo-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(184, 150, 90, 0.12);
+  border: 1px solid rgba(184, 150, 90, 0.5);
+  border-left: 3px solid var(--gold);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+}
+.promo-banner-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ---------- Lightbox (full-screen single-photo viewer) ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: rgba(10, 25, 41, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 56px);
+  animation: lightboxIn 200ms var(--ease);
+}
+@keyframes lightboxIn { from { opacity: 0; } to { opacity: 1; } }
+.lightbox-stage {
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-stage img {
+  max-width: min(1400px, 92vw);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.45);
+}
+.lightbox-close {
+  position: fixed;
+  top: 22px;
+  right: 24px;
+  background: transparent;
+  border: 0;
+  color: var(--ivory);
+  opacity: 0.82;
+  transition: opacity 200ms var(--ease);
+}
+.lightbox-close:hover { opacity: 1; }
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  background: rgba(247, 243, 236, 0.1);
+  border: 1px solid rgba(247, 243, 236, 0.35);
+  color: var(--ivory);
+  font-size: 30px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms var(--ease);
+}
+.lightbox-nav:hover { background: rgba(247, 243, 236, 0.22); }
+.lightbox-nav.prev { left: clamp(12px, 3vw, 40px); }
+.lightbox-nav.next { right: clamp(12px, 3vw, 40px); }
+.lightbox-counter {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  opacity: 0.82;
+}
+@media (max-width: 600px) {
+  .lightbox-nav { width: 42px; height: 42px; font-size: 24px; }
+}
+
 /* ---------- Filters panel ---------- */
 .filters-panel {
   position: fixed;

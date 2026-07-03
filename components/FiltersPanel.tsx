@@ -22,15 +22,28 @@ export const DEFAULT_FILTERS: Filters = {
   sort: 'name',
 };
 
-const ALL_AMENITIES = [
-  'In-suite laundry',
-  'Parking',
-  'Pet-friendly',
-  'Balcony',
-  'Fitness centre',
-  'Bicycle storage',
-  'Concierge',
-  'Roof terrace',
+// Every amenity the client provided (plus In-suite laundry, a feature renters
+// filter by). `match` is a lowercase substring tested against each building's
+// features + amenities. Near-duplicates are grouped: "Balcony" catches
+// Balconies + Private balconies; "Shared mail area" catches both mail-area
+// wordings.
+const ALL_AMENITIES: { label: string; match: string }[] = [
+  { label: 'In-suite laundry', match: 'in-suite laundry' },
+  { label: 'Communal laundry', match: 'communal laundry' },
+  { label: 'Surface parking', match: 'surface parking' },
+  { label: 'Heated underground parking', match: 'heated underground parking' },
+  { label: 'Pet-friendly', match: 'pet-friendly' },
+  { label: 'Balcony', match: 'balcon' },
+  { label: 'Elevator', match: 'elevator' },
+  { label: 'Storage lockers', match: 'storage locker' },
+  { label: 'Resident lounge', match: 'resident lounge' },
+  { label: 'Resident concierge', match: 'resident concierge' },
+  { label: 'Roof terrace', match: 'roof terrace' },
+  { label: 'Mail & parcel concierge', match: 'mail and parcel concierge' },
+  { label: 'Shared mail area', match: 'shared mail' },
+  { label: 'Updated common areas', match: 'updated common areas' },
+  { label: 'Newly renovated suites', match: 'newly renovated suites' },
+  { label: 'Heat & hot water', match: 'heat and hot water' },
 ];
 
 interface PriceRangeProps {
@@ -194,7 +207,7 @@ export function FiltersPanel({
         >
           {ALL_AMENITIES.map((a) => (
             <label
-              key={a}
+              key={a.match}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -205,11 +218,11 @@ export function FiltersPanel({
             >
               <input
                 type="checkbox"
-                checked={filters.amenities.includes(a)}
-                onChange={() => toggleAmenity(a)}
+                checked={filters.amenities.includes(a.match)}
+                onChange={() => toggleAmenity(a.match)}
                 style={{ accentColor: 'var(--ink)', width: 16, height: 16 }}
               />
-              {a}
+              {a.label}
             </label>
           ))}
         </div>

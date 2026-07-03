@@ -108,9 +108,8 @@ export interface Residence {
   prices: Partial<Record<0 | 1 | 2 | 3, number>>;
   /** Minimum across `prices`, used on cards / "From $X/mo" labels. */
   priceFrom: number;
-  /** Short note explaining the advertised net-effective basis (incentive +
-   *  lease term). Undefined for Woodridge, which is on its own rate card. */
-  priceBasis?: string;
+  /** Promotional banner text, e.g. "Up to 2 months free on a 12-month lease". */
+  promo?: string;
   availability: Availability;
   featured: boolean;
   /** Build Spec neighbourhood label (shown as the property-page tag). */
@@ -134,27 +133,23 @@ const NON_RENOVATED_RATES: Record<0 | 1 | 2 | 3, number> = {
   0: 1100, 1: 1300, 2: 1500, 3: 1600,
 };
 
-/** Standard non-renovated incentive: up to this many months free, advertised
- *  as net effective rent over a (12 + freeMonths)-month lease -
- *  base × 12 / (12 + freeMonths). e.g. $1,100 × 12 / 14 = $942. */
-const NON_RENOVATED_FREE_MONTHS = 2;
-export const NON_RENOVATED_INCENTIVE = `Up to ${NON_RENOVATED_FREE_MONTHS} months free`;
-const netEffective = (base: number): number =>
-  Math.floor((base * 12) / (12 + NON_RENOVATED_FREE_MONTHS));
-
-/** Net effective non-renovated card, what we advertise. */
-const NON_RENOVATED_NET: Record<0 | 1 | 2 | 3, number> = {
-  0: netEffective(NON_RENOVATED_RATES[0]),
-  1: netEffective(NON_RENOVATED_RATES[1]),
-  2: netEffective(NON_RENOVATED_RATES[2]),
-  3: netEffective(NON_RENOVATED_RATES[3]),
-};
-
-/** Woodridge keeps its own (renovated-tier) rate card, excluded from the
- *  non-renovated net-effective scheme above. */
+/** Woodridge (Westpark Living) keeps its own (renovated-tier) base card. */
 const WOODRIDGE_RATES: Record<0 | 1 | 2 | 3, number> = {
   0: 1150, 1: 1350, 2: 1550, 3: 1700,
 };
+
+/** Promotional offer (client, 2026): up to N months free on a 12-month lease.
+ *  Default is 2 months; three buildings run a 1-month promo. Advertised rent is
+ *  net effective over the 12-month term — base × (12 - free) / 12.
+ *  e.g. $1,300 × 10/12 = $1,083 (2 free); × 11/12 = $1,191 (1 free). */
+const LEASE_MONTHS = 12;
+const REDUCED_PROMO_SLUGS = new Set(['royal-manor', 'royal-lady', 'woodridge']);
+const freeMonthsFor = (slug: string): number =>
+  REDUCED_PROMO_SLUGS.has(slug) ? 1 : 2;
+const promoText = (freeMonths: number): string =>
+  `Up to ${freeMonths} month${freeMonths === 1 ? '' : 's'} free on a 12-month lease`;
+const netEffective = (base: number, freeMonths: number): number =>
+  Math.floor((base * (LEASE_MONTHS - freeMonths)) / LEASE_MONTHS);
 
 /* ============================================================
    BALTO CAPITAL, assets (real portfolio, 28 residences)
@@ -173,38 +168,38 @@ interface RawAsset {
   hideDetailGallery?: boolean;
   incentives?: string[];
   unitLabels?: string[];
+  /** Bedroom configs the building actually offers (0=Studio, 1..3=bedrooms),
+   *  from the client's Apartment Type data. Overrides the city default.
+   *  Buildings the client left blank keep the default until data arrives. */
+  bedrooms?: number[];
 }
 
 // NOTE: `slug` is the stable URL + asset-folder key, keep it fixed across
 // renames. `name` is the public display name per the Build Spec (Part Two).
 const ASSETS: RawAsset[] = [
   { slug: 'chicklet-house',   name: 'Chicklet House',        city: 'edmonton',  address: '10304 107 Ave NW, Edmonton, AB T5H 0V8' },
-  { slug: 'woodridge',        name: 'Westpark Living',       city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9', featured: true },
+  { slug: 'woodridge',        name: 'Westpark Living',       city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9', featured: true, bedrooms: [1, 2] },
   {
     slug: 'palisades',        name: 'Palisades',             city: 'edmonton',  address: '10825 113 ST NW, Edmonton, AB T5H 3J1', featured: true,
-    incentives: [
-      'Early move-in opportunity.',
-      'Up to 2 months free.',
-      'In-suite washer/dryer adds units for +$100/month.',
-    ],
+    bedrooms: [1, 2],
   },
-  { slug: 'hamlet',           name: 'Hamlet Village',        city: 'edmonton',  address: '11647 124 ST NW, Edmonton, AB T5M 0K8' },
+  { slug: 'hamlet',           name: 'Hamlet Village',        city: 'edmonton',  address: '11647 124 ST NW, Edmonton, AB T5M 0K8', bedrooms: [1] },
   { slug: 'copper-manor',     name: 'Copper Manor',          city: 'edmonton',  address: '13011 83 ST NW, Edmonton, AB T5E 2W5' },
   { slug: 'kafa',             name: 'Kafa Manor',            city: 'edmonton',  address: '12717 119 ST NW, Edmonton, AB T5E 5M2' },
-  { slug: 'royal-lady',       name: 'The Crown Residence',   city: 'edmonton',  address: '10746 102 ST NW, Edmonton, AB T5H 2T7', featured: true },
-  { slug: 'catalina-estates', name: 'Catalina Estates',      city: 'edmonton',  address: '5910 118 Ave NW, Edmonton, AB T5W 1E5' },
-  { slug: 'layali',           name: 'Layali House',          city: 'edmonton',  address: '13710 64 ST NW, Edmonton, AB T5A 1R9' },
+  { slug: 'royal-lady',       name: 'The Crown Residence',   city: 'edmonton',  address: '10746 102 ST NW, Edmonton, AB T5H 2T7', featured: true, bedrooms: [1] },
+  { slug: 'catalina-estates', name: 'Catalina Estates',      city: 'edmonton',  address: '5910 118 Ave NW, Edmonton, AB T5W 1E5', bedrooms: [1] },
+  { slug: 'layali',           name: 'Layali House',          city: 'edmonton',  address: '13710 64 ST NW, Edmonton, AB T5A 1R9', bedrooms: [1, 2] },
   { slug: 'sky-manor',        name: 'Sky Manor',             city: 'edmonton',  address: '9612 156 ST NW, Edmonton, AB T5P 2N7' },
   { slug: 'grandview-manor',  name: 'Grandview Manor',       city: 'edmonton',  address: '11705 83 ST NW, Edmonton, AB T5B 2Z1', featured: true },
-  { slug: 'cedar-manor',      name: 'Cedar Manor',           city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6' },
-  { slug: 'courts-manor',     name: 'Courts Manor',          city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9' },
+  { slug: 'cedar-manor',      name: 'Cedar Manor',           city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6', bedrooms: [1] },
+  { slug: 'courts-manor',     name: 'Courts Manor',          city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9', bedrooms: [1] },
   { slug: 'oakwood-manor',    name: 'Oakwood Manor',         city: 'edmonton',  address: '11348 97 ST NW, Edmonton, AB T5G 1X4' },
-  { slug: 'royal-manor',      name: 'Royal Manor',           city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9', featured: true },
+  { slug: 'royal-manor',      name: 'Royal Manor',           city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9', featured: true, bedrooms: [1] },
   { slug: 'balwin-manor',     name: 'Balwin Manor',          city: 'edmonton',  address: '6704 131A AVE NW, Edmonton, AB T5C 1Z6' },
-  { slug: 'acadian',          name: '124 West Residences',   city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5' },
-  { slug: 'parkdale',         name: '115 Park Residences',   city: 'edmonton',  address: '8021 115 Ave NW, Edmonton, AB T5B 4W7' },
-  { slug: 'beverly',          name: 'The Beverley 34',       city: 'edmonton',  address: '11312 34 ST NW, Edmonton, AB T5W 1Y9' },
-  { slug: 'strathearn',       name: 'River Valley Residence', city: 'edmonton', address: '9510 85 ST NW, Edmonton, AB T6C 3E2' },
+  { slug: 'acadian',          name: '124 West Residences',   city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5', bedrooms: [0, 1] },
+  { slug: 'parkdale',         name: '115 Park Residences',   city: 'edmonton',  address: '8021 115 Ave NW, Edmonton, AB T5B 4W7', bedrooms: [2] },
+  { slug: 'beverly',          name: 'The Beverley 34',       city: 'edmonton',  address: '11312 34 ST NW, Edmonton, AB T5W 1Y9', bedrooms: [1] },
+  { slug: 'strathearn',       name: 'River Valley Residence', city: 'edmonton', address: '9510 85 ST NW, Edmonton, AB T6C 3E2', bedrooms: [1] },
   { slug: 'pioneer',          name: '127 North Residences',  city: 'edmonton',  address: '12929 / 12921 127 ST NW, Edmonton, AB T5L 1B1' },
   { slug: 'rivergate',        name: 'River 82 Residences',   city: 'edmonton',  address: '11040 82 ST NW, Edmonton, AB T5H 1L9' },
   { slug: 'arbour-green',     name: 'Arbour Green',          city: 'edmonton',  address: '12036 - 66 Street, Edmonton, AB' },
@@ -314,6 +309,96 @@ const AMENITY_POOL = [
   'Courtyard garden',
   'Mail and parcel concierge',
 ];
+
+/** Curated per-building Residence Features + Building Amenities from the
+ *  client's Amenities tab (2026). Buildings not listed here fall back to the
+ *  deterministic pool selection. "Heat and hot water included" was added to
+ *  every building in this update per the client's promo note. */
+const HEAT = 'Heat and hot water included';
+const CURATED: Record<string, { features: string[]; amenities: string[] }> = {
+  // 115 Park Residences
+  parkdale: {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'Spacious suites'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Mail and parcel concierge', 'Elevator', HEAT],
+  },
+  // 124 West Residences
+  acadian: {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Mail and parcel concierge', 'Communal laundry', 'Updated common areas', HEAT],
+  },
+  'balwin-manor': {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Mail and parcel concierge', 'Balconies', HEAT],
+  },
+  'catalina-estates': {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Mail and parcel concierge', 'Updated common areas', HEAT],
+  },
+  'cedar-manor': {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+  },
+  'copper-manor': {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Resident lounge', 'Shared mail area', 'Updated common areas', HEAT],
+  },
+  'courts-manor': {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Updated common areas', 'Private balconies', HEAT],
+  },
+  'grandview-manor': {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Private balconies', 'Shared mail area', HEAT],
+  },
+  hamlet: {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Private balconies', 'Updated common areas', HEAT],
+  },
+  kafa: {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Roof terrace', 'Updated common areas', HEAT],
+  },
+  layali: {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+  },
+  'oakwood-manor': {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Resident lounge', 'Private balconies', 'Updated common areas', HEAT],
+  },
+  palisades: {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+  },
+  // River Valley Residence
+  strathearn: {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+  },
+  'royal-manor': {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Roof terrace', 'Mail and parcel concierge', 'Updated common areas', 'Communal laundry', HEAT],
+  },
+  'sky-manor': {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Heated underground parking', 'Pet-friendly', 'Resident lounge', 'Private balconies', 'Newly renovated suites', 'Shared mail and parcel area', HEAT],
+  },
+  // The Beverley 34
+  beverly: {
+    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Roof terrace', 'Private balconies', 'Updated common areas', HEAT],
+  },
+  // The Crown Residence
+  'royal-lady': {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
+  },
+  // Westpark Living
+  woodridge: {
+    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
+    amenities: ['Surface parking', 'Pet-friendly', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
+  },
+};
 
 function pickN<T>(pool: T[], n: number, seed: number): T[] {
   const len = pool.length;
@@ -609,11 +694,18 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   },
 };
 
-/** Pricing per asset. Every property except Woodridge uses the non-renovated
- *  net-effective card (all cities); Woodridge keeps its own rates. */
+/** Net-effective pricing per asset. Woodridge uses its own base card; everyone
+ *  else uses the non-renovated card. The advertised number reflects the
+ *  building's promo (free months) over a 12-month lease. */
 function pricesFor(raw: RawAsset): Partial<Record<0 | 1 | 2 | 3, number>> {
-  if (raw.slug === 'woodridge') return WOODRIDGE_RATES;
-  return NON_RENOVATED_NET;
+  const card = raw.slug === 'woodridge' ? WOODRIDGE_RATES : NON_RENOVATED_RATES;
+  const free = freeMonthsFor(raw.slug);
+  return {
+    0: netEffective(card[0], free),
+    1: netEffective(card[1], free),
+    2: netEffective(card[2], free),
+    3: netEffective(card[3], free),
+  };
 }
 
 /** Per-building copy from the Build Spec, Part Two. `description` is the
@@ -795,9 +887,10 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
   const cityLabel = CITIES[raw.city].label;
   // Every Edmonton property offers all four configs. Other cities keep
   // the deterministic variation until we know better.
-  const bedroomOptions = raw.city === 'edmonton'
-    ? [0, 1, 2, 3]
-    : BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length];
+  const bedroomOptions = raw.bedrooms
+    ?? (raw.city === 'edmonton'
+      ? [0, 1, 2, 3]
+      : BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length]);
   // Rate card may carry all four configs; keep only the bedrooms this
   // building actually offers so "From $X" reflects an available suite.
   const card = pricesFor(raw);
@@ -807,11 +900,8 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     if (v !== undefined) prices[b as 0 | 1 | 2 | 3] = v;
   });
   const priceFrom = Math.min(...(Object.values(prices) as number[]));
-  // Non-renovated net-effective pricing carries the standard incentive basis;
-  // Woodridge is on its own card and keeps the generic note.
-  const priceBasis = raw.slug === 'woodridge'
-    ? undefined
-    : `Reflects ${NON_RENOVATED_INCENTIVE.toLowerCase()} on a ${12 + NON_RENOVATED_FREE_MONTHS}-month lease.`;
+  // Promotional banner (client promo is scoped to Edmonton properties).
+  const promo = raw.city === 'edmonton' ? promoText(freeMonthsFor(raw.slug)) : undefined;
 
   const real = REAL_PHOTOS[raw.slug];
   // Card image: always honour real photo if present. hideDetailGallery
@@ -821,8 +911,9 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     ? []
     : (real?.gallery ?? pickN(GALLERY_POOL, 5, seed));
 
-  const features = pickN(FEATURE_POOL, 6, seed >> 1);
-  const amenities = pickN(AMENITY_POOL, 6, seed >> 2);
+  const curated = CURATED[raw.slug];
+  const features = curated?.features ?? pickN(FEATURE_POOL, 6, seed >> 1);
+  const amenities = curated?.amenities ?? pickN(AMENITY_POOL, 6, seed >> 2);
   const availability: Availability = 'available';
   const featured = raw.featured ?? false;
 
@@ -848,7 +939,7 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     bedroomOptions,
     prices,
     priceFrom,
-    priceBasis,
+    promo,
     availability,
     featured,
     hideDetailGallery: raw.hideDetailGallery,

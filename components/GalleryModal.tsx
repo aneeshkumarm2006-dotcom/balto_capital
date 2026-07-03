@@ -7,9 +7,11 @@ interface Props {
   open: boolean;
   onClose: () => void;
   residence: Residence;
+  /** Open the enlarged lightbox at the given photo index. */
+  onPhotoClick?: (index: number) => void;
 }
 
-export function GalleryModal({ open, onClose, residence }: Props) {
+export function GalleryModal({ open, onClose, residence, onPhotoClick }: Props) {
   const allPhotos = [residence.heroImage, ...residence.gallery].filter(Boolean);
 
   return (
@@ -82,10 +84,12 @@ export function GalleryModal({ open, onClose, residence }: Props) {
             {allPhotos.map((src, i) => (
               <div
                 key={`${src}-${i}`}
+                onClick={onPhotoClick ? () => onPhotoClick(i) : undefined}
                 style={{
                   aspectRatio: '4 / 3',
                   background: 'var(--cream)',
                   overflow: 'hidden',
+                  cursor: onPhotoClick ? 'zoom-in' : undefined,
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

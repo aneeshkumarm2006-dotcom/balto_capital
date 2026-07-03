@@ -94,10 +94,10 @@ export function Footer() {
             <div style={{ marginTop: 24 }}>
               <h4 style={{ marginBottom: 10 }}>Inquiries</h4>
               <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
-                inquire@baltocapital.com
+                info@baltoproperties.ca
               </div>
               <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
-                +1 587-207-5171
+                1-587-207-5171
               </div>
             </div>
           </div>

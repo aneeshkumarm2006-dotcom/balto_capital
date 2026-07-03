@@ -8,6 +8,7 @@ import { PropertyCard } from '@/components/PropertyCard';
 import { PlaceholderImg } from '@/components/SmartImage';
 import { InquireModal } from '@/components/InquireModal';
 import { GalleryModal } from '@/components/GalleryModal';
+import { Lightbox } from '@/components/Lightbox';
 import {
   bedroomShort,
   formatPrice,
@@ -72,12 +73,17 @@ export default function ResidenceDetailPage({
   const [inquireOpen, setInquireOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(0);
+  // null = closed; otherwise the index into `photos` to show enlarged.
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (!r) router.push('/residences');
   }, [r, router]);
 
   if (!r) return null;
+
+  // Ordered photo set for the lightbox: hero first, then the gallery.
+  const photos = [r.heroImage, ...r.gallery].filter(Boolean);
 
   const plans = r.bedroomOptions
     .filter((b) => r.prices[b as 0 | 1 | 2 | 3] !== undefined)
@@ -123,10 +129,12 @@ export default function ResidenceDetailPage({
           className="detail-gallery-grid"
         >
           <div
+            onClick={() => r.heroImage && setLightboxIndex(0)}
             style={{
               aspectRatio: '4 / 3',
               overflow: 'hidden',
               background: 'var(--cream)',
+              cursor: r.heroImage ? 'zoom-in' : undefined,
             }}
           >
             {r.heroImage ? (
@@ -159,13 +167,16 @@ export default function ResidenceDetailPage({
             className="detail-gallery-thumbs"
           >
             {[0, 1, 2, 3].map((i) => {
-              const src = r.gallery[i % r.gallery.length];
+              const galleryIdx = r.gallery.length ? i % r.gallery.length : -1;
+              const src = galleryIdx >= 0 ? r.gallery[galleryIdx] : undefined;
               return (
                 <div
                   key={i}
+                  onClick={() => src && setLightboxIndex(galleryIdx + 1)}
                   style={{
                     overflow: 'hidden',
                     background: 'var(--cream)',
+                    cursor: src ? 'zoom-in' : undefined,
                   }}
                 >
                   {src ? (
@@ -237,10 +248,11 @@ export default function ResidenceDetailPage({
               </span>
               <span className="muted"> /month net · {bedroomShort(r.bedroomOptions)}</span>
             </p>
-            {r.priceBasis && (
-              <p className="caption muted" style={{ fontSize: 12.5, marginTop: 6 }}>
-                {r.priceBasis}
-              </p>
+            {r.promo && (
+              <div className="promo-banner" style={{ marginTop: 18 }}>
+                <span className="promo-banner-tag">Limited offer</span>
+                <span>{r.promo}</span>
+              </div>
             )}
 
             <div className="divider" style={{ margin: '36px 0 32px' }} />
@@ -505,9 +517,9 @@ export default function ResidenceDetailPage({
 
               <Eyebrow style={{ marginBottom: 12 }}>CONTACT</Eyebrow>
               <div className="small" style={{ marginBottom: 4 }}>
-                inquire@baltocapital.com
+                info@baltoproperties.ca
               </div>
-              <div className="small muted">+1 (XXX) XXX-XXX</div>
+              <div className="small muted">1-587-207-5171</div>
             </div>
           </aside>
         </div>
@@ -540,6 +552,15 @@ export default function ResidenceDetailPage({
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
         residence={r}
+        onPhotoClick={(i) => setLightboxIndex(i)}
+      />
+      <Lightbox
+        open={lightboxIndex !== null}
+        photos={photos}
+        index={lightboxIndex ?? 0}
+        onIndexChange={setLightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        label={r.name}
       />
     </main>
   );

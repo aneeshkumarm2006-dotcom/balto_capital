@@ -51,13 +51,13 @@ export default function ContactPage() {
               <div style={{ marginBottom: 28 }}>
                 <Eyebrow style={{ marginBottom: 8 }}>EMAIL</Eyebrow>
                 <div className="serif" style={{ fontSize: 19 }}>
-                  inquire@baltocapital.com
+                  info@baltoproperties.ca
                 </div>
               </div>
               <div style={{ marginBottom: 28 }}>
                 <Eyebrow style={{ marginBottom: 8 }}>TELEPHONE</Eyebrow>
                 <div className="serif" style={{ fontSize: 19 }}>
-                  +1 (XXX) XXX-XXX
+                  1-587-207-5171
                 </div>
               </div>
               <div style={{ marginBottom: 28 }}>
