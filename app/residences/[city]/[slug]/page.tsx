@@ -129,9 +129,9 @@ export default function ResidenceDetailPage({
           className="detail-gallery-grid"
         >
           <div
+            className="detail-gallery-main"
             onClick={() => r.heroImage && setLightboxIndex(0)}
             style={{
-              aspectRatio: '4 / 3',
               overflow: 'hidden',
               background: 'var(--cream)',
               cursor: r.heroImage ? 'zoom-in' : undefined,
