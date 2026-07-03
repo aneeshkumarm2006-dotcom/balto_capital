@@ -637,9 +637,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   strathearn: {
-    hero: '/assets/coming-soon.png',
+    // First interior promoted to cover (no coming-soon placeholder).
+    hero: '/assets/strathearn/01-main.jpg',
     gallery: [
-      '/assets/strathearn/01-main.jpg',
       '/assets/strathearn/02.jpg',
       '/assets/strathearn/03.jpg',
       '/assets/strathearn/04.jpg',
@@ -647,9 +647,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   rivergate: {
-    hero: '/assets/coming-soon.png',
+    // First interior promoted to cover (no coming-soon placeholder).
+    hero: '/assets/rivergate/01-main.jpg',
     gallery: [
-      '/assets/rivergate/01-main.jpg',
       '/assets/rivergate/02.jpg',
       '/assets/rivergate/03.jpg',
       '/assets/rivergate/04.jpg',

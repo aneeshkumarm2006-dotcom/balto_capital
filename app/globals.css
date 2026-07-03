@@ -763,10 +763,12 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
 
 /* Detail gallery: main image + 2x2 thumbnails share one height so their top
-   and bottom edges align (desktop). Reset to stacked/auto on mobile below. */
-.detail-gallery-grid { height: clamp(360px, 42vw, 560px); }
-.detail-gallery-main { height: 100%; }
-.detail-gallery-thumbs { height: 100%; }
+   and bottom edges align (desktop). The explicit row track pins both columns
+   to the fixed height (without it the row auto-sizes to the images and the
+   gallery overflows onto the title / pricing card). Reset on mobile below. */
+.detail-gallery-grid { height: clamp(360px, 42vw, 560px); grid-template-rows: minmax(0, 1fr); }
+.detail-gallery-main { height: 100%; min-height: 0; }
+.detail-gallery-thumbs { height: 100%; min-height: 0; }
 
 @media (max-width: 1280px) {
   .featured-grid { grid-template-columns: repeat(3, 1fr); }
@@ -782,7 +784,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .portfolio-grid { grid-template-columns: 1fr !important; }
   .city-carousel-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .detail-grid { grid-template-columns: 1fr !important; }
-  .detail-gallery-grid { grid-template-columns: 1fr !important; height: auto !important; }
+  .detail-gallery-grid { grid-template-columns: 1fr !important; height: auto !important; grid-template-rows: auto !important; }
   .detail-gallery-main { height: auto !important; aspect-ratio: 16 / 10; }
   .detail-gallery-thumbs { grid-template-columns: repeat(4, 1fr) !important; grid-template-rows: auto !important; height: auto !important; }
   .detail-sidebar { position: static !important; }
