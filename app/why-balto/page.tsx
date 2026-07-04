@@ -20,8 +20,8 @@ const PILLARS = [
   },
   {
     eyebrow: 'III · SERVICE',
-    title: 'One business day. Local in every city.',
-    body: 'Maintenance requests are answered within one business day, by a local team in your city, not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.',
+    title: '24 hours Maintenance Response Standard.',
+    body: 'Maintenance requests are answered within 24 hours, by a local team in your city, not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.',
     align: 'left' as const,
   },
 ];
