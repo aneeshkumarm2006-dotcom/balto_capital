@@ -101,8 +101,8 @@ export default function ResidenceDetailPage({
   // "Available suites" rows: real units from the sheet when we have them,
   // otherwise one row per available bedroom type (unit number unknown).
   const suiteRows = r.units?.length
-    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1, image: u.image }))
-    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed, image: undefined as string | undefined }));
+    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1, image: u.image, applyUrl: u.applyUrl }))
+    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed, image: undefined as string | undefined, applyUrl: undefined as string | undefined }));
 
   const others = residencesByCity(r.city)
     .filter((x) => x.id !== r.id)
@@ -374,10 +374,10 @@ export default function ResidenceDetailPage({
                     )}
                   </span>
                   <span role="cell" style={{ textAlign: 'right' }}>
-                    {applyUrlFor(r.slug, row.bed) ? (
+                    {(row.applyUrl ?? applyUrlFor(r.slug, row.bed)) ? (
                       <a
                         className="btn btn-ghost btn-sm"
-                        href={applyUrlFor(r.slug, row.bed)}
+                        href={row.applyUrl ?? applyUrlFor(r.slug, row.bed)}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

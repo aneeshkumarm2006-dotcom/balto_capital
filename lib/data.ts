@@ -137,6 +137,8 @@ export interface Unit {
   rent: number;
   /** Per-unit Google Drive photo folder (from the sheet's Pictures column). */
   image?: string;
+  /** Unit-specific ZenRentals apply URL. Overrides the per-bedroom-type link. */
+  applyUrl?: string;
 }
 
 /** Non-renovated base rate card, applies to every property except Woodridge
@@ -965,14 +967,11 @@ const UNITS: Record<string, Unit[]> = {
     { unit: '405', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1JRdyJ5jCQwMq6DEwgmISUkVF2tugDUZ7?usp=drive_link' },
   ],
   'catalina-estates': [
-    { unit: '2', type: '1 Bedroom', rent: 1125, image: 'https://drive.google.com/drive/folders/12gV2SmYV0qhcwivGGxehPkmFA9IBMYFC' },
-    // Units 3/5/7/8/9 from the ZenRentals listing (not in the availability
-    // sheet); rent is the ZenRentals "Starting at" price — confirm net vs gross.
-    { unit: '3', type: '1 Bedroom', rent: 1300 },
-    { unit: '5', type: '1 Bedroom', rent: 1300 },
-    { unit: '7', type: '1 Bedroom', rent: 1300 },
-    { unit: '8', type: '1 Bedroom', rent: 1300 },
-    { unit: '9', type: '1 Bedroom', rent: 1300 },
+    {
+      unit: '2', type: '1 Bedroom', rent: 1125,
+      image: 'https://drive.google.com/drive/folders/12gV2SmYV0qhcwivGGxehPkmFA9IBMYFC',
+      applyUrl: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026',
+    },
   ],
   layali: [
     { unit: '7', type: '1 Bedroom', rent: 1025, image: 'https://drive.google.com/drive/folders/12eQOFsQfiHo51x86xY1h61BZ2u6glT7m' },
@@ -1048,11 +1047,9 @@ const APPLY_LINKS: Record<string, Partial<Record<0 | 1 | 2 | 3, string>>> = {
     1: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/1-bedroom',
     2: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/2-bedroom',
   },
-  // Catalina's per-unit "Apply Now" all resolve to the same terms page
-  // (ZenRentals tracks the unit in-session, not via URL).
   'catalina-estates': {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/termsandotheritems.aspx',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/termsandotheritems.aspx',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/2-bedroom',
   },
   'sky-manor': {
     1: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/1-bedroom',
