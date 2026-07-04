@@ -135,6 +135,8 @@ export interface Unit {
   unit: string;
   type: string;
   rent: number;
+  /** Per-unit Google Drive photo folder (from the sheet's Pictures column). */
+  image?: string;
 }
 
 /** Non-renovated base rate card, applies to every property except Woodridge
@@ -935,7 +937,9 @@ const UNIT_TYPE_TO_NUM: Record<string, 0 | 1 | 2 | 3> = {
   'Studio': 0, '1 Bedroom': 1, '2 Bedroom': 2, '3 Bedroom': 3,
 };
 const UNITS: Record<string, Unit[]> = {
-  hamlet: [{ unit: '6', type: '1 Bedroom', rent: 1075 }],
+  hamlet: [
+    { unit: '6', type: '1 Bedroom', rent: 1075, image: 'https://drive.google.com/drive/folders/1o-WcAM4Kfu4b7wRjhjOAgmAE_DRqoqi1' },
+  ],
   woodridge: [
     { unit: '1', type: '2 Bedroom', rent: 1421 },
     { unit: '114', type: '2 Bedroom', rent: 1300 },
@@ -951,52 +955,67 @@ const UNITS: Record<string, Unit[]> = {
     { unit: '324', type: '2 Bedroom', rent: 1421 },
   ],
   'royal-lady': [
-    { unit: '105', type: '1 Bedroom', rent: 1200 },
-    { unit: '107', type: '1 Bedroom', rent: 1200 },
-    { unit: '205', type: '1 Bedroom', rent: 1200 },
-    { unit: '302', type: '1 Bedroom', rent: 1070 },
-    { unit: '303', type: '1 Bedroom', rent: 1005 },
-    { unit: '307', type: '1 Bedroom', rent: 1200 },
-    { unit: '402', type: '1 Bedroom', rent: 1200 },
-    { unit: '405', type: '1 Bedroom', rent: 1200 },
+    { unit: '105', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1K-7bKqhvaqP626T6pTsAT5RsP2H12IbR?usp=drive_link' },
+    { unit: '107', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1eJi5BhunpXhJN7VXI975wYPk3gu3BGYI?usp=drive_link' },
+    { unit: '205', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1HvcZC6yEaSU5NPwkMrkG_SAB1WaAPTb8?usp=drive_link' },
+    { unit: '302', type: '1 Bedroom', rent: 1070, image: 'https://drive.google.com/drive/folders/1aFoXxpP7iKJi4SSKvx2FCjiSMxMMSb2x' },
+    { unit: '303', type: '1 Bedroom', rent: 1005, image: 'https://drive.google.com/drive/folders/1F8CXb5bcnt1eGPZPba6JCKDxBXl35x54' },
+    { unit: '307', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1R_RYtNn6pXVmScR25PMrPCMNGuy7R4da?usp=drive_link' },
+    { unit: '402', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/18rccnctKqAAN2alj8iXkYvhnqjgjZrtd?usp=drive_link' },
+    { unit: '405', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1JRdyJ5jCQwMq6DEwgmISUkVF2tugDUZ7?usp=drive_link' },
   ],
-  'catalina-estates': [{ unit: '2', type: '1 Bedroom', rent: 1125 }],
+  'catalina-estates': [
+    { unit: '2', type: '1 Bedroom', rent: 1125, image: 'https://drive.google.com/drive/folders/12gV2SmYV0qhcwivGGxehPkmFA9IBMYFC' },
+    // Units 3/5/7/8/9 from the ZenRentals listing (not in the availability
+    // sheet); rent is the ZenRentals "Starting at" price — confirm net vs gross.
+    { unit: '3', type: '1 Bedroom', rent: 1300 },
+    { unit: '5', type: '1 Bedroom', rent: 1300 },
+    { unit: '7', type: '1 Bedroom', rent: 1300 },
+    { unit: '8', type: '1 Bedroom', rent: 1300 },
+    { unit: '9', type: '1 Bedroom', rent: 1300 },
+  ],
   layali: [
-    { unit: '7', type: '1 Bedroom', rent: 1025 },
-    { unit: '15', type: '2 Bedroom', rent: 1350 },
+    { unit: '7', type: '1 Bedroom', rent: 1025, image: 'https://drive.google.com/drive/folders/12eQOFsQfiHo51x86xY1h61BZ2u6glT7m' },
+    { unit: '15', type: '2 Bedroom', rent: 1350, image: 'https://drive.google.com/drive/folders/11h4fC4QLDmOw8DQ9lz7mXgzCgJfwxlgy' },
   ],
   'cedar-manor': [
-    { unit: '2', type: '1 Bedroom', rent: 1015 },
-    { unit: '5', type: '1 Bedroom', rent: 1015 },
-    { unit: '7', type: '1 Bedroom', rent: 1015 },
-    { unit: '8', type: '1 Bedroom', rent: 1015 },
-    { unit: '15', type: '1 Bedroom', rent: 1015 },
-    { unit: '17', type: '1 Bedroom', rent: 1015 },
+    { unit: '2', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1ZCg4sJmjTkb84yVMz_ILTC1L5G3VWn8Q' },
+    { unit: '5', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1Nds9YyIv5m8iHX4ABR1FioeZng0FN37F' },
+    { unit: '7', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1Aubuzm0ou7pTq_lspo2FrvsQgMuG-zQp' },
+    { unit: '8', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1Egkfmszu9p6VM3nz8mmjm2lChP86BNhg' },
+    { unit: '15', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1MpPe018-Dca4wIS_PwpOBg7i_NS9HQSF' },
+    { unit: '17', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1596nhZf-S5X2VUq28A_oNdj8RzX6L9Ga?usp=drive_link' },
   ],
-  'courts-manor': [{ unit: '5', type: '1 Bedroom', rent: 1015 }],
+  'courts-manor': [
+    { unit: '5', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/14Z_dnflv6nrhVSenCeLawIDfuWAmT2GY?usp=drive_link' },
+  ],
   'royal-manor': [
-    { unit: '9', type: '1 Bedroom', rent: 1185 },
-    { unit: '12', type: '1 Bedroom', rent: 1238 },
+    { unit: '9', type: '1 Bedroom', rent: 1185, image: 'https://drive.google.com/drive/folders/1RSXCx-G_SEabZDc-VvwU1wUuyWj_0kaw' },
+    { unit: '12', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/16se8oImLbhCnROLVHDWLxy6A7EeFOndK?usp=drive_link' },
   ],
   palisades: [
-    { unit: '204', type: '1 Bedroom', rent: 1090 },
-    { unit: '205', type: '2 Bedroom', rent: 1360 },
+    { unit: '204', type: '1 Bedroom', rent: 1090, image: 'https://drive.google.com/drive/folders/11aChKUK1f7_ftb7cGMqcbp5aQVmEcJ2C?usp=drive_link' },
+    { unit: '205', type: '2 Bedroom', rent: 1360, image: 'https://drive.google.com/drive/folders/1prpbfQPmEXDjHQi5O-oOFaeOpiYsaEhx' },
   ],
   acadian: [
-    { unit: '103', type: 'Studio', rent: 950 },
-    { unit: '106', type: '1 Bedroom', rent: 1115 },
-    { unit: '201', type: '1 Bedroom', rent: 1095 },
-    { unit: '205', type: '1 Bedroom', rent: 1220 },
-    { unit: '207', type: '1 Bedroom', rent: 1135 },
-    { unit: '306', type: '1 Bedroom', rent: 1150 },
-    { unit: '302', type: '2 Bedroom', rent: 1295 },
+    { unit: '103', type: 'Studio', rent: 950, image: 'https://drive.google.com/drive/folders/11BOsxAcLAbnGQQsuQd-Ny5Cvdj6J51lP?usp=drive_link' },
+    { unit: '106', type: '1 Bedroom', rent: 1115, image: 'https://drive.google.com/drive/folders/1Agy82BxShEa7CCtJaiuA8uGSNrJNQ8SX' },
+    { unit: '201', type: '1 Bedroom', rent: 1095, image: 'https://drive.google.com/drive/folders/10_Zpg29wddsKGTNRnnqj1HLUBc901ivS?usp=drive_link' },
+    { unit: '205', type: '1 Bedroom', rent: 1220, image: 'https://drive.google.com/drive/folders/10s5inKXryL0-_HdfZ8dAPGRa85PhfwUV?usp=drive_link' },
+    { unit: '207', type: '1 Bedroom', rent: 1135, image: 'https://drive.google.com/drive/folders/19VS4T3oLNdWmSKDJWe1sHN1gdE-t45nU' },
+    { unit: '306', type: '1 Bedroom', rent: 1150, image: 'https://drive.google.com/drive/folders/111IRCViZE_rZIyX5_PwUbcoI4wP5aD3b?usp=drive_link' },
+    { unit: '302', type: '2 Bedroom', rent: 1295, image: 'https://drive.google.com/drive/folders/1Po_NeOYvzFIwSPJ9fmsGFnZJsCpDcixA?usp=drive_link' },
   ],
   parkdale: [
-    { unit: '202', type: '2 Bedroom', rent: 1280 },
-    { unit: '208', type: '2 Bedroom', rent: 1245 },
+    { unit: '202', type: '2 Bedroom', rent: 1280, image: 'https://drive.google.com/drive/folders/12lUgnP2BBPF5IAdWRXNjxTl8ZvsqIkWc' },
+    { unit: '208', type: '2 Bedroom', rent: 1245, image: 'https://drive.google.com/drive/folders/1359w3N_1zEHSYpYxo20vIZNgGus7ga0X?usp=drive_link' },
   ],
-  strathearn: [{ unit: '1', type: '1 Bedroom', rent: 1090 }],
-  beverly: [{ unit: '203', type: '1 Bedroom', rent: 1050 }],
+  strathearn: [
+    { unit: '1', type: '1 Bedroom', rent: 1090, image: 'https://drive.google.com/drive/folders/13RhkgkKjs3LicN7UEJ2EParOhT_95hWg' },
+  ],
+  beverly: [
+    { unit: '203', type: '1 Bedroom', rent: 1050, image: 'https://drive.google.com/drive/folders/15IESPJZjxHzm6ZBy1KrdqELYObn8lP-U?usp=drive_link' },
+  ],
 };
 
 /** ZenRentals per-floor-plan "View Details" links by bedroom type
@@ -1029,9 +1048,11 @@ const APPLY_LINKS: Record<string, Partial<Record<0 | 1 | 2 | 3, string>>> = {
     1: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/1-bedroom',
     2: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/2-bedroom',
   },
+  // Catalina's per-unit "Apply Now" all resolve to the same terms page
+  // (ZenRentals tracks the unit in-session, not via URL).
   'catalina-estates': {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/2-bedroom',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/termsandotheritems.aspx',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/termsandotheritems.aspx',
   },
   'sky-manor': {
     1: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/1-bedroom',
@@ -1097,6 +1118,15 @@ const APPLY_LINKS: Record<string, Partial<Record<0 | 1 | 2 | 3, string>>> = {
   edge: {
     1: 'https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/1-bedroom-p22l33u1ws-den',
     2: 'https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/2-bedroom',
+  },
+  'copper-manor': {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/copper-manor/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/copper-manor/floorplans/2-bedroom',
+  },
+  'grandview-manor': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/2-bedroom',
   },
 };
 

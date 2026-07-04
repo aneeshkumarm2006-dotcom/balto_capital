@@ -101,8 +101,8 @@ export default function ResidenceDetailPage({
   // "Available suites" rows: real units from the sheet when we have them,
   // otherwise one row per available bedroom type (unit number unknown).
   const suiteRows = r.units?.length
-    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1 }))
-    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed }));
+    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1, image: u.image }))
+    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed, image: undefined as string | undefined }));
 
   const others = residencesByCity(r.city)
     .filter((x) => x.id !== r.id)
@@ -356,7 +356,12 @@ export default function ResidenceDetailPage({
                     {formatPrice(row.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>
                   </span>
                   <span role="cell">
-                    {photos.length ? (
+                    {row.image ? (
+                      // Per-unit photos live in a Google Drive folder (from the sheet).
+                      <a className="text-link" href={row.image} target="_blank" rel="noopener noreferrer">
+                        View
+                      </a>
+                    ) : photos.length ? (
                       <button
                         className="text-link"
                         onClick={() => setLightboxIndex(0)}
