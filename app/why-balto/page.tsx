@@ -184,7 +184,7 @@ export default function WhyBaltoPage() {
           >
             {[
               { n: '1,500+', label: 'Doors across Western Canada' },
-              { n: '1 day', label: 'Maintenance response standard' },
+              { n: '24 hours', label: 'Maintenance response standard' },
               { n: '100%', label: 'Owned & operated in-house' },
             ].map((s) => (
               <div key={s.n}>

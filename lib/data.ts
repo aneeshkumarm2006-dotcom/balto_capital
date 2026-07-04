@@ -125,6 +125,16 @@ export interface Residence {
   hideDetailGallery?: boolean;
   incentives?: string[];
   unitLabels?: string[];
+  /** Real available units from the client's availability sheet. When present,
+   *  these drive the "Available suites" table and the building's pricing. */
+  units?: Unit[];
+}
+
+/** A single available unit from the availability sheet. */
+export interface Unit {
+  unit: string;
+  type: string;
+  rent: number;
 }
 
 /** Non-renovated base rate card, applies to every property except Woodridge
@@ -297,17 +307,14 @@ const FEATURE_POOL = [
   'Custom millwork',
 ];
 
+// Fallback amenity pool for buildings the client's doc doesn't cover. The
+// items the doc treats as "not real" (roof terrace, resident lounge, storage
+// lockers, mail & parcel concierge) are intentionally excluded.
 const AMENITY_POOL = [
-  'Resident concierge',
-  'Bicycle storage',
-  'Heated underground parking',
   'Surface parking',
-  'Pet-friendly',
-  'Storage lockers',
-  'Resident lounge',
-  'Roof terrace',
-  'Courtyard garden',
-  'Mail and parcel concierge',
+  'Heated underground parking',
+  'Updated common areas',
+  'Private balconies',
 ];
 
 /** Curated per-building Residence Features + Building Amenities from the
@@ -315,88 +322,94 @@ const AMENITY_POOL = [
  *  deterministic pool selection. "Heat and hot water included" was added to
  *  every building in this update per the client's promo note. */
 const HEAT = 'Heat and hot water included';
+// Per-building Residence Features + Building Amenities, strictly per the
+// client's Amenities doc (2026): base features {In-suite laundry, Marble
+// fireplace mantels}, base amenity {Heated underground parking}, with the doc's
+// remove/add/replace applied. Items the doc never adds (roof terrace, resident
+// lounge, storage lockers, mail & parcel concierge) and items it never mentions
+// (pet-friendly, soaker tubs, walk-in wardrobes, mouldings, millwork) are gone.
 const CURATED: Record<string, { features: string[]; amenities: string[] }> = {
   // 115 Park Residences
   parkdale: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'Spacious suites'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Mail and parcel concierge', 'Elevator', HEAT],
+    features: ['In-suite laundry', 'Spacious suites'],
+    amenities: ['Surface parking', 'Elevator', HEAT],
   },
   // 124 West Residences
   acadian: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Mail and parcel concierge', 'Communal laundry', 'Updated common areas', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Surface parking', 'Communal laundry', 'Updated common areas', HEAT],
   },
   'balwin-manor': {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Mail and parcel concierge', 'Balconies', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Heated underground parking', 'Balconies', HEAT],
   },
   'catalina-estates': {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Mail and parcel concierge', 'Updated common areas', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Heated underground parking', 'Updated common areas', HEAT],
   },
   'cedar-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+    features: ['Marble fireplace mantels (select suites)'],
+    amenities: ['Heated underground parking', 'Updated common areas', HEAT],
   },
   'copper-manor': {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Resident lounge', 'Shared mail area', 'Updated common areas', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Heated underground parking', 'Shared mail area', 'Updated common areas', HEAT],
   },
   'courts-manor': {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Updated common areas', 'Private balconies', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Surface parking', 'Updated common areas', 'Private balconies', HEAT],
   },
   'grandview-manor': {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Private balconies', 'Shared mail area', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Heated underground parking', 'Private balconies', 'Shared mail area', HEAT],
   },
   hamlet: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Private balconies', 'Updated common areas', HEAT],
+    features: ['Marble fireplace mantels (select suites)'],
+    amenities: ['Surface parking', 'Private balconies', 'Updated common areas', HEAT],
   },
   kafa: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Roof terrace', 'Updated common areas', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Surface parking', 'Updated common areas', HEAT],
   },
   layali: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Surface parking', 'Updated common areas', HEAT],
   },
   'oakwood-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Resident lounge', 'Private balconies', 'Updated common areas', HEAT],
+    features: ['Marble fireplace mantels (select suites)'],
+    amenities: ['Heated underground parking', 'Private balconies', 'Updated common areas', HEAT],
   },
   palisades: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+    features: ['In-suite laundry', 'Marble fireplace mantels (select suites)'],
+    amenities: ['Surface parking', 'Updated common areas', HEAT],
   },
-  // River Valley Residence
+  // River Valley Residence (no residence features remain per the doc)
   strathearn: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Updated common areas', HEAT],
+    features: [],
+    amenities: ['Surface parking', 'Updated common areas', HEAT],
   },
   'royal-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Roof terrace', 'Mail and parcel concierge', 'Updated common areas', 'Communal laundry', HEAT],
+    features: [],
+    amenities: ['Surface parking', 'Updated common areas', 'Communal laundry', HEAT],
   },
   'sky-manor': {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Heated underground parking', 'Pet-friendly', 'Resident lounge', 'Private balconies', 'Newly renovated suites', 'Shared mail and parcel area', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Heated underground parking', 'Private balconies', 'Newly renovated suites', 'Shared mail and parcel area', HEAT],
   },
   // The Beverley 34
   beverly: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Storage lockers', 'Resident lounge', 'Roof terrace', 'Private balconies', 'Updated common areas', HEAT],
+    features: ['In-suite laundry'],
+    amenities: ['Surface parking', 'Private balconies', 'Updated common areas', HEAT],
   },
   // The Crown Residence
   'royal-lady': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
+    features: ['Marble fireplace mantels (select suites)'],
+    amenities: ['Surface parking', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
   },
   // Westpark Living
   woodridge: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Marble fireplace mantels (select suites)', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Resident lounge', 'Roof terrace', 'Mail and parcel concierge', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
+    features: ['Marble fireplace mantels (select suites)'],
+    amenities: ['Surface parking', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
   },
 };
 
@@ -916,23 +929,254 @@ const TIER_LINE: Record<Tier, string> = {
   'coming-soon': 'Coming soon. Register your interest and we’ll be in touch as homes become available.',
 };
 
+/** Real available units per building, from the client's availability sheet
+ *  (2026). Net-effective rent is the source of truth for these buildings. */
+const UNIT_TYPE_TO_NUM: Record<string, 0 | 1 | 2 | 3> = {
+  'Studio': 0, '1 Bedroom': 1, '2 Bedroom': 2, '3 Bedroom': 3,
+};
+const UNITS: Record<string, Unit[]> = {
+  hamlet: [{ unit: '6', type: '1 Bedroom', rent: 1075 }],
+  woodridge: [
+    { unit: '1', type: '2 Bedroom', rent: 1421 },
+    { unit: '114', type: '2 Bedroom', rent: 1300 },
+    { unit: '120', type: '1 Bedroom', rent: 1238 },
+    { unit: '121', type: '1 Bedroom', rent: 1238 },
+    { unit: '213', type: '2 Bedroom', rent: 1200 },
+    { unit: '216', type: '1 Bedroom', rent: 1238 },
+    { unit: '221', type: '1 Bedroom', rent: 1238 },
+    { unit: '317', type: '2 Bedroom', rent: 1421 },
+    { unit: '320', type: '1 Bedroom', rent: 1238 },
+    { unit: '322', type: '2 Bedroom', rent: 1300 },
+    { unit: '323', type: '1 Bedroom', rent: 1150 },
+    { unit: '324', type: '2 Bedroom', rent: 1421 },
+  ],
+  'royal-lady': [
+    { unit: '105', type: '1 Bedroom', rent: 1200 },
+    { unit: '107', type: '1 Bedroom', rent: 1200 },
+    { unit: '205', type: '1 Bedroom', rent: 1200 },
+    { unit: '302', type: '1 Bedroom', rent: 1070 },
+    { unit: '303', type: '1 Bedroom', rent: 1005 },
+    { unit: '307', type: '1 Bedroom', rent: 1200 },
+    { unit: '402', type: '1 Bedroom', rent: 1200 },
+    { unit: '405', type: '1 Bedroom', rent: 1200 },
+  ],
+  'catalina-estates': [{ unit: '2', type: '1 Bedroom', rent: 1125 }],
+  layali: [
+    { unit: '7', type: '1 Bedroom', rent: 1025 },
+    { unit: '15', type: '2 Bedroom', rent: 1350 },
+  ],
+  'cedar-manor': [
+    { unit: '2', type: '1 Bedroom', rent: 1015 },
+    { unit: '5', type: '1 Bedroom', rent: 1015 },
+    { unit: '7', type: '1 Bedroom', rent: 1015 },
+    { unit: '8', type: '1 Bedroom', rent: 1015 },
+    { unit: '15', type: '1 Bedroom', rent: 1015 },
+    { unit: '17', type: '1 Bedroom', rent: 1015 },
+  ],
+  'courts-manor': [{ unit: '5', type: '1 Bedroom', rent: 1015 }],
+  'royal-manor': [
+    { unit: '9', type: '1 Bedroom', rent: 1185 },
+    { unit: '12', type: '1 Bedroom', rent: 1238 },
+  ],
+  palisades: [
+    { unit: '204', type: '1 Bedroom', rent: 1090 },
+    { unit: '205', type: '2 Bedroom', rent: 1360 },
+  ],
+  acadian: [
+    { unit: '103', type: 'Studio', rent: 950 },
+    { unit: '106', type: '1 Bedroom', rent: 1115 },
+    { unit: '201', type: '1 Bedroom', rent: 1095 },
+    { unit: '205', type: '1 Bedroom', rent: 1220 },
+    { unit: '207', type: '1 Bedroom', rent: 1135 },
+    { unit: '306', type: '1 Bedroom', rent: 1150 },
+    { unit: '302', type: '2 Bedroom', rent: 1295 },
+  ],
+  parkdale: [
+    { unit: '202', type: '2 Bedroom', rent: 1280 },
+    { unit: '208', type: '2 Bedroom', rent: 1245 },
+  ],
+  strathearn: [{ unit: '1', type: '1 Bedroom', rent: 1090 }],
+  beverly: [{ unit: '203', type: '1 Bedroom', rent: 1050 }],
+};
+
+/** ZenRentals per-floor-plan "View Details" links by bedroom type
+ *  (0=Studio, 1..3=bedrooms), from the client (2026). Session tracking params
+ *  are stripped — ZenRentals re-adds its own on load. The Apply button for a
+ *  unit links to the matching bedroom type here. */
+const APPLY_LINKS: Record<string, Partial<Record<0 | 1 | 2 | 3, string>>> = {
+  woodridge: {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/woodridge-5/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/woodridge-5/floorplans/2-bedroom',
+  },
+  kafa: {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/kafa-manor/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/kafa-manor/floorplans/1-bedroom-1-bath',
+  },
+  'cedar-manor': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/cedar-manor1/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/cedar-manor1/floorplans/1-bedroom',
+  },
+  'courts-manor': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/2-bedroom',
+  },
+  'oakwood-manor': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/oakwood-manor2/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/oakwood-manor2/floorplans/1-bedroom',
+  },
+  layali: {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/2-bedroom',
+  },
+  'catalina-estates': {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/2-bedroom',
+  },
+  'sky-manor': {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/2-bedroom',
+    3: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/3-bedroom',
+  },
+  'chicklet-house': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/2-bedroom',
+  },
+  hamlet: {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/hamlet-village/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/hamlet-village/floorplans/1-bedroom',
+  },
+  'royal-lady': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/royal-lady/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/royal-lady/floorplans/1-bedroom',
+  },
+  'royal-manor': {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/royal-manor2/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/royal-manor2/floorplans/1-bedroom',
+  },
+  'balwin-manor': {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/balwin-manor/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/balwin-manor/floorplans/2-bedroom',
+  },
+  // ZenRentals slug for Acadian House is "house-acadian".
+  acadian: {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/2-bedroom',
+  },
+  palisades: {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/studio',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/2-bedroom',
+  },
+  // ZenRentals slug for Beverly Heights is "beverly-manor".
+  beverly: {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/beverly-manor/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/beverly-manor/floorplans/2-bedroom',
+  },
+  parkdale: {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/parkdale-terrace0/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/parkdale-terrace0/floorplans/2-bedroom',
+  },
+  strathearn: {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/strathearn-place/floorplans/1-bedroom',
+  },
+  // "Bachelor" is ZenRentals' slug for Studio.
+  rivergate: {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/rivergate2/floorplans/bachelor',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/rivergate2/floorplans/1-bedroom-1-bath',
+  },
+  pioneer: {
+    0: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/bachelor',
+    1: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/1-bedroom',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/2-bedroom',
+    3: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/3-bedroom',
+  },
+  // The Edge has multiple 2-bed plans; the bedroom-type table links the base one.
+  edge: {
+    1: 'https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/1-bedroom-p22l33u1ws-den',
+    2: 'https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/2-bedroom',
+  },
+};
+
+/** Apply/"View Details" URL for a building + bedroom type, if provided. */
+export const applyUrlFor = (slug: string, bed: number): string | undefined =>
+  APPLY_LINKS[slug]?.[bed as 0 | 1 | 2 | 3];
+
+/** ZenRentals resident-services property slug per building (from the client's
+ *  Resident Portals sheet). Resident Portal + Maintenance Request links derive
+ *  from this. Buildings not listed have no portal yet ("coming soon"). */
+const ZEN_SLUG: Record<string, string> = {
+  woodridge: 'woodridge-5',
+  'royal-lady': 'royal-lady',
+  acadian: 'house-acadian',
+  parkdale: 'parkdale-terrace0',
+  'cedar-manor': 'cedar-manor1',
+  layali: 'layali-house',
+  palisades: 'palisades4',
+  'courts-manor': 'courts-manor',
+  'royal-manor': 'royal-manor2',
+  hamlet: 'hamlet-village',
+  kafa: 'kafa-manor',
+  'catalina-estates': 'catalina-estates',
+  strathearn: 'strathearn-place',
+  beverly: 'beverly-manor',
+  'chicklet-house': 'chicklet-house',
+  'copper-manor': 'copper-manor',
+  'sky-manor': 'sky-manor',
+  'grandview-manor': 'grandview-manor1',
+  'oakwood-manor': 'oakwood-manor2',
+  'balwin-manor': 'balwin-manor',
+  pioneer: 'pioneer-apartments6',
+  rivergate: 'rivergate2',
+  'arbour-green': 'arbour-green-2757506-alberta-ltd',
+};
+
+/** Resident Portal + Maintenance Request URLs for a building, if it has a
+ *  ZenRentals portal. Returns undefined when none exists yet. */
+export const portalLinksFor = (
+  slug: string
+): { portal: string; maintenance: string } | undefined => {
+  const z = ZEN_SLUG[slug];
+  if (!z) return undefined;
+  const base = `https://zenrentals.securecafe.com/residentservices/${z}`;
+  return { portal: `${base}/userlogin.aspx`, maintenance: `${base}/maintenance.aspx` };
+};
+
 function makeResidence(raw: RawAsset, _idx: number): Residence {
   const seed = hashSeed(raw.slug);
   const cityLabel = CITIES[raw.city].label;
-  // Every Edmonton property offers all four configs. Other cities keep
-  // the deterministic variation until we know better.
-  const bedroomOptions = raw.bedrooms
-    ?? (raw.city === 'edmonton'
-      ? [0, 1, 2, 3]
-      : BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length]);
-  // Rate card may carry all four configs; keep only the bedrooms this
-  // building actually offers so "From $X" reflects an available suite.
-  const card = pricesFor(raw);
-  const prices: Partial<Record<0 | 1 | 2 | 3, number>> = {};
-  bedroomOptions.forEach((b) => {
-    const v = card[b as 0 | 1 | 2 | 3];
-    if (v !== undefined) prices[b as 0 | 1 | 2 | 3] = v;
-  });
+  const units = UNITS[raw.slug];
+
+  let bedroomOptions: number[];
+  let prices: Partial<Record<0 | 1 | 2 | 3, number>>;
+  if (units && units.length) {
+    // Availability sheet is the source of truth: bedroom types + net rent
+    // (min per type) come from the actual available units.
+    prices = {};
+    units.forEach((u) => {
+      const n = UNIT_TYPE_TO_NUM[u.type];
+      if (n === undefined) return;
+      const cur = prices[n];
+      prices[n] = cur === undefined ? u.rent : Math.min(cur, u.rent);
+    });
+    bedroomOptions = (Object.keys(prices) as unknown as number[])
+      .map(Number)
+      .sort((a, b) => a - b);
+  } else {
+    // No sheet units: fall back to the configured bedrooms + promo pricing.
+    bedroomOptions = raw.bedrooms
+      ?? (raw.city === 'edmonton'
+        ? [0, 1, 2, 3]
+        : BEDROOM_VARIANTS[seed % BEDROOM_VARIANTS.length]);
+    const card = pricesFor(raw);
+    prices = {};
+    bedroomOptions.forEach((b) => {
+      const v = card[b as 0 | 1 | 2 | 3];
+      if (v !== undefined) prices[b as 0 | 1 | 2 | 3] = v;
+    });
+  }
   const priceFrom = Math.min(...(Object.values(prices) as number[]));
   // Promotional banner (client promo is scoped to Edmonton properties).
   const promo = raw.city === 'edmonton' ? promoText(freeMonthsFor(raw.slug)) : undefined;
@@ -979,6 +1223,7 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     hideDetailGallery: raw.hideDetailGallery,
     incentives: raw.incentives,
     unitLabels: raw.unitLabels,
+    units,
     heroImage,
     gallery,
     features,

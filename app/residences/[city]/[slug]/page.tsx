@@ -10,12 +10,17 @@ import { InquireModal } from '@/components/InquireModal';
 import { GalleryModal } from '@/components/GalleryModal';
 import { Lightbox } from '@/components/Lightbox';
 import {
+  applyUrlFor,
   bedroomShort,
   formatPrice,
   getResidence,
+  portalLinksFor,
   residencesByCity,
   type Residence,
 } from '@/lib/data';
+
+// Bedroom type label -> numeric key (0=Studio, 1..3=bedrooms).
+const BED_NUM: Record<string, number> = { 'Studio': 0, '1 Bedroom': 1, '2 Bedroom': 2, '3 Bedroom': 3 };
 
 const TONES = ['warm', 'cool', 'deep', 'light', 'warm', 'cool'] as const;
 
@@ -88,9 +93,16 @@ export default function ResidenceDetailPage({
   const plans = r.bedroomOptions
     .filter((b) => r.prices[b as 0 | 1 | 2 | 3] !== undefined)
     .map((b) => ({
+      bed: b,
       label: b === 0 ? 'Studio' : `${b} Bedroom`,
       price: r.prices[b as 0 | 1 | 2 | 3] as number,
     }));
+
+  // "Available suites" rows: real units from the sheet when we have them,
+  // otherwise one row per available bedroom type (unit number unknown).
+  const suiteRows = r.units?.length
+    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1 }))
+    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed }));
 
   const others = residencesByCity(r.city)
     .filter((x) => x.id !== r.id)
@@ -300,12 +312,15 @@ export default function ResidenceDetailPage({
               {r.longDescription}
             </p>
 
-            <div className="divider" style={{ margin: '64px 0 40px' }} />
-
-            <h2 className="h2 serif" style={{ marginBottom: 32 }}>
-              {r.incentives ? 'Incentives' : 'Residence features'}
-            </h2>
-            <FeatureList items={r.incentives ?? r.features} />
+            {(r.incentives ?? r.features).length > 0 && (
+              <>
+                <div className="divider" style={{ margin: '64px 0 40px' }} />
+                <h2 className="h2 serif" style={{ marginBottom: 32 }}>
+                  {r.incentives ? 'Incentives' : 'Residence features'}
+                </h2>
+                <FeatureList items={r.incentives ?? r.features} />
+              </>
+            )}
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
@@ -316,38 +331,61 @@ export default function ResidenceDetailPage({
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
-            <h2 className="h2 serif" style={{ marginBottom: 12 }}>Suites</h2>
+            <h2 className="h2 serif" style={{ marginBottom: 12 }}>Available suites</h2>
             <p className="small muted" style={{ marginBottom: 28 }}>
-              Rents shown are net effective, what you pay after any promotion. Square
-              footage and live availability are confirmed at viewing.
+              Rents shown are net effective, what you pay after any promotion. Live
+              availability is confirmed at viewing.
             </p>
             <div className="suites-table" role="table">
               <div className="suites-row suites-head" role="row">
-                <span role="columnheader">Suite</span>
-                <span role="columnheader">Sq ft</span>
+                <span role="columnheader">Unit Number</span>
+                <span role="columnheader">Unit Type</span>
                 <span role="columnheader">Rent (net)</span>
-                <span role="columnheader">Availability</span>
+                <span role="columnheader">Images</span>
                 <span role="columnheader" aria-label="Apply" />
               </div>
-              {plans.map((p, i) => (
+              {suiteRows.map((row, i) => (
                 <div className="suites-row" role="row" key={i}>
+                  <span role="cell" className={row.unit === '—' ? 'muted' : 'serif'} style={row.unit === '—' ? undefined : { fontSize: 16, fontWeight: 500 }}>
+                    {row.unit}
+                  </span>
                   <span role="cell" className="serif" style={{ fontSize: 16, fontWeight: 500 }}>
-                    {p.label}
+                    {row.type}
                   </span>
-                  <span role="cell" className="muted">–</span>
                   <span role="cell" className="serif" style={{ fontWeight: 500 }}>
-                    {formatPrice(p.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>
+                    {formatPrice(row.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>
                   </span>
-                  <span role="cell" className="muted">
-                    {r.availability === 'available' ? 'Available' : 'Coming soon'}
+                  <span role="cell">
+                    {photos.length ? (
+                      <button
+                        className="text-link"
+                        onClick={() => setLightboxIndex(0)}
+                        style={{ background: 'transparent', border: 0, padding: 0, cursor: 'pointer' }}
+                      >
+                        View
+                      </button>
+                    ) : (
+                      <span className="muted">—</span>
+                    )}
                   </span>
                   <span role="cell" style={{ textAlign: 'right' }}>
-                    <button
-                      className="btn btn-ghost btn-sm"
-                      onClick={() => { setSelectedPlan(i); setInquireOpen(true); }}
-                    >
-                      Apply
-                    </button>
+                    {applyUrlFor(r.slug, row.bed) ? (
+                      <a
+                        className="btn btn-ghost btn-sm"
+                        href={applyUrlFor(r.slug, row.bed)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Apply
+                      </a>
+                    ) : (
+                      <button
+                        className="btn btn-ghost btn-sm"
+                        onClick={() => { if (!r.units?.length) setSelectedPlan(i); setInquireOpen(true); }}
+                      >
+                        Apply
+                      </button>
+                    )}
                   </span>
                 </div>
               ))}
@@ -498,6 +536,40 @@ export default function ResidenceDetailPage({
               >
                 Book a viewing
               </button>
+
+              {/* Resident Portal + Maintenance Request (per-property links). */}
+              {(() => {
+                const portal = portalLinksFor(r.slug);
+                const secondary: React.CSSProperties = { width: '100%', marginBottom: 10 };
+                const soon: React.CSSProperties = {
+                  ...secondary,
+                  opacity: 0.5,
+                  cursor: 'default',
+                  pointerEvents: 'none',
+                };
+                return (
+                  <div style={{ marginTop: 4 }}>
+                    {portal ? (
+                      <a className="btn btn-ghost btn-sm" style={secondary} href={portal.portal} target="_blank" rel="noopener noreferrer">
+                        Resident Portal
+                      </a>
+                    ) : (
+                      <span className="btn btn-ghost btn-sm" style={soon} aria-disabled="true">
+                        Resident Portal · Coming soon
+                      </span>
+                    )}
+                    {portal ? (
+                      <a className="btn btn-ghost btn-sm" style={secondary} href={portal.maintenance} target="_blank" rel="noopener noreferrer">
+                        Maintenance Request
+                      </a>
+                    ) : (
+                      <span className="btn btn-ghost btn-sm" style={soon} aria-disabled="true">
+                        Maintenance Request · Coming soon
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
 
               <div
                 style={{

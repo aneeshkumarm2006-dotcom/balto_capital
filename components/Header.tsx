@@ -6,8 +6,6 @@ import { Logo } from './Logo';
 import { useFavorites } from './FavoritesContext';
 import { HeartIcon, MenuIcon, CloseIcon, ChevronDown } from './icons';
 
-// TODO: real Resident Portal URL pending from client.
-const RESIDENT_PORTAL_URL = '#';
 
 export function Header() {
   const pathname = usePathname();
@@ -131,12 +129,6 @@ export function Header() {
           </nav>
 
           <div className="nav-right">
-            <a
-              href={RESIDENT_PORTAL_URL}
-              className="btn btn-ghost btn-sm resident-portal-btn"
-            >
-              Resident Portal
-            </a>
             <Link
               href="/favorites"
               className="favorites-link"
@@ -192,7 +184,6 @@ export function Header() {
             No openings · check back soon
           </span>
           <Link href="/inquire">Contact Us</Link>
-          <a href={RESIDENT_PORTAL_URL}>Resident Portal</a>
           <Link href="/favorites">
             Favorites{' '}
             <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>

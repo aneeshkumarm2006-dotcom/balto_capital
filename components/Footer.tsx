@@ -1,9 +1,10 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-// TODO: real Resident Portal / Maintenance Request URLs pending from client.
-const RESIDENT_PORTAL_URL = '#';
-const MAINTENANCE_REQUEST_URL = '#';
+// Resident Portal + Maintenance Request are per-building (ZenRentals). Site-wide
+// links route to the residence list, where each property has its own buttons.
+const RESIDENT_PORTAL_URL = '/residences';
+const MAINTENANCE_REQUEST_URL = '/residences';
 
 export function Footer() {
   const router = useRouter();
