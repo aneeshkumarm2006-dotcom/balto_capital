@@ -549,15 +549,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   'sky-manor': {
+    // Interior photos hidden per client; keep only the facade cover.
     hero: '/assets/sky-manor/01-main.jpg',
-    gallery: [
-      '/assets/sky-manor/02.jpg',
-      '/assets/sky-manor/03.jpg',
-      '/assets/sky-manor/04.jpg',
-      '/assets/sky-manor/05.jpg',
-      '/assets/sky-manor/06.jpg',
-      '/assets/sky-manor/07.jpg',
-    ],
+    gallery: [],
   },
   'cedar-manor': {
     hero: '/assets/cedar-manor/01-main.jpg',
@@ -572,16 +566,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   kafa: {
+    // Interior photos hidden per client; keep only the facade cover.
     hero: '/assets/kafa/01-main.jpg',
-    gallery: [
-      '/assets/kafa/02.jpg',
-      '/assets/kafa/03.jpg',
-      '/assets/kafa/04.jpg',
-      '/assets/kafa/05.jpg',
-      '/assets/kafa/06.jpg',
-      '/assets/kafa/07.jpg',
-      '/assets/kafa/08.jpg',
-    ],
+    gallery: [],
   },
   palisades: {
     hero: '/assets/palisades/01-main.jpg',
@@ -600,12 +587,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   },
   'copper-manor':    { hero: '/assets/copper-manor/01-main.jpg',    gallery: [] },
   'grandview-manor': {
+    // Interior photos hidden per client; keep only the facade cover.
     hero: '/assets/grandview-manor/01-main.jpg',
-    gallery: [
-      '/assets/grandview-manor/02.jpg',
-      '/assets/grandview-manor/03.jpg',
-      '/assets/grandview-manor/04.jpg',
-    ],
+    gallery: [],
   },
   'courts-manor': {
     hero: '/assets/courts-manor/01-main.jpg',
@@ -628,16 +612,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   'balwin-manor': {
+    // Interior photos hidden per client; keep only the facade cover.
     hero: '/assets/balwin-manor/01-main.jpg',
-    gallery: [
-      '/assets/balwin-manor/02.jpg',
-      '/assets/balwin-manor/03.jpg',
-      '/assets/balwin-manor/04.jpg',
-      '/assets/balwin-manor/05.jpg',
-      '/assets/balwin-manor/06.jpg',
-      '/assets/balwin-manor/07.jpg',
-      '/assets/balwin-manor/08.jpg',
-    ],
+    gallery: [],
   },
   // Parkdale / Strathearn / Rivergate / Beverly, the sync script auto-
   // promoted the first photo to 01-main.jpg since there's no dedicated
@@ -943,18 +920,18 @@ const UNITS: Record<string, Unit[]> = {
     { unit: '6', type: '1 Bedroom', rent: 1075, image: 'https://drive.google.com/drive/folders/1o-WcAM4Kfu4b7wRjhjOAgmAE_DRqoqi1' },
   ],
   woodridge: [
-    { unit: '1', type: '2 Bedroom', rent: 1421 },
-    { unit: '114', type: '2 Bedroom', rent: 1300 },
-    { unit: '120', type: '1 Bedroom', rent: 1238 },
-    { unit: '121', type: '1 Bedroom', rent: 1238 },
-    { unit: '213', type: '2 Bedroom', rent: 1200 },
-    { unit: '216', type: '1 Bedroom', rent: 1238 },
-    { unit: '221', type: '1 Bedroom', rent: 1238 },
-    { unit: '317', type: '2 Bedroom', rent: 1421 },
-    { unit: '320', type: '1 Bedroom', rent: 1238 },
-    { unit: '322', type: '2 Bedroom', rent: 1300 },
-    { unit: '323', type: '1 Bedroom', rent: 1150 },
-    { unit: '324', type: '2 Bedroom', rent: 1421 },
+    { unit: '1', type: '2 Bedroom', rent: 1421, image: 'https://drive.google.com/drive/folders/1bU6J6IXN-TZgyQnBQgKMddeiWbORTTUZ?usp=drive_link' },
+    { unit: '114', type: '2 Bedroom', rent: 1300, image: 'https://drive.google.com/drive/folders/1jtSky6wEnzedW870sCFY2yIH0Ys4DBRE' },
+    { unit: '120', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1NoTFFOVN1Ns9ASE5L6fbB21nm8a2RZ6G' },
+    { unit: '121', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1hurQfR8YS5pe6c4NF7S5UYAy6ODRP7VG' },
+    { unit: '213', type: '2 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1Sz2DXp89Od2bH3_J6sE3y3z-TxOJVQXh' },
+    { unit: '216', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1r5tPznkBKczEHgoezQaLxxH7mGn-_B8S' },
+    { unit: '221', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1P0kk6stgO7a1JRZOUtEb4NgOuwEnfQ6t?usp=drive_link' },
+    { unit: '317', type: '2 Bedroom', rent: 1421, image: 'https://drive.google.com/drive/folders/1hOfv7l3MZs0SA8syGmo0kIMSXllkYrVt?usp=drive_link' },
+    { unit: '320', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/10VPy3996sfqilRComJ9POn0u-gGR_fKm' },
+    { unit: '322', type: '2 Bedroom', rent: 1300, image: 'https://drive.google.com/drive/folders/1y-b0WGohU4Va1lqg-t_y0CB7029UToKt' },
+    { unit: '323', type: '1 Bedroom', rent: 1150, image: 'https://drive.google.com/drive/folders/11rJ3OXsr84qSOTBmuxIFOQxeiSi1SgqQ' },
+    { unit: '324', type: '2 Bedroom', rent: 1421, image: 'https://drive.google.com/drive/folders/1H1bjzW3ejy9H4ygzj4XQ0lTz8q2P2Q0C?usp=drive_link' },
   ],
   'royal-lady': [
     { unit: '105', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1K-7bKqhvaqP626T6pTsAT5RsP2H12IbR?usp=drive_link' },
