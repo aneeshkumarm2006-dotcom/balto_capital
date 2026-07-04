@@ -157,7 +157,10 @@ export default function WhyBaltoPage() {
               </div>
               <div style={{ direction: 'ltr' }}>
                 <Eyebrow style={{ marginBottom: 22 }}>{p.eyebrow}</Eyebrow>
-                <h2 className="h2 serif" style={{ marginBottom: 28 }}>
+                <h2
+                  className="h2 serif"
+                  style={{ marginBottom: 28, fontVariantNumeric: 'lining-nums', fontFeatureSettings: '"lnum" 1' }}
+                >
                   {p.title}
                 </h2>
                 <p
