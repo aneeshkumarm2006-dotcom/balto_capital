@@ -603,13 +603,9 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   'oakwood-manor': {
+    // Interior photos hidden per client; keep only the facade cover.
     hero: '/assets/oakwood-manor/01-main.jpg',
-    gallery: [
-      '/assets/oakwood-manor/02.jpg',
-      '/assets/oakwood-manor/03.jpg',
-      '/assets/oakwood-manor/04.jpg',
-      '/assets/oakwood-manor/05.jpg',
-    ],
+    gallery: [],
   },
   'balwin-manor': {
     // Interior photos hidden per client; keep only the facade cover.
@@ -633,24 +629,14 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   strathearn: {
+    // Interior photos hidden per client; no facade yet, so keep coming-soon.
     hero: '/assets/coming-soon.png',
-    gallery: [
-      '/assets/strathearn/01-main.jpg',
-      '/assets/strathearn/02.jpg',
-      '/assets/strathearn/03.jpg',
-      '/assets/strathearn/04.jpg',
-      '/assets/strathearn/05.jpg',
-    ],
+    gallery: [],
   },
   rivergate: {
+    // Interior photos hidden per client; no facade yet, so keep coming-soon.
     hero: '/assets/coming-soon.png',
-    gallery: [
-      '/assets/rivergate/01-main.jpg',
-      '/assets/rivergate/02.jpg',
-      '/assets/rivergate/03.jpg',
-      '/assets/rivergate/04.jpg',
-      '/assets/rivergate/05.jpg',
-    ],
+    gallery: [],
   },
   beverly: {
     // No facade shot yet — keep the coming-soon cover; Unit 203 AI Unfurnished
