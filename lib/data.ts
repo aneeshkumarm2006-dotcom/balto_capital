@@ -484,24 +484,20 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     // Interiors replaced with AI renders across units 103/303, 106/201/207/
     // 304/306, and 202/205 (furnished + unfurnished, 2026).
     gallery: [
-      '/assets/acadian/02.png', // 103/303 · Living area (furnished)
-      '/assets/acadian/03.png', // 103/303 · Kitchen (furnished)
-      '/assets/acadian/04.png', // 103/303 · Living area
-      '/assets/acadian/05.png', // 103/303 · Kitchen
-      '/assets/acadian/06.png', // 106… · Living room (furnished)
-      '/assets/acadian/07.png', // 106… · Kitchen (furnished)
-      '/assets/acadian/08.png', // 106… · Bedroom (furnished)
-      '/assets/acadian/09.png', // 106… · Living room
-      '/assets/acadian/10.png', // 106… · Kitchen
-      '/assets/acadian/11.png', // 106… · Bedroom
-      '/assets/acadian/12.png', // 202/205 · Living room (furnished)
-      '/assets/acadian/13.png', // 202/205 · Kitchen (furnished)
-      '/assets/acadian/14.png', // 202/205 · Bedroom (furnished)
-      '/assets/acadian/15.png', // 202/205 · Master bedroom (furnished)
-      '/assets/acadian/16.png', // 202/205 · Living room
-      '/assets/acadian/17.png', // 202/205 · Kitchen
-      '/assets/acadian/18.png', // 202/205 · Bedroom
-      '/assets/acadian/19.png', // 202/205 · Master bedroom
+      '/assets/acadian/02.png', // unfurnished
+      '/assets/acadian/03.png', // unfurnished
+      '/assets/acadian/04.png', // unfurnished
+      '/assets/acadian/05.png', // unfurnished
+      '/assets/acadian/06.png', // unfurnished
+      '/assets/acadian/07.png', // unfurnished
+      '/assets/acadian/08.png', // unfurnished
+      '/assets/acadian/09.png', // furnished
+      '/assets/acadian/10.png', // furnished
+      '/assets/acadian/11.png', // furnished
+      '/assets/acadian/12.png', // furnished
+      '/assets/acadian/13.png', // furnished
+      '/assets/acadian/14.png', // furnished
+      '/assets/acadian/15.png', // furnished
     ],
   },
   hamlet: {
