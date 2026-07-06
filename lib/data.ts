@@ -453,15 +453,30 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   woodridge: {
     hero: '/assets/woodridge/01-main.jpg',
     gallery: [
-      '/assets/woodridge/02.jpg',
-      '/assets/woodridge/03.jpg',
-      '/assets/woodridge/04.jpg',
-      '/assets/woodridge/05.jpg',
-      '/assets/woodridge/06.jpg',
-      '/assets/woodridge/07.jpg',
-      '/assets/woodridge/08.jpg',
-      '/assets/woodridge/09.jpg',
-      '/assets/woodridge/10.jpg',
+      '/assets/woodridge/02.jpg', // unfurnished
+      '/assets/woodridge/03.jpg', // unfurnished
+      '/assets/woodridge/04.jpg', // unfurnished
+      '/assets/woodridge/05.jpg', // unfurnished
+      '/assets/woodridge/06.png', // unfurnished
+      '/assets/woodridge/07.png', // unfurnished
+      '/assets/woodridge/08.png', // unfurnished
+      '/assets/woodridge/09.png', // unfurnished
+      '/assets/woodridge/10.png', // unfurnished
+      '/assets/woodridge/11.png', // unfurnished
+      '/assets/woodridge/12.png', // unfurnished
+      '/assets/woodridge/13.png', // unfurnished
+      '/assets/woodridge/14.png', // furnished
+      '/assets/woodridge/15.png', // furnished
+      '/assets/woodridge/16.png', // furnished
+      '/assets/woodridge/17.png', // furnished
+      '/assets/woodridge/18.png', // furnished
+      '/assets/woodridge/19.png', // furnished
+      '/assets/woodridge/20.png', // furnished
+      '/assets/woodridge/21.png', // furnished
+      '/assets/woodridge/22.png', // furnished
+      '/assets/woodridge/23.png', // furnished
+      '/assets/woodridge/24.png', // furnished
+      '/assets/woodridge/25.png', // furnished
     ],
   },
   acadian: {
@@ -502,39 +517,34 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   'royal-lady': {
     hero: '/assets/royal-lady/01-main.jpg',
     gallery: [
-      '/assets/royal-lady/02.jpg',
-      '/assets/royal-lady/03.jpg',
-      '/assets/royal-lady/04.jpg',
-      '/assets/royal-lady/05.jpg',
-      '/assets/royal-lady/06.jpg',
-      '/assets/royal-lady/07.jpg',
-      '/assets/royal-lady/08.jpg',
-      '/assets/royal-lady/09.jpg',
-      '/assets/royal-lady/10.jpg',
-      '/assets/royal-lady/11.jpg',
-      // Added: Unit 302/303/309 AI Unfurnished renders (2026).
-      '/assets/royal-lady/12.png', // Living room
-      '/assets/royal-lady/13.png', // Kitchen
-      '/assets/royal-lady/14.png', // Bedroom
-      // Added: unit 105 AI Furnished renders (2026).
-      '/assets/royal-lady/15.png', // Living room
-      '/assets/royal-lady/16.png', // Kitchen
-      '/assets/royal-lady/17.png', // Bedroom
-      '/assets/royal-lady/18.png', // Bathroom
-      // Added: Unit 302/303/309 AI Furnished renders (2026).
-      '/assets/royal-lady/19.png', // Living room
-      '/assets/royal-lady/20.png', // Kitchen
-      '/assets/royal-lady/21.png', // Bedroom
+      '/assets/royal-lady/02.jpg', // unfurnished
+      '/assets/royal-lady/03.jpg', // unfurnished
+      '/assets/royal-lady/04.jpg', // unfurnished
+      '/assets/royal-lady/05.jpg', // unfurnished
+      '/assets/royal-lady/06.png', // unfurnished
+      '/assets/royal-lady/07.png', // unfurnished
+      '/assets/royal-lady/08.png', // unfurnished
+      '/assets/royal-lady/09.png', // furnished
+      '/assets/royal-lady/10.png', // furnished
+      '/assets/royal-lady/11.png', // furnished
+      '/assets/royal-lady/12.png', // furnished
+      '/assets/royal-lady/13.png', // furnished
+      '/assets/royal-lady/14.png', // furnished
+      '/assets/royal-lady/15.png', // furnished
     ],
   },
   'catalina-estates': {
     hero: '/assets/catalina-estates/01-main.jpg',
     // Interiors replaced with Unit 2 AI Furnished renders (2026).
     gallery: [
-      '/assets/catalina-estates/02.png', // Living room
-      '/assets/catalina-estates/03.png', // Kitchen
-      '/assets/catalina-estates/04.png', // Bedroom
-      '/assets/catalina-estates/05.png', // Bathroom
+      '/assets/catalina-estates/02.png', // unfurnished
+      '/assets/catalina-estates/03.png', // unfurnished
+      '/assets/catalina-estates/04.png', // unfurnished
+      '/assets/catalina-estates/05.png', // unfurnished
+      '/assets/catalina-estates/06.png', // furnished
+      '/assets/catalina-estates/07.png', // furnished
+      '/assets/catalina-estates/08.png', // furnished
+      '/assets/catalina-estates/09.png', // furnished
     ],
   },
   layali: {
@@ -574,15 +584,24 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     hero: '/assets/palisades/01-main.jpg',
     // Interiors replaced with unit 204 + Unit 205 AI Furnished renders (2026).
     gallery: [
-      '/assets/palisades/02.png', // Unit 204 · Living room
-      '/assets/palisades/03.png', // Unit 204 · Kitchen
-      '/assets/palisades/04.png', // Unit 204 · Bedroom
-      '/assets/palisades/05.png', // Unit 204 · Bathroom
-      '/assets/palisades/06.png', // Unit 205 · Living room
-      '/assets/palisades/07.png', // Unit 205 · Kitchen
-      '/assets/palisades/08.png', // Unit 205 · Bedroom 1
-      '/assets/palisades/09.png', // Unit 205 · Bedroom 2
-      '/assets/palisades/10.png', // Unit 205 · Bathroom
+      '/assets/palisades/02.png', // unfurnished
+      '/assets/palisades/03.png', // unfurnished
+      '/assets/palisades/04.png', // unfurnished
+      '/assets/palisades/05.png', // unfurnished
+      '/assets/palisades/06.png', // unfurnished
+      '/assets/palisades/07.png', // unfurnished
+      '/assets/palisades/08.png', // unfurnished
+      '/assets/palisades/09.png', // unfurnished
+      '/assets/palisades/10.png', // unfurnished
+      '/assets/palisades/11.png', // furnished
+      '/assets/palisades/12.png', // furnished
+      '/assets/palisades/13.png', // furnished
+      '/assets/palisades/14.png', // furnished
+      '/assets/palisades/15.png', // furnished
+      '/assets/palisades/16.png', // furnished
+      '/assets/palisades/17.png', // furnished
+      '/assets/palisades/18.png', // furnished
+      '/assets/palisades/19.png', // furnished
     ],
   },
   'copper-manor':    { hero: '/assets/copper-manor/01-main.jpg',    gallery: [] },
@@ -629,9 +648,19 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     ],
   },
   strathearn: {
-    // Interior photos hidden per client; no facade yet, so keep coming-soon.
+    // No facade shot yet, so cover stays coming-soon; gallery = Unit 1 AI
+    // unfurnished then furnished (2026).
     hero: '/assets/coming-soon.png',
-    gallery: [],
+    gallery: [
+      '/assets/strathearn/02.png', // unfurnished
+      '/assets/strathearn/03.png', // unfurnished
+      '/assets/strathearn/04.png', // unfurnished
+      '/assets/strathearn/05.png', // unfurnished
+      '/assets/strathearn/06.png', // furnished
+      '/assets/strathearn/07.png', // furnished
+      '/assets/strathearn/08.png', // furnished
+      '/assets/strathearn/09.png', // furnished
+    ],
   },
   rivergate: {
     // Interior photos hidden per client; no facade yet, so keep coming-soon.
@@ -651,19 +680,14 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
   'royal-manor': {
     hero: '/assets/royal-manor/01-main.jpg',
     gallery: [
-      '/assets/royal-manor/02.jpg',
-      '/assets/royal-manor/03.jpg',
-      '/assets/royal-manor/04.jpg',
-      '/assets/royal-manor/05.jpg',
-      '/assets/royal-manor/06.jpg',
-      '/assets/royal-manor/07.jpg',
-      '/assets/royal-manor/08.jpg',
-      '/assets/royal-manor/09.jpg',
-      // Added: AI Furnished renders (2026).
-      '/assets/royal-manor/10.png', // Living room
-      '/assets/royal-manor/11.png', // Kitchen
-      '/assets/royal-manor/12.png', // Bedroom
-      '/assets/royal-manor/13.png', // Bathroom
+      '/assets/royal-manor/02.jpg', // unfurnished
+      '/assets/royal-manor/03.jpg', // unfurnished
+      '/assets/royal-manor/04.jpg', // unfurnished
+      '/assets/royal-manor/05.jpg', // unfurnished
+      '/assets/royal-manor/06.png', // furnished
+      '/assets/royal-manor/07.png', // furnished
+      '/assets/royal-manor/08.png', // furnished
+      '/assets/royal-manor/09.png', // furnished
     ],
   },
   // Saskatoon, Cielo & Greyson split + new Edge Living + renames.
