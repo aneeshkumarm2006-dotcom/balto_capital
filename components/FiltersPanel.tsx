@@ -27,15 +27,20 @@ export const DEFAULT_FILTERS: Filters = {
 // features + amenities. Near-duplicates are grouped: "Balcony" catches
 // Balconies + Private balconies; "Shared mail area" catches both mail-area
 // wordings.
-// Only amenities/features that actually exist per the client's doc.
+// Real amenities/features across the portfolio. Roof terrace is excluded
+// everywhere per the client (not a real amenity in any building).
 const ALL_AMENITIES: { label: string; match: string }[] = [
   { label: 'In-suite laundry', match: 'in-suite laundry' },
   { label: 'Communal laundry', match: 'communal laundry' },
   { label: 'Surface parking', match: 'surface parking' },
   { label: 'Heated underground parking', match: 'heated underground parking' },
+  { label: 'Pet-friendly', match: 'pet-friendly' },
   { label: 'Balcony', match: 'balcon' },
   { label: 'Elevator', match: 'elevator' },
+  { label: 'Storage lockers', match: 'storage locker' },
+  { label: 'Resident lounge', match: 'resident lounge' },
   { label: 'Resident concierge', match: 'resident concierge' },
+  { label: 'Mail & parcel concierge', match: 'mail and parcel concierge' },
   { label: 'Shared mail area', match: 'shared mail' },
   { label: 'Updated common areas', match: 'updated common areas' },
   { label: 'Newly renovated suites', match: 'newly renovated suites' },
