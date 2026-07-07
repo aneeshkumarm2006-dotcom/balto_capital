@@ -6,13 +6,21 @@ import { CloseIcon } from './icons';
 interface Props {
   open: boolean;
   onClose: () => void;
-  residence: Residence;
+  /** Building gallery (hero + gallery). Ignored when `photos` is passed. */
+  residence?: Residence;
+  /** Explicit photo list — used for the per-unit gallery. */
+  photos?: string[];
+  /** Heading (defaults to residence name). */
+  title?: string;
+  eyebrow?: string;
   /** Open the enlarged lightbox at the given photo index. */
   onPhotoClick?: (index: number) => void;
 }
 
-export function GalleryModal({ open, onClose, residence, onPhotoClick }: Props) {
-  const allPhotos = [residence.heroImage, ...residence.gallery].filter(Boolean);
+export function GalleryModal({ open, onClose, residence, photos, title, eyebrow, onPhotoClick }: Props) {
+  const allPhotos = photos
+    ?? (residence ? [residence.heroImage, ...residence.gallery].filter(Boolean) : []);
+  const heading = title ?? residence?.name ?? '';
 
   return (
     <div
@@ -53,9 +61,9 @@ export function GalleryModal({ open, onClose, residence, onPhotoClick }: Props) 
           >
             <CloseIcon size={18} />
           </button>
-          <Eyebrow style={{ marginBottom: 6 }}>GALLERY</Eyebrow>
+          <Eyebrow style={{ marginBottom: 6 }}>{eyebrow ?? 'GALLERY'}</Eyebrow>
           <h2 className="h2 serif" style={{ marginBottom: 4, fontSize: 28 }}>
-            {residence.name}
+            {heading}
           </h2>
           <div
             className="small muted"
@@ -95,7 +103,7 @@ export function GalleryModal({ open, onClose, residence, onPhotoClick }: Props) 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={src}
-                  alt={`${residence.name} · ${i + 1}`}
+                  alt={`${heading} · ${i + 1}`}
                   loading="lazy"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />

@@ -80,6 +80,9 @@ export default function ResidenceDetailPage({
   const [selectedPlan, setSelectedPlan] = useState(0);
   // null = closed; otherwise the index into `photos` to show enlarged.
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  // Per-unit photo viewer: tile grid modal + its own lightbox.
+  const [unitGallery, setUnitGallery] = useState<{ photos: string[]; label: string } | null>(null);
+  const [unitLightbox, setUnitLightbox] = useState<number | null>(null);
 
   useEffect(() => {
     if (!r) router.push('/residences');
@@ -101,8 +104,8 @@ export default function ResidenceDetailPage({
   // "Available suites" rows: real units from the sheet when we have them,
   // otherwise one row per available bedroom type (unit number unknown).
   const suiteRows = r.units?.length
-    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1, image: u.image, applyUrl: u.applyUrl }))
-    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed, image: undefined as string | undefined, applyUrl: undefined as string | undefined }));
+    ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1, image: u.image, images: u.images, applyUrl: u.applyUrl }))
+    : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed, image: undefined as string | undefined, images: undefined as string[] | undefined, applyUrl: undefined as string | undefined }));
 
   const others = residencesByCity(r.city)
     .filter((x) => x.id !== r.id)
@@ -356,8 +359,16 @@ export default function ResidenceDetailPage({
                     {formatPrice(row.price)}<span className="caption muted" style={{ marginLeft: 4 }}>/mo</span>
                   </span>
                   <span role="cell">
-                    {row.image ? (
-                      // Per-unit photos live in a Google Drive folder (from the sheet).
+                    {row.images?.length ? (
+                      // Per-unit photos, viewed in-site as a tile grid + lightbox.
+                      <button
+                        className="text-link"
+                        onClick={() => setUnitGallery({ photos: row.images!, label: `Unit ${row.unit}` })}
+                        style={{ background: 'transparent', border: 0, padding: 0, cursor: 'pointer' }}
+                      >
+                        View
+                      </button>
+                    ) : row.image ? (
                       <a className="text-link" href={row.image} target="_blank" rel="noopener noreferrer">
                         View
                       </a>
@@ -638,6 +649,24 @@ export default function ResidenceDetailPage({
         onIndexChange={setLightboxIndex}
         onClose={() => setLightboxIndex(null)}
         label={r.name}
+      />
+
+      {/* Per-unit photo viewer: tile grid, click a tile to enlarge. */}
+      <GalleryModal
+        open={unitGallery !== null}
+        onClose={() => setUnitGallery(null)}
+        photos={unitGallery?.photos ?? []}
+        title={unitGallery ? `${r.name} · ${unitGallery.label}` : ''}
+        eyebrow="UNIT PHOTOS"
+        onPhotoClick={(i) => setUnitLightbox(i)}
+      />
+      <Lightbox
+        open={unitLightbox !== null}
+        photos={unitGallery?.photos ?? []}
+        index={unitLightbox ?? 0}
+        onIndexChange={setUnitLightbox}
+        onClose={() => setUnitLightbox(null)}
+        label={unitGallery?.label ?? ''}
       />
     </main>
   );
