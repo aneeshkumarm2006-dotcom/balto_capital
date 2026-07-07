@@ -959,6 +959,7 @@ const UNITS: Record<string, Unit[]> = {
     {
       unit: '2', type: '1 Bedroom', rent: 1125,
       image: 'https://drive.google.com/drive/folders/12gV2SmYV0qhcwivGGxehPkmFA9IBMYFC',
+      images: ['/assets/catalina-estates/units/2/01.jpg', '/assets/catalina-estates/units/2/02.jpg', '/assets/catalina-estates/units/2/03.jpg', '/assets/catalina-estates/units/2/04.jpg', '/assets/catalina-estates/units/2/05.jpg', '/assets/catalina-estates/units/2/06.jpg', '/assets/catalina-estates/units/2/07.jpg', '/assets/catalina-estates/units/2/08.jpg', '/assets/catalina-estates/units/2/09.jpg', '/assets/catalina-estates/units/2/10.jpg', '/assets/catalina-estates/units/2/11.jpg', '/assets/catalina-estates/units/2/12.jpg'],
       applyUrl: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026',
     },
   ],
