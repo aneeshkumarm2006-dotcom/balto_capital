@@ -335,6 +335,12 @@ export default function ResidenceDetailPage({
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
             <h2 className="h2 serif" style={{ marginBottom: 12 }}>Available suites</h2>
+            {!r.units?.length ? (
+              <p className="small muted" style={{ marginTop: 16 }}>
+                There are no suites available at the moment.
+              </p>
+            ) : (
+            <>
             <p className="small muted" style={{ marginBottom: 28 }}>
               Rents shown are net effective, what you pay after any promotion. Live
               availability is confirmed at viewing.
@@ -406,6 +412,8 @@ export default function ResidenceDetailPage({
                 </div>
               ))}
             </div>
+            </>
+            )}
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
