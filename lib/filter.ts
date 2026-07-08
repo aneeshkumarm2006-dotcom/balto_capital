@@ -1,6 +1,14 @@
 import type { Residence } from './data';
 import type { Filters } from '@/components/FiltersPanel';
 
+/** Bedroom count from a unit's type label. "Studio" -> 0, "2 Bedroom" -> 2.
+ *  Returns -1 when the label has no recognisable size. */
+function unitBeds(type: string): number {
+  if (/studio/i.test(type)) return 0;
+  const m = type.match(/(\d+)/);
+  return m ? Number(m[1]) : -1;
+}
+
 export function applyFilters(
   residences: Residence[],
   filters: Filters,
@@ -9,12 +17,14 @@ export function applyFilters(
   let out = residences.slice();
 
   if (filters.beds.length) {
+    // Match against actual available suites, not the building's advertised
+    // bedroom mix: a residence only appears under a bedroom filter when it has
+    // a real unit of that size. Buildings with no available suites are hidden.
     out = out.filter((r) =>
-      r.bedroomOptions.some(
-        (b) =>
-          filters.beds.includes(b === 3 ? 3 : b) ||
-          (b >= 3 && filters.beds.includes(3))
-      )
+      (r.units ?? []).some((u) => {
+        const b = unitBeds(u.type);
+        return b >= 0 && filters.beds.includes(b >= 3 ? 3 : b);
+      })
     );
   }
   out = out.filter(

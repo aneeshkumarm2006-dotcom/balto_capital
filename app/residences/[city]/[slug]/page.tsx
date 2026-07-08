@@ -83,6 +83,9 @@ export default function ResidenceDetailPage({
   // Per-unit photo viewer: tile grid modal + its own lightbox.
   const [unitGallery, setUnitGallery] = useState<{ photos: string[]; label: string } | null>(null);
   const [unitLightbox, setUnitLightbox] = useState<number | null>(null);
+  // "View all photos" enlarge state (kept separate from the above-fold grid so
+  // the type-labelled gallery can carry its own photo set).
+  const [allLightbox, setAllLightbox] = useState<number | null>(null);
 
   useEffect(() => {
     if (!r) router.push('/residences');
@@ -92,6 +95,34 @@ export default function ResidenceDetailPage({
 
   // Ordered photo set for the lightbox: hero first, then the gallery.
   const photos = [r.heroImage, ...r.gallery].filter(Boolean);
+
+  // 124 West only: "View all photos" is organised by unit type so renters can
+  // tell studio vs 1- vs 2-bedroom apart. Built from the real per-unit photo
+  // sets (each unit carries its type), with the facade shown first. Every other
+  // building keeps its normal hero + gallery set, unlabelled.
+  const TYPE_ORDER = ['Studio', '1 Bedroom', '2 Bedroom', '3 Bedroom'];
+  const typedGallery = (() => {
+    if (r.slug !== 'acadian') return null;
+    const groups = new Map<string, string[]>();
+    for (const u of r.units ?? []) {
+      if (!u.images?.length) continue;
+      groups.set(u.type, [...(groups.get(u.type) ?? []), ...u.images]);
+    }
+    if (groups.size === 0) return null;
+    const gp: string[] = [];
+    const gl: (string | undefined)[] = [];
+    if (r.heroImage) { gp.push(r.heroImage); gl.push('Exterior'); }
+    for (const t of TYPE_ORDER) {
+      for (const src of groups.get(t) ?? []) { gp.push(src); gl.push(t); }
+    }
+    return { photos: gp, labels: gl };
+  })();
+  const galleryPhotos = typedGallery?.photos ?? photos;
+  const galleryLabels = typedGallery?.labels;
+  const allLightboxLabel =
+    galleryLabels?.[allLightbox ?? 0] && galleryLabels[allLightbox ?? 0] !== 'Exterior'
+      ? `${r.name} · ${galleryLabels[allLightbox ?? 0]}`
+      : r.name;
 
   const plans = r.bedroomOptions
     .filter((b) => r.prices[b as 0 | 1 | 2 | 3] !== undefined)
@@ -647,9 +678,20 @@ export default function ResidenceDetailPage({
       <GalleryModal
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
-        residence={r}
-        onPhotoClick={(i) => setLightboxIndex(i)}
+        photos={galleryPhotos}
+        labels={galleryLabels}
+        title={r.name}
+        onPhotoClick={(i) => setAllLightbox(i)}
       />
+      <Lightbox
+        open={allLightbox !== null}
+        photos={galleryPhotos}
+        index={allLightbox ?? 0}
+        onIndexChange={setAllLightbox}
+        onClose={() => setAllLightbox(null)}
+        label={allLightboxLabel}
+      />
+      {/* Above-the-fold gallery grid enlarge (hero + building gallery). */}
       <Lightbox
         open={lightboxIndex !== null}
         photos={photos}
