@@ -503,20 +503,24 @@ const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
     // Interiors replaced with AI renders across units 103/303, 106/201/207/
     // 304/306, and 202/205 (furnished + unfurnished, 2026).
     gallery: [
-      '/assets/acadian/02.png', // unfurnished
-      '/assets/acadian/03.png', // unfurnished
-      '/assets/acadian/04.png', // unfurnished
-      '/assets/acadian/05.png', // unfurnished
-      '/assets/acadian/06.png', // unfurnished
-      '/assets/acadian/07.png', // unfurnished
-      '/assets/acadian/08.png', // unfurnished
-      '/assets/acadian/09.png', // furnished
-      '/assets/acadian/10.png', // furnished
-      '/assets/acadian/11.png', // furnished
-      '/assets/acadian/12.png', // furnished
-      '/assets/acadian/13.png', // furnished
-      '/assets/acadian/14.png', // furnished
-      '/assets/acadian/15.png', // furnished
+      '/assets/acadian/ai/01_studio_ai_furnished_kitchen.png',
+      '/assets/acadian/ai/02_studio_ai_furnished_living_area.png',
+      '/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png',
+      '/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png',
+      '/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png',
+      '/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png',
+      '/assets/acadian/ai/07_1bed_ai_furnished__living_room.png',
+      '/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png',
+      '/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png',
+      '/assets/acadian/ai/10_1bed_ai_unfurnished_living_room.png',
+      '/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png',
+      '/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png',
+      '/assets/acadian/ai/13_2bed_ai_furnished_living_room.png',
+      '/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png',
+      '/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png',
+      '/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png',
+      '/assets/acadian/ai/17_2bed_ai_unfurnished_living_room.png',
+      '/assets/acadian/ai/18_2bed_ai_unfurnished_master_bedroom.png',
     ],
   },
   hamlet: {

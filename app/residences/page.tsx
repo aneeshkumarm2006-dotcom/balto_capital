@@ -1,5 +1,5 @@
 'use client';
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, useMemo, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FiltersPanel, DEFAULT_FILTERS, type Filters } from '@/components/FiltersPanel';
 import { SortDropdown } from '@/components/SortDropdown';
@@ -20,23 +20,104 @@ export default function ResidencesAllPage() {
 function ResidencesAllInner() {
   const router = useRouter();
   const search = useSearchParams();
-  const initialQuery = search.get('q') ?? '';
-  // Seed filters from the homepage rental search bar (maxRent / beds).
-  const initMaxRent = Number(search.get('maxRent'));
-  const initBeds = search.get('beds');
-  const [filters, setFilters] = useState<Filters>(() => ({
-    ...DEFAULT_FILTERS,
-    priceMax:
-      initMaxRent && initMaxRent >= DEFAULT_FILTERS.priceMin
-        ? initMaxRent
-        : DEFAULT_FILTERS.priceMax,
-    beds: initBeds
-      ? initBeds.split(',').map(Number).filter((n) => !Number.isNaN(n))
-      : [],
-  }));
+
+  const [filters, setFilters] = useState<Filters>(() => {
+    const qBeds = search.get('beds');
+    const qPriceMin = search.get('priceMin');
+    const qPriceMax = search.get('priceMax') || search.get('maxRent');
+    const qAvailability = search.get('availability');
+    const qAmenities = search.get('amenities');
+    const qSort = search.get('sort');
+
+    return {
+      beds: qBeds
+        ? qBeds.split(',').map(Number).filter((n) => !Number.isNaN(n))
+        : [],
+      priceMin: qPriceMin ? Number(qPriceMin) : DEFAULT_FILTERS.priceMin,
+      priceMax: qPriceMax ? Number(qPriceMax) : DEFAULT_FILTERS.priceMax,
+      availability: (qAvailability as any) || DEFAULT_FILTERS.availability,
+      amenities: qAmenities ? qAmenities.split(',') : [],
+      sort: (qSort as any) || DEFAULT_FILTERS.sort,
+    };
+  });
+  
+  const [query, setQuery] = useState(() => search.get('q') ?? '');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
-  const [query, setQuery] = useState(initialQuery);
+
+  // Sync state from URL when the URL changes (e.g. Back button)
+  useEffect(() => {
+    const qBeds = search.get('beds');
+    const qPriceMin = search.get('priceMin');
+    const qPriceMax = search.get('priceMax') || search.get('maxRent');
+    const qAvailability = search.get('availability');
+    const qAmenities = search.get('amenities');
+    const qSort = search.get('sort');
+    const qQuery = search.get('q') ?? '';
+
+    const newBeds = qBeds ? qBeds.split(',').map(Number).filter((n) => !Number.isNaN(n)) : [];
+    const newPriceMin = qPriceMin ? Number(qPriceMin) : DEFAULT_FILTERS.priceMin;
+    const newPriceMax = qPriceMax ? Number(qPriceMax) : DEFAULT_FILTERS.priceMax;
+    const newAvailability = (qAvailability as any) || DEFAULT_FILTERS.availability;
+    const newAmenities = qAmenities ? qAmenities.split(',') : [];
+    const newSort = (qSort as any) || DEFAULT_FILTERS.sort;
+
+    setFilters((prev) => {
+      const bedsChanged = prev.beds.join(',') !== newBeds.join(',');
+      const minChanged = prev.priceMin !== newPriceMin;
+      const maxChanged = prev.priceMax !== newPriceMax;
+      const availChanged = prev.availability !== newAvailability;
+      const amenChanged = prev.amenities.join(',') !== newAmenities.join(',');
+      const sortChanged = prev.sort !== newSort;
+
+      if (bedsChanged || minChanged || maxChanged || availChanged || amenChanged || sortChanged) {
+        return {
+          beds: newBeds,
+          priceMin: newPriceMin,
+          priceMax: newPriceMax,
+          availability: newAvailability,
+          amenities: newAmenities,
+          sort: newSort,
+        };
+      }
+      return prev;
+    });
+
+    setQuery((prev) => (prev !== qQuery ? qQuery : prev));
+  }, [search]);
+
+  // Sync state to URL
+  useEffect(() => {
+    const sp = new URLSearchParams();
+    if (query) sp.set('q', query);
+    if (filters.beds.length) sp.set('beds', filters.beds.join(','));
+    if (filters.priceMin !== DEFAULT_FILTERS.priceMin) sp.set('priceMin', String(filters.priceMin));
+    if (filters.priceMax !== DEFAULT_FILTERS.priceMax) sp.set('priceMax', String(filters.priceMax));
+    if (filters.availability !== DEFAULT_FILTERS.availability) sp.set('availability', filters.availability);
+    if (filters.amenities.length) sp.set('amenities', filters.amenities.join(','));
+    if (filters.sort !== DEFAULT_FILTERS.sort) sp.set('sort', filters.sort);
+
+    const queryString = sp.toString();
+    const newUrl = queryString ? `/residences?${queryString}` : '/residences';
+
+    const currentQueryString = window.location.search;
+    const parsedCurrent = new URLSearchParams(currentQueryString);
+    const parsedNew = new URLSearchParams(queryString);
+    parsedCurrent.sort();
+    parsedNew.sort();
+
+    if (parsedCurrent.toString() !== parsedNew.toString()) {
+      // Immediate address bar update for continuous changes
+      window.history.replaceState(null, '', newUrl);
+
+      // Debounce history push for the back button
+      const timeoutId = setTimeout(() => {
+        window.history.pushState(null, '', newUrl);
+      }, 500);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [filters, query]);
 
   const filtered = useMemo(
     () => applyFilters(RESIDENCES, filters, query),

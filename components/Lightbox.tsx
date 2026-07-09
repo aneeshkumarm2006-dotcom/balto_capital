@@ -10,13 +10,15 @@ interface Props {
   onClose: () => void;
   /** Building name, used for alt text. */
   label?: string;
+  /** Optional array of labels corresponding to each photo (e.g., unit types). */
+  labels?: (string | undefined)[];
 }
 
 /**
  * Full-screen photo lightbox. Shows one image at a time; navigate with the
  * on-screen arrows, ← / → keys, or a swipe. Esc or a backdrop click closes.
  */
-export function Lightbox({ open, photos, index, onIndexChange, onClose, label = '' }: Props) {
+export function Lightbox({ open, photos, index, onIndexChange, onClose, label = '', labels }: Props) {
   const total = photos.length;
   const touchX = useRef<number | null>(null);
 
@@ -103,7 +105,21 @@ export function Lightbox({ open, photos, index, onIndexChange, onClose, label = 
 
       {total > 1 && (
         <div className="lightbox-counter">
-          {index + 1} / {total}
+          {labels && labels[index] && (
+            <span style={{ 
+              marginRight: 16, 
+              opacity: 0.9, 
+              textTransform: 'uppercase', 
+              letterSpacing: '0.05em',
+              fontWeight: 600,
+              background: 'rgba(0,0,0,0.5)',
+              padding: '4px 8px',
+              borderRadius: 4,
+            }}>
+              {labels[index]}
+            </span>
+          )}
+          <span>{index + 1} / {total}</span>
         </div>
       )}
     </div>

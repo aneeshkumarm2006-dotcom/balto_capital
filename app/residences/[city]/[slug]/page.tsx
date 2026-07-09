@@ -93,6 +93,16 @@ export default function ResidenceDetailPage({
   // Ordered photo set for the lightbox: hero first, then the gallery.
   const photos = [r.heroImage, ...r.gallery].filter(Boolean);
 
+  const acadianLabels =
+    r.slug === 'acadian' && r.gallery.length === 18
+      ? [
+          'Exterior',
+          'Studio', 'Studio', 'Studio', 'Studio',
+          '1 Bedroom', '1 Bedroom', '1 Bedroom', '1 Bedroom', '1 Bedroom', '1 Bedroom',
+          '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom'
+        ]
+      : undefined;
+
   const plans = r.bedroomOptions
     .filter((b) => r.prices[b as 0 | 1 | 2 | 3] !== undefined)
     .map((b) => ({
@@ -648,6 +658,7 @@ export default function ResidenceDetailPage({
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
         residence={r}
+        labels={acadianLabels}
         onPhotoClick={(i) => setLightboxIndex(i)}
       />
       <Lightbox
@@ -657,6 +668,7 @@ export default function ResidenceDetailPage({
         onIndexChange={setLightboxIndex}
         onClose={() => setLightboxIndex(null)}
         label={r.name}
+        labels={acadianLabels}
       />
 
       {/* Per-unit photo viewer: tile grid, click a tile to enlarge. */}

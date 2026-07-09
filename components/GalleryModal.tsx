@@ -10,6 +10,8 @@ interface Props {
   residence?: Residence;
   /** Explicit photo list — used for the per-unit gallery. */
   photos?: string[];
+  /** Optional array of labels corresponding to each photo (e.g., unit types). */
+  labels?: (string | undefined)[];
   /** Heading (defaults to residence name). */
   title?: string;
   eyebrow?: string;
@@ -17,7 +19,7 @@ interface Props {
   onPhotoClick?: (index: number) => void;
 }
 
-export function GalleryModal({ open, onClose, residence, photos, title, eyebrow, onPhotoClick }: Props) {
+export function GalleryModal({ open, onClose, residence, photos, labels, title, eyebrow, onPhotoClick }: Props) {
   const allPhotos = photos
     ?? (residence ? [residence.heroImage, ...residence.gallery].filter(Boolean) : []);
   const heading = title ?? residence?.name ?? '';
@@ -94,6 +96,7 @@ export function GalleryModal({ open, onClose, residence, photos, title, eyebrow,
                 key={`${src}-${i}`}
                 onClick={onPhotoClick ? () => onPhotoClick(i) : undefined}
                 style={{
+                  position: 'relative',
                   aspectRatio: '4 / 3',
                   background: 'var(--cream)',
                   overflow: 'hidden',
@@ -107,6 +110,26 @@ export function GalleryModal({ open, onClose, residence, photos, title, eyebrow,
                   loading="lazy"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
+                {labels && labels[i] && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 12,
+                      left: 12,
+                      background: 'rgba(0,0,0,0.65)',
+                      color: '#fff',
+                      padding: '4px 8px',
+                      fontSize: 11,
+                      fontWeight: 600,
+                      borderRadius: 4,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      fontFamily: 'var(--sans)',
+                    }}
+                  >
+                    {labels[i]}
+                  </div>
+                )}
               </div>
             ))}
           </div>
