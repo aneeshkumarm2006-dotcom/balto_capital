@@ -379,8 +379,10 @@
     "hidden": []
   },
   "test-one": {
-    "hero": null,
-    "gallery": [],
+    "hero": "/assets/test-one/uploads/1783752343026-01.jpg",
+    "gallery": [
+      "/assets/test-one/uploads/1783752343026-01.jpg"
+    ],
     "hidden": []
   }
 }
