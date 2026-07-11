@@ -4,13 +4,20 @@
    "Available suites" table and the advertised from-prices. Removing every
    row makes the site show "no suites available" for the building. */
 
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { getContent, putContent } from '@/components/admin/api';
+import { getContent, putContent, uploadUnitPhotos } from '@/components/admin/api';
 import { ConfirmDialog, PageHead, useToast } from '@/components/admin/ui';
 import { PropertyTabs } from '@/components/admin/PropertyTabs';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
-import { IconPlus, IconSpinner, IconTrash } from '@/components/admin/icons';
+import {
+  IconImage,
+  IconPlus,
+  IconSpinner,
+  IconTrash,
+  IconUpload,
+  IconX,
+} from '@/components/admin/icons';
 
 interface Building {
   slug: string;
@@ -47,6 +54,9 @@ export default function PropertyUnitsPage() {
   const [pendingRemove, setPendingRemove] = useState<number | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [openPhotos, setOpenPhotos] = useState<number | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -104,6 +114,38 @@ export default function PropertyUnitsPage() {
     if (pendingRemove === null) return;
     setRows((prev) => prev.filter((_, i) => i !== pendingRemove));
     setPendingRemove(null);
+    setOpenPhotos(null);
+  };
+
+  const addUnitPhotos = async (index: number, list: FileList | null) => {
+    const files = list ? Array.from(list) : [];
+    const row = rows[index];
+    if (!row || files.length === 0) return;
+    const unitNo = row.unit.trim();
+    if (!unitNo) {
+      toast('error', 'Give the unit a number before uploading its photos.');
+      return;
+    }
+    setUploading(true);
+    try {
+      const added = await uploadUnitPhotos(slug, unitNo, files);
+      editRow(index, { images: [...(row.images ?? []), ...added] });
+      toast(
+        'success',
+        `${added.length} photo${added.length === 1 ? '' : 's'} uploaded — press Save changes to publish.`
+      );
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Upload failed.');
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = '';
+    }
+  };
+
+  const removeUnitPhoto = (index: number, photo: string) => {
+    const row = rows[index];
+    if (!row) return;
+    editRow(index, { images: (row.images ?? []).filter((p) => p !== photo) });
   };
 
   const save = async () => {
@@ -114,6 +156,7 @@ export default function PropertyUnitsPage() {
       const applyUrl = r.applyUrl?.trim();
       if (applyUrl) next.applyUrl = applyUrl;
       else delete next.applyUrl;
+      if (!next.images || next.images.length === 0) delete next.images;
       return next;
     });
     const nextRecord: UnitsRecord = { ...record };
@@ -211,7 +254,8 @@ export default function PropertyUnitsPage() {
               </thead>
               <tbody>
                 {rows.map((row, i) => (
-                  <tr key={i}>
+                  <Fragment key={i}>
+                  <tr>
                     <td>
                       <input
                         className="adm-input"
@@ -260,11 +304,18 @@ export default function PropertyUnitsPage() {
                       />
                     </td>
                     <td>
-                      <span className="adm-muted">
+                      <button
+                        type="button"
+                        className="adm-btn-bare"
+                        aria-expanded={openPhotos === i}
+                        aria-label={`Manage photos for unit ${row.unit.trim() || `#${i + 1}`}`}
+                        onClick={() => setOpenPhotos(openPhotos === i ? null : i)}
+                      >
+                        <IconImage />
                         {row.images?.length
                           ? `${row.images.length} photo${row.images.length === 1 ? '' : 's'}`
-                          : '—'}
-                      </span>
+                          : 'Add photos'}
+                      </button>
                     </td>
                     <td>
                       <button
@@ -277,6 +328,62 @@ export default function PropertyUnitsPage() {
                       </button>
                     </td>
                   </tr>
+                  {openPhotos === i && (
+                    <tr>
+                      <td colSpan={6} style={{ background: 'rgba(239,232,220,0.3)' }}>
+                        <div className="adm-row" style={{ alignItems: 'flex-start', padding: '6px 0' }}>
+                          <div className="adm-row adm-grow" style={{ gap: 10 }}>
+                            {(row.images ?? []).map((photo) => (
+                              <div key={photo} style={{ position: 'relative' }}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={photo}
+                                  alt=""
+                                  loading="lazy"
+                                  style={{ width: 84, height: 64, objectFit: 'cover', border: '1px solid var(--adm-hairline)' }}
+                                />
+                                <button
+                                  type="button"
+                                  aria-label="Remove this photo"
+                                  onClick={() => removeUnitPhoto(i, photo)}
+                                  style={{
+                                    position: 'absolute', top: -7, right: -7,
+                                    width: 20, height: 20, display: 'flex',
+                                    alignItems: 'center', justifyContent: 'center',
+                                    background: 'var(--adm-ink)', color: 'var(--adm-ivory)',
+                                    border: 0, borderRadius: '50%', cursor: 'pointer',
+                                  }}
+                                >
+                                  <IconX style={{ width: 10, height: 10 }} />
+                                </button>
+                              </div>
+                            ))}
+                            {(row.images ?? []).length === 0 && (
+                              <span className="adm-muted" style={{ fontSize: 13 }}>
+                                No photos yet — renters see these in the suite&apos;s
+                                &lsquo;View&rsquo; gallery.
+                              </span>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            className="adm-btn ghost sm"
+                            disabled={uploading}
+                            onClick={() => fileRef.current?.click()}
+                          >
+                            {uploading ? <IconSpinner /> : <IconUpload />}
+                            {uploading ? 'Uploading…' : 'Upload photos'}
+                          </button>
+                        </div>
+                        {!row.unit.trim() && (
+                          <p className="adm-help" style={{ margin: '0 0 8px' }}>
+                            Give the unit a number first — photos are filed under it.
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                  </Fragment>
                 ))}
               </tbody>
             </table>
@@ -286,6 +393,16 @@ export default function PropertyUnitsPage() {
                 Add unit
               </button>
             </div>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              onChange={(e) => {
+                if (openPhotos !== null) void addUnitPhotos(openPhotos, e.target.files);
+              }}
+            />
           </>
         )}
       </div>

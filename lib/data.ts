@@ -224,34 +224,9 @@ const BEDROOM_VARIANTS: number[][] = [
   [0, 1],
 ];
 
-const FEATURE_POOL = [
-  'Oak floors throughout',
-  'Tall casement windows',
-  'Updated kitchens and baths',
-  'Quartz counters, panel-front appliances',
-  'In-suite laundry',
-  'Soaker tubs in primary baths',
-  'Walk-in wardrobes',
-  'Restored mouldings and trim',
-  'Marble fireplace mantels (select suites)',
-  'Custom millwork',
-];
-
-// Fallback amenity pool for buildings the client's doc doesn't cover.
-// Roof terrace is excluded everywhere per the client (not a real amenity).
-const AMENITY_POOL = [
-  'Resident concierge',
-  'Bicycle storage',
-  'Heated underground parking',
-  'Surface parking',
-  'Pet-friendly',
-  'Storage lockers',
-  'Resident lounge',
-  'Courtyard garden',
-  'Mail and parcel concierge',
-];
-
-const HEAT = 'Heat and hot water included';
+// (Generic feature/amenity fallback pools removed — the six buildings that
+// relied on them had their values frozen into content/amenities.json. New
+// properties list nothing until amenities are added in the CMS.)
 /** Per-building Residence Features + Building Amenities, copied verbatim from
  *  the client's "Properties Descriptions Checklist" sheet (2026). The sheet is
  *  the single source of truth: each building shows exactly what its row lists,
@@ -261,13 +236,6 @@ const HEAT = 'Heat and hot water included';
  *  greyson, lawson-village, lockwood-arms) and keep their pool fallback. */
 const CURATED: Record<string, { features: string[]; amenities: string[] }> =
   amenitiesJson as unknown as Record<string, { features: string[]; amenities: string[] }>;
-
-function pickN<T>(pool: T[], n: number, seed: number): T[] {
-  const len = pool.length;
-  const count = Math.min(n, len);
-  const offset = Math.abs(seed) % len;
-  return Array.from({ length: count }, (_, k) => pool[(offset + k) % len]);
-}
 
 // (Unsplash hero/gallery fallback pools removed - every building has real or
 // coming-soon imagery managed via content/photos.json.)
@@ -417,8 +385,8 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     : (real?.gallery ?? []).filter((src) => !hiddenSet.has(src));
 
   const curated = CURATED[raw.slug];
-  const features = curated?.features ?? pickN(FEATURE_POOL, 6, seed >> 1);
-  const amenities = curated?.amenities ?? pickN(AMENITY_POOL, 6, seed >> 2);
+  const features = curated?.features ?? [];
+  const amenities = curated?.amenities ?? [];
   const availability: Availability = 'available';
   const featured = raw.featured ?? false;
 

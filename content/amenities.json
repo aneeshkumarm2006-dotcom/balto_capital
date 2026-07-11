@@ -396,5 +396,113 @@
       "Resident concierge",
       "Heat and hot water included"
     ]
+  },
+  "britnell-landing": {
+    "features": [
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Marble fireplace mantels (select suites)",
+      "Custom millwork",
+      "Oak floors throughout",
+      "Tall casement windows"
+    ],
+    "amenities": [
+      "Mail and parcel concierge",
+      "Resident concierge",
+      "Bicycle storage",
+      "Heated underground parking",
+      "Surface parking",
+      "Pet-friendly"
+    ]
+  },
+  "edge": {
+    "features": [
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances",
+      "In-suite laundry",
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim"
+    ],
+    "amenities": [
+      "Heated underground parking",
+      "Surface parking",
+      "Pet-friendly",
+      "Storage lockers",
+      "Resident lounge",
+      "Courtyard garden"
+    ]
+  },
+  "cielo": {
+    "features": [
+      "Restored mouldings and trim",
+      "Marble fireplace mantels (select suites)",
+      "Custom millwork",
+      "Oak floors throughout",
+      "Tall casement windows",
+      "Updated kitchens and baths"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Pet-friendly",
+      "Storage lockers",
+      "Resident lounge",
+      "Courtyard garden",
+      "Mail and parcel concierge"
+    ]
+  },
+  "greyson": {
+    "features": [
+      "Tall casement windows",
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances",
+      "In-suite laundry",
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Pet-friendly",
+      "Storage lockers",
+      "Resident lounge",
+      "Courtyard garden",
+      "Mail and parcel concierge"
+    ]
+  },
+  "lawson-village": {
+    "features": [
+      "Custom millwork",
+      "Oak floors throughout",
+      "Tall casement windows",
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances",
+      "In-suite laundry"
+    ],
+    "amenities": [
+      "Resident concierge",
+      "Bicycle storage",
+      "Heated underground parking",
+      "Surface parking",
+      "Pet-friendly",
+      "Storage lockers"
+    ]
+  },
+  "lockwood-arms": {
+    "features": [
+      "In-suite laundry",
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Marble fireplace mantels (select suites)",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Heated underground parking",
+      "Surface parking",
+      "Pet-friendly",
+      "Storage lockers",
+      "Resident lounge",
+      "Courtyard garden"
+    ]
   }
 }

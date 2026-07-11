@@ -27,18 +27,30 @@ interface MediaItem {
  *  - dest omitted / 'building' (+ slug): resized into
  *    public/assets/<slug>/uploads/ and appended to the building's gallery in
  *    content/photos.json.
+ *  - dest 'unit' (+ slug + unit): resized into
+ *    public/assets/<slug>/units/<unit>/uploads/. Returns the paths only —
+ *    the units editor adds them to the row and saves with its own Save.
  *  - dest 'library': resized into public/assets/library/ and registered in
  *    content/media.json for reuse across properties (and city cards). */
 export async function POST(req: Request) {
   const form = await req.formData();
   const dest = String(form.get('dest') ?? 'building');
   const slug = String(form.get('slug') ?? '');
+  const unit = String(form.get('unit') ?? '')
+    .trim()
+    .replace(/[^A-Za-z0-9-]/g, '-');
   const files = form.getAll('files').filter((f): f is File => f instanceof File);
 
-  if (dest === 'building') {
+  if (dest === 'building' || dest === 'unit') {
     const buildings = await readContent<Array<{ slug: string }>>('buildings');
     if (!buildings.some((b) => b.slug === slug)) {
       return NextResponse.json({ error: 'Unknown building.' }, { status: 400 });
+    }
+    if (dest === 'unit' && !unit) {
+      return NextResponse.json(
+        { error: 'Give the unit a number before uploading its photos.' },
+        { status: 400 }
+      );
     }
   } else if (dest !== 'library') {
     return NextResponse.json({ error: 'Unknown upload destination.' }, { status: 400 });
@@ -47,7 +59,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'No files received.' }, { status: 400 });
   }
 
-  const relDir = dest === 'library' ? ['library'] : [slug, 'uploads'];
+  const relDir =
+    dest === 'library'
+      ? ['library']
+      : dest === 'unit'
+        ? [slug, 'units', unit, 'uploads']
+        : [slug, 'uploads'];
 
   // Resize everything to web size in memory first.
   const added: string[] = [];

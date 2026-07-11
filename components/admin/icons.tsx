@@ -4,6 +4,10 @@ import type { SVGProps } from 'react';
 
 const base = (props: SVGProps<SVGSVGElement>): SVGProps<SVGSVGElement> => ({
   viewBox: '0 0 24 24',
+  // Default intrinsic size so a bare icon (outside a sized container) stays
+  // text-sized instead of filling the layout. CSS rules still override this.
+  width: '1em',
+  height: '1em',
   fill: 'none',
   stroke: 'currentColor',
   strokeWidth: 1.8,

@@ -331,12 +331,15 @@ export default function ResidenceDetailPage({
               </>
             )}
 
-            <div className="divider" style={{ margin: '64px 0 40px' }} />
-
-            <h2 className="h2 serif" style={{ marginBottom: 32 }}>
-              {r.unitLabels ? 'Unit Photos' : 'Building amenities'}
-            </h2>
-            <FeatureList items={r.unitLabels ?? r.amenities} />
+            {(r.unitLabels ?? r.amenities).length > 0 && (
+              <>
+                <div className="divider" style={{ margin: '64px 0 40px' }} />
+                <h2 className="h2 serif" style={{ marginBottom: 32 }}>
+                  {r.unitLabels ? 'Unit Photos' : 'Building amenities'}
+                </h2>
+                <FeatureList items={r.unitLabels ?? r.amenities} />
+              </>
+            )}
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 

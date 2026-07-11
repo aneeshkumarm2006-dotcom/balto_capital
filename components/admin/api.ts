@@ -93,6 +93,20 @@ export async function uploadLibraryFiles(files: File[]): Promise<string[]> {
   return added;
 }
 
+/** Upload photos for one unit. Returns the new paths — the units editor puts
+ *  them on the row and persists via its own Save button. */
+export async function uploadUnitPhotos(
+  slug: string,
+  unit: string,
+  files: File[]
+): Promise<string[]> {
+  const added: string[] = [];
+  for (const f of files) {
+    added.push(...(await uploadOne({ dest: 'unit', slug, unit }, f)));
+  }
+  return added;
+}
+
 export async function logout(): Promise<void> {
   await fetch('/api/admin/logout', { method: 'POST' });
 }
