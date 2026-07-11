@@ -227,5 +227,14 @@
     "name": "Lockwood",
     "city": "regina",
     "address": "193 / 197 Lockwood Road, Regina, SK S4S 6G9"
+  },
+  {
+    "slug": "test-one",
+    "name": "Test One",
+    "city": "saskatoon",
+    "address": "2-11/A",
+    "bedrooms": [
+      0
+    ]
   }
 ]
