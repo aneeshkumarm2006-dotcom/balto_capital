@@ -859,5 +859,12 @@
         "/assets/beverly/units/203/17.jpg"
       ]
     }
+  ],
+  "test-one": [
+    {
+      "unit": "201",
+      "type": "1 Bedroom",
+      "rent": 2000
+    }
   ]
 }
