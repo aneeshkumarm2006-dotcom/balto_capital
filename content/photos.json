@@ -377,5 +377,10 @@
       "/assets/lockwood-arms/05.jpg"
     ],
     "hidden": []
+  },
+  "test-one": {
+    "hero": null,
+    "gallery": [],
+    "hidden": []
   }
 }
