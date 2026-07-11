@@ -6,7 +6,12 @@
 
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { getContent, putContent, uploadUnitPhotos } from '@/components/admin/api';
+import {
+  commitStaged,
+  getContent,
+  uploadUnitPhotos,
+  type StagedFile,
+} from '@/components/admin/api';
 import { ConfirmDialog, PageHead, useToast } from '@/components/admin/ui';
 import { PropertyTabs } from '@/components/admin/PropertyTabs';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
@@ -56,7 +61,22 @@ export default function PropertyUnitsPage() {
   const [busy, setBusy] = useState(false);
   const [openPhotos, setOpenPhotos] = useState<number | null>(null);
   const [uploading, setUploading] = useState(false);
+  /* Uploads only stage files now — these are published with Save changes. */
+  const [stagedFiles, setStagedFiles] = useState<StagedFile[]>([]);
+  /* path → object URL for photos uploaded this session; in GitHub mode the
+     real URL does not exist until publish, so thumbnails render from here. */
+  const [previews, setPreviews] = useState<Record<string, string>>({});
+  const previewsRef = useRef<Record<string, string>>({});
+  previewsRef.current = previews;
   const fileRef = useRef<HTMLInputElement>(null);
+
+  /* Free object URLs when the page unmounts. */
+  useEffect(
+    () => () => {
+      for (const url of Object.values(previewsRef.current)) URL.revokeObjectURL(url);
+    },
+    []
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -128,11 +148,23 @@ export default function PropertyUnitsPage() {
     }
     setUploading(true);
     try {
-      const added = await uploadUnitPhotos(slug, unitNo, files);
-      editRow(index, { images: [...(row.images ?? []), ...added] });
+      const result = await uploadUnitPhotos(slug, unitNo, files);
+      editRow(index, { images: [...(row.images ?? []), ...result.added] });
+      setStagedFiles((prev) => [...prev, ...result.staged]);
+      /* added[i] corresponds to files[i] — build local previews so the
+         thumbnails render before the photos exist on the website. */
+      setPreviews((prev) => {
+        const next = { ...prev };
+        result.added.forEach((path, i) => {
+          const file = files[i];
+          if (file) next[path] = URL.createObjectURL(file);
+        });
+        return next;
+      });
+      const n = result.added.length;
       toast(
         'success',
-        `${added.length} photo${added.length === 1 ? '' : 's'} uploaded — press Save changes to publish.`
+        `${n} photo${n === 1 ? '' : 's'} uploaded — press Save changes to publish.`
       );
     } catch (err) {
       toast('error', err instanceof Error ? err.message : 'Upload failed.');
@@ -146,6 +178,15 @@ export default function PropertyUnitsPage() {
     const row = rows[index];
     if (!row) return;
     editRow(index, { images: (row.images ?? []).filter((p) => p !== photo) });
+    const url = previews[photo];
+    if (url) {
+      URL.revokeObjectURL(url);
+      setPreviews((prev) => {
+        const next = { ...prev };
+        delete next[photo];
+        return next;
+      });
+    }
   };
 
   const save = async () => {
@@ -163,10 +204,16 @@ export default function PropertyUnitsPage() {
     if (cleaned.length === 0) delete nextRecord[slug];
     else nextRecord[slug] = cleaned;
     try {
-      await putContent('units', nextRecord);
+      await commitStaged({
+        message: `update units for ${slug}`,
+        files: stagedFiles,
+        content: [{ name: 'units', data: nextRecord }],
+      });
       setRecord(nextRecord);
       setRows(cleaned);
       setSnapshot(cleaned);
+      /* Keep previews so freshly published thumbnails render until reload. */
+      setStagedFiles([]);
       toast('success', 'Availability saved.');
     } catch (err) {
       toast('error', err instanceof Error ? err.message : 'Could not save availability.');
@@ -337,7 +384,7 @@ export default function PropertyUnitsPage() {
                               <div key={photo} style={{ position: 'relative' }}>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
-                                  src={photo}
+                                  src={previews[photo] ?? photo}
                                   alt=""
                                   loading="lazy"
                                   style={{ width: 84, height: 64, objectFit: 'cover', border: '1px solid var(--adm-hairline)' }}
@@ -421,7 +468,7 @@ export default function PropertyUnitsPage() {
         onCancel={() => setPendingRemove(null)}
       />
 
-      {dirty && (
+      {(dirty || stagedFiles.length > 0) && (
         <>
           {!valid && (
             <p className="adm-error-text" style={{ marginTop: 16, marginBottom: 0 }}>
@@ -440,7 +487,12 @@ export default function PropertyUnitsPage() {
                   color: 'var(--adm-ivory)',
                   background: 'transparent',
                 }}
-                onClick={() => setRows(snapshot)}
+                onClick={() => {
+                  setRows(snapshot);
+                  setStagedFiles([]);
+                  for (const url of Object.values(previews)) URL.revokeObjectURL(url);
+                  setPreviews({});
+                }}
               >
                 Discard
               </button>

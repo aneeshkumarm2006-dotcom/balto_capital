@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import sharp from 'sharp';
-import { ghCommitFiles, githubMode } from '@/lib/admin/github';
-import { readContent, writeContent } from '@/lib/admin/store';
+import { ghCreateBlob, githubMode } from '@/lib/admin/github';
+import { readContent } from '@/lib/admin/store';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,27 +11,13 @@ export const dynamic = 'force-dynamic';
 const MAX_EDGE = 1800; // same web size the sync-images pipeline ships
 const JPEG_QUALITY = 82;
 
-interface PhotoSet {
-  hero?: string | null;
-  gallery: string[];
-  hidden?: string[];
-}
-
-interface MediaItem {
-  path: string;
-  name: string;
-  uploadedAt: string;
-}
-
-/** Upload one or more photos.
- *  - dest omitted / 'building' (+ slug): resized into
- *    public/assets/<slug>/uploads/ and appended to the building's gallery in
- *    content/photos.json.
- *  - dest 'unit' (+ slug + unit): resized into
- *    public/assets/<slug>/units/<unit>/uploads/. Returns the paths only —
- *    the units editor adds them to the row and saves with its own Save.
- *  - dest 'library': resized into public/assets/library/ and registered in
- *    content/media.json for reuse across properties (and city cards). */
+/** Upload one or more photos (resize + store only — never commits).
+ *  - dest omitted / 'building' (+ slug): public/assets/<slug>/uploads/
+ *  - dest 'unit' (+ slug + unit): public/assets/<slug>/units/<unit>/uploads/
+ *  - dest 'library': public/assets/library/
+ *  Returns { added: webPaths, staged: [{path, sha}] } — staged is non-empty
+ *  in GitHub mode, where files wait as uncommitted blobs until the page
+ *  publishes them in one commit via /api/admin/commit-staged. */
 export async function POST(req: Request) {
   const form = await req.formData();
   const dest = String(form.get('dest') ?? 'building');
@@ -92,50 +78,29 @@ export async function POST(req: Request) {
     names.push(files[i].name);
   }
 
-  // Updated content JSON that references the new images.
-  let contentName: 'media' | 'photos';
-  let contentData: unknown;
-  if (dest === 'library') {
-    const media = await readContent<MediaItem[]>('media');
-    const now = new Date().toISOString();
-    added.forEach((p, i) =>
-      media.push({ path: p, name: names[i], uploadedAt: now })
-    );
-    contentName = 'media';
-    contentData = media;
-  } else {
-    const photos = await readContent<Record<string, PhotoSet>>('photos');
-    const set: PhotoSet = photos[slug] ?? { hero: null, gallery: [], hidden: [] };
-    set.gallery = [...set.gallery, ...added];
-    if (!set.hero) set.hero = added[0];
-    photos[slug] = set;
-    contentName = 'photos';
-    contentData = photos;
-  }
-  const contentJson = JSON.stringify(contentData, null, 2) + '\n';
-
+  // Uploads NEVER commit or edit content JSON by themselves — the editor
+  // pages put the returned paths into their draft and publish everything in
+  // ONE commit (via /api/admin/commit-staged), so a 20-photo session is a
+  // single deploy instead of twenty.
   if (githubMode()) {
-    // One atomic commit: the images plus the JSON that references them.
-    await ghCommitFiles(
-      [
-        ...added.map((webPath, i) => ({
-          path: `public${webPath}`,
-          content: buffers[i],
-        })),
-        { path: `content/${contentName}.json`, content: contentJson },
-      ],
-      `cms: upload ${added.length} photo(s) to ${dest === 'library' ? 'library' : slug}`
+    // Stage blobs in GitHub's object store; no commit, no deploy yet.
+    const staged = await Promise.all(
+      buffers.map(async (buf, i) => ({
+        path: `public${added[i]}`,
+        sha: await ghCreateBlob(buf),
+      }))
     );
-  } else {
-    const dir = path.join(process.cwd(), 'public', 'assets', ...relDir);
-    await fs.mkdir(dir, { recursive: true });
-    await Promise.all(
-      buffers.map((buf, i) =>
-        fs.writeFile(path.join(dir, path.basename(added[i])), buf)
-      )
-    );
-    await writeContent(contentName, contentData);
+    return NextResponse.json({ ok: true, added, staged });
   }
 
-  return NextResponse.json({ ok: true, added });
+  // Local mode: files land on disk immediately; publishing is just the
+  // JSON save (and you commit/push yourself).
+  const dir = path.join(process.cwd(), 'public', 'assets', ...relDir);
+  await fs.mkdir(dir, { recursive: true });
+  await Promise.all(
+    buffers.map((buf, i) =>
+      fs.writeFile(path.join(dir, path.basename(added[i])), buf)
+    )
+  );
+  return NextResponse.json({ ok: true, added, staged: [] });
 }

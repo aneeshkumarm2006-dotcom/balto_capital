@@ -58,10 +58,23 @@ async function compressForUpload(file: File): Promise<Blob> {
   }
 }
 
+export interface StagedFile {
+  path: string;
+  sha: string;
+}
+
+export interface UploadResult {
+  /** Web paths, e.g. /assets/<slug>/uploads/123.jpg */
+  added: string[];
+  /** Uncommitted GitHub blobs (empty in local mode). Hold these and pass
+   *  them to commitStaged so the whole session publishes as one commit. */
+  staged: StagedFile[];
+}
+
 async function uploadOne(
   fields: Record<string, string>,
   file: File
-): Promise<string[]> {
+): Promise<UploadResult> {
   const blob = await compressForUpload(file);
   if (blob.size > REQUEST_LIMIT) {
     throw new Error(
@@ -75,36 +88,53 @@ async function uploadOne(
   const res = await fetch('/api/admin/upload', { method: 'POST', body: form });
   if (!res.ok) throw await toError(res);
   const body = await res.json();
-  return (body.added ?? []) as string[];
+  return {
+    added: (body.added ?? []) as string[],
+    staged: (body.staged ?? []) as StagedFile[],
+  };
 }
 
-export async function uploadPhotos(
-  slug: string,
-  files: File[]
-): Promise<string[]> {
-  const added: string[] = [];
-  for (const f of files) added.push(...(await uploadOne({ slug }, f)));
-  return added;
-}
+const collect = async (
+  files: File[],
+  fields: Record<string, string>
+): Promise<UploadResult> => {
+  const out: UploadResult = { added: [], staged: [] };
+  for (const f of files) {
+    const r = await uploadOne(fields, f);
+    out.added.push(...r.added);
+    out.staged.push(...r.staged);
+  }
+  return out;
+};
 
-export async function uploadLibraryFiles(files: File[]): Promise<string[]> {
-  const added: string[] = [];
-  for (const f of files) added.push(...(await uploadOne({ dest: 'library' }, f)));
-  return added;
-}
+export const uploadPhotos = (slug: string, files: File[]): Promise<UploadResult> =>
+  collect(files, { slug });
 
-/** Upload photos for one unit. Returns the new paths — the units editor puts
- *  them on the row and persists via its own Save button. */
-export async function uploadUnitPhotos(
+export const uploadLibraryFiles = (files: File[]): Promise<UploadResult> =>
+  collect(files, { dest: 'library' });
+
+/** Upload photos for one unit; the units editor holds the result and
+ *  publishes it with its Save button. */
+export const uploadUnitPhotos = (
   slug: string,
   unit: string,
   files: File[]
-): Promise<string[]> {
-  const added: string[] = [];
-  for (const f of files) {
-    added.push(...(await uploadOne({ dest: 'unit', slug, unit }, f)));
-  }
-  return added;
+): Promise<UploadResult> => collect(files, { dest: 'unit', slug, unit });
+
+/** Publish an editing session as ONE commit (one deploy): all staged photo
+ *  blobs plus the content files that reference them. Works in local mode
+ *  too (files are already on disk there; only the JSON is written). */
+export async function commitStaged(opts: {
+  message?: string;
+  files?: StagedFile[];
+  content?: Array<{ name: string; data: unknown }>;
+}): Promise<void> {
+  const res = await fetch('/api/admin/commit-staged', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(opts),
+  });
+  if (!res.ok) throw await toError(res);
 }
 
 export async function logout(): Promise<void> {

@@ -4,11 +4,20 @@
    public site, pick the hero image, tag photos, reorder the gallery, and
    write alt text. Hidden photos stay on disk and in this grid so they can
    be restored at any time. Every tile shows whether it is live on the
-   website right now. */
+   website right now.
+
+   Publish-once model: uploads only STAGE files and every action edits a
+   local DRAFT. Nothing reaches the website until "Publish changes" sends
+   the staged photos and the photos JSON as ONE commit (one deploy). */
 
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { getContent, putContent, uploadPhotos } from '@/components/admin/api';
+import {
+  commitStaged,
+  getContent,
+  uploadPhotos,
+  type StagedFile,
+} from '@/components/admin/api';
 import { Field, PageHead, useToast } from '@/components/admin/ui';
 import { PropertyTabs } from '@/components/admin/PropertyTabs';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
@@ -52,12 +61,21 @@ export default function PropertyImagesPage() {
 
   const [buildings, setBuildings] = useState<Building[] | null>(null);
   const [record, setRecord] = useState<PhotoRecord>({});
+  const [draft, setDraft] = useState<Photos>(EMPTY_ENTRY);
+  const [snapshot, setSnapshot] = useState<Photos>(EMPTY_ENTRY);
+  const [stagedFiles, setStagedFiles] = useState<StagedFile[]>([]);
+  /* path → object URL for photos uploaded this session; in GitHub mode the
+     real URL does not exist until publish, so tiles render from here. */
+  const [previews, setPreviews] = useState<Record<string, string>>({});
+  const previewsRef = useRef<Record<string, string>>({});
+  previewsRef.current = previews;
   const [photoTags, setPhotoTags] = useState<string[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [tagChoice, setTagChoice] = useState('');
   const [altDraft, setAltDraft] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [publishing, setPublishing] = useState(false);
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -71,7 +89,11 @@ export default function PropertyImagesPage() {
       .then(([b, p, tax]) => {
         if (cancelled) return;
         setBuildings(Array.isArray(b) ? b : []);
-        setRecord(p ?? {});
+        const rec = p ?? {};
+        setRecord(rec);
+        const entry = rec[slug] ?? EMPTY_ENTRY;
+        setDraft(entry);
+        setSnapshot(entry);
         setPhotoTags(
           Array.isArray(tax?.photoTags)
             ? tax.photoTags.filter((t): t is string => typeof t === 'string')
@@ -85,28 +107,42 @@ export default function PropertyImagesPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [slug]);
+
+  /* Free object URLs when the page unmounts. */
+  useEffect(
+    () => () => {
+      for (const url of Object.values(previewsRef.current)) URL.revokeObjectURL(url);
+    },
+    []
+  );
 
   const building = buildings?.find((b) => b.slug === slug);
   const hideGallery = building?.hideDetailGallery === true;
 
-  const entry = record[slug] ?? EMPTY_ENTRY;
   const items = Array.from(
-    new Set([...(entry.hero ? [entry.hero] : []), ...(entry.gallery ?? [])])
+    new Set([...(draft.hero ? [draft.hero] : []), ...(draft.gallery ?? [])])
   );
-  const hiddenSet = new Set(entry.hidden ?? []);
+  const hiddenSet = new Set(draft.hidden ?? []);
   const hiddenCount = items.filter((p) => hiddenSet.has(p)).length;
   const liveCount = items.filter(
-    (p) => !hiddenSet.has(p) && (p === entry.hero || !hideGallery)
+    (p) => !hiddenSet.has(p) && (p === draft.hero || !hideGallery)
   ).length;
+
+  /* Photos not in the last published snapshot are "New" until published. */
+  const snapshotSet = new Set([
+    ...(snapshot.hero ? [snapshot.hero] : []),
+    ...(snapshot.gallery ?? []),
+  ]);
+  const newCount = items.filter((p) => !snapshotSet.has(p)).length;
+
+  const dirty = JSON.stringify(draft) !== JSON.stringify(snapshot);
 
   const singleSelection = selected.size === 1 ? Array.from(selected)[0] : null;
 
   /* Keep the alt-text draft in sync with the currently selected photo. */
   useEffect(() => {
-    setAltDraft(
-      singleSelection !== null ? record[slug]?.alt?.[singleSelection] ?? '' : ''
-    );
+    setAltDraft(singleSelection !== null ? draft.alt?.[singleSelection] ?? '' : '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [singleSelection, slug]);
 
@@ -119,64 +155,33 @@ export default function PropertyImagesPage() {
     });
   };
 
-  /** Optimistic write of the whole photos record; re-fetches on failure. */
-  const applyEntry = async (
-    next: Photos,
-    successMessage: string,
-    keepSelection = false
-  ) => {
-    const previous = record;
-    const nextRecord: PhotoRecord = { ...record, [slug]: next };
-    setRecord(nextRecord);
+  /** Every action edits the draft only — nothing is saved until publish. */
+  const applyEntry = (next: Photos, keepSelection = false) => {
+    setDraft(next);
     if (!keepSelection) setSelected(new Set());
-    try {
-      await putContent('photos', nextRecord);
-      toast('success', successMessage);
-    } catch (err) {
-      try {
-        const fresh = await getContent<PhotoRecord>('photos');
-        setRecord(fresh ?? {});
-      } catch {
-        setRecord(previous);
-      }
-      toast('error', err instanceof Error ? err.message : 'Could not save photo changes.');
-    }
   };
 
   const hideSelected = () => {
-    const n = selected.size;
-    if (n === 0) return;
-    const hidden = Array.from(new Set([...(entry.hidden ?? []), ...selected]));
-    void applyEntry(
-      { ...entry, hidden },
-      n === 1
-        ? '1 photo hidden. It stays saved here and can be shown again anytime.'
-        : `${n} photos hidden. They stay saved here and can be shown again anytime.`
-    );
+    if (selected.size === 0) return;
+    const hidden = Array.from(new Set([...(draft.hidden ?? []), ...selected]));
+    applyEntry({ ...draft, hidden });
   };
 
   const showSelected = () => {
-    const n = selected.size;
-    if (n === 0) return;
-    const hidden = (entry.hidden ?? []).filter((path) => !selected.has(path));
-    void applyEntry(
-      { ...entry, hidden },
-      n === 1 ? '1 photo is now visible on the website.' : `${n} photos are now visible on the website.`
-    );
+    if (selected.size === 0) return;
+    const hidden = (draft.hidden ?? []).filter((path) => !selected.has(path));
+    applyEntry({ ...draft, hidden });
   };
 
   const canSetHero = singleSelection !== null && !hiddenSet.has(singleSelection);
 
   const setAsHero = () => {
     if (!canSetHero || singleSelection === null) return;
-    const gallery = (entry.gallery ?? []).filter((path) => path !== singleSelection);
-    if (entry.hero && entry.hero !== singleSelection && !gallery.includes(entry.hero)) {
-      gallery.unshift(entry.hero);
+    const gallery = (draft.gallery ?? []).filter((path) => path !== singleSelection);
+    if (draft.hero && draft.hero !== singleSelection && !gallery.includes(draft.hero)) {
+      gallery.unshift(draft.hero);
     }
-    void applyEntry(
-      { ...entry, hero: singleSelection, gallery },
-      'Hero photo updated.'
-    );
+    applyEntry({ ...draft, hero: singleSelection, gallery });
   };
 
   /* ---------- Tags ---------- */
@@ -187,78 +192,121 @@ export default function PropertyImagesPage() {
   ];
 
   const applyTag = () => {
-    const n = selected.size;
-    if (n === 0) return;
-    const tags = { ...(entry.tags ?? {}) };
+    if (selected.size === 0) return;
+    const tags = { ...(draft.tags ?? {}) };
     for (const path of selected) {
       if (tagChoice === '') delete tags[path];
       else tags[path] = tagChoice;
     }
-    const next: Photos = { ...entry };
+    const next: Photos = { ...draft };
     if (Object.keys(tags).length > 0) next.tags = tags;
     else delete next.tags;
-    void applyEntry(
-      next,
-      tagChoice === ''
-        ? `Tag cleared on ${n} photo${n === 1 ? '' : 's'}.`
-        : `${n} photo${n === 1 ? '' : 's'} tagged “${tagChoice}”.`
-    );
+    applyEntry(next);
   };
 
   /* ---------- Reorder (single gallery photo, not the hero) ---------- */
 
   const galleryIndex =
-    singleSelection !== null && singleSelection !== entry.hero
-      ? (entry.gallery ?? []).indexOf(singleSelection)
+    singleSelection !== null && singleSelection !== draft.hero
+      ? (draft.gallery ?? []).indexOf(singleSelection)
       : -1;
   const canMoveEarlier = galleryIndex > 0;
   const canMoveLater =
-    galleryIndex >= 0 && galleryIndex < (entry.gallery ?? []).length - 1;
+    galleryIndex >= 0 && galleryIndex < (draft.gallery ?? []).length - 1;
 
   const moveSelected = (delta: -1 | 1) => {
     if (galleryIndex < 0) return;
     const target = galleryIndex + delta;
-    const gallery = [...(entry.gallery ?? [])];
+    const gallery = [...(draft.gallery ?? [])];
     if (target < 0 || target >= gallery.length) return;
     const a = gallery[galleryIndex];
     gallery[galleryIndex] = gallery[target];
     gallery[target] = a;
-    void applyEntry(
-      { ...entry, gallery },
-      delta === -1 ? 'Photo moved earlier in the gallery.' : 'Photo moved later in the gallery.',
-      true
-    );
+    applyEntry({ ...draft, gallery }, true);
   };
 
   /* ---------- Alt text ---------- */
 
-  const saveAlt = () => {
+  const applyAlt = () => {
     if (singleSelection === null) return;
-    const alt = { ...(entry.alt ?? {}) };
+    const alt = { ...(draft.alt ?? {}) };
     const trimmed = altDraft.trim();
     if (trimmed) alt[singleSelection] = trimmed;
     else delete alt[singleSelection];
-    const next: Photos = { ...entry };
+    const next: Photos = { ...draft };
     if (Object.keys(alt).length > 0) next.alt = alt;
     else delete next.alt;
-    void applyEntry(next, 'Alt text saved.', true);
+    applyEntry(next, true);
   };
+
+  /* ---------- Upload (stage only) ---------- */
 
   const handleFiles = async (list: FileList | File[] | null) => {
     const files = Array.from(list ?? []).filter((f) => f.type.startsWith('image/'));
     if (files.length === 0 || uploading) return;
     setUploading(true);
     try {
-      const added = await uploadPhotos(slug, files);
-      const fresh = await getContent<PhotoRecord>('photos');
-      setRecord(fresh ?? {});
-      const n = added.length;
-      toast('success', `${n} photo${n === 1 ? '' : 's'} uploaded.`);
+      const result = await uploadPhotos(slug, files);
+      setDraft((prev) => ({
+        ...prev,
+        hero: prev.hero ?? result.added[0] ?? null,
+        gallery: [...(prev.gallery ?? []), ...result.added],
+      }));
+      setStagedFiles((prev) => [...prev, ...result.staged]);
+      /* added[i] corresponds to files[i] — build local previews so the
+         tiles render before the photos exist on the website. */
+      setPreviews((prev) => {
+        const next = { ...prev };
+        result.added.forEach((path, i) => {
+          const file = files[i];
+          if (file) next[path] = URL.createObjectURL(file);
+        });
+        return next;
+      });
+      const n = result.added.length;
+      toast(
+        'success',
+        `${n} photo${n === 1 ? '' : 's'} added — press Publish changes to put ${
+          n === 1 ? 'it' : 'them'
+        } on the website.`
+      );
     } catch (err) {
       toast('error', err instanceof Error ? err.message : 'Upload failed.');
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = '';
+    }
+  };
+
+  /* ---------- Publish / discard ---------- */
+
+  const discard = () => {
+    setDraft(snapshot);
+    setSelected(new Set());
+    setStagedFiles([]);
+    for (const url of Object.values(previews)) URL.revokeObjectURL(url);
+    setPreviews({});
+  };
+
+  const publish = async () => {
+    if (publishing) return;
+    setPublishing(true);
+    const nextRecord: PhotoRecord = { ...record, [slug]: draft };
+    try {
+      await commitStaged({
+        message: `update photos for ${slug}`,
+        files: stagedFiles,
+        content: [{ name: 'photos', data: nextRecord }],
+      });
+      setRecord(nextRecord);
+      setSnapshot(draft);
+      /* Keep previews so freshly published tiles still render until reload. */
+      setStagedFiles([]);
+      toast('success', 'Published — the website updates in about 2 minutes.');
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Could not publish photo changes.');
+    } finally {
+      setPublishing(false);
     }
   };
 
@@ -305,7 +353,7 @@ export default function PropertyImagesPage() {
       <PageHead
         eyebrow="Photos"
         title={`${building.name} — Photos`}
-        lede="Select photos to hide or show them on the website. Hidden photos stay here and can be restored anytime — the website keeps its layout with beige placeholder cards even if everything is hidden."
+        lede="Select photos to hide or show them on the website. Hidden photos stay here and can be restored anytime — the website keeps its layout with beige placeholder cards even if everything is hidden. Nothing changes on the website until you press Publish changes."
       />
 
       <div className="adm-row" style={{ marginBottom: 18 }}>
@@ -359,13 +407,16 @@ export default function PropertyImagesPage() {
       ) : (
         <div className="adm-photo-grid">
           {items.map((path, i) => {
-            const isHero = path === entry.hero;
+            const isHero = path === draft.hero;
             const isHidden = hiddenSet.has(path);
             const isSelected = selected.has(path);
+            const isNew = !snapshotSet.has(path);
             const isLive = !isHidden && (isHero || !hideGallery);
             const galleryOff = !isHidden && !isLive;
-            const tag = entry.tags?.[path];
+            const tag = draft.tags?.[path];
             const label = `Photo ${i + 1}${isHero ? ', hero' : ''}${
+              isNew ? ', new — not yet published' : ''
+            }${
               isHidden ? ', hidden' : isLive ? ', on website' : ', gallery off'
             }${tag ? `, tagged ${tag}` : ''}${isSelected ? ', selected' : ''}`;
             return (
@@ -380,12 +431,13 @@ export default function PropertyImagesPage() {
                 onClick={() => toggleSelect(path)}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={path} alt="" loading="lazy" />
+                <img src={previews[path] ?? path} alt="" loading="lazy" />
                 <span className="adm-photo-check">
                   <IconCheck />
                 </span>
                 <span className="adm-photo-flags">
                   {isHero && <span className="adm-photo-flag gold">Hero</span>}
+                  {isNew && <span className="adm-photo-flag gold">New</span>}
                   {isLive && <span className="adm-photo-flag live">On website</span>}
                   {isHidden && <span className="adm-photo-flag">Hidden</span>}
                   {galleryOff && <span className="adm-photo-flag">Gallery off</span>}
@@ -401,7 +453,7 @@ export default function PropertyImagesPage() {
         <div className="adm-card adm-card-pad" style={{ marginTop: 22, maxWidth: 560 }}>
           <Field
             label="Alt text (accessibility & SEO)"
-            help="Describes the selected photo for screen readers and search engines."
+            help="Describes the selected photo for screen readers and search engines. Applied to your draft — publish to put it live."
           >
             <div className="adm-row" style={{ flexWrap: 'nowrap', gap: 8 }}>
               <input
@@ -410,8 +462,8 @@ export default function PropertyImagesPage() {
                 placeholder="e.g. Renovated kitchen with stainless appliances"
                 onChange={(e) => setAltDraft(e.target.value)}
               />
-              <button type="button" className="adm-btn sm" onClick={saveAlt}>
-                Save
+              <button type="button" className="adm-btn sm" onClick={applyAlt}>
+                Apply
               </button>
             </div>
           </Field>
@@ -486,6 +538,39 @@ export default function PropertyImagesPage() {
           >
             Clear
           </button>
+        </div>
+      )}
+
+      {(dirty || stagedFiles.length > 0) && (
+        <div className="adm-savebar">
+          <span>
+            You have unpublished changes
+            {newCount > 0 ? ` · ${newCount} new photo${newCount === 1 ? '' : 's'}` : ''}
+          </span>
+          <div className="adm-row">
+            <button
+              type="button"
+              className="adm-btn ghost"
+              style={{
+                borderColor: 'rgba(247,243,236,0.4)',
+                color: 'var(--adm-ivory)',
+                background: 'transparent',
+              }}
+              onClick={discard}
+              disabled={publishing}
+            >
+              Discard
+            </button>
+            <button
+              type="button"
+              className="adm-btn gold"
+              disabled={publishing}
+              onClick={() => void publish()}
+            >
+              {publishing && <IconSpinner />}
+              Publish changes
+            </button>
+          </div>
         </div>
       )}
     </>

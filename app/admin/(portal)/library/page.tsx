@@ -5,7 +5,12 @@
    cards, library uploads), Cities, Property types (tiers + unit types)
    and Tags. Property photos live on each property's Photos page, not
    here. Property types and Tags both edit taxonomies.json, so the page
-   holds ONE shared taxonomies draft that either tab's savebar persists. */
+   holds ONE shared taxonomies draft that either tab's savebar persists.
+
+   Publish-once model: uploads only STAGE files. The page holds ONE shared
+   staged pool + media.json draft used by both the Media tab dropzone and
+   the Cities tab image uploads; whichever publish/save button runs first
+   publishes the pool as a single commit (one deploy). */
 
 import {
   useEffect,
@@ -15,7 +20,13 @@ import {
   type ChangeEvent,
   type DragEvent,
 } from 'react';
-import { getContent, putContent, uploadLibraryFiles } from '@/components/admin/api';
+import {
+  commitStaged,
+  getContent,
+  putContent,
+  uploadLibraryFiles,
+  type StagedFile,
+} from '@/components/admin/api';
 import {
   IconCheck,
   IconPlus,
@@ -76,6 +87,14 @@ interface SiteMediaItem {
   group: SiteMediaGroup;
 }
 
+/** media.json entry — the register of library uploads. The upload route no
+    longer writes it; this page appends per upload and publishes it. */
+interface MediaUpload {
+  path: string;
+  name: string;
+  uploadedAt: string;
+}
+
 interface PhotoEntry {
   hero: string | null;
   gallery: string[];
@@ -134,14 +153,6 @@ function plural(n: number, word: string): string {
 
 function propertiesCount(n: number): string {
   return n === 1 ? '1 property' : `${n} properties`;
-}
-
-/** Library upload (dest=library) — compressed in the browser and sent one
-    file per request (Vercel's 4.5 MB body limit), registered in media.json.
-    Returns the added paths. */
-async function uploadToLibrary(files: File[]): Promise<string[]> {
-  const added = await uploadLibraryFiles(files);
-  return added.filter(isSafeAssetPath);
 }
 
 /** Site-wide reusable media: top-level assets (hero, coming-soon,
@@ -278,6 +289,27 @@ export default function LibraryPage() {
   const [taxSaved, setTaxSaved] = useState<Taxonomies>(EMPTY_TAXONOMIES);
   const [taxDraft, setTaxDraft] = useState<Taxonomies>(EMPTY_TAXONOMIES);
 
+  /* ONE shared staged pool + media.json draft — fed by the Media tab
+     dropzone AND the Cities tab image uploads. Uploads only stage files;
+     whichever publish/save button runs first publishes the pool. */
+  const [mediaSaved, setMediaSaved] = useState<MediaUpload[]>([]);
+  const [mediaDraft, setMediaDraft] = useState<MediaUpload[]>([]);
+  const [staged, setStaged] = useState<StagedFile[]>([]);
+  const [publishing, setPublishing] = useState(false);
+  /* path → object URL for photos uploaded this session; in GitHub mode the
+     real URL does not exist until publish, so tiles render from here. */
+  const [previews, setPreviews] = useState<Record<string, string>>({});
+  const previewsRef = useRef<Record<string, string>>({});
+  previewsRef.current = previews;
+
+  /* Free object URLs when the page unmounts. */
+  useEffect(
+    () => () => {
+      for (const url of Object.values(previewsRef.current)) URL.revokeObjectURL(url);
+    },
+    []
+  );
+
   useEffect(() => {
     let cancelled = false;
     Promise.all([
@@ -288,8 +320,10 @@ export default function LibraryPage() {
       getContent<Copy>('copy'),
       getContent<Cities>('cities'),
       getContent<Taxonomies>('taxonomies'),
+      /* media.json may not exist yet — start the register empty then. */
+      getContent<unknown>('media').catch(() => []),
     ])
-      .then(([m, p, b, u, c, cities, tax]) => {
+      .then(([m, p, b, u, c, cities, tax, md]) => {
         if (cancelled) return;
         setMedia(m);
         setPhotos(p && typeof p === 'object' ? p : {});
@@ -306,6 +340,19 @@ export default function LibraryPage() {
         };
         setTaxSaved(safeTax);
         setTaxDraft(safeTax);
+        const safeMediaList = (Array.isArray(md) ? md : []).filter(
+          (item): item is MediaUpload => {
+            if (!item || typeof item !== 'object') return false;
+            const { path, name, uploadedAt } = item as Partial<MediaUpload>;
+            return (
+              isSafeAssetPath(path) &&
+              typeof name === 'string' &&
+              typeof uploadedAt === 'string'
+            );
+          }
+        );
+        setMediaSaved(safeMediaList);
+        setMediaDraft(safeMediaList);
         setLoaded(true);
       })
       .catch((err: unknown) => {
@@ -320,8 +367,54 @@ export default function LibraryPage() {
     };
   }, [toast]);
 
-  const refreshMedia = async () => {
-    setMedia(await getSiteMedia());
+  /** Stage library uploads: send the files, register them in the media
+      draft and build local previews. Returns the added web paths. */
+  const stageUploads = async (files: File[]): Promise<string[]> => {
+    const result = await uploadLibraryFiles(files);
+    const now = new Date().toISOString();
+    const entries: MediaUpload[] = [];
+    const urls: Record<string, string> = {};
+    /* added[i] corresponds to files[i] — order is preserved. */
+    result.added.forEach((path, i) => {
+      if (!isSafeAssetPath(path)) return;
+      const file = files[i];
+      entries.push({ path, name: file?.name ?? fileTail(path), uploadedAt: now });
+      if (file) urls[path] = URL.createObjectURL(file);
+    });
+    setStaged((prev) => [...prev, ...result.staged]);
+    setMediaDraft((prev) => [...prev, ...entries]);
+    setPreviews((prev) => ({ ...prev, ...urls }));
+    return entries.map((e) => e.path);
+  };
+
+  const mediaDirty =
+    staged.length > 0 || JSON.stringify(mediaDraft) !== JSON.stringify(mediaSaved);
+
+  /** Publish the staged pool + media.json register as one commit. */
+  const publishMedia = async () => {
+    if (publishing) return;
+    setPublishing(true);
+    try {
+      await commitStaged({
+        message: 'upload photos to library',
+        files: staged,
+        content: [{ name: 'media', data: mediaDraft }],
+      });
+      setStaged([]);
+      setMediaSaved(mediaDraft);
+      /* Keep previews so freshly published tiles render until reload. */
+      toast('success', 'Published — the website updates in about 2 minutes.');
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Could not publish photos.');
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  /** The Cities tab save publishes the pool too — mark it flushed here. */
+  const onPoolPublished = () => {
+    setStaged([]);
+    setMediaSaved(mediaDraft);
   };
 
   const head = (
@@ -383,10 +476,16 @@ export default function LibraryPage() {
         {tab === 'media' && (
           <MediaTab
             media={media}
+            mediaDraft={mediaDraft}
+            mediaSaved={mediaSaved}
+            previews={previews}
             photos={photos}
             setPhotos={setPhotos}
             buildings={buildings}
-            refreshMedia={refreshMedia}
+            onUpload={stageUploads}
+            publishReady={mediaDirty}
+            publishing={publishing}
+            onPublish={publishMedia}
           />
         )}
         {tab === 'cities' && (
@@ -396,7 +495,10 @@ export default function LibraryPage() {
             setDraft={setCitiesDraft}
             setSaved={setCitiesSaved}
             buildings={buildings}
-            refreshMedia={refreshMedia}
+            staged={staged}
+            mediaDraft={mediaDraft}
+            onUpload={stageUploads}
+            onPoolPublished={onPoolPublished}
           />
         )}
         {tab === 'types' && (
@@ -502,16 +604,28 @@ const MEDIA_GROUP_HEADINGS: Record<SiteMediaGroup, string> = {
 
 function MediaTab({
   media,
+  mediaDraft,
+  mediaSaved,
+  previews,
   photos,
   setPhotos,
   buildings,
-  refreshMedia,
+  onUpload,
+  publishReady,
+  publishing,
+  onPublish,
 }: {
   media: SiteMediaItem[];
+  mediaDraft: MediaUpload[];
+  mediaSaved: MediaUpload[];
+  previews: Record<string, string>;
   photos: Photos;
   setPhotos: (p: Photos) => void;
   buildings: Building[];
-  refreshMedia: () => Promise<void>;
+  onUpload: (files: File[]) => Promise<string[]>;
+  publishReady: boolean;
+  publishing: boolean;
+  onPublish: () => Promise<void>;
 }) {
   const toast = useToast();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -522,10 +636,25 @@ function MediaTab({
   const [target, setTarget] = useState('');
   const [adding, setAdding] = useState(false);
 
+  /* The site-media GET lists committed files only — merge in this
+     session's not-yet-published uploads so they show immediately. */
+  const allMedia = useMemo(() => {
+    const committed = new Set(media.map((m) => m.path));
+    const draftOnly: SiteMediaItem[] = mediaDraft
+      .filter((m) => !committed.has(m.path))
+      .map((m) => ({ path: m.path, name: m.name, group: 'Library upload' }));
+    return [...draftOnly, ...media];
+  }, [media, mediaDraft]);
+
+  const newCount = useMemo(() => {
+    const saved = new Set(mediaSaved.map((m) => m.path));
+    return mediaDraft.filter((m) => !saved.has(m.path)).length;
+  }, [mediaDraft, mediaSaved]);
+
   /* Search across all groups, then bucket by group for display. */
   const grouped = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const visible = media.filter(
+    const visible = allMedia.filter(
       (m) =>
         isSafeAssetPath(m.path) &&
         (!q ||
@@ -537,7 +666,7 @@ function MediaTab({
       heading: MEDIA_GROUP_HEADINGS[group],
       items: visible.filter((m) => m.group === group),
     })).filter((g) => g.items.length > 0);
-  }, [media, query]);
+  }, [allMedia, query]);
 
   const visibleCount = grouped.reduce((n, g) => n + g.items.length, 0);
 
@@ -555,15 +684,19 @@ function MediaTab({
     });
   };
 
-  /* -- Upload -- */
+  /* -- Upload (stage only — publishing happens from the bar below) -- */
   const doUpload = async (files: File[]) => {
     const images = files.filter((f) => f.type.startsWith('image/'));
     if (images.length === 0) return;
     setUploading(true);
     try {
-      const added = await uploadToLibrary(images);
-      await refreshMedia();
-      toast('success', `${plural(added.length, 'photo')} uploaded to the library.`);
+      const added = await onUpload(images);
+      toast(
+        'success',
+        `${plural(added.length, 'photo')} uploaded — press Publish to put ${
+          added.length === 1 ? 'it' : 'them'
+        } in the library.`
+      );
     } catch (err) {
       toast('error', err instanceof Error ? err.message : 'Upload failed.');
     } finally {
@@ -601,7 +734,7 @@ function MediaTab({
     };
     setAdding(true);
     try {
-      await putContent('photos', next);
+      await commitStaged({ content: [{ name: 'photos', data: next }] });
       setPhotos(next);
       setSelected(new Set());
       setTarget('');
@@ -668,7 +801,7 @@ function MediaTab({
       </div>
 
       {/* Grouped grid: Library uploads, then Site images, then Brand */}
-      {media.length === 0 ? (
+      {allMedia.length === 0 ? (
         <div className="adm-card">
           <div className="adm-empty">
             <div className="t">No photos yet</div>
@@ -699,7 +832,7 @@ function MediaTab({
                     aria-label={`Select ${t.name} (${heading})`}
                     onClick={() => toggle(t.path)}
                   >
-                    <img src={t.path} alt="" loading="lazy" />
+                    <img src={previews[t.path] ?? t.path} alt="" loading="lazy" />
                     <span className="adm-photo-check">
                       <IconCheck />
                     </span>
@@ -746,6 +879,24 @@ function MediaTab({
           </button>
         </div>
       )}
+
+      {/* Publish bar — one commit for every staged upload + media.json */}
+      {publishReady && (
+        <div className="adm-savebar">
+          <span>{plural(newCount, 'new photo')} ready to publish</span>
+          <div className="adm-row">
+            <button
+              type="button"
+              className="adm-btn sm gold"
+              disabled={publishing}
+              onClick={() => void onPublish()}
+            >
+              {publishing && <IconSpinner />}
+              Publish
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -760,14 +911,20 @@ function CitiesTab({
   setDraft,
   setSaved,
   buildings,
-  refreshMedia,
+  staged,
+  mediaDraft,
+  onUpload,
+  onPoolPublished,
 }: {
   draft: Cities;
   saved: Cities;
   setDraft: (c: Cities | ((c: Cities) => Cities)) => void;
   setSaved: (c: Cities) => void;
   buildings: Building[];
-  refreshMedia: () => Promise<void>;
+  staged: StagedFile[];
+  mediaDraft: MediaUpload[];
+  onUpload: (files: File[]) => Promise<string[]>;
+  onPoolPublished: () => void;
 }) {
   const toast = useToast();
   const [saving, setSaving] = useState(false);
@@ -856,8 +1013,18 @@ function CitiesTab({
     }
     setSaving(true);
     try {
-      await putContent('cities', draft);
+      /* One commit: the cities JSON, any staged city images and the
+         media.json register they belong to. */
+      await commitStaged({
+        message: 'update cities',
+        files: staged,
+        content: [
+          { name: 'cities', data: draft },
+          { name: 'media', data: mediaDraft },
+        ],
+      });
       setSaved(draft);
+      onPoolPublished();
       toast('success', 'Cities saved.');
     } catch (err) {
       toast('error', err instanceof Error ? err.message : 'Failed to save cities.');
@@ -879,7 +1046,7 @@ function CitiesTab({
             usedBy={usageCount(city.slug)}
             onChange={(patch) => updateCity(city.slug, patch)}
             onRemove={() => setConfirmRemove(city.slug)}
-            refreshMedia={refreshMedia}
+            onUpload={onUpload}
           />
         ))}
 
@@ -949,13 +1116,13 @@ function CityCard({
   usedBy,
   onChange,
   onRemove,
-  refreshMedia,
+  onUpload,
 }: {
   city: City;
   usedBy: number;
   onChange: (patch: Partial<City>) => void;
   onRemove: () => void;
-  refreshMedia: () => Promise<void>;
+  onUpload: (files: File[]) => Promise<string[]>;
 }) {
   const toast = useToast();
   const imageRef = useRef<HTMLInputElement>(null);
@@ -966,11 +1133,15 @@ function CityCard({
     if (images.length === 0) return;
     setUploading(true);
     try {
-      const added = await uploadToLibrary(images.slice(0, 1));
+      /* Stages the file into the page-level pool — it is published together
+         with the cities JSON when Save changes runs. */
+      const added = await onUpload(images.slice(0, 1));
       if (added.length === 0) throw new Error('Upload returned no files.');
       onChange({ image: added[0] });
-      await refreshMedia();
-      toast('success', 'Image uploaded and set as the card image.');
+      toast(
+        'success',
+        'Image uploaded and set as the card image — press Save changes to publish.'
+      );
     } catch (err) {
       toast('error', err instanceof Error ? err.message : 'Upload failed.');
     } finally {

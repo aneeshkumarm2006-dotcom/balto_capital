@@ -82,12 +82,30 @@ export async function ghListDir(
 export interface CommitFile {
   /** Repo-relative path, e.g. "content/photos.json". */
   path: string;
-  /** UTF-8 string or binary buffer. */
-  content: string | Buffer;
+  /** UTF-8 string or binary buffer. Omit when `sha` is given. */
+  content?: string | Buffer;
+  /** Sha of an already-created blob (see ghCreateBlob) to commit as-is. */
+  sha?: string;
+}
+
+/** Upload a file blob WITHOUT committing it. Used to stage photo uploads:
+ *  blobs sit in the repo's object store (no deploy fires) until a later
+ *  ghCommitFiles references their sha in a single publish commit. */
+export async function ghCreateBlob(content: string | Buffer): Promise<string> {
+  const blob = await ghJson<{ sha: string }>(`/repos/${repo()}/git/blobs`, {
+    method: 'POST',
+    body: JSON.stringify(
+      typeof content === 'string'
+        ? { content, encoding: 'utf-8' }
+        : { content: content.toString('base64'), encoding: 'base64' }
+    ),
+  });
+  return blob.sha;
 }
 
 /** Commit one or more files atomically (Git Data API: blobs → tree →
- *  commit → ref). Retries once on a ref race. */
+ *  commit → ref). Entries may carry inline content or a pre-staged blob
+ *  sha. Retries once on a ref race. */
 export async function ghCommitFiles(
   files: CommitFile[],
   message: string
@@ -108,18 +126,9 @@ export async function ghCommitFiles(
           base_tree: head.tree.sha,
           tree: await Promise.all(
             files.map(async (f) => {
-              const blob = await ghJson<{ sha: string }>(
-                `/repos/${repo()}/git/blobs`,
-                {
-                  method: 'POST',
-                  body: JSON.stringify(
-                    typeof f.content === 'string'
-                      ? { content: f.content, encoding: 'utf-8' }
-                      : { content: f.content.toString('base64'), encoding: 'base64' }
-                  ),
-                }
-              );
-              return { path: f.path, mode: '100644', type: 'blob', sha: blob.sha };
+              const sha =
+                f.sha ?? (await ghCreateBlob(f.content ?? ''));
+              return { path: f.path, mode: '100644', type: 'blob', sha };
             })
           ),
         }),
