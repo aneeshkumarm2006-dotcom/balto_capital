@@ -6,11 +6,37 @@ import { SmartImage } from '@/components/SmartImage';
 import { PropertyCard } from '@/components/PropertyCard';
 import { useTilt } from '@/components/useTilt';
 import { ArrowRight, SearchIcon } from '@/components/icons';
-import { CITIES, IMAGES, featuredResidences, type City } from '@/lib/data';
+import { Dropdown } from '@/components/ui/Dropdown';
+import {
+  COMING_SOON_CITIES,
+  IMAGES,
+  LIVE_CITIES,
+  featuredResidences,
+  type City,
+} from '@/lib/data';
 
 /* ------------------------------------------------------------------ */
 /* 02 · Hero + rental search bar                                       */
 /* ------------------------------------------------------------------ */
+const CITY_OPTIONS = [
+  { value: '', label: 'All cities' },
+  ...LIVE_CITIES.map((c) => ({ value: c.slug, label: c.label })),
+];
+const RENT_OPTIONS = [
+  { value: '', label: 'Any' },
+  { value: '1400', label: 'Up to $1,400' },
+  { value: '1600', label: 'Up to $1,600' },
+  { value: '1800', label: 'Up to $1,800' },
+  { value: '2200', label: 'Up to $2,200' },
+];
+const BED_OPTIONS = [
+  { value: '', label: 'Any' },
+  { value: '0', label: 'Studio' },
+  { value: '1', label: '1 Bedroom' },
+  { value: '2', label: '2 Bedrooms' },
+  { value: '3', label: '3+ Bedrooms' },
+];
+
 function CinematicHero({
   onSearch,
 }: {
@@ -19,18 +45,6 @@ function CinematicHero({
   const [city, setCity] = useState('');
   const [maxRent, setMaxRent] = useState('');
   const [beds, setBeds] = useState('');
-
-  const selectStyle: React.CSSProperties = {
-    border: 0,
-    background: 'transparent',
-    font: 'inherit',
-    color: 'var(--ink)',
-    fontSize: 15,
-    width: '100%',
-    padding: '14px 16px',
-    appearance: 'none',
-    cursor: 'pointer',
-  };
 
   return (
     <section
@@ -127,34 +141,17 @@ function CinematicHero({
         >
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
             <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>City</span>
-            <select style={selectStyle} value={city} onChange={(e) => setCity(e.target.value)}>
-              <option value="">Any city</option>
-              <option value="Edmonton">Edmonton</option>
-              <option value="Saskatoon">Saskatoon</option>
-              <option value="Regina">Regina</option>
-            </select>
+            <Dropdown variant="site" ariaLabel="City" value={city} onChange={setCity} options={CITY_OPTIONS} />
           </label>
           <span className="hero-search-div" />
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
             <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>Max rent</span>
-            <select style={selectStyle} value={maxRent} onChange={(e) => setMaxRent(e.target.value)}>
-              <option value="">Any</option>
-              <option value="1400">Up to $1,400</option>
-              <option value="1600">Up to $1,600</option>
-              <option value="1800">Up to $1,800</option>
-              <option value="2200">Up to $2,200</option>
-            </select>
+            <Dropdown variant="site" ariaLabel="Max rent" value={maxRent} onChange={setMaxRent} options={RENT_OPTIONS} />
           </label>
           <span className="hero-search-div" />
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
             <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>Bedrooms</span>
-            <select style={selectStyle} value={beds} onChange={(e) => setBeds(e.target.value)}>
-              <option value="">Any</option>
-              <option value="0">Studio</option>
-              <option value="1">1 Bedroom</option>
-              <option value="2">2 Bedrooms</option>
-              <option value="3">3+ Bedrooms</option>
-            </select>
+            <Dropdown variant="site" ariaLabel="Bedrooms" value={beds} onChange={setBeds} options={BED_OPTIONS} />
           </label>
           <button
             type="submit"
@@ -217,7 +214,7 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
 }
 
 function OurCities() {
-  const cities = (['saskatoon', 'edmonton', 'regina'] as const).map((s) => CITIES[s]);
+  const cities = LIVE_CITIES;
   return (
     <section className="section bg-ivory">
       <div className="container">
@@ -243,7 +240,9 @@ function OurCities() {
           {cities.map((c) => (
             <CityCard key={c.slug} c={c} />
           ))}
-          <CityCard c={CITIES.yellowknife} comingSoon />
+          {COMING_SOON_CITIES.map((c) => (
+            <CityCard key={c.slug} c={c} comingSoon />
+          ))}
         </div>
       </div>
     </section>

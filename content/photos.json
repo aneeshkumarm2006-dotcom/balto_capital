@@ -1,0 +1,381 @@
+{
+  "woodridge": {
+    "hero": "/assets/woodridge/01-main.jpg",
+    "gallery": [
+      "/assets/woodridge/02.jpg",
+      "/assets/woodridge/03.jpg",
+      "/assets/woodridge/04.jpg",
+      "/assets/woodridge/05.jpg",
+      "/assets/woodridge/06.png",
+      "/assets/woodridge/07.png",
+      "/assets/woodridge/08.png",
+      "/assets/woodridge/09.png",
+      "/assets/woodridge/10.png",
+      "/assets/woodridge/11.png",
+      "/assets/woodridge/12.png",
+      "/assets/woodridge/13.png",
+      "/assets/woodridge/14.png",
+      "/assets/woodridge/15.png",
+      "/assets/woodridge/16.png",
+      "/assets/woodridge/17.png",
+      "/assets/woodridge/18.png",
+      "/assets/woodridge/19.png",
+      "/assets/woodridge/20.png",
+      "/assets/woodridge/21.png",
+      "/assets/woodridge/22.png",
+      "/assets/woodridge/23.png",
+      "/assets/woodridge/24.png",
+      "/assets/woodridge/25.png"
+    ],
+    "hidden": []
+  },
+  "acadian": {
+    "hero": "/assets/acadian/01-main.jpg",
+    "gallery": [
+      "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png",
+      "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png",
+      "/assets/acadian/ai/01_studio_ai_furnished_kitchen.png",
+      "/assets/acadian/ai/02_studio_ai_furnished_living_area.png",
+      "/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png",
+      "/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png",
+      "/assets/acadian/ai/10_1bed_ai_unfurnished_living_room.png",
+      "/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png",
+      "/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png",
+      "/assets/acadian/ai/07_1bed_ai_furnished__living_room.png",
+      "/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png",
+      "/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png",
+      "/assets/acadian/ai/17_2bed_ai_unfurnished_living_room.png",
+      "/assets/acadian/ai/18_2bed_ai_unfurnished_master_bedroom.png",
+      "/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png",
+      "/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png",
+      "/assets/acadian/ai/13_2bed_ai_furnished_living_room.png",
+      "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png"
+    ],
+    "hidden": [],
+    "tags": {
+      "/assets/acadian/01-main.jpg": "Exterior",
+      "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png": "Studio",
+      "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png": "Studio",
+      "/assets/acadian/ai/01_studio_ai_furnished_kitchen.png": "Studio",
+      "/assets/acadian/ai/02_studio_ai_furnished_living_area.png": "Studio",
+      "/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png": "1 Bedroom",
+      "/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png": "1 Bedroom",
+      "/assets/acadian/ai/10_1bed_ai_unfurnished_living_room.png": "1 Bedroom",
+      "/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png": "1 Bedroom",
+      "/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png": "1 Bedroom",
+      "/assets/acadian/ai/07_1bed_ai_furnished__living_room.png": "1 Bedroom",
+      "/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png": "2 Bedroom",
+      "/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png": "2 Bedroom",
+      "/assets/acadian/ai/17_2bed_ai_unfurnished_living_room.png": "2 Bedroom",
+      "/assets/acadian/ai/18_2bed_ai_unfurnished_master_bedroom.png": "2 Bedroom",
+      "/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png": "2 Bedroom",
+      "/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png": "2 Bedroom",
+      "/assets/acadian/ai/13_2bed_ai_furnished_living_room.png": "2 Bedroom",
+      "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png": "2 Bedroom"
+    }
+  },
+  "hamlet": {
+    "hero": "/assets/hamlet/01-main.jpg",
+    "gallery": [
+      "/assets/hamlet/02.png",
+      "/assets/hamlet/03.png",
+      "/assets/hamlet/04.png",
+      "/assets/hamlet/05.png"
+    ],
+    "hidden": []
+  },
+  "royal-lady": {
+    "hero": "/assets/royal-lady/01-main.jpg",
+    "gallery": [
+      "/assets/royal-lady/02.jpg",
+      "/assets/royal-lady/03.jpg",
+      "/assets/royal-lady/04.jpg",
+      "/assets/royal-lady/05.jpg",
+      "/assets/royal-lady/06.png",
+      "/assets/royal-lady/07.png",
+      "/assets/royal-lady/08.png",
+      "/assets/royal-lady/09.png",
+      "/assets/royal-lady/10.png",
+      "/assets/royal-lady/11.png",
+      "/assets/royal-lady/12.png",
+      "/assets/royal-lady/13.png",
+      "/assets/royal-lady/14.png",
+      "/assets/royal-lady/15.png"
+    ],
+    "hidden": []
+  },
+  "catalina-estates": {
+    "hero": "/assets/catalina-estates/01-main.jpg",
+    "gallery": [
+      "/assets/catalina-estates/02.png",
+      "/assets/catalina-estates/03.png",
+      "/assets/catalina-estates/04.png",
+      "/assets/catalina-estates/05.png",
+      "/assets/catalina-estates/06.png",
+      "/assets/catalina-estates/07.png",
+      "/assets/catalina-estates/08.png",
+      "/assets/catalina-estates/09.png"
+    ],
+    "hidden": []
+  },
+  "layali": {
+    "hero": "/assets/layali/01-main.jpg",
+    "gallery": [
+      "/assets/layali/02.png",
+      "/assets/layali/03.png",
+      "/assets/layali/04.png",
+      "/assets/layali/05.png",
+      "/assets/layali/06.png"
+    ],
+    "hidden": []
+  },
+  "sky-manor": {
+    "hero": "/assets/sky-manor/01-main.jpg",
+    "gallery": [],
+    "hidden": []
+  },
+  "cedar-manor": {
+    "hero": "/assets/cedar-manor/01-main.jpg",
+    "gallery": [
+      "/assets/cedar-manor/02.png",
+      "/assets/cedar-manor/03.png",
+      "/assets/cedar-manor/04.png",
+      "/assets/cedar-manor/05.png",
+      "/assets/cedar-manor/06.png",
+      "/assets/cedar-manor/07.png"
+    ],
+    "hidden": []
+  },
+  "kafa": {
+    "hero": "/assets/kafa/01-main.jpg",
+    "gallery": [],
+    "hidden": []
+  },
+  "palisades": {
+    "hero": "/assets/palisades/01-main.jpg",
+    "gallery": [
+      "/assets/palisades/02.png",
+      "/assets/palisades/03.png",
+      "/assets/palisades/04.png",
+      "/assets/palisades/05.png",
+      "/assets/palisades/06.png",
+      "/assets/palisades/07.png",
+      "/assets/palisades/08.png",
+      "/assets/palisades/09.png",
+      "/assets/palisades/10.png",
+      "/assets/palisades/11.png",
+      "/assets/palisades/12.png",
+      "/assets/palisades/13.png",
+      "/assets/palisades/14.png",
+      "/assets/palisades/15.png",
+      "/assets/palisades/16.png",
+      "/assets/palisades/17.png",
+      "/assets/palisades/18.png",
+      "/assets/palisades/19.png"
+    ],
+    "hidden": []
+  },
+  "copper-manor": {
+    "hero": "/assets/copper-manor/01-main.jpg",
+    "gallery": [],
+    "hidden": []
+  },
+  "grandview-manor": {
+    "hero": "/assets/grandview-manor/01-main.jpg",
+    "gallery": [],
+    "hidden": []
+  },
+  "courts-manor": {
+    "hero": "/assets/courts-manor/01-main.jpg",
+    "gallery": [
+      "/assets/courts-manor/02.png",
+      "/assets/courts-manor/03.png",
+      "/assets/courts-manor/04.png",
+      "/assets/courts-manor/05.png",
+      "/assets/courts-manor/06.png"
+    ],
+    "hidden": []
+  },
+  "oakwood-manor": {
+    "hero": "/assets/oakwood-manor/01-main.jpg",
+    "gallery": [],
+    "hidden": []
+  },
+  "balwin-manor": {
+    "hero": "/assets/balwin-manor/01-main.jpg",
+    "gallery": [],
+    "hidden": []
+  },
+  "parkdale": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [
+      "/assets/parkdale/01-main.png",
+      "/assets/parkdale/02.png",
+      "/assets/parkdale/03.png",
+      "/assets/parkdale/04.png"
+    ],
+    "hidden": []
+  },
+  "strathearn": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [
+      "/assets/strathearn/02.png",
+      "/assets/strathearn/03.png",
+      "/assets/strathearn/04.png",
+      "/assets/strathearn/05.png",
+      "/assets/strathearn/06.png",
+      "/assets/strathearn/07.png",
+      "/assets/strathearn/08.png",
+      "/assets/strathearn/09.png"
+    ],
+    "hidden": []
+  },
+  "rivergate": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [],
+    "hidden": []
+  },
+  "beverly": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [
+      "/assets/beverly/01-main.png",
+      "/assets/beverly/02.png",
+      "/assets/beverly/03.png"
+    ],
+    "hidden": []
+  },
+  "royal-manor": {
+    "hero": "/assets/royal-manor/01-main.jpg",
+    "gallery": [
+      "/assets/royal-manor/02.jpg",
+      "/assets/royal-manor/03.jpg",
+      "/assets/royal-manor/04.jpg",
+      "/assets/royal-manor/05.jpg",
+      "/assets/royal-manor/06.png",
+      "/assets/royal-manor/07.png",
+      "/assets/royal-manor/08.png",
+      "/assets/royal-manor/09.png"
+    ],
+    "hidden": []
+  },
+  "cielo": {
+    "hero": "/assets/cielo/01-main.jpg",
+    "gallery": [
+      "/assets/cielo/02.jpg",
+      "/assets/cielo/03.jpg",
+      "/assets/cielo/04.jpg",
+      "/assets/cielo/05.jpg",
+      "/assets/cielo/06.jpg",
+      "/assets/cielo/07.jpg",
+      "/assets/cielo/08.jpg",
+      "/assets/cielo/09.jpg",
+      "/assets/cielo/10.jpg",
+      "/assets/cielo/11.jpg",
+      "/assets/cielo/12.jpg",
+      "/assets/cielo/13.jpg",
+      "/assets/cielo/14.jpg",
+      "/assets/cielo/15.jpg",
+      "/assets/cielo/16.jpg",
+      "/assets/cielo/17.jpg",
+      "/assets/cielo/18.jpg"
+    ],
+    "hidden": []
+  },
+  "greyson": {
+    "hero": "/assets/greyson/01-main.jpg",
+    "gallery": [
+      "/assets/greyson/02.jpg",
+      "/assets/greyson/03.jpg",
+      "/assets/greyson/04.jpg",
+      "/assets/greyson/05.jpg",
+      "/assets/greyson/06.jpg",
+      "/assets/greyson/07.jpg",
+      "/assets/greyson/08.jpg",
+      "/assets/greyson/09.jpg",
+      "/assets/greyson/10.jpg",
+      "/assets/greyson/11.jpg",
+      "/assets/greyson/12.jpg",
+      "/assets/greyson/13.jpg",
+      "/assets/greyson/14.jpg",
+      "/assets/greyson/15.jpg",
+      "/assets/greyson/16.jpg",
+      "/assets/greyson/17.jpg",
+      "/assets/greyson/18.jpg",
+      "/assets/greyson/19.jpg",
+      "/assets/greyson/20.jpg",
+      "/assets/greyson/21.jpg",
+      "/assets/greyson/22.jpg",
+      "/assets/greyson/23.jpg",
+      "/assets/greyson/24.jpg",
+      "/assets/greyson/25.jpg",
+      "/assets/greyson/26.jpg",
+      "/assets/greyson/27.jpg",
+      "/assets/greyson/28.jpg",
+      "/assets/greyson/29.jpg"
+    ],
+    "hidden": []
+  },
+  "edge": {
+    "hero": "/assets/edge-living/01-main.jpg",
+    "gallery": [
+      "/assets/edge-living/01.jpg",
+      "/assets/edge-living/02.jpg",
+      "/assets/edge-living/03.jpg",
+      "/assets/edge-living/04.jpg",
+      "/assets/edge-living/05.jpg",
+      "/assets/edge-living/06.jpg",
+      "/assets/edge-living/07.jpg",
+      "/assets/edge-living/08.jpg",
+      "/assets/edge-living/09.jpg",
+      "/assets/edge-living/10.jpg",
+      "/assets/edge-living/11.jpg",
+      "/assets/edge-living/12.jpg"
+    ],
+    "hidden": []
+  },
+  "pioneer": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [],
+    "hidden": []
+  },
+  "arbour-green": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [],
+    "hidden": []
+  },
+  "ten-one-26-154": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [],
+    "hidden": []
+  },
+  "britnell-landing": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [],
+    "hidden": []
+  },
+  "chicklet-house": {
+    "hero": "/assets/coming-soon.png",
+    "gallery": [],
+    "hidden": []
+  },
+  "lawson-village": {
+    "hero": "/assets/lawson-village/01-main.jpg",
+    "gallery": [
+      "/assets/lawson-village/02.jpg",
+      "/assets/lawson-village/03.jpg",
+      "/assets/lawson-village/04.jpg",
+      "/assets/lawson-village/05.jpg"
+    ],
+    "hidden": []
+  },
+  "lockwood-arms": {
+    "hero": "/assets/lockwood-arms/01-main.jpg",
+    "gallery": [
+      "/assets/lockwood-arms/02.jpg",
+      "/assets/lockwood-arms/03.jpg",
+      "/assets/lockwood-arms/04.jpg",
+      "/assets/lockwood-arms/05.jpg"
+    ],
+    "hidden": []
+  }
+}

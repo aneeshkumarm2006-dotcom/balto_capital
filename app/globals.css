@@ -1038,3 +1038,203 @@ body.reveal-safety .reveal-on-scroll { opacity: 1 !important; transform: none !i
 .balto-mapview .map-preview-card .info { padding: 14px 16px; flex: 1; min-width: 0; }
 
 .balto-mapview .leaflet-marker-shadow { display: none; }
+
+/* ============================================================
+   BALTO custom dropdown + calendar (.bd-*) — replaces native
+   <select> and date inputs everywhere. Variants: .bd-site
+   (transparent trigger, public site) and .bd-admin (input-style,
+   CMS). Components: components/ui/Dropdown.tsx, DatePicker.tsx
+   ============================================================ */
+
+.bd-select { position: relative; width: 100%; }
+
+.bd-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  border-radius: 0;
+  transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+
+.bd-site .bd-trigger {
+  border: 0;
+  background: transparent;
+  font-size: 15px;
+  padding: 14px 16px;
+}
+
+.bd-admin .bd-trigger {
+  background: #fff;
+  border: 1px solid #c9c0ae;
+  font-size: 14px;
+  padding: 10px 14px;
+}
+
+.bd-admin .bd-trigger:focus-visible {
+  outline: none;
+  border-color: #b8965a;
+  box-shadow: 0 0 0 3px rgba(184, 150, 90, 0.55);
+}
+
+.bd-site .bd-trigger:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+/* Inside a form field (label.field) the site trigger aligns flush with
+   .input text, which has no horizontal padding. */
+.field .bd-site .bd-trigger { padding-left: 0; padding-right: 0; }
+
+.bd-select.disabled .bd-trigger { opacity: 0.5; cursor: default; }
+
+.bd-placeholder { color: #a9b2bf; }
+.bd-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.bd-chevron {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--muted);
+  transition: transform 200ms var(--ease);
+}
+.bd-chevron.up { transform: rotate(180deg); }
+
+.bd-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #c9c0ae;
+  box-shadow: 0 14px 40px rgba(10, 25, 41, 0.16);
+  z-index: 260;
+  animation: bd-pop 160ms var(--ease);
+}
+
+@keyframes bd-pop {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bd-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 16px;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.bd-option.active { background: var(--cream); }
+.bd-option[aria-selected='true'] { color: var(--gold); font-weight: 500; }
+.bd-option svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Calendar ---------- */
+
+.bd-cal-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 296px;
+  background: #fff;
+  border: 1px solid #c9c0ae;
+  box-shadow: 0 14px 40px rgba(10, 25, 41, 0.16);
+  z-index: 260;
+  padding: 14px;
+  animation: bd-pop 160ms var(--ease);
+}
+
+.bd-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.bd-cal-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+}
+.bd-cal-title span { color: var(--muted); }
+
+.bd-cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--hairline);
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 160ms var(--ease);
+}
+.bd-cal-nav:hover { border-color: var(--gold); }
+.bd-cal-nav svg { width: 15px; height: 15px; }
+
+.bd-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.bd-cal-wd {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 0;
+}
+
+.bd-cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  background: none;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 140ms var(--ease), border-color 140ms var(--ease);
+}
+
+.bd-cal-day:hover:not(:disabled) { background: var(--cream); }
+.bd-cal-day.today { border-color: var(--hairline-strong); }
+.bd-cal-day.selected { background: var(--ink); color: var(--ivory); }
+.bd-cal-day:disabled { color: #c8cdd6; cursor: default; }
+
+.bd-cal-foot {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+  text-align: right;
+}
+
+.bd-cal-clear {
+  border: 0;
+  background: none;
+  font-size: 12.5px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.bd-cal-clear:hover { color: var(--ink); text-decoration: underline; }

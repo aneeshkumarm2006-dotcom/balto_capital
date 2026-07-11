@@ -1,0 +1,400 @@
+{
+  "parkdale": {
+    "features": [
+      "In-suite laundry",
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork",
+      "Spacious suites"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Elevator",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "acadian": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Pet-friendly",
+      "Communal laundry",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "pioneer": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork",
+      "Oak floors throughout"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Resident concierge",
+      "Bicycle storage",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "arbour-green": {
+    "features": [
+      "Custom millwork",
+      "Oak floors throughout",
+      "Tall casement windows",
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "ten-one-26-154": {
+    "features": [
+      "Custom millwork",
+      "Oak floors throughout",
+      "Tall casement windows",
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Resident concierge",
+      "Heat and hot water included"
+    ]
+  },
+  "balwin-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Private balconies",
+      "Heat and hot water included"
+    ]
+  },
+  "catalina-estates": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "cedar-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "chicklet-house": {
+    "features": [
+      "Tall casement windows",
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances",
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Bicycle storage",
+      "Pet-friendly",
+      "Heat and hot water included"
+    ]
+  },
+  "copper-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork",
+      "New appliances"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Pet-friendly",
+      "Heat and hot water included"
+    ]
+  },
+  "courts-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "grandview-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Pet-friendly",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "hamlet": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "kafa": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "layali": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork",
+      "New appliances"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "oakwood-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "palisades": {
+    "features": [
+      "Walk-in wardrobes",
+      "Updated kitchens and baths",
+      "Soaker tubs in primary baths",
+      "Restored mouldings and trim",
+      "Oak floors throughout",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Surface parking",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "rivergate": {
+    "features": [
+      "Custom millwork",
+      "Oak floors throughout",
+      "Tall casement windows",
+      "Updated kitchens and baths",
+      "Quartz counters, panel-front appliances"
+    ],
+    "amenities": [
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Courtyard garden",
+      "Bicycle storage",
+      "Surface parking",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "strathearn": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Communal laundry",
+      "Pet-friendly",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "royal-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork",
+      "New appliances"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Shared mail and parcel area",
+      "Pet-friendly",
+      "Updated common areas",
+      "Communal laundry",
+      "Heat and hot water included"
+    ]
+  },
+  "sky-manor": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Pet-friendly",
+      "Newly renovated suites",
+      "Shared mail and parcel area",
+      "Heat and hot water included",
+      "Private balconies"
+    ]
+  },
+  "beverly": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Pet-friendly",
+      "Private balconies",
+      "Updated common areas",
+      "Heat and hot water included"
+    ]
+  },
+  "royal-lady": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Pet-friendly",
+      "Private balconies",
+      "Updated common areas",
+      "Communal laundry",
+      "Resident concierge",
+      "Heat and hot water included"
+    ]
+  },
+  "woodridge": {
+    "features": [
+      "Soaker tubs in primary baths",
+      "Walk-in wardrobes",
+      "Restored mouldings and trim",
+      "Custom millwork",
+      "New appliances"
+    ],
+    "amenities": [
+      "Surface parking",
+      "Pet-friendly",
+      "Private balconies",
+      "Updated common areas",
+      "Communal laundry",
+      "Resident concierge",
+      "Heat and hot water included"
+    ]
+  }
+}

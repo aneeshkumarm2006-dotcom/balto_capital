@@ -1,0 +1,231 @@
+[
+  {
+    "slug": "chicklet-house",
+    "name": "Chicklet House",
+    "city": "edmonton",
+    "address": "10304 107 Ave NW, Edmonton, AB T5H 0V8"
+  },
+  {
+    "slug": "woodridge",
+    "name": "Westpark Living",
+    "city": "edmonton",
+    "address": "10139 158 ST NW, Edmonton, AB T5P 2X9",
+    "featured": true,
+    "bedrooms": [
+      1,
+      2
+    ]
+  },
+  {
+    "slug": "palisades",
+    "name": "Palisades",
+    "city": "edmonton",
+    "address": "10825 113 ST NW, Edmonton, AB T5H 3J1",
+    "featured": true,
+    "bedrooms": [
+      1,
+      2
+    ]
+  },
+  {
+    "slug": "hamlet",
+    "name": "Hamlet Village",
+    "city": "edmonton",
+    "address": "11647 124 ST NW, Edmonton, AB T5M 0K8",
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "copper-manor",
+    "name": "Copper Manor",
+    "city": "edmonton",
+    "address": "13011 83 ST NW, Edmonton, AB T5E 2W5"
+  },
+  {
+    "slug": "kafa",
+    "name": "Kafa Manor",
+    "city": "edmonton",
+    "address": "12717 119 ST NW, Edmonton, AB T5E 5M2"
+  },
+  {
+    "slug": "royal-lady",
+    "name": "The Crown Residence",
+    "city": "edmonton",
+    "address": "10746 102 ST NW, Edmonton, AB T5H 2T7",
+    "featured": true,
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "catalina-estates",
+    "name": "Catalina Estates",
+    "city": "edmonton",
+    "address": "5910 118 Ave NW, Edmonton, AB T5W 1E5",
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "layali",
+    "name": "Layali House",
+    "city": "edmonton",
+    "address": "13710 64 ST NW, Edmonton, AB T5A 1R9",
+    "bedrooms": [
+      1,
+      2
+    ]
+  },
+  {
+    "slug": "sky-manor",
+    "name": "Sky Manor",
+    "city": "edmonton",
+    "address": "9612 156 ST NW, Edmonton, AB T5P 2N7"
+  },
+  {
+    "slug": "grandview-manor",
+    "name": "Grandview Manor",
+    "city": "edmonton",
+    "address": "11705 83 ST NW, Edmonton, AB T5B 2Z1",
+    "featured": true
+  },
+  {
+    "slug": "cedar-manor",
+    "name": "Cedar Manor",
+    "city": "edmonton",
+    "address": "12040 82 ST NW, Edmonton, AB T5B 2W6",
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "courts-manor",
+    "name": "Courts Manor",
+    "city": "edmonton",
+    "address": "12239 82 ST NW, Edmonton, AB T5B 2W9",
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "oakwood-manor",
+    "name": "Oakwood Manor",
+    "city": "edmonton",
+    "address": "11348 97 ST NW, Edmonton, AB T5G 1X4"
+  },
+  {
+    "slug": "royal-manor",
+    "name": "Royal Manor",
+    "city": "edmonton",
+    "address": "10215 108 Ave NW, Edmonton, AB T5H 1A9",
+    "featured": true,
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "balwin-manor",
+    "name": "Balwin Manor",
+    "city": "edmonton",
+    "address": "6704 131A AVE NW, Edmonton, AB T5C 1Z6"
+  },
+  {
+    "slug": "acadian",
+    "name": "124 West Residences",
+    "city": "edmonton",
+    "address": "11535 124 ST NW, Edmonton, AB T5M 0K5",
+    "bedrooms": [
+      0,
+      1
+    ]
+  },
+  {
+    "slug": "parkdale",
+    "name": "115 Park Residences",
+    "city": "edmonton",
+    "address": "8021 115 Ave NW, Edmonton, AB T5B 4W7",
+    "bedrooms": [
+      2
+    ]
+  },
+  {
+    "slug": "beverly",
+    "name": "The Beverley 34",
+    "city": "edmonton",
+    "address": "11312 34 ST NW, Edmonton, AB T5W 1Y9",
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "strathearn",
+    "name": "River Valley Residence",
+    "city": "edmonton",
+    "address": "9510 85 ST NW, Edmonton, AB T6C 3E2",
+    "bedrooms": [
+      1
+    ]
+  },
+  {
+    "slug": "pioneer",
+    "name": "127 North Residences",
+    "city": "edmonton",
+    "address": "12929 / 12921 127 ST NW, Edmonton, AB T5L 1B1"
+  },
+  {
+    "slug": "rivergate",
+    "name": "River 82 Residences",
+    "city": "edmonton",
+    "address": "11040 82 ST NW, Edmonton, AB T5H 1L9"
+  },
+  {
+    "slug": "arbour-green",
+    "name": "Arbour Green",
+    "city": "edmonton",
+    "address": "12036 - 66 Street, Edmonton, AB"
+  },
+  {
+    "slug": "ten-one-26-154",
+    "name": "Aurora West",
+    "city": "edmonton",
+    "address": "10126 154 St, Edmonton, AB T5P 2H3"
+  },
+  {
+    "slug": "britnell-landing",
+    "name": "Brintnell Landing",
+    "city": "edmonton",
+    "address": "16255 51 St NW, Edmonton, AB T5Y 0V6"
+  },
+  {
+    "slug": "edge",
+    "name": "The Edge",
+    "city": "edmonton",
+    "address": "3005 James Mowatt Trail SW, Edmonton, AB T6W 3P3",
+    "featured": true
+  },
+  {
+    "slug": "cielo",
+    "name": "Cielo",
+    "city": "saskatoon",
+    "address": "235 Willis Crescent, Saskatoon, SK S7T 0W7"
+  },
+  {
+    "slug": "greyson",
+    "name": "Greyson",
+    "city": "saskatoon",
+    "address": "241 Willis Crescent, Saskatoon, SK"
+  },
+  {
+    "slug": "lawson-village",
+    "name": "Lawson",
+    "city": "saskatoon",
+    "address": "192 Pinehouse Drive, Saskatoon, SK S7K 7Z9"
+  },
+  {
+    "slug": "lockwood-arms",
+    "name": "Lockwood",
+    "city": "regina",
+    "address": "193 / 197 Lockwood Road, Regina, SK S4S 6G9"
+  }
+]

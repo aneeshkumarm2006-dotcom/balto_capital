@@ -9,6 +9,7 @@ import { PlaceholderImg } from '@/components/SmartImage';
 import { InquireModal } from '@/components/InquireModal';
 import { GalleryModal } from '@/components/GalleryModal';
 import { Lightbox } from '@/components/Lightbox';
+import { SETTINGS } from '@/lib/settings';
 import {
   applyUrlFor,
   bedroomShort,
@@ -93,15 +94,10 @@ export default function ResidenceDetailPage({
   // Ordered photo set for the lightbox: hero first, then the gallery.
   const photos = [r.heroImage, ...r.gallery].filter(Boolean);
 
-  const acadianLabels =
-    r.slug === 'acadian' && r.gallery.length === 18
-      ? [
-          'Exterior',
-          'Studio', 'Studio', 'Studio', 'Studio',
-          '1 Bedroom', '1 Bedroom', '1 Bedroom', '1 Bedroom', '1 Bedroom', '1 Bedroom',
-          '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom', '2 Bedroom'
-        ]
-      : undefined;
+  // Photo badges + gallery grouping come from the CMS photo tags (set in the
+  // admin portal). Aligned to `photos` (hero first, then gallery).
+  const tagLabels = photos.map((p) => r.photoTags?.[p]);
+  const photoLabels = tagLabels.some(Boolean) ? tagLabels : undefined;
 
   const plans = r.bedroomOptions
     .filter((b) => r.prices[b as 0 | 1 | 2 | 3] !== undefined)
@@ -623,9 +619,9 @@ export default function ResidenceDetailPage({
 
               <Eyebrow style={{ marginBottom: 12 }}>CONTACT</Eyebrow>
               <div className="small" style={{ marginBottom: 4 }}>
-                info@baltoproperties.ca
+                {SETTINGS.contactEmail}
               </div>
-              <div className="small muted">1-587-207-5171</div>
+              <div className="small muted">{SETTINGS.contactPhone}</div>
             </div>
           </aside>
         </div>
@@ -658,7 +654,7 @@ export default function ResidenceDetailPage({
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
         residence={r}
-        labels={acadianLabels}
+        labels={photoLabels}
         onPhotoClick={(i) => setLightboxIndex(i)}
       />
       <Lightbox
@@ -668,7 +664,7 @@ export default function ResidenceDetailPage({
         onIndexChange={setLightboxIndex}
         onClose={() => setLightboxIndex(null)}
         label={r.name}
-        labels={acadianLabels}
+        labels={photoLabels}
       />
 
       {/* Per-unit photo viewer: tile grid, click a tile to enlarge. */}

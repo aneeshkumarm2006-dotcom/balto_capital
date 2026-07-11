@@ -1,0 +1,128 @@
+{
+  "applyLinks": {
+    "woodridge": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/woodridge-5/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/woodridge-5/floorplans/2-bedroom"
+    },
+    "kafa": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/kafa-manor/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/kafa-manor/floorplans/1-bedroom-1-bath"
+    },
+    "cedar-manor": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/cedar-manor1/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/cedar-manor1/floorplans/1-bedroom"
+    },
+    "courts-manor": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/2-bedroom"
+    },
+    "oakwood-manor": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/oakwood-manor2/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/oakwood-manor2/floorplans/1-bedroom"
+    },
+    "layali": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/2-bedroom"
+    },
+    "catalina-estates": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/2-bedroom"
+    },
+    "sky-manor": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/2-bedroom",
+      "3": "https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/3-bedroom"
+    },
+    "chicklet-house": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/2-bedroom"
+    },
+    "hamlet": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/hamlet-village/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/hamlet-village/floorplans/1-bedroom"
+    },
+    "royal-lady": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/royal-lady/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/royal-lady/floorplans/1-bedroom"
+    },
+    "royal-manor": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/royal-manor2/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/royal-manor2/floorplans/1-bedroom"
+    },
+    "balwin-manor": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/balwin-manor/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/balwin-manor/floorplans/2-bedroom"
+    },
+    "acadian": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/2-bedroom"
+    },
+    "palisades": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/2-bedroom"
+    },
+    "beverly": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/beverly-manor/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/beverly-manor/floorplans/2-bedroom"
+    },
+    "parkdale": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/parkdale-terrace0/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/parkdale-terrace0/floorplans/2-bedroom"
+    },
+    "strathearn": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/strathearn-place/floorplans/1-bedroom"
+    },
+    "rivergate": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/rivergate2/floorplans/bachelor",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/rivergate2/floorplans/1-bedroom-1-bath"
+    },
+    "pioneer": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/bachelor",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/2-bedroom",
+      "3": "https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/3-bedroom"
+    },
+    "edge": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/1-bedroom-p22l33u1ws-den",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/2-bedroom"
+    },
+    "copper-manor": {
+      "1": "https://zenrentals.securecafe.com/onlineleasing/copper-manor/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/copper-manor/floorplans/2-bedroom"
+    },
+    "grandview-manor": {
+      "0": "https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/studio",
+      "1": "https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/1-bedroom",
+      "2": "https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/2-bedroom"
+    }
+  },
+  "zenSlugs": {
+    "woodridge": "woodridge-5",
+    "royal-lady": "royal-lady",
+    "acadian": "house-acadian",
+    "parkdale": "parkdale-terrace0",
+    "cedar-manor": "cedar-manor1",
+    "layali": "layali-house",
+    "palisades": "palisades4",
+    "courts-manor": "courts-manor",
+    "royal-manor": "royal-manor2",
+    "hamlet": "hamlet-village",
+    "kafa": "kafa-manor",
+    "catalina-estates": "catalina-estates",
+    "strathearn": "strathearn-place",
+    "beverly": "beverly-manor",
+    "chicklet-house": "chicklet-house",
+    "copper-manor": "copper-manor",
+    "sky-manor": "sky-manor",
+    "grandview-manor": "grandview-manor1",
+    "oakwood-manor": "oakwood-manor2",
+    "balwin-manor": "balwin-manor",
+    "pioneer": "pioneer-apartments6",
+    "rivergate": "rivergate2",
+    "arbour-green": "arbour-green-2757506-alberta-ltd"
+  }
+}

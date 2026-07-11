@@ -1,3 +1,13 @@
+import buildingsJson from '@/content/buildings.json';
+import copyJson from '@/content/copy.json';
+import amenitiesJson from '@/content/amenities.json';
+import photosJson from '@/content/photos.json';
+import unitsJson from '@/content/units.json';
+import linksJson from '@/content/links.json';
+import citiesJson from '@/content/cities.json';
+import geocodedJson from '@/content/geocoded.json';
+import taxonomiesJson from '@/content/taxonomies.json';
+
 const IMG = (id: string, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=85&auto=format&fit=crop`;
 
@@ -37,7 +47,9 @@ export const IMAGES = {
   ext_apartment6: IMG('1494522855154-9297ac14b55f'),
 } as const;
 
-export type CitySlug = 'saskatoon' | 'edmonton' | 'regina' | 'yellowknife';
+/** City slugs are dynamic — the client can add markets from the CMS
+ *  (content/cities.json), so this is an open string rather than a union. */
+export type CitySlug = string;
 
 export interface City {
   slug: CitySlug;
@@ -46,51 +58,24 @@ export interface City {
   image: string;
   blurb: string;
   bounds: { minLng: number; maxLng: number; minLat: number; maxLat: number };
+  /** Map centre + jitter spread for properties that haven't been geocoded. */
+  center?: { lat: number; lng: number; spreadLat: number; spreadLng: number };
   /** Market is announced but not yet live, render as register-interest, not listings. */
   comingSoon?: boolean;
 }
 
-export const CITIES: Record<CitySlug, City> = {
-  saskatoon: {
-    slug: 'saskatoon',
-    label: 'Saskatoon',
-    province: 'Saskatchewan',
-    image: '/assets/city-saskatoon.png',
-    blurb: 'Contemporary residences in Saskatoon’s sought-after south end and convenient north end.',
-    bounds: { minLng: -106.685, maxLng: -106.620, minLat: 52.115, maxLat: 52.150 },
-  },
-  edmonton: {
-    slug: 'edmonton',
-    label: 'Edmonton',
-    province: 'Alberta',
-    image: '/assets/city-edmonton.png',
-    blurb: 'The heart of the portfolio, renovated, updated residences across Edmonton’s most livable neighbourhoods, with local management in every building.',
-    bounds: { minLng: -113.555, maxLng: -113.470, minLat: 53.520, maxLat: 53.560 },
-  },
-  regina: {
-    slug: 'regina',
-    label: 'Regina',
-    province: 'Saskatchewan',
-    image: '/assets/city-regina.png',
-    blurb: 'A quiet, well-connected residence in southeast Regina near the University of Regina and Wascana Centre.',
-    bounds: { minLng: -104.640, maxLng: -104.580, minLat: 50.430, maxLat: 50.460 },
-  },
-  yellowknife: {
-    slug: 'yellowknife',
-    label: 'Yellowknife',
-    province: 'Northwest Territories',
-    image: '/assets/city-yellowknife.avif',
-    blurb: 'Aurora-touched, lakeside, gold-quiet, the capital of the Northwest Territories, where Great Slave Lake meets the long Northern night.',
-    bounds: { minLng: -114.420, maxLng: -114.330, minLat: 62.430, maxLat: 62.475 },
-    comingSoon: true,
-  },
-};
+export const CITIES: Record<string, City> = citiesJson as Record<string, City>;
+
+/** Cities in display order: live markets first, coming-soon markets last. */
+export const CITY_LIST: City[] = Object.values(CITIES);
+export const LIVE_CITIES: City[] = CITY_LIST.filter((c) => !c.comingSoon);
+export const COMING_SOON_CITIES: City[] = CITY_LIST.filter((c) => c.comingSoon);
 
 export type Availability = 'available' | 'coming-soon';
 
-/** Description voice per the Build Spec: value-add buildings lead with
- *  renovations + security; newer lead with finishes; premium fully elevated. */
-export type Tier = 'value-add' | 'newer' | 'premium' | 'coming-soon';
+/** Description voice per the Build Spec. Tiers are client-editable in the CMS
+ *  (content/taxonomies.json), so this is an open string rather than a union. */
+export type Tier = string;
 
 export interface Residence {
   id: string;
@@ -118,6 +103,11 @@ export interface Residence {
   tier?: Tier;
   heroImage: string;
   gallery: string[];
+  /** CMS photo tags keyed by image path (e.g. "Studio", "1 Bedroom") — shown
+   *  as badges and used to group the View-all-photos gallery. */
+  photoTags?: Record<string, string>;
+  /** CMS alt text keyed by image path. */
+  photoAlt?: Record<string, string>;
   features: string[];
   amenities: string[];
   nearbyPoints: string[];
@@ -190,55 +180,19 @@ interface RawAsset {
    *  from the client's Apartment Type data. Overrides the city default.
    *  Buildings the client left blank keep the default until data arrives. */
   bedrooms?: number[];
+  /** Archived in the CMS: kept in content/buildings.json but never rendered. */
+  archived?: boolean;
+  /** Homepage featured-card order (lower first). Unranked featured go last. */
+  featuredRank?: number;
 }
 
 // NOTE: `slug` is the stable URL + asset-folder key, keep it fixed across
 // renames. `name` is the public display name per the Build Spec (Part Two).
-const ASSETS: RawAsset[] = [
-  { slug: 'chicklet-house',   name: 'Chicklet House',        city: 'edmonton',  address: '10304 107 Ave NW, Edmonton, AB T5H 0V8' },
-  { slug: 'woodridge',        name: 'Westpark Living',       city: 'edmonton',  address: '10139 158 ST NW, Edmonton, AB T5P 2X9', featured: true, bedrooms: [1, 2] },
-  {
-    slug: 'palisades',        name: 'Palisades',             city: 'edmonton',  address: '10825 113 ST NW, Edmonton, AB T5H 3J1', featured: true,
-    bedrooms: [1, 2],
-  },
-  { slug: 'hamlet',           name: 'Hamlet Village',        city: 'edmonton',  address: '11647 124 ST NW, Edmonton, AB T5M 0K8', bedrooms: [1] },
-  { slug: 'copper-manor',     name: 'Copper Manor',          city: 'edmonton',  address: '13011 83 ST NW, Edmonton, AB T5E 2W5' },
-  { slug: 'kafa',             name: 'Kafa Manor',            city: 'edmonton',  address: '12717 119 ST NW, Edmonton, AB T5E 5M2' },
-  { slug: 'royal-lady',       name: 'The Crown Residence',   city: 'edmonton',  address: '10746 102 ST NW, Edmonton, AB T5H 2T7', featured: true, bedrooms: [1] },
-  { slug: 'catalina-estates', name: 'Catalina Estates',      city: 'edmonton',  address: '5910 118 Ave NW, Edmonton, AB T5W 1E5', bedrooms: [1] },
-  { slug: 'layali',           name: 'Layali House',          city: 'edmonton',  address: '13710 64 ST NW, Edmonton, AB T5A 1R9', bedrooms: [1, 2] },
-  { slug: 'sky-manor',        name: 'Sky Manor',             city: 'edmonton',  address: '9612 156 ST NW, Edmonton, AB T5P 2N7' },
-  { slug: 'grandview-manor',  name: 'Grandview Manor',       city: 'edmonton',  address: '11705 83 ST NW, Edmonton, AB T5B 2Z1', featured: true },
-  { slug: 'cedar-manor',      name: 'Cedar Manor',           city: 'edmonton',  address: '12040 82 ST NW, Edmonton, AB T5B 2W6', bedrooms: [1] },
-  { slug: 'courts-manor',     name: 'Courts Manor',          city: 'edmonton',  address: '12239 82 ST NW, Edmonton, AB T5B 2W9', bedrooms: [1] },
-  { slug: 'oakwood-manor',    name: 'Oakwood Manor',         city: 'edmonton',  address: '11348 97 ST NW, Edmonton, AB T5G 1X4' },
-  { slug: 'royal-manor',      name: 'Royal Manor',           city: 'edmonton',  address: '10215 108 Ave NW, Edmonton, AB T5H 1A9', featured: true, bedrooms: [1] },
-  { slug: 'balwin-manor',     name: 'Balwin Manor',          city: 'edmonton',  address: '6704 131A AVE NW, Edmonton, AB T5C 1Z6' },
-  { slug: 'acadian',          name: '124 West Residences',   city: 'edmonton',  address: '11535 124 ST NW, Edmonton, AB T5M 0K5', bedrooms: [0, 1] },
-  { slug: 'parkdale',         name: '115 Park Residences',   city: 'edmonton',  address: '8021 115 Ave NW, Edmonton, AB T5B 4W7', bedrooms: [2] },
-  { slug: 'beverly',          name: 'The Beverley 34',       city: 'edmonton',  address: '11312 34 ST NW, Edmonton, AB T5W 1Y9', bedrooms: [1] },
-  { slug: 'strathearn',       name: 'River Valley Residence', city: 'edmonton', address: '9510 85 ST NW, Edmonton, AB T6C 3E2', bedrooms: [1] },
-  { slug: 'pioneer',          name: '127 North Residences',  city: 'edmonton',  address: '12929 / 12921 127 ST NW, Edmonton, AB T5L 1B1' },
-  { slug: 'rivergate',        name: 'River 82 Residences',   city: 'edmonton',  address: '11040 82 ST NW, Edmonton, AB T5H 1L9' },
-  { slug: 'arbour-green',     name: 'Arbour Green',          city: 'edmonton',  address: '12036 - 66 Street, Edmonton, AB' },
-  { slug: 'ten-one-26-154',   name: 'Aurora West',           city: 'edmonton',  address: '10126 154 St, Edmonton, AB T5P 2H3' },
-  { slug: 'britnell-landing', name: 'Brintnell Landing',     city: 'edmonton',  address: '16255 51 St NW, Edmonton, AB T5Y 0V6' },
-  // The Edge, consolidates the former 'edge' + 'edge-living' entries into one
-  // premium building at 3005 James Mowatt Trail (Allard). Uses the edge-living photos.
-  { slug: 'edge',             name: 'The Edge',              city: 'edmonton',  address: '3005 James Mowatt Trail SW, Edmonton, AB T6W 3P3', featured: true },
-  // Cielo & Greyson, separate buildings, adjacent addresses on Willis Cres.
-  { slug: 'cielo',            name: 'Cielo',                 city: 'saskatoon', address: '235 Willis Crescent, Saskatoon, SK S7T 0W7' },
-  { slug: 'greyson',          name: 'Greyson',               city: 'saskatoon', address: '241 Willis Crescent, Saskatoon, SK' },
-  { slug: 'lawson-village',   name: 'Lawson',                city: 'saskatoon', address: '192 Pinehouse Drive, Saskatoon, SK S7K 7Z9' },
-  { slug: 'lockwood-arms',    name: 'Lockwood',              city: 'regina',    address: '193 / 197 Lockwood Road, Regina, SK S4S 6G9' },
-];
+const ASSETS: RawAsset[] = buildingsJson as unknown as RawAsset[];
 
-const CITY_CENTERS: Record<CitySlug, { lat: number; lng: number; spreadLat: number; spreadLng: number }> = {
-  edmonton:    { lat: 53.545,  lng: -113.493, spreadLat: 0.045, spreadLng: 0.070 },
-  saskatoon:   { lat: 52.130,  lng: -106.665, spreadLat: 0.025, spreadLng: 0.045 },
-  regina:      { lat: 50.445,  lng: -104.620, spreadLat: 0.020, spreadLng: 0.040 },
-  yellowknife: { lat: 62.4540, lng: -114.3718, spreadLat: 0.022, spreadLng: 0.040 },
-};
+/** Map centre + jitter spread per city, from content/cities.json. */
+const DEFAULT_CENTER = { lat: 53.545, lng: -113.493, spreadLat: 0.045, spreadLng: 0.07 };
+const centerFor = (city: CitySlug) => CITIES[city]?.center ?? DEFAULT_CENTER;
 
 function hashSeed(s: string): number {
   let h = 0;
@@ -246,48 +200,16 @@ function hashSeed(s: string): number {
   return Math.abs(h);
 }
 
-/** Real lat/lng per property, geocoded via OSM Nominatim by scripts/geocode.mjs.
- *  Re-run `node scripts/geocode.mjs` when addresses change. */
-const GEOCODED: Record<string, { lat: number; lng: number }> = {
-  'chicklet-house':   { lat: 53.55151, lng: -113.49765 }, // 10304 107 Ave, exact house match
-  'woodridge':        { lat: 53.54850, lng: -113.59388 }, // 10139 158 St, corrected to Britannia-Youngstown
-  'palisades':        { lat: 53.55377, lng: -113.51541 },
-  'hamlet':           { lat: 53.56818, lng: -113.53571 },
-  'copper-manor':     { lat: 53.58946, lng: -113.46890 },
-  'kafa':             { lat: 53.58548, lng: -113.52637 },
-  'royal-lady':       { lat: 53.55253, lng: -113.49567 },
-  'catalina-estates': { lat: 53.57065, lng: -113.43269 },
-  'layali':           { lat: 53.60011, lng: -113.44043 },
-  'sky-manor':        { lat: 53.53347, lng: -113.59051 },
-  'grandview-manor':  { lat: 53.56902, lng: -113.46863 },
-  'cedar-manor':      { lat: 53.57453, lng: -113.46720 }, // 12040 82 St, corrected (anchored to Courts Manor, same street)
-  'courts-manor':     { lat: 53.57766, lng: -113.46717 },
-  'oakwood-manor':    { lat: 53.56408, lng: -113.49233 },
-  'royal-manor':      { lat: 53.55293, lng: -113.49664 },
-  'balwin-manor':     { lat: 53.59132, lng: -113.44544 },
-  'acadian':          { lat: 53.59792, lng: -113.53657 },
-  'parkdale':         { lat: 53.56570, lng: -113.46520 },
-  'beverly':          { lat: 53.56629, lng: -113.39384 },
-  'strathearn':       { lat: 53.53202, lng: -113.45802 },
-  'pioneer':          { lat: 53.58853, lng: -113.54084 },
-  'rivergate':        { lat: 53.55941, lng: -113.46769 },
-  'arbour-green':     { lat: 53.57439, lng: -113.44324 },
-  'ten-one-26-154':   { lat: 53.54219, lng: -113.58721 },
-  'britnell-landing': { lat: 53.62481, lng: -113.41321 },
-  'edge':             { lat: 53.41544, lng: -113.52042 },
-  // Saskatoon, Cielo at 235 Willis, Greyson at 241 Willis (separate buildings).
-  'cielo':            { lat: 52.08840, lng: -106.63143 },
-  'greyson':          { lat: 52.08835, lng: -106.62955 },
-  'lawson-village':   { lat: 52.16912, lng: -106.62724 },
-  // Regina
-  'lockwood-arms':    { lat: 50.40151, lng: -104.62602 },
-};
+/** Real lat/lng per property (content/geocoded.json), geocoded via OSM
+ *  Nominatim — by scripts/geocode.mjs or the CMS "Fix map pin" button. */
+const GEOCODED: Record<string, { lat: number; lng: number }> =
+  geocodedJson as Record<string, { lat: number; lng: number }>;
 
 function coordsFor(slug: string, city: CitySlug): { lat: number; lng: number } {
   const real = GEOCODED[slug];
   if (real) return real;
-  // Fallback for new properties added before re-running geocode.mjs.
-  const c = CITY_CENTERS[city];
+  // Fallback for new properties that haven't been geocoded yet.
+  const c = centerFor(city);
   const h = hashSeed(slug);
   const dLat = (((h % 997) / 997) - 0.5) * c.spreadLat * 2;
   const dLng = ((((h * 13) % 1009) / 1009) - 0.5) * c.spreadLng * 2;
@@ -337,104 +259,8 @@ const HEAT = 'Heat and hot water included';
  *  style; the item set matches the sheet. "Heat and hot water included" = HEAT.
  *  Six buildings are absent from the sheet (britnell-landing, edge, cielo,
  *  greyson, lawson-village, lockwood-arms) and keep their pool fallback. */
-const CURATED: Record<string, { features: string[]; amenities: string[] }> = {
-  parkdale: {
-    features: ['In-suite laundry', 'Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'Spacious suites'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', 'Elevator', HEAT, 'Private balconies'],
-  },
-  acadian: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Pet-friendly', 'Communal laundry', 'Updated common areas', HEAT],
-  },
-  pioneer: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'Oak floors throughout'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Resident concierge', 'Bicycle storage', HEAT, 'Private balconies'],
-  },
-  'arbour-green': {
-    features: ['Custom millwork', 'Oak floors throughout', 'Tall casement windows', 'Updated kitchens and baths', 'Quartz counters, panel-front appliances'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', HEAT, 'Private balconies'],
-  },
-  'ten-one-26-154': {
-    features: ['Custom millwork', 'Oak floors throughout', 'Tall casement windows', 'Updated kitchens and baths', 'Quartz counters, panel-front appliances'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Resident concierge', HEAT],
-  },
-  'balwin-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Private balconies', HEAT],
-  },
-  'catalina-estates': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  'cedar-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  'chicklet-house': {
-    features: ['Tall casement windows', 'Updated kitchens and baths', 'Quartz counters, panel-front appliances', 'Soaker tubs in primary baths', 'Walk-in wardrobes'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Bicycle storage', 'Pet-friendly', HEAT],
-  },
-  'copper-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'New appliances'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Pet-friendly', HEAT],
-  },
-  'courts-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  'grandview-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Pet-friendly', HEAT, 'Private balconies'],
-  },
-  hamlet: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  kafa: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  layali: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'New appliances'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  'oakwood-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Pet-friendly', 'Updated common areas', HEAT, 'Private balconies'],
-  },
-  palisades: {
-    features: ['Walk-in wardrobes', 'Updated kitchens and baths', 'Soaker tubs in primary baths', 'Restored mouldings and trim', 'Oak floors throughout', 'Custom millwork'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Surface parking', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  rivergate: {
-    features: ['Custom millwork', 'Oak floors throughout', 'Tall casement windows', 'Updated kitchens and baths', 'Quartz counters, panel-front appliances'],
-    amenities: ['Shared mail and parcel area', 'Communal laundry', 'Courtyard garden', 'Bicycle storage', 'Surface parking', HEAT, 'Private balconies'],
-  },
-  strathearn: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Communal laundry', 'Pet-friendly', 'Updated common areas', HEAT],
-  },
-  'royal-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'New appliances'],
-    amenities: ['Surface parking', 'Shared mail and parcel area', 'Pet-friendly', 'Updated common areas', 'Communal laundry', HEAT],
-  },
-  'sky-manor': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Newly renovated suites', 'Shared mail and parcel area', HEAT, 'Private balconies'],
-  },
-  beverly: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Private balconies', 'Updated common areas', HEAT],
-  },
-  'royal-lady': {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
-  },
-  woodridge: {
-    features: ['Soaker tubs in primary baths', 'Walk-in wardrobes', 'Restored mouldings and trim', 'Custom millwork', 'New appliances'],
-    amenities: ['Surface parking', 'Pet-friendly', 'Private balconies', 'Updated common areas', 'Communal laundry', 'Resident concierge', HEAT],
-  },
-};
+const CURATED: Record<string, { features: string[]; amenities: string[] }> =
+  amenitiesJson as unknown as Record<string, { features: string[]; amenities: string[] }>;
 
 function pickN<T>(pool: T[], n: number, seed: number): T[] {
   const len = pool.length;
@@ -443,21 +269,8 @@ function pickN<T>(pool: T[], n: number, seed: number): T[] {
   return Array.from({ length: count }, (_, k) => pool[(offset + k) % len]);
 }
 
-const HERO_POOL: string[] = [
-  IMAGES.heritage1, IMAGES.heritage2, IMAGES.heritage3, IMAGES.heritage4,
-  IMAGES.modern1, IMAGES.modern2, IMAGES.modern3, IMAGES.modern4,
-  IMAGES.detail_brick, IMAGES.detail_door, IMAGES.detail_arch,
-  IMAGES.ext_apartment1, IMAGES.ext_apartment2, IMAGES.ext_apartment3,
-  IMAGES.ext_apartment4, IMAGES.ext_apartment5, IMAGES.ext_apartment6,
-];
-
-const GALLERY_POOL: string[] = [
-  IMAGES.int_living1, IMAGES.int_living2, IMAGES.int_living3,
-  IMAGES.int_kitchen1, IMAGES.int_kitchen2,
-  IMAGES.int_bed1, IMAGES.int_bed2,
-  IMAGES.int_bath1, IMAGES.int_bath2,
-  IMAGES.int_dining1, IMAGES.int_detail1, IMAGES.int_detail2,
-];
+// (Unsplash hero/gallery fallback pools removed - every building has real or
+// coming-soon imagery managed via content/photos.json.)
 
 function bedroomLabel(opts: number[]): string {
   const parts = opts.map((b) => (b === 0 ? 'Studio' : String(b)));
@@ -465,294 +278,19 @@ function bedroomLabel(opts: number[]): string {
   return parts.join(' · ') + (onlyStudio ? '' : ' Bedrooms');
 }
 
-/** Per-asset overrides for real photos that have been synced into
- *  public/assets/<slug>/. Anything not listed here falls back to the
- *  Unsplash pool. Generated/maintained via npm run sync-images. */
-const REAL_PHOTOS: Record<string, { hero?: string; gallery: string[] }> = {
-  woodridge: {
-    hero: '/assets/woodridge/01-main.jpg',
-    gallery: [
-      '/assets/woodridge/02.jpg', // unfurnished
-      '/assets/woodridge/03.jpg', // unfurnished
-      '/assets/woodridge/04.jpg', // unfurnished
-      '/assets/woodridge/05.jpg', // unfurnished
-      '/assets/woodridge/06.png', // unfurnished
-      '/assets/woodridge/07.png', // unfurnished
-      '/assets/woodridge/08.png', // unfurnished
-      '/assets/woodridge/09.png', // unfurnished
-      '/assets/woodridge/10.png', // unfurnished
-      '/assets/woodridge/11.png', // unfurnished
-      '/assets/woodridge/12.png', // unfurnished
-      '/assets/woodridge/13.png', // unfurnished
-      '/assets/woodridge/14.png', // furnished
-      '/assets/woodridge/15.png', // furnished
-      '/assets/woodridge/16.png', // furnished
-      '/assets/woodridge/17.png', // furnished
-      '/assets/woodridge/18.png', // furnished
-      '/assets/woodridge/19.png', // furnished
-      '/assets/woodridge/20.png', // furnished
-      '/assets/woodridge/21.png', // furnished
-      '/assets/woodridge/22.png', // furnished
-      '/assets/woodridge/23.png', // furnished
-      '/assets/woodridge/24.png', // furnished
-      '/assets/woodridge/25.png', // furnished
-    ],
-  },
-  acadian: {
-    hero: '/assets/acadian/01-main.jpg',
-    // Interiors replaced with AI renders across units 103/303, 106/201/207/
-    // 304/306, and 202/205 (furnished + unfurnished, 2026).
-    gallery: [
-      // Studio
-      '/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png',
-      '/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png',
-      '/assets/acadian/ai/01_studio_ai_furnished_kitchen.png',
-      '/assets/acadian/ai/02_studio_ai_furnished_living_area.png',
-      // 1 Bedroom
-      '/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png',
-      '/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png',
-      '/assets/acadian/ai/10_1bed_ai_unfurnished_living_room.png',
-      '/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png',
-      '/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png',
-      '/assets/acadian/ai/07_1bed_ai_furnished__living_room.png',
-      // 2 Bedroom
-      '/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png',
-      '/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png',
-      '/assets/acadian/ai/17_2bed_ai_unfurnished_living_room.png',
-      '/assets/acadian/ai/18_2bed_ai_unfurnished_master_bedroom.png',
-      '/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png',
-      '/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png',
-      '/assets/acadian/ai/13_2bed_ai_furnished_living_room.png',
-      '/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png',
-    ],
-  },
-  hamlet: {
-    hero: '/assets/hamlet/01-main.jpg',
-    // Interiors replaced with Unit 6 AI Unfurnished renders (2026).
-    gallery: [
-      '/assets/hamlet/02.png', // Living room
-      '/assets/hamlet/03.png', // Kitchen
-      '/assets/hamlet/04.png', // Kitchen view
-      '/assets/hamlet/05.png', // Bedroom
-    ],
-  },
-  'royal-lady': {
-    hero: '/assets/royal-lady/01-main.jpg',
-    gallery: [
-      '/assets/royal-lady/02.jpg', // unfurnished
-      '/assets/royal-lady/03.jpg', // unfurnished
-      '/assets/royal-lady/04.jpg', // unfurnished
-      '/assets/royal-lady/05.jpg', // unfurnished
-      '/assets/royal-lady/06.png', // unfurnished
-      '/assets/royal-lady/07.png', // unfurnished
-      '/assets/royal-lady/08.png', // unfurnished
-      '/assets/royal-lady/09.png', // furnished
-      '/assets/royal-lady/10.png', // furnished
-      '/assets/royal-lady/11.png', // furnished
-      '/assets/royal-lady/12.png', // furnished
-      '/assets/royal-lady/13.png', // furnished
-      '/assets/royal-lady/14.png', // furnished
-      '/assets/royal-lady/15.png', // furnished
-    ],
-  },
-  'catalina-estates': {
-    hero: '/assets/catalina-estates/01-main.jpg',
-    // Interiors replaced with Unit 2 AI Furnished renders (2026).
-    gallery: [
-      '/assets/catalina-estates/02.png', // unfurnished
-      '/assets/catalina-estates/03.png', // unfurnished
-      '/assets/catalina-estates/04.png', // unfurnished
-      '/assets/catalina-estates/05.png', // unfurnished
-      '/assets/catalina-estates/06.png', // furnished
-      '/assets/catalina-estates/07.png', // furnished
-      '/assets/catalina-estates/08.png', // furnished
-      '/assets/catalina-estates/09.png', // furnished
-    ],
-  },
-  layali: {
-    hero: '/assets/layali/01-main.jpg',
-    // Interiors replaced with Unit 7 + Unit 5/15 AI Unfurnished renders (2026).
-    gallery: [
-      '/assets/layali/02.png', // Unit 7 · Living room
-      '/assets/layali/03.png', // Unit 7 · Kitchen
-      '/assets/layali/04.png', // Unit 7 · Bedroom
-      '/assets/layali/05.png', // Unit 5/15 · Master bedroom
-      '/assets/layali/06.png', // Unit 5/15 · Bedroom
-    ],
-  },
-  'sky-manor': {
-    // Interior photos hidden per client; keep only the facade cover.
-    hero: '/assets/sky-manor/01-main.jpg',
-    gallery: [],
-  },
-  'cedar-manor': {
-    hero: '/assets/cedar-manor/01-main.jpg',
-    // Interiors replaced with Unit 5/15/17 + Unit 2/7/8 AI Unfurnished (2026).
-    gallery: [
-      '/assets/cedar-manor/02.png', // Unit 5/15/17 · Living room
-      '/assets/cedar-manor/03.png', // Unit 5/15/17 · Kitchen
-      '/assets/cedar-manor/04.png', // Unit 5/15/17 · Bedroom
-      '/assets/cedar-manor/05.png', // Unit 2/7/8 · Living room
-      '/assets/cedar-manor/06.png', // Unit 2/7/8 · Kitchen
-      '/assets/cedar-manor/07.png', // Unit 2/7/8 · Bedroom
-    ],
-  },
-  kafa: {
-    // Interior photos hidden per client; keep only the facade cover.
-    hero: '/assets/kafa/01-main.jpg',
-    gallery: [],
-  },
-  palisades: {
-    hero: '/assets/palisades/01-main.jpg',
-    // Interiors replaced with unit 204 + Unit 205 AI Furnished renders (2026).
-    gallery: [
-      '/assets/palisades/02.png', // unfurnished
-      '/assets/palisades/03.png', // unfurnished
-      '/assets/palisades/04.png', // unfurnished
-      '/assets/palisades/05.png', // unfurnished
-      '/assets/palisades/06.png', // unfurnished
-      '/assets/palisades/07.png', // unfurnished
-      '/assets/palisades/08.png', // unfurnished
-      '/assets/palisades/09.png', // unfurnished
-      '/assets/palisades/10.png', // unfurnished
-      '/assets/palisades/11.png', // furnished
-      '/assets/palisades/12.png', // furnished
-      '/assets/palisades/13.png', // furnished
-      '/assets/palisades/14.png', // furnished
-      '/assets/palisades/15.png', // furnished
-      '/assets/palisades/16.png', // furnished
-      '/assets/palisades/17.png', // furnished
-      '/assets/palisades/18.png', // furnished
-      '/assets/palisades/19.png', // furnished
-    ],
-  },
-  'copper-manor':    { hero: '/assets/copper-manor/01-main.jpg',    gallery: [] },
-  'grandview-manor': {
-    // Interior photos hidden per client; keep only the facade cover.
-    hero: '/assets/grandview-manor/01-main.jpg',
-    gallery: [],
-  },
-  'courts-manor': {
-    hero: '/assets/courts-manor/01-main.jpg',
-    // Interiors replaced with Unit 5 + Unit 21 AI Unfurnished renders (2026).
-    gallery: [
-      '/assets/courts-manor/02.png', // Unit 5 · Living room
-      '/assets/courts-manor/03.png', // Unit 5 · Kitchen
-      '/assets/courts-manor/04.png', // Unit 21 · Living room
-      '/assets/courts-manor/05.png', // Unit 21 · Kitchen
-      '/assets/courts-manor/06.png', // Unit 21 · Bathroom
-    ],
-  },
-  'oakwood-manor': {
-    // Interior photos hidden per client; keep only the facade cover.
-    hero: '/assets/oakwood-manor/01-main.jpg',
-    gallery: [],
-  },
-  'balwin-manor': {
-    // Interior photos hidden per client; keep only the facade cover.
-    hero: '/assets/balwin-manor/01-main.jpg',
-    gallery: [],
-  },
-  // Parkdale / Strathearn / Rivergate / Beverly, the sync script auto-
-  // promoted the first photo to 01-main.jpg since there's no dedicated
-  // Main shot from the client yet. Hero comes from that file; the rest
-  // populate the gallery. When a proper Main arrives, the file naming
-  // re-sorts automatically on next sync.
-  parkdale: {
-    // No facade shot yet — keep the coming-soon cover; Unit 202 AI Unfurnished
-    // interiors populate the gallery (2026).
-    hero: '/assets/coming-soon.png',
-    gallery: [
-      '/assets/parkdale/01-main.png', // Living room
-      '/assets/parkdale/02.png', // Kitchen
-      '/assets/parkdale/03.png', // Master bedroom
-      '/assets/parkdale/04.png', // Bedroom
-    ],
-  },
-  strathearn: {
-    // No facade shot yet, so cover stays coming-soon; gallery = Unit 1 AI
-    // unfurnished then furnished (2026).
-    hero: '/assets/coming-soon.png',
-    gallery: [
-      '/assets/strathearn/02.png', // unfurnished
-      '/assets/strathearn/03.png', // unfurnished
-      '/assets/strathearn/04.png', // unfurnished
-      '/assets/strathearn/05.png', // unfurnished
-      '/assets/strathearn/06.png', // furnished
-      '/assets/strathearn/07.png', // furnished
-      '/assets/strathearn/08.png', // furnished
-      '/assets/strathearn/09.png', // furnished
-    ],
-  },
-  rivergate: {
-    // Interior photos hidden per client; no facade yet, so keep coming-soon.
-    hero: '/assets/coming-soon.png',
-    gallery: [],
-  },
-  beverly: {
-    // No facade shot yet — keep the coming-soon cover; Unit 203 AI Unfurnished
-    // interiors populate the gallery (2026).
-    hero: '/assets/coming-soon.png',
-    gallery: [
-      '/assets/beverly/01-main.png', // Living room
-      '/assets/beverly/02.png', // Kitchen
-      '/assets/beverly/03.png', // Bedroom
-    ],
-  },
-  'royal-manor': {
-    hero: '/assets/royal-manor/01-main.jpg',
-    gallery: [
-      '/assets/royal-manor/02.jpg', // unfurnished
-      '/assets/royal-manor/03.jpg', // unfurnished
-      '/assets/royal-manor/04.jpg', // unfurnished
-      '/assets/royal-manor/05.jpg', // unfurnished
-      '/assets/royal-manor/06.png', // furnished
-      '/assets/royal-manor/07.png', // furnished
-      '/assets/royal-manor/08.png', // furnished
-      '/assets/royal-manor/09.png', // furnished
-    ],
-  },
-  // Saskatoon, Cielo & Greyson split + new Edge Living + renames.
-  cielo: {
-    hero: '/assets/cielo/01-main.jpg',
-    gallery: Array.from({ length: 17 }, (_, i) =>
-      `/assets/cielo/${String(i + 2).padStart(2, '0')}.jpg`),
-  },
-  greyson: {
-    hero: '/assets/greyson/01-main.jpg',
-    gallery: Array.from({ length: 28 }, (_, i) =>
-      `/assets/greyson/${String(i + 2).padStart(2, '0')}.jpg`),
-  },
-  // The Edge, photos live under /assets/edge-living/ (folder kept as-is).
-  edge: {
-    hero: '/assets/edge-living/01-main.jpg',
-    gallery: Array.from({ length: 12 }, (_, i) =>
-      `/assets/edge-living/${String(i + 1).padStart(2, '0')}.jpg`),
-  },
-  pioneer:           { hero: '/assets/coming-soon.png', gallery: [] },
-  'arbour-green':    { hero: '/assets/coming-soon.png', gallery: [] },
-  'ten-one-26-154':  { hero: '/assets/coming-soon.png', gallery: [] },
-  'britnell-landing':{ hero: '/assets/coming-soon.png', gallery: [] },
-  'chicklet-house':  { hero: '/assets/coming-soon.png', gallery: [] },
-  'lawson-village': {
-    hero: '/assets/lawson-village/01-main.jpg',
-    gallery: [
-      '/assets/lawson-village/02.jpg',
-      '/assets/lawson-village/03.jpg',
-      '/assets/lawson-village/04.jpg',
-      '/assets/lawson-village/05.jpg',
-    ],
-  },
-  'lockwood-arms': {
-    hero: '/assets/lockwood-arms/01-main.jpg',
-    gallery: [
-      '/assets/lockwood-arms/02.jpg',
-      '/assets/lockwood-arms/03.jpg',
-      '/assets/lockwood-arms/04.jpg',
-      '/assets/lockwood-arms/05.jpg',
-    ],
-  },
-};
+/** Per-building photo sets synced into public/assets/<slug>/ and managed by
+ *  the CMS in content/photos.json. `hidden` lists image paths the client has
+ *  hidden in the admin portal - they stay on disk but never render. */
+export interface PhotoSet {
+  hero?: string | null;
+  gallery: string[];
+  hidden?: string[];
+  /** Tag per image path (e.g. "Studio") — badges + gallery grouping. */
+  tags?: Record<string, string>;
+  /** Alt text per image path. */
+  alt?: Record<string, string>;
+}
+const REAL_PHOTOS: Record<string, PhotoSet> = photosJson as unknown as Record<string, PhotoSet>;
 
 /** Net-effective pricing per asset. Woodridge uses its own base card; everyone
  *  else uses the non-renovated card. The advertised number reflects the
@@ -779,363 +317,36 @@ interface BuildingCopy {
   closeTo: string[];
 }
 
-const COPY: Record<string, BuildingCopy> = {
-  'chicklet-house': {
-    neighbourhood: 'Central McDougall', tier: 'value-add',
-    description: 'A renovated and updated residence on Edmonton’s multicultural “Avenue of Nations,” just north of downtown. Modernized suites and secured entry in a highly walkable, transit-rich pocket, steps from the diverse restaurants and shops of 107 Avenue, with MacEwan University, the Royal Alexandra Hospital, and the Metro Line LRT all close by.',
-    closeTo: ['107 Ave “Avenue of Nations” dining', 'MacEwan University', 'Royal Alexandra Hospital', 'Kingsway Mall', 'Metro Line LRT', 'downtown'],
-  },
-  hamlet: {
-    neighbourhood: '124 St / Westmount', tier: 'value-add',
-    description: 'A renovated character walk-up on Edmonton’s most celebrated independent shopping street. Updated suites pair handsome mid-century proportions with refreshed kitchens and baths, secured entry, and improved common areas. Step out the door into the 124 Street District, galleries, boutiques, and the city’s best-loved bakeries and cafés, with the river valley and downtown minutes away.',
-    closeTo: ['Duchess Bake Shop', 'Roxy Theatre', '124 Grand Market', 'Government House Park & river valley', 'downtown', 'transit on 124 St'],
-  },
-  acadian: {
-    neighbourhood: 'Inglewood', tier: 'value-add',
-    description: 'In Inglewood, an established central neighbourhood beside the 124 Street District. This renovated and updated building puts the corridor’s cafés, galleries, and boutiques within easy reach, modernized suites, upgraded security, and a quiet residential setting near one of Edmonton’s most walkable streets.',
-    closeTo: ['124 Street shops & restaurants', 'Duchess Bake Shop', 'art galleries', 'Westmount Centre', 'downtown & Jasper Avenue', 'transit'],
-  },
-  kafa: {
-    neighbourhood: 'Calder', tier: 'value-add',
-    description: 'A renovated building in Calder, a quiet, established north-central neighbourhood. Updated suites and secured entry in a mature, tree-lined setting, close to NAIT, Kingsway Mall, and the Yellowhead, with easy transit and downtown access for commuters.',
-    closeTo: ['124 Street District (walk)', 'Westmount Centre', 'Kingsway Mall', 'Yellowhead Trail', 'downtown', 'transit'],
-  },
-  'royal-lady': {
-    neighbourhood: 'Downtown / MacEwan', tier: 'value-add',
-    description: 'Steps from MacEwan University and the ICE District, on the northern edge of downtown. This renovated and updated building offers modernized suites and upgraded security in a location built for students and young professionals, walk to class, work, and Rogers Place, with LRT and Jasper Avenue minutes away.',
-    closeTo: ['MacEwan University', 'ICE District & Rogers Place', 'downtown core', 'LRT', 'Jasper Avenue', 'river valley'],
-  },
-  'royal-manor': {
-    neighbourhood: 'Central McDougall', tier: 'value-add',
-    description: 'A central address moments from MacEwan University and Edmonton’s downtown core. Renovated and updated suites, secured entry, and quick transit access make this an easy choice for students and downtown commuters. Walk to campus, shops, and the river valley.',
-    closeTo: ['MacEwan University', 'downtown', 'Royal Alexandra Hospital', 'Kingsway Mall', 'LRT', 'river valley'],
-  },
-  'grandview-manor': {
-    neighbourhood: 'Parkdale', tier: 'value-add',
-    description: 'A renovated walk-up in Parkdale, a central neighbourhood just off the 118 Avenue arts district and a short distance north of downtown. Updated suites, secured entry, and refreshed common areas in an area seeing real reinvestment, close to Commonwealth Stadium, transit, and the downtown core.',
-    closeTo: ['118 Avenue arts & festivals (Kaleido, Deep Freeze)', 'Nina Haggerty Centre', 'Commonwealth Stadium & Rec Centre', 'downtown', 'transit'],
-  },
-  'cedar-manor': {
-    neighbourhood: 'Alberta Avenue', tier: 'value-add',
-    description: 'A renovated and updated building on a quiet residential block in the Alberta Avenue community, steps from the 118 Avenue corridor’s cafés, galleries, and festivals. Modernized suites and upgraded security, with downtown and NAIT a short commute and the Coliseum LRT connecting you across the city.',
-    closeTo: ['118 Avenue shops & arts', 'Carrot Community Coffeehouse', 'NAIT', 'Coliseum LRT', 'downtown'],
-  },
-  'courts-manor': {
-    neighbourhood: 'Elmwood', tier: 'value-add',
-    description: 'In Elmwood, a quiet established neighbourhood near the 118 Avenue corridor, this renovated building offers updated suites and secured entry. A short reach to the Avenue’s growing arts scene, with quick downtown and transit access at an accessible rent.',
-    closeTo: ['118 Avenue corridor', 'arts & festivals', 'NAIT', 'Coliseum LRT', 'Commonwealth Rec Centre', 'downtown'],
-  },
-  parkdale: {
-    neighbourhood: 'Eastwood', tier: 'value-add',
-    description: 'A renovated and updated building in Eastwood, just east of the Alberta Avenue corridor. Secured entry and modernized suites with easy access to 118 Avenue amenities, Commonwealth Stadium, and downtown. Practical, central, and improving.',
-    closeTo: ['118 Avenue', 'Commonwealth Stadium', 'Stadium LRT', 'downtown', 'transit'],
-  },
-  'oakwood-manor': {
-    neighbourhood: 'Spruce Avenue', tier: 'value-add',
-    description: 'In Spruce Avenue, a central neighbourhood on 97 Street near Kingsway and the 118 Avenue corridor. This renovated building offers updated suites and secured entry in a well-connected inner-city location, close to Kingsway Mall, NAIT, the Royal Alexandra Hospital, transit, and downtown.',
-    closeTo: ['118 Avenue', 'downtown (short drive)', 'Royal Alexandra Hospital', 'NAIT', 'transit'],
-  },
-  'catalina-estates': {
-    neighbourhood: 'Montrose', tier: 'value-add',
-    description: 'A renovated and updated building in Montrose, an established neighbourhood near the 118 Avenue corridor and Borden Park. Modernized suites with upgraded security, close to green space, transit, and the ongoing 118 Avenue revitalization. Affordable, connected, and on the rise.',
-    closeTo: ['Borden Park', '118 Avenue corridor', 'Coliseum', 'Stadium LRT', 'Commonwealth Rec Centre', 'downtown access'],
-  },
-  rivergate: {
-    neighbourhood: 'Cromdale', tier: 'value-add',
-    description: 'A renovated building in Cromdale, an established inner-city neighbourhood overlooking the river valley. Updated suites and secured entry in a central, well-connected pocket, steps from the 118 Avenue corridor’s cafés and arts spaces, with quick downtown and transit access.',
-    closeTo: ['118 Avenue', 'downtown', 'Commonwealth Rec Centre', 'transit', 'NAIT'],
-  },
-  'copper-manor': {
-    neighbourhood: 'NE / Killarney', tier: 'value-add',
-    description: 'A renovated and updated building in a quiet, established northeast neighbourhood. Modernized suites and secured entry, with quick Yellowhead Trail access for commuters and nearby shopping and schools. Practical, family-friendly value.',
-    closeTo: ['Yellowhead Trail', 'Northgate shopping', 'schools', 'transit', 'downtown access'],
-  },
-  'balwin-manor': {
-    neighbourhood: 'Northgate', tier: 'value-add',
-    description: 'Close to Northgate Centre shopping and transit, this renovated building offers updated suites and upgraded security in a convenient northeast location. Easy access to NAIT, downtown, and major routes north.',
-    closeTo: ['Northgate Centre', 'NAIT', 'transit hub', 'Yellowhead Trail', 'downtown'],
-  },
-  'arbour-green': {
-    neighbourhood: 'Montrose', tier: 'value-add',
-    description: 'A renovated and updated building in Montrose, an established neighbourhood near the 118 Avenue corridor. Modernized suites and secured entry, close to transit and downtown access, at an accessible rent.',
-    closeTo: ['118 Avenue', 'Commonwealth area', 'transit', 'downtown access', 'schools'],
-  },
-  layali: {
-    neighbourhood: 'York', tier: 'value-add',
-    description: 'A renovated building in York, a quiet northeast residential neighbourhood with good road access and nearby shopping and schools. Updated suites and secured entry, comfortable, practical value close to transit.',
-    closeTo: ['Northgate & Clareview shopping', 'Clareview LRT (nearby)', 'schools', 'Anthony Henday access'],
-  },
-  beverly: {
-    neighbourhood: 'Beverly Heights', tier: 'value-add',
-    description: 'A renovated and updated building in Beverly Heights, a mature northeast neighbourhood overlooking the river valley. Modernized suites and secured entry close to Rundle Park, the river valley golf courses, and transit, green space and connectivity at an accessible rent.',
-    closeTo: ['Rundle Park', 'river valley & golf', 'Coliseum/Stadium LRT', 'downtown', 'transit'],
-  },
-  pioneer: {
-    neighbourhood: 'Calder', tier: 'value-add',
-    description: 'Two renovated buildings on a quiet residential street in north-central Edmonton, close to NAIT, the Yellowhead, and Kingsway Mall. Updated suites and secured entry, with quick downtown and transit access. Practical, central value.',
-    closeTo: ['NAIT', 'Kingsway Mall', 'Yellowhead Trail', 'transit', 'downtown'],
-  },
-  woodridge: {
-    neighbourhood: 'Britannia-Youngstown', tier: 'value-add',
-    description: 'A renovated building in Britannia-Youngstown, an established west-end neighbourhood near the Stony Plain Road corridor. Updated suites and secured entry with quick routes to West Edmonton Mall and the Misericordia Hospital, practical value with everyday amenities close by and the future Valley Line West LRT nearby.',
-    closeTo: ['West Edmonton Mall', 'Misericordia Hospital', 'Stony Plain Road shops', 'Meadowlark', 'future Valley Line West LRT'],
-  },
-  'sky-manor': {
-    neighbourhood: 'Glenwood', tier: 'value-add',
-    description: 'A renovated and updated walk-up in Glenwood, an established west-end neighbourhood minutes from West Edmonton Mall and Meadowlark shopping. Modernized suites, upgraded security, and good transit access toward downtown. Comfortable, connected, family-friendly.',
-    closeTo: ['West Edmonton Mall', 'Meadowlark shopping', 'Misericordia Hospital', 'transit', 'future Valley Line West LRT'],
-  },
-  'ten-one-26-154': {
-    neighbourhood: 'Canora', tier: 'value-add',
-    description: 'A renovated and updated building in Canora, an established west-end neighbourhood near the Stony Plain Road corridor. Modernized suites and secured entry, close to shopping, schools, and Misericordia Hospital, with the coming Valley Line West LRT set to improve the commute downtown.',
-    closeTo: ['Stony Plain Road', 'West Edmonton Mall', 'Misericordia Hospital', 'schools', 'future Valley Line West LRT'],
-  },
-  strathearn: {
-    neighbourhood: 'Strathearn', tier: 'newer',
-    description: 'A standout address in Strathearn, a quiet, mature southeast neighbourhood perched above the river valley. Bright, updated suites with modern finishes and secured entry, moments from Mill Creek Ravine, the Bonnie Doon shopping area, and the Valley Line LRT, with downtown and the University of Alberta both a short hop across the river.',
-    closeTo: ['Mill Creek Ravine trails', 'Bonnie Doon shopping', 'Valley Line LRT', 'river valley', 'University of Alberta', 'downtown'],
-  },
-  'britnell-landing': {
-    neighbourhood: 'Brintnell', tier: 'newer',
-    description: 'A newer building in the Brintnell area of northeast Edmonton, surrounded by established shopping, schools, and parks. Modern suites and secured entry with easy Manning Drive and Anthony Henday access, a fresh, family-friendly option with everyday amenities close by.',
-    closeTo: ['Anthony Henday Drive', 'new retail & schools', 'parks', 'transit'],
-  },
-  edge: {
-    neighbourhood: 'Allard', tier: 'premium',
-    description: 'The Edge is a contemporary residence in Allard, one of Edmonton’s fast-growing southside communities. Modern open-concept suites, premium finishes, and secured building access, surrounded by new retail, parks, and schools, with quick Anthony Henday connections and the future Heritage Valley LRT planned nearby. Elevated rental living, built for how people live now.',
-    closeTo: ['Heritage Valley shopping', 'parks & schools', 'Anthony Henday Drive', 'future Heritage Valley LRT', 'QEII to Calgary'],
-  },
-  // Palisades: not in the Build Spec Part Two, copy below is drafted in-house
-  // from the tier map (Oliver / Wîhkwêntôwin, value-add). VERIFY before publishing.
-  palisades: {
-    neighbourhood: 'Oliver / Wîhkwêntôwin', tier: 'value-add',
-    description: 'A renovated and updated building in Oliver (Wîhkwêntôwin), one of Edmonton’s most walkable downtown-edge neighbourhoods. Modernized suites and secured entry steps from the river valley, Jasper Avenue, and the Brewery District, with the Valley Line West LRT and the downtown core close at hand.',
-    closeTo: ['Jasper Avenue', 'Brewery District shopping', 'river valley', 'MacEwan University', 'downtown core', 'transit'],
-  },
-  cielo: {
-    neighbourhood: 'Stonebridge', tier: 'newer',
-    description: 'A contemporary residence in Stonebridge, one of Saskatoon’s most popular newer neighbourhoods. Bright, modern suites and secured entry in a master-planned community built for easy living, walk to grocery, restaurants, parks, and pathways, with a direct University of Saskatchewan bus connection and quick Circle Drive access across the city.',
-    closeTo: ['Stonebridge shopping (Sobeys, restaurants)', 'parks & pathways', 'Stonebridge Library', 'direct U of S transit', 'Circle Drive', 'schools'],
-  },
-  greyson: {
-    neighbourhood: 'Stonebridge', tier: 'newer',
-    description: 'A modern building in the heart of Stonebridge, steps from its shops, parks, and interconnected walking paths. Contemporary suites and secured entry in a vibrant, family-friendly south-end community, with a direct bus to the University of Saskatchewan and fast Circle Drive connections to downtown and beyond.',
-    closeTo: ['Stonebridge amenities', 'grocery & dining', 'parks & pathways', 'direct U of S transit', 'Circle Drive', 'downtown access'],
-  },
-  'lawson-village': {
-    neighbourhood: 'Lawson Heights', tier: 'value-add',
-    description: 'A well-positioned residence in established Lawson Heights, one of Saskatoon’s most convenient north-end neighbourhoods. Comfortable, updated suites and secured entry in a peaceful, tree-lined setting, with Lawson Heights Mall right across the way and the river trails minutes from your door.',
-    closeTo: ['Lawson Heights Mall', 'groceries, dining, medical', 'Meewasin Valley Trail & South Saskatchewan River', 'schools', 'downtown (short commute)'],
-  },
-  'lockwood-arms': {
-    neighbourhood: 'Whitmore Park', tier: 'value-add',
-    description: 'Two updated buildings in a settled southeast Regina neighbourhood, minutes from the University of Regina and the green expanse of Wascana Centre, one of North America’s largest urban parks. Comfortable suites and secured entry in a quiet residential setting, close to shopping, parks, and the lake, with the campus and downtown both within reach.',
-    closeTo: ['University of Regina', 'Wascana Centre & lake', 'Albert St / Gordon Rd shopping', 'schools', 'downtown access'],
-  },
-};
+const COPY: Record<string, BuildingCopy> = copyJson as unknown as Record<string, BuildingCopy>;
+
+/** Client-editable taxonomies (CMS Library): building tiers (with their
+ *  standard Overview condition line) and unit types (with bedroom counts). */
+interface Taxonomies {
+  tiers: Array<{ value: string; label: string; line: string }>;
+  unitTypes: Array<{ label: string; bedrooms: number }>;
+  photoTags: string[];
+}
+export const TAXONOMIES: Taxonomies = taxonomiesJson as Taxonomies;
 
 /** Standard condition line per tier, used as the second Overview paragraph. */
-const TIER_LINE: Record<Tier, string> = {
-  'value-add': 'Renovated and updated under Balto, modernized suites, secured entry, and refreshed common areas, family-operated and locally managed with a one-business-day maintenance standard.',
-  newer: 'A newer building with bright, well-finished suites and secured entry, family-operated and locally managed, with a one-business-day maintenance standard.',
-  premium: 'Fully elevated rental living, premium finishes, open-concept suites, and secured building access, family-operated and locally managed.',
-  'coming-soon': 'Coming soon. Register your interest and we’ll be in touch as homes become available.',
-};
+const TIER_LINE: Record<string, string> = Object.fromEntries(
+  TAXONOMIES.tiers.map((t) => [t.value, t.line])
+);
+const GENERIC_TIER_LINE =
+  'Operated to the Balto standard, family-operated and locally managed, with a one-business-day maintenance standard.';
 
-/** Real available units per building, from the client's availability sheet
- *  (2026). Net-effective rent is the source of truth for these buildings. */
-const UNIT_TYPE_TO_NUM: Record<string, 0 | 1 | 2 | 3> = {
-  'Studio': 0, '1 Bedroom': 1, '2 Bedroom': 2, '3 Bedroom': 3,
-};
-const UNITS: Record<string, Unit[]> = {
-  hamlet: [
-    { unit: '6', type: '1 Bedroom', rent: 1075, image: 'https://drive.google.com/drive/folders/1o-WcAM4Kfu4b7wRjhjOAgmAE_DRqoqi1', images: ['/assets/hamlet/units/6/01.jpg', '/assets/hamlet/units/6/02.jpg', '/assets/hamlet/units/6/03.jpg', '/assets/hamlet/units/6/04.jpg', '/assets/hamlet/units/6/05.jpg', '/assets/hamlet/units/6/06.jpg', '/assets/hamlet/units/6/07.jpg', '/assets/hamlet/units/6/08.jpg', '/assets/hamlet/units/6/09.jpg', '/assets/hamlet/units/6/10.jpg', '/assets/hamlet/units/6/11.jpg', '/assets/hamlet/units/6/12.jpg', '/assets/hamlet/units/6/13.jpg', '/assets/hamlet/units/6/14.jpg'] },
-  ],
-  woodridge: [
-    { unit: '1', type: '2 Bedroom', rent: 1421, image: 'https://drive.google.com/drive/folders/1bU6J6IXN-TZgyQnBQgKMddeiWbORTTUZ?usp=drive_link', images: ['/assets/woodridge/units/1/01.jpg', '/assets/woodridge/units/1/02.jpg', '/assets/woodridge/units/1/03.jpg', '/assets/woodridge/units/1/04.jpg', '/assets/woodridge/units/1/05.jpg', '/assets/woodridge/units/1/06.jpg'] },
-    { unit: '114', type: '2 Bedroom', rent: 1300, image: 'https://drive.google.com/drive/folders/1jtSky6wEnzedW870sCFY2yIH0Ys4DBRE', images: ['/assets/woodridge/units/114/01.jpg', '/assets/woodridge/units/114/02.jpg', '/assets/woodridge/units/114/03.jpg', '/assets/woodridge/units/114/04.jpg', '/assets/woodridge/units/114/05.jpg', '/assets/woodridge/units/114/06.jpg', '/assets/woodridge/units/114/07.jpg', '/assets/woodridge/units/114/08.jpg'] },
-    { unit: '120', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1NoTFFOVN1Ns9ASE5L6fbB21nm8a2RZ6G', images: ['/assets/woodridge/units/120/01.jpg', '/assets/woodridge/units/120/02.jpg', '/assets/woodridge/units/120/03.jpg', '/assets/woodridge/units/120/04.jpg'] },
-    { unit: '121', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1hurQfR8YS5pe6c4NF7S5UYAy6ODRP7VG', images: ['/assets/woodridge/units/121/01.jpg', '/assets/woodridge/units/121/02.jpg', '/assets/woodridge/units/121/03.jpg', '/assets/woodridge/units/121/04.jpg'] },
-    { unit: '213', type: '2 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1Sz2DXp89Od2bH3_J6sE3y3z-TxOJVQXh', images: ['/assets/woodridge/units/213/01.jpg', '/assets/woodridge/units/213/02.jpg', '/assets/woodridge/units/213/03.jpg', '/assets/woodridge/units/213/04.jpg', '/assets/woodridge/units/213/05.jpg', '/assets/woodridge/units/213/06.jpg', '/assets/woodridge/units/213/07.jpg', '/assets/woodridge/units/213/08.jpg', '/assets/woodridge/units/213/09.jpg', '/assets/woodridge/units/213/10.jpg', '/assets/woodridge/units/213/11.jpg', '/assets/woodridge/units/213/12.jpg', '/assets/woodridge/units/213/13.jpg'] },
-    { unit: '216', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1r5tPznkBKczEHgoezQaLxxH7mGn-_B8S', images: ['/assets/woodridge/units/216/01.jpg', '/assets/woodridge/units/216/02.jpg', '/assets/woodridge/units/216/03.jpg', '/assets/woodridge/units/216/04.jpg', '/assets/woodridge/units/216/05.jpg'] },
-    { unit: '221', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/1P0kk6stgO7a1JRZOUtEb4NgOuwEnfQ6t?usp=drive_link', images: ['/assets/woodridge/units/221/01.jpg', '/assets/woodridge/units/221/02.jpg', '/assets/woodridge/units/221/03.jpg', '/assets/woodridge/units/221/04.jpg'] },
-    { unit: '317', type: '2 Bedroom', rent: 1421, image: 'https://drive.google.com/drive/folders/1hOfv7l3MZs0SA8syGmo0kIMSXllkYrVt?usp=drive_link', images: ['/assets/woodridge/units/317/01.jpg', '/assets/woodridge/units/317/02.jpg', '/assets/woodridge/units/317/03.jpg', '/assets/woodridge/units/317/04.jpg', '/assets/woodridge/units/317/05.jpg'] },
-    { unit: '320', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/10VPy3996sfqilRComJ9POn0u-gGR_fKm', images: ['/assets/woodridge/units/320/01.jpg', '/assets/woodridge/units/320/02.jpg', '/assets/woodridge/units/320/03.jpg', '/assets/woodridge/units/320/04.jpg', '/assets/woodridge/units/320/05.jpg'] },
-    { unit: '322', type: '2 Bedroom', rent: 1300, image: 'https://drive.google.com/drive/folders/1y-b0WGohU4Va1lqg-t_y0CB7029UToKt', images: ['/assets/woodridge/units/322/01.jpg', '/assets/woodridge/units/322/02.jpg', '/assets/woodridge/units/322/03.jpg', '/assets/woodridge/units/322/04.jpg', '/assets/woodridge/units/322/05.jpg', '/assets/woodridge/units/322/06.jpg', '/assets/woodridge/units/322/07.jpg', '/assets/woodridge/units/322/08.jpg', '/assets/woodridge/units/322/09.jpg', '/assets/woodridge/units/322/10.jpg', '/assets/woodridge/units/322/11.jpg', '/assets/woodridge/units/322/12.jpg', '/assets/woodridge/units/322/13.jpg'] },
-    { unit: '323', type: '1 Bedroom', rent: 1150, image: 'https://drive.google.com/drive/folders/11rJ3OXsr84qSOTBmuxIFOQxeiSi1SgqQ', images: ['/assets/woodridge/units/323/01.jpg', '/assets/woodridge/units/323/02.jpg', '/assets/woodridge/units/323/03.jpg', '/assets/woodridge/units/323/04.jpg', '/assets/woodridge/units/323/05.jpg', '/assets/woodridge/units/323/06.jpg', '/assets/woodridge/units/323/07.jpg', '/assets/woodridge/units/323/08.jpg', '/assets/woodridge/units/323/09.jpg', '/assets/woodridge/units/323/10.jpg', '/assets/woodridge/units/323/11.jpg'] },
-    { unit: '324', type: '2 Bedroom', rent: 1421, image: 'https://drive.google.com/drive/folders/1H1bjzW3ejy9H4ygzj4XQ0lTz8q2P2Q0C?usp=drive_link', images: ['/assets/woodridge/units/324/01.jpg', '/assets/woodridge/units/324/02.jpg', '/assets/woodridge/units/324/03.jpg', '/assets/woodridge/units/324/04.jpg', '/assets/woodridge/units/324/05.jpg'] },
-  ],
-  'royal-lady': [
-    { unit: '105', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1K-7bKqhvaqP626T6pTsAT5RsP2H12IbR?usp=drive_link', images: ['/assets/royal-lady/units/105/01.jpg', '/assets/royal-lady/units/105/02.jpg', '/assets/royal-lady/units/105/03.jpg', '/assets/royal-lady/units/105/04.jpg', '/assets/royal-lady/units/105/05.jpg', '/assets/royal-lady/units/105/06.jpg', '/assets/royal-lady/units/105/07.jpg', '/assets/royal-lady/units/105/08.jpg', '/assets/royal-lady/units/105/09.jpg', '/assets/royal-lady/units/105/10.jpg', '/assets/royal-lady/units/105/11.jpg'] },
-    { unit: '107', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1eJi5BhunpXhJN7VXI975wYPk3gu3BGYI?usp=drive_link', images: ['/assets/royal-lady/units/107/01.jpg', '/assets/royal-lady/units/107/02.jpg', '/assets/royal-lady/units/107/03.jpg', '/assets/royal-lady/units/107/04.jpg', '/assets/royal-lady/units/107/05.jpg', '/assets/royal-lady/units/107/06.jpg', '/assets/royal-lady/units/107/07.jpg', '/assets/royal-lady/units/107/08.jpg', '/assets/royal-lady/units/107/09.jpg', '/assets/royal-lady/units/107/10.jpg'] },
-    { unit: '205', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1HvcZC6yEaSU5NPwkMrkG_SAB1WaAPTb8?usp=drive_link', images: ['/assets/royal-lady/units/205/01.jpg', '/assets/royal-lady/units/205/02.jpg', '/assets/royal-lady/units/205/03.jpg', '/assets/royal-lady/units/205/04.jpg', '/assets/royal-lady/units/205/05.jpg', '/assets/royal-lady/units/205/06.jpg', '/assets/royal-lady/units/205/07.jpg', '/assets/royal-lady/units/205/08.jpg', '/assets/royal-lady/units/205/09.jpg', '/assets/royal-lady/units/205/10.jpg'] },
-    { unit: '302', type: '1 Bedroom', rent: 1070, image: 'https://drive.google.com/drive/folders/1aFoXxpP7iKJi4SSKvx2FCjiSMxMMSb2x' },
-    { unit: '303', type: '1 Bedroom', rent: 1005, image: 'https://drive.google.com/drive/folders/1F8CXb5bcnt1eGPZPba6JCKDxBXl35x54', images: ['/assets/royal-lady/units/303/01.jpg', '/assets/royal-lady/units/303/02.jpg', '/assets/royal-lady/units/303/03.jpg', '/assets/royal-lady/units/303/04.jpg', '/assets/royal-lady/units/303/05.jpg', '/assets/royal-lady/units/303/06.jpg', '/assets/royal-lady/units/303/07.jpg', '/assets/royal-lady/units/303/08.jpg', '/assets/royal-lady/units/303/09.jpg', '/assets/royal-lady/units/303/10.jpg', '/assets/royal-lady/units/303/11.jpg', '/assets/royal-lady/units/303/12.jpg'] },
-    { unit: '307', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1R_RYtNn6pXVmScR25PMrPCMNGuy7R4da?usp=drive_link', images: ['/assets/royal-lady/units/307/01.jpg', '/assets/royal-lady/units/307/02.jpg', '/assets/royal-lady/units/307/03.jpg', '/assets/royal-lady/units/307/04.jpg', '/assets/royal-lady/units/307/05.jpg', '/assets/royal-lady/units/307/06.jpg', '/assets/royal-lady/units/307/07.jpg', '/assets/royal-lady/units/307/08.jpg', '/assets/royal-lady/units/307/09.jpg', '/assets/royal-lady/units/307/10.jpg'] },
-    { unit: '402', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/18rccnctKqAAN2alj8iXkYvhnqjgjZrtd?usp=drive_link', images: ['/assets/royal-lady/units/402/01.jpg', '/assets/royal-lady/units/402/02.jpg', '/assets/royal-lady/units/402/03.jpg', '/assets/royal-lady/units/402/04.jpg', '/assets/royal-lady/units/402/05.jpg', '/assets/royal-lady/units/402/06.jpg', '/assets/royal-lady/units/402/07.jpg', '/assets/royal-lady/units/402/08.jpg', '/assets/royal-lady/units/402/09.jpg', '/assets/royal-lady/units/402/10.jpg'] },
-    { unit: '405', type: '1 Bedroom', rent: 1200, image: 'https://drive.google.com/drive/folders/1JRdyJ5jCQwMq6DEwgmISUkVF2tugDUZ7?usp=drive_link', images: ['/assets/royal-lady/units/405/01.jpg', '/assets/royal-lady/units/405/02.jpg', '/assets/royal-lady/units/405/03.jpg', '/assets/royal-lady/units/405/04.jpg', '/assets/royal-lady/units/405/05.jpg', '/assets/royal-lady/units/405/06.jpg', '/assets/royal-lady/units/405/07.jpg', '/assets/royal-lady/units/405/08.jpg', '/assets/royal-lady/units/405/09.jpg', '/assets/royal-lady/units/405/10.jpg'] },
-  ],
-  'catalina-estates': [
-    {
-      unit: '2', type: '1 Bedroom', rent: 1125,
-      image: 'https://drive.google.com/drive/folders/12gV2SmYV0qhcwivGGxehPkmFA9IBMYFC',
-      images: ['/assets/catalina-estates/units/2/01.jpg', '/assets/catalina-estates/units/2/02.jpg', '/assets/catalina-estates/units/2/03.jpg', '/assets/catalina-estates/units/2/04.jpg', '/assets/catalina-estates/units/2/05.jpg', '/assets/catalina-estates/units/2/06.jpg', '/assets/catalina-estates/units/2/07.jpg', '/assets/catalina-estates/units/2/08.jpg', '/assets/catalina-estates/units/2/09.jpg', '/assets/catalina-estates/units/2/10.jpg', '/assets/catalina-estates/units/2/11.jpg', '/assets/catalina-estates/units/2/12.jpg'],
-      applyUrl: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026',
-    },
-  ],
-  layali: [
-    { unit: '7', type: '1 Bedroom', rent: 1025, image: 'https://drive.google.com/drive/folders/12eQOFsQfiHo51x86xY1h61BZ2u6glT7m', images: ['/assets/layali/units/7/01.jpg', '/assets/layali/units/7/02.jpg', '/assets/layali/units/7/03.jpg', '/assets/layali/units/7/04.jpg', '/assets/layali/units/7/05.jpg', '/assets/layali/units/7/06.jpg', '/assets/layali/units/7/07.jpg'] },
-    { unit: '15', type: '2 Bedroom', rent: 1350, image: 'https://drive.google.com/drive/folders/11h4fC4QLDmOw8DQ9lz7mXgzCgJfwxlgy', images: ['/assets/layali/units/15/01.jpg', '/assets/layali/units/15/02.jpg', '/assets/layali/units/15/03.jpg', '/assets/layali/units/15/04.jpg', '/assets/layali/units/15/05.jpg', '/assets/layali/units/15/06.jpg', '/assets/layali/units/15/07.jpg', '/assets/layali/units/15/08.jpg', '/assets/layali/units/15/09.jpg', '/assets/layali/units/15/10.jpg', '/assets/layali/units/15/11.jpg'] },
-  ],
-  'cedar-manor': [
-    { unit: '2', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1ZCg4sJmjTkb84yVMz_ILTC1L5G3VWn8Q', images: ['/assets/cedar-manor/units/2/01.jpg', '/assets/cedar-manor/units/2/02.jpg', '/assets/cedar-manor/units/2/03.jpg', '/assets/cedar-manor/units/2/04.jpg', '/assets/cedar-manor/units/2/05.jpg', '/assets/cedar-manor/units/2/06.jpg', '/assets/cedar-manor/units/2/07.jpg', '/assets/cedar-manor/units/2/08.jpg', '/assets/cedar-manor/units/2/09.jpg'] },
-    { unit: '5', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1Nds9YyIv5m8iHX4ABR1FioeZng0FN37F', images: ['/assets/cedar-manor/units/5/01.jpg', '/assets/cedar-manor/units/5/02.jpg', '/assets/cedar-manor/units/5/03.jpg', '/assets/cedar-manor/units/5/04.jpg', '/assets/cedar-manor/units/5/05.jpg', '/assets/cedar-manor/units/5/06.jpg', '/assets/cedar-manor/units/5/07.jpg', '/assets/cedar-manor/units/5/08.jpg'] },
-    { unit: '7', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1Aubuzm0ou7pTq_lspo2FrvsQgMuG-zQp', images: ['/assets/cedar-manor/units/7/01.jpg', '/assets/cedar-manor/units/7/02.jpg', '/assets/cedar-manor/units/7/03.jpg', '/assets/cedar-manor/units/7/04.jpg', '/assets/cedar-manor/units/7/05.jpg', '/assets/cedar-manor/units/7/06.jpg', '/assets/cedar-manor/units/7/07.jpg'] },
-    { unit: '8', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1Egkfmszu9p6VM3nz8mmjm2lChP86BNhg', images: ['/assets/cedar-manor/units/8/01.jpg', '/assets/cedar-manor/units/8/02.jpg', '/assets/cedar-manor/units/8/03.jpg', '/assets/cedar-manor/units/8/04.jpg', '/assets/cedar-manor/units/8/05.jpg', '/assets/cedar-manor/units/8/06.jpg', '/assets/cedar-manor/units/8/07.jpg', '/assets/cedar-manor/units/8/08.jpg'] },
-    { unit: '15', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1MpPe018-Dca4wIS_PwpOBg7i_NS9HQSF', images: ['/assets/cedar-manor/units/15/01.jpg', '/assets/cedar-manor/units/15/02.jpg', '/assets/cedar-manor/units/15/03.jpg', '/assets/cedar-manor/units/15/04.jpg', '/assets/cedar-manor/units/15/05.jpg', '/assets/cedar-manor/units/15/06.jpg', '/assets/cedar-manor/units/15/07.jpg', '/assets/cedar-manor/units/15/08.jpg', '/assets/cedar-manor/units/15/09.jpg'] },
-    { unit: '17', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/1596nhZf-S5X2VUq28A_oNdj8RzX6L9Ga?usp=drive_link', images: ['/assets/cedar-manor/units/17/01.jpg', '/assets/cedar-manor/units/17/02.jpg', '/assets/cedar-manor/units/17/03.jpg', '/assets/cedar-manor/units/17/04.jpg', '/assets/cedar-manor/units/17/05.jpg', '/assets/cedar-manor/units/17/06.jpg', '/assets/cedar-manor/units/17/07.jpg', '/assets/cedar-manor/units/17/08.jpg', '/assets/cedar-manor/units/17/09.jpg', '/assets/cedar-manor/units/17/10.jpg', '/assets/cedar-manor/units/17/11.jpg', '/assets/cedar-manor/units/17/12.jpg', '/assets/cedar-manor/units/17/13.jpg', '/assets/cedar-manor/units/17/14.jpg', '/assets/cedar-manor/units/17/15.jpg'] },
-  ],
-  'courts-manor': [
-    { unit: '5', type: '1 Bedroom', rent: 1015, image: 'https://drive.google.com/drive/folders/14Z_dnflv6nrhVSenCeLawIDfuWAmT2GY?usp=drive_link', images: ['/assets/courts-manor/units/5/01.jpg', '/assets/courts-manor/units/5/02.jpg', '/assets/courts-manor/units/5/03.jpg', '/assets/courts-manor/units/5/04.jpg', '/assets/courts-manor/units/5/05.jpg', '/assets/courts-manor/units/5/06.jpg', '/assets/courts-manor/units/5/07.jpg', '/assets/courts-manor/units/5/08.jpg', '/assets/courts-manor/units/5/09.jpg', '/assets/courts-manor/units/5/10.jpg', '/assets/courts-manor/units/5/11.jpg', '/assets/courts-manor/units/5/12.jpg', '/assets/courts-manor/units/5/13.jpg'] },
-  ],
-  'royal-manor': [
-    { unit: '9', type: '1 Bedroom', rent: 1185, image: 'https://drive.google.com/drive/folders/1RSXCx-G_SEabZDc-VvwU1wUuyWj_0kaw', images: ['/assets/royal-manor/units/9/01.jpg', '/assets/royal-manor/units/9/02.jpg', '/assets/royal-manor/units/9/03.jpg', '/assets/royal-manor/units/9/04.jpg', '/assets/royal-manor/units/9/05.jpg', '/assets/royal-manor/units/9/06.jpg', '/assets/royal-manor/units/9/07.jpg', '/assets/royal-manor/units/9/08.jpg'] },
-    { unit: '12', type: '1 Bedroom', rent: 1238, image: 'https://drive.google.com/drive/folders/16se8oImLbhCnROLVHDWLxy6A7EeFOndK?usp=drive_link', images: ['/assets/royal-manor/units/12/01.jpg', '/assets/royal-manor/units/12/02.jpg', '/assets/royal-manor/units/12/03.jpg', '/assets/royal-manor/units/12/04.jpg'] },
-  ],
-  palisades: [
-    { unit: '204', type: '1 Bedroom', rent: 1090, image: 'https://drive.google.com/drive/folders/11aChKUK1f7_ftb7cGMqcbp5aQVmEcJ2C?usp=drive_link', images: ['/assets/palisades/units/204/01.jpg', '/assets/palisades/units/204/02.jpg', '/assets/palisades/units/204/03.jpg', '/assets/palisades/units/204/04.jpg', '/assets/palisades/units/204/05.jpg', '/assets/palisades/units/204/06.jpg', '/assets/palisades/units/204/07.jpg', '/assets/palisades/units/204/08.jpg', '/assets/palisades/units/204/09.jpg', '/assets/palisades/units/204/10.jpg', '/assets/palisades/units/204/11.jpg', '/assets/palisades/units/204/12.jpg', '/assets/palisades/units/204/13.jpg', '/assets/palisades/units/204/14.jpg'] },
-    { unit: '205', type: '2 Bedroom', rent: 1360, image: 'https://drive.google.com/drive/folders/1prpbfQPmEXDjHQi5O-oOFaeOpiYsaEhx', images: ['/assets/palisades/units/205/01.jpg', '/assets/palisades/units/205/02.jpg', '/assets/palisades/units/205/03.jpg', '/assets/palisades/units/205/04.jpg', '/assets/palisades/units/205/05.jpg', '/assets/palisades/units/205/06.jpg', '/assets/palisades/units/205/07.jpg', '/assets/palisades/units/205/08.jpg', '/assets/palisades/units/205/09.jpg', '/assets/palisades/units/205/10.jpg'] },
-  ],
-  acadian: [
-    { unit: '103', type: 'Studio', rent: 950, image: 'https://drive.google.com/drive/folders/11BOsxAcLAbnGQQsuQd-Ny5Cvdj6J51lP?usp=drive_link', images: ['/assets/acadian/units/103/01.jpg', '/assets/acadian/units/103/02.jpg', '/assets/acadian/units/103/03.jpg', '/assets/acadian/units/103/04.jpg', '/assets/acadian/units/103/05.jpg', '/assets/acadian/units/103/06.jpg', '/assets/acadian/units/103/07.jpg', '/assets/acadian/units/103/08.jpg', '/assets/acadian/units/103/09.jpg', '/assets/acadian/units/103/10.jpg', '/assets/acadian/units/103/11.jpg', '/assets/acadian/units/103/12.jpg', '/assets/acadian/units/103/13.jpg'] },
-    { unit: '106', type: '1 Bedroom', rent: 1115, image: 'https://drive.google.com/drive/folders/1Agy82BxShEa7CCtJaiuA8uGSNrJNQ8SX', images: ['/assets/acadian/units/106/01.jpg', '/assets/acadian/units/106/02.jpg', '/assets/acadian/units/106/03.jpg', '/assets/acadian/units/106/04.jpg', '/assets/acadian/units/106/05.jpg', '/assets/acadian/units/106/06.jpg', '/assets/acadian/units/106/07.jpg', '/assets/acadian/units/106/08.jpg', '/assets/acadian/units/106/09.jpg', '/assets/acadian/units/106/10.jpg', '/assets/acadian/units/106/11.jpg', '/assets/acadian/units/106/12.jpg', '/assets/acadian/units/106/13.jpg', '/assets/acadian/units/106/14.jpg', '/assets/acadian/units/106/15.jpg'] },
-    { unit: '201', type: '1 Bedroom', rent: 1095, image: 'https://drive.google.com/drive/folders/10_Zpg29wddsKGTNRnnqj1HLUBc901ivS?usp=drive_link', images: ['/assets/acadian/units/201/01.jpg', '/assets/acadian/units/201/02.jpg', '/assets/acadian/units/201/03.jpg', '/assets/acadian/units/201/04.jpg', '/assets/acadian/units/201/05.jpg', '/assets/acadian/units/201/06.jpg', '/assets/acadian/units/201/07.jpg', '/assets/acadian/units/201/08.jpg', '/assets/acadian/units/201/09.jpg', '/assets/acadian/units/201/10.jpg', '/assets/acadian/units/201/11.jpg', '/assets/acadian/units/201/12.jpg', '/assets/acadian/units/201/13.jpg', '/assets/acadian/units/201/14.jpg'] },
-    { unit: '205', type: '1 Bedroom', rent: 1220, image: 'https://drive.google.com/drive/folders/10s5inKXryL0-_HdfZ8dAPGRa85PhfwUV?usp=drive_link', images: ['/assets/acadian/units/205/01.jpg', '/assets/acadian/units/205/02.jpg', '/assets/acadian/units/205/03.jpg', '/assets/acadian/units/205/04.jpg', '/assets/acadian/units/205/05.jpg', '/assets/acadian/units/205/06.jpg', '/assets/acadian/units/205/07.jpg', '/assets/acadian/units/205/08.jpg', '/assets/acadian/units/205/09.jpg', '/assets/acadian/units/205/10.jpg', '/assets/acadian/units/205/11.jpg', '/assets/acadian/units/205/12.jpg', '/assets/acadian/units/205/13.jpg', '/assets/acadian/units/205/14.jpg', '/assets/acadian/units/205/15.jpg', '/assets/acadian/units/205/16.jpg', '/assets/acadian/units/205/17.jpg', '/assets/acadian/units/205/18.jpg', '/assets/acadian/units/205/19.jpg', '/assets/acadian/units/205/20.jpg', '/assets/acadian/units/205/21.jpg', '/assets/acadian/units/205/22.jpg'] },
-    { unit: '207', type: '1 Bedroom', rent: 1135, image: 'https://drive.google.com/drive/folders/19VS4T3oLNdWmSKDJWe1sHN1gdE-t45nU', images: ['/assets/acadian/units/207/01.jpg', '/assets/acadian/units/207/02.jpg', '/assets/acadian/units/207/03.jpg', '/assets/acadian/units/207/04.jpg', '/assets/acadian/units/207/05.jpg', '/assets/acadian/units/207/06.jpg', '/assets/acadian/units/207/07.jpg', '/assets/acadian/units/207/08.jpg', '/assets/acadian/units/207/09.jpg', '/assets/acadian/units/207/10.jpg', '/assets/acadian/units/207/11.jpg', '/assets/acadian/units/207/12.jpg'] },
-    { unit: '306', type: '1 Bedroom', rent: 1150, image: 'https://drive.google.com/drive/folders/111IRCViZE_rZIyX5_PwUbcoI4wP5aD3b?usp=drive_link', images: ['/assets/acadian/units/306/01.jpg', '/assets/acadian/units/306/02.jpg', '/assets/acadian/units/306/03.jpg', '/assets/acadian/units/306/04.jpg', '/assets/acadian/units/306/05.jpg', '/assets/acadian/units/306/06.jpg', '/assets/acadian/units/306/07.jpg', '/assets/acadian/units/306/08.jpg', '/assets/acadian/units/306/09.jpg', '/assets/acadian/units/306/10.jpg', '/assets/acadian/units/306/11.jpg', '/assets/acadian/units/306/12.jpg', '/assets/acadian/units/306/13.jpg'] },
-    { unit: '302', type: '2 Bedroom', rent: 1295, image: 'https://drive.google.com/drive/folders/1Po_NeOYvzFIwSPJ9fmsGFnZJsCpDcixA?usp=drive_link', images: ['/assets/acadian/units/302/01.jpg', '/assets/acadian/units/302/02.jpg', '/assets/acadian/units/302/03.jpg', '/assets/acadian/units/302/04.jpg', '/assets/acadian/units/302/05.jpg', '/assets/acadian/units/302/06.jpg', '/assets/acadian/units/302/07.jpg', '/assets/acadian/units/302/08.jpg', '/assets/acadian/units/302/09.jpg', '/assets/acadian/units/302/10.jpg'] },
-  ],
-  parkdale: [
-    { unit: '202', type: '2 Bedroom', rent: 1280, image: 'https://drive.google.com/drive/folders/12lUgnP2BBPF5IAdWRXNjxTl8ZvsqIkWc', images: ['/assets/parkdale/units/202/01.jpg', '/assets/parkdale/units/202/02.jpg', '/assets/parkdale/units/202/03.jpg', '/assets/parkdale/units/202/04.jpg', '/assets/parkdale/units/202/05.jpg', '/assets/parkdale/units/202/06.jpg', '/assets/parkdale/units/202/07.jpg', '/assets/parkdale/units/202/08.jpg', '/assets/parkdale/units/202/09.jpg', '/assets/parkdale/units/202/10.jpg', '/assets/parkdale/units/202/11.jpg', '/assets/parkdale/units/202/12.jpg', '/assets/parkdale/units/202/13.jpg', '/assets/parkdale/units/202/14.jpg', '/assets/parkdale/units/202/15.jpg'] },
-    { unit: '208', type: '2 Bedroom', rent: 1245, image: 'https://drive.google.com/drive/folders/1359w3N_1zEHSYpYxo20vIZNgGus7ga0X?usp=drive_link', images: ['/assets/parkdale/units/208/01.jpg', '/assets/parkdale/units/208/02.jpg', '/assets/parkdale/units/208/03.jpg', '/assets/parkdale/units/208/04.jpg', '/assets/parkdale/units/208/05.jpg', '/assets/parkdale/units/208/06.jpg', '/assets/parkdale/units/208/07.jpg', '/assets/parkdale/units/208/08.jpg', '/assets/parkdale/units/208/09.jpg', '/assets/parkdale/units/208/10.jpg', '/assets/parkdale/units/208/11.jpg', '/assets/parkdale/units/208/12.jpg', '/assets/parkdale/units/208/13.jpg', '/assets/parkdale/units/208/14.jpg'] },
-  ],
-  strathearn: [
-    { unit: '1', type: '1 Bedroom', rent: 1090, image: 'https://drive.google.com/drive/folders/13RhkgkKjs3LicN7UEJ2EParOhT_95hWg', images: ['/assets/strathearn/units/1/01.jpg', '/assets/strathearn/units/1/02.jpg', '/assets/strathearn/units/1/03.jpg', '/assets/strathearn/units/1/04.jpg', '/assets/strathearn/units/1/05.jpg', '/assets/strathearn/units/1/06.jpg', '/assets/strathearn/units/1/07.jpg', '/assets/strathearn/units/1/08.jpg', '/assets/strathearn/units/1/09.jpg', '/assets/strathearn/units/1/10.jpg', '/assets/strathearn/units/1/11.jpg', '/assets/strathearn/units/1/12.jpg', '/assets/strathearn/units/1/13.jpg', '/assets/strathearn/units/1/14.jpg', '/assets/strathearn/units/1/15.jpg', '/assets/strathearn/units/1/16.jpg', '/assets/strathearn/units/1/17.jpg', '/assets/strathearn/units/1/18.jpg'] },
-  ],
-  beverly: [
-    { unit: '203', type: '1 Bedroom', rent: 1050, image: 'https://drive.google.com/drive/folders/15IESPJZjxHzm6ZBy1KrdqELYObn8lP-U?usp=drive_link', images: ['/assets/beverly/units/203/01.jpg', '/assets/beverly/units/203/02.jpg', '/assets/beverly/units/203/03.jpg', '/assets/beverly/units/203/04.jpg', '/assets/beverly/units/203/05.jpg', '/assets/beverly/units/203/06.jpg', '/assets/beverly/units/203/07.jpg', '/assets/beverly/units/203/08.jpg', '/assets/beverly/units/203/09.jpg', '/assets/beverly/units/203/10.jpg', '/assets/beverly/units/203/11.jpg', '/assets/beverly/units/203/12.jpg', '/assets/beverly/units/203/13.jpg', '/assets/beverly/units/203/14.jpg', '/assets/beverly/units/203/15.jpg', '/assets/beverly/units/203/16.jpg', '/assets/beverly/units/203/17.jpg'] },
-  ],
-};
+/** Unit-type label → bedroom count (0=Studio), from the CMS taxonomies. */
+const UNIT_TYPE_TO_NUM: Record<string, number> = Object.fromEntries(
+  TAXONOMIES.unitTypes.map((u) => [u.label, u.bedrooms])
+);
+const UNITS: Record<string, Unit[]> = unitsJson as unknown as Record<string, Unit[]>;
 
 /** ZenRentals per-floor-plan "View Details" links by bedroom type
  *  (0=Studio, 1..3=bedrooms), from the client (2026). Session tracking params
  *  are stripped — ZenRentals re-adds its own on load. The Apply button for a
  *  unit links to the matching bedroom type here. */
-const APPLY_LINKS: Record<string, Partial<Record<0 | 1 | 2 | 3, string>>> = {
-  woodridge: {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/woodridge-5/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/woodridge-5/floorplans/2-bedroom',
-  },
-  kafa: {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/kafa-manor/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/kafa-manor/floorplans/1-bedroom-1-bath',
-  },
-  'cedar-manor': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/cedar-manor1/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/cedar-manor1/floorplans/1-bedroom',
-  },
-  'courts-manor': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/courts-manor/floorplans/2-bedroom',
-  },
-  'oakwood-manor': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/oakwood-manor2/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/oakwood-manor2/floorplans/1-bedroom',
-  },
-  layali: {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/layali-house/floorplans/2-bedroom',
-  },
-  'catalina-estates': {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/catalina-estates/floorplans/2-bedroom',
-  },
-  'sky-manor': {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/2-bedroom',
-    3: 'https://zenrentals.securecafe.com/onlineleasing/sky-manor/floorplans/3-bedroom',
-  },
-  'chicklet-house': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/chicklet-house/floorplans/2-bedroom',
-  },
-  hamlet: {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/hamlet-village/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/hamlet-village/floorplans/1-bedroom',
-  },
-  'royal-lady': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/royal-lady/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/royal-lady/floorplans/1-bedroom',
-  },
-  'royal-manor': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/royal-manor2/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/royal-manor2/floorplans/1-bedroom',
-  },
-  'balwin-manor': {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/balwin-manor/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/balwin-manor/floorplans/2-bedroom',
-  },
-  // ZenRentals slug for Acadian House is "house-acadian".
-  acadian: {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/house-acadian/floorplans/2-bedroom',
-  },
-  palisades: {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/palisades4/floorplans/2-bedroom',
-  },
-  // ZenRentals slug for Beverly Heights is "beverly-manor".
-  beverly: {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/beverly-manor/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/beverly-manor/floorplans/2-bedroom',
-  },
-  parkdale: {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/parkdale-terrace0/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/parkdale-terrace0/floorplans/2-bedroom',
-  },
-  strathearn: {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/strathearn-place/floorplans/1-bedroom',
-  },
-  // "Bachelor" is ZenRentals' slug for Studio.
-  rivergate: {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/rivergate2/floorplans/bachelor',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/rivergate2/floorplans/1-bedroom-1-bath',
-  },
-  pioneer: {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/bachelor',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/2-bedroom',
-    3: 'https://zenrentals.securecafe.com/onlineleasing/pioneer-apartments6/floorplans/3-bedroom',
-  },
-  // The Edge has multiple 2-bed plans; the bedroom-type table links the base one.
-  edge: {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/1-bedroom-p22l33u1ws-den',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/the-edge14/floorplans/2-bedroom',
-  },
-  'copper-manor': {
-    1: 'https://zenrentals.securecafe.com/onlineleasing/copper-manor/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/copper-manor/floorplans/2-bedroom',
-  },
-  'grandview-manor': {
-    0: 'https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/studio',
-    1: 'https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/1-bedroom',
-    2: 'https://zenrentals.securecafe.com/onlineleasing/grandview-manor1/floorplans/2-bedroom',
-  },
-};
+const APPLY_LINKS: Record<string, Partial<Record<0 | 1 | 2 | 3, string>>> =
+  linksJson.applyLinks as unknown as Record<string, Partial<Record<0 | 1 | 2 | 3, string>>>;
 
 /** Apply/"View Details" URL for a building + bedroom type, if provided. */
 export const applyUrlFor = (slug: string, bed: number): string | undefined =>
@@ -1144,31 +355,7 @@ export const applyUrlFor = (slug: string, bed: number): string | undefined =>
 /** ZenRentals resident-services property slug per building (from the client's
  *  Resident Portals sheet). Resident Portal + Maintenance Request links derive
  *  from this. Buildings not listed have no portal yet ("coming soon"). */
-const ZEN_SLUG: Record<string, string> = {
-  woodridge: 'woodridge-5',
-  'royal-lady': 'royal-lady',
-  acadian: 'house-acadian',
-  parkdale: 'parkdale-terrace0',
-  'cedar-manor': 'cedar-manor1',
-  layali: 'layali-house',
-  palisades: 'palisades4',
-  'courts-manor': 'courts-manor',
-  'royal-manor': 'royal-manor2',
-  hamlet: 'hamlet-village',
-  kafa: 'kafa-manor',
-  'catalina-estates': 'catalina-estates',
-  strathearn: 'strathearn-place',
-  beverly: 'beverly-manor',
-  'chicklet-house': 'chicklet-house',
-  'copper-manor': 'copper-manor',
-  'sky-manor': 'sky-manor',
-  'grandview-manor': 'grandview-manor1',
-  'oakwood-manor': 'oakwood-manor2',
-  'balwin-manor': 'balwin-manor',
-  pioneer: 'pioneer-apartments6',
-  rivergate: 'rivergate2',
-  'arbour-green': 'arbour-green-2757506-alberta-ltd',
-};
+const ZEN_SLUG: Record<string, string> = linksJson.zenSlugs as Record<string, string>;
 
 /** Resident Portal + Maintenance Request URLs for a building, if it has a
  *  ZenRentals portal. Returns undefined when none exists yet. */
@@ -1183,7 +370,7 @@ export const portalLinksFor = (
 
 function makeResidence(raw: RawAsset, _idx: number): Residence {
   const seed = hashSeed(raw.slug);
-  const cityLabel = CITIES[raw.city].label;
+  const cityLabel = CITIES[raw.city]?.label ?? raw.city;
   const units = UNITS[raw.slug];
 
   let bedroomOptions: number[];
@@ -1194,9 +381,10 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     prices = {};
     units.forEach((u) => {
       const n = UNIT_TYPE_TO_NUM[u.type];
-      if (n === undefined) return;
-      const cur = prices[n];
-      prices[n] = cur === undefined ? u.rent : Math.min(cur, u.rent);
+      if (n === undefined || n < 0 || n > 3) return;
+      const bed = n as 0 | 1 | 2 | 3;
+      const cur = prices[bed];
+      prices[bed] = cur === undefined ? u.rent : Math.min(cur, u.rent);
     });
     bedroomOptions = (Object.keys(prices) as unknown as number[])
       .map(Number)
@@ -1219,12 +407,14 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
   const promo = raw.city === 'edmonton' ? promoText(freeMonthsFor(raw.slug)) : undefined;
 
   const real = REAL_PHOTOS[raw.slug];
-  // Card image: always honour real photo if present. hideDetailGallery
-  // only skips the gallery on the detail page, not the listing card.
-  const heroImage = real?.hero || HERO_POOL[seed % HERO_POOL.length];
+  const hiddenSet = new Set(real?.hidden ?? []);
+  // Card image: honour the real photo when present and not hidden in the CMS.
+  // hideDetailGallery only skips the gallery on the detail page, not the card.
+  const visibleHero = real?.hero && !hiddenSet.has(real.hero) ? real.hero : undefined;
+  const heroImage = visibleHero || '/assets/coming-soon.png';
   const gallery = raw.hideDetailGallery
     ? []
-    : (real?.gallery ?? pickN(GALLERY_POOL, 5, seed));
+    : (real?.gallery ?? []).filter((src) => !hiddenSet.has(src));
 
   const curated = CURATED[raw.slug];
   const features = curated?.features ?? pickN(FEATURE_POOL, 6, seed >> 1);
@@ -1248,7 +438,7 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     description: copy?.description
       ?? `${raw.name}, a Balto residence at ${streetLine} in ${cityLabel}.`,
     longDescription: copy
-      ? TIER_LINE[copy.tier]
+      ? TIER_LINE[copy.tier] ?? GENERIC_TIER_LINE
       : `${raw.name} is held within the Balto portfolio at ${raw.address}. The building is operated to the Balto standard, restored where appropriate, maintained by a resident manager, and let on terms intended to favour long stays. Detailed unit plans, finishes, and current availability are released on request.`,
     bedrooms: bedroomLabel(bedroomOptions),
     bedroomOptions,
@@ -1263,6 +453,8 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     units,
     heroImage,
     gallery,
+    photoTags: real?.tags,
+    photoAlt: real?.alt,
     features,
     amenities,
     nearbyPoints: copy?.closeTo ?? [
@@ -1273,16 +465,24 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
   };
 }
 
-export const RESIDENCES: Residence[] = ASSETS.map((raw, idx) => makeResidence(raw, idx));
+/** Live residences only — archived buildings stay in the CMS but never render. */
+export const RESIDENCES: Residence[] = ASSETS.filter((a) => !a.archived).map(
+  (raw, idx) => makeResidence(raw, idx)
+);
 
-export const getCity = (slug: string): City | undefined =>
-  (CITIES as Record<string, City>)[slug];
+const FEATURED_RANK: Record<string, number> = Object.fromEntries(
+  ASSETS.filter((a) => a.featuredRank !== undefined).map((a) => [a.slug, a.featuredRank as number])
+);
+
+export const getCity = (slug: string): City | undefined => CITIES[slug];
 export const getResidence = (slug: string): Residence | undefined =>
   RESIDENCES.find((r) => r.slug === slug);
 export const residencesByCity = (slug: string): Residence[] =>
   RESIDENCES.filter((r) => r.city === slug);
 export const featuredResidences = (): Residence[] =>
-  RESIDENCES.filter((r) => r.featured);
+  RESIDENCES.filter((r) => r.featured).sort(
+    (a, b) => (FEATURED_RANK[a.slug] ?? Infinity) - (FEATURED_RANK[b.slug] ?? Infinity)
+  );
 
 export const formatPrice = (n: number): string => '$' + n.toLocaleString('en-US');
 

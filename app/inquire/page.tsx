@@ -2,6 +2,25 @@
 import { useState, type FormEvent } from 'react';
 import { Eyebrow } from '@/components/Eyebrow';
 import { ArrowRight } from '@/components/icons';
+import { DatePicker } from '@/components/ui/DatePicker';
+import { Dropdown } from '@/components/ui/Dropdown';
+import { LIVE_CITIES } from '@/lib/data';
+import { SETTINGS } from '@/lib/settings';
+
+const CITY_OPTIONS = [
+  { value: '', label: 'Select a city' },
+  ...LIVE_CITIES.map((c) => ({ value: c.slug, label: c.label })),
+];
+
+const fieldControlStyle: React.CSSProperties = {
+  borderBottom: '1px solid var(--hairline-strong)',
+};
+
+function todayKey(): string {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -10,6 +29,7 @@ export default function ContactPage() {
     email: '',
     phone: '',
     city: '',
+    moveIn: '',
     residence: '',
     message: '',
   });
@@ -51,28 +71,28 @@ export default function ContactPage() {
               <div style={{ marginBottom: 28 }}>
                 <Eyebrow style={{ marginBottom: 8 }}>EMAIL</Eyebrow>
                 <div className="serif" style={{ fontSize: 19 }}>
-                  info@baltoproperties.ca
+                  {SETTINGS.contactEmail}
                 </div>
               </div>
               <div style={{ marginBottom: 28 }}>
                 <Eyebrow style={{ marginBottom: 8 }}>TELEPHONE</Eyebrow>
                 <div className="serif" style={{ fontSize: 19 }}>
-                  1-587-207-5171
+                  {SETTINGS.contactPhone}
                 </div>
               </div>
               <div style={{ marginBottom: 28 }}>
                 <Eyebrow style={{ marginBottom: 8 }}>OFFICE</Eyebrow>
                 <div className="serif" style={{ fontSize: 19 }}>
-                  Edmonton, Alberta
+                  {SETTINGS.officeLocation}
                 </div>
               </div>
 
               <div className="divider" style={{ margin: '32px 0' }} />
               <Eyebrow style={{ marginBottom: 8 }}>OFFICE HOURS</Eyebrow>
               <div className="small" style={{ marginBottom: 4 }}>
-                Monday to Friday · 9 to 6
+                {SETTINGS.officeHoursWeekdays}
               </div>
-              <div className="small muted">Saturday by appointment</div>
+              <div className="small muted">{SETTINGS.officeHoursWeekend}</div>
             </div>
 
             <div className="card" style={{ padding: 'clamp(32px, 4vw, 56px)' }}>
@@ -116,28 +136,37 @@ export default function ContactPage() {
                     </label>
                     <label className="field">
                       <Eyebrow>CITY OF INTEREST</Eyebrow>
-                      <select
-                        className="input"
+                      <Dropdown
+                        variant="site"
+                        ariaLabel="City of interest"
                         value={form.city}
-                        onChange={(e) => update('city', e.target.value)}
-                        style={{ background: 'transparent' }}
-                      >
-                        <option value="">Select a city</option>
-                        <option value="saskatoon">Saskatoon</option>
-                        <option value="edmonton">Edmonton</option>
-                        <option value="regina">Regina</option>
-                      </select>
+                        onChange={(v) => update('city', v)}
+                        options={CITY_OPTIONS}
+                        style={fieldControlStyle}
+                      />
+                    </label>
+                    <label className="field">
+                      <Eyebrow>PREFERRED MOVE-IN DATE</Eyebrow>
+                      <DatePicker
+                        variant="site"
+                        ariaLabel="Preferred move-in date"
+                        placeholder="Optional"
+                        min={todayKey()}
+                        value={form.moveIn || undefined}
+                        onChange={(v) => update('moveIn', v ?? '')}
+                        style={fieldControlStyle}
+                      />
+                    </label>
+                    <label className="field">
+                      <Eyebrow>RESIDENCE OF INTEREST</Eyebrow>
+                      <input
+                        className="input"
+                        placeholder="Optional"
+                        value={form.residence}
+                        onChange={(e) => update('residence', e.target.value)}
+                      />
                     </label>
                   </div>
-                  <label className="field">
-                    <Eyebrow>RESIDENCE OF INTEREST</Eyebrow>
-                    <input
-                      className="input"
-                      placeholder="Optional"
-                      value={form.residence}
-                      onChange={(e) => update('residence', e.target.value)}
-                    />
-                  </label>
                   <label className="field">
                     <Eyebrow>MESSAGE</Eyebrow>
                     <textarea

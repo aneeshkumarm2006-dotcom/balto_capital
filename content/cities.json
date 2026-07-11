@@ -1,0 +1,79 @@
+{
+  "saskatoon": {
+    "slug": "saskatoon",
+    "label": "Saskatoon",
+    "province": "Saskatchewan",
+    "image": "/assets/city-saskatoon.png",
+    "blurb": "Contemporary residences in Saskatoon’s sought-after south end and convenient north end.",
+    "bounds": {
+      "minLng": -106.685,
+      "maxLng": -106.62,
+      "minLat": 52.115,
+      "maxLat": 52.15
+    },
+    "center": {
+      "lat": 52.13,
+      "lng": -106.665,
+      "spreadLat": 0.025,
+      "spreadLng": 0.045
+    }
+  },
+  "edmonton": {
+    "slug": "edmonton",
+    "label": "Edmonton",
+    "province": "Alberta",
+    "image": "/assets/city-edmonton.png",
+    "blurb": "The heart of the portfolio, renovated, updated residences across Edmonton’s most livable neighbourhoods, with local management in every building.",
+    "bounds": {
+      "minLng": -113.555,
+      "maxLng": -113.47,
+      "minLat": 53.52,
+      "maxLat": 53.56
+    },
+    "center": {
+      "lat": 53.545,
+      "lng": -113.493,
+      "spreadLat": 0.045,
+      "spreadLng": 0.07
+    }
+  },
+  "regina": {
+    "slug": "regina",
+    "label": "Regina",
+    "province": "Saskatchewan",
+    "image": "/assets/city-regina.png",
+    "blurb": "A quiet, well-connected residence in southeast Regina near the University of Regina and Wascana Centre.",
+    "bounds": {
+      "minLng": -104.64,
+      "maxLng": -104.58,
+      "minLat": 50.43,
+      "maxLat": 50.46
+    },
+    "center": {
+      "lat": 50.445,
+      "lng": -104.62,
+      "spreadLat": 0.02,
+      "spreadLng": 0.04
+    }
+  },
+  "yellowknife": {
+    "slug": "yellowknife",
+    "label": "Yellowknife",
+    "province": "Northwest Territories",
+    "image": "/assets/city-yellowknife.avif",
+    "blurb": "Aurora-touched, lakeside, gold-quiet, the capital of the Northwest Territories, where Great Slave Lake meets the long Northern night.",
+    "bounds": {
+      "minLng": -114.42,
+      "maxLng": -114.33,
+      "minLat": 62.43,
+      "maxLat": 62.475
+    },
+    "comingSoon": true,
+    "center": {
+      "lat": 62.454,
+      "lng": -114.3718,
+      "spreadLat": 0.022,
+      "spreadLng": 0.04
+    }
+  }
+}

@@ -21,6 +21,9 @@ export function Header() {
   const isActive = (prefix: string) =>
     pathname === prefix || pathname.startsWith(prefix + '/');
 
+  // The CMS portal has its own chrome — no public site header there.
+  if (pathname.startsWith('/admin')) return null;
+
   return (
     <>
       <header className="site-header">

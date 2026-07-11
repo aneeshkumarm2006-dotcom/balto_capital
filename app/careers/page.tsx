@@ -2,11 +2,12 @@
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { ArrowRight } from '@/components/icons';
+import { SETTINGS } from '@/lib/settings';
 
 // NOTE: Benefits + culture copy mirror the Delmar Cargo careers structure,
 // adapted to Balto's voice. Confirm the specific benefits with the client
 // before launch. Openings message + resume inbox are placeholders.
-const CAREERS_EMAIL = 'info@baltoproperties.ca';
+const CAREERS_EMAIL = SETTINGS.contactEmail;
 
 const BENEFITS = [
   'Health and dental benefits',

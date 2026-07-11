@@ -1,0 +1,863 @@
+{
+  "hamlet": [
+    {
+      "unit": "6",
+      "type": "1 Bedroom",
+      "rent": 1075,
+      "image": "https://drive.google.com/drive/folders/1o-WcAM4Kfu4b7wRjhjOAgmAE_DRqoqi1",
+      "images": [
+        "/assets/hamlet/units/6/01.jpg",
+        "/assets/hamlet/units/6/02.jpg",
+        "/assets/hamlet/units/6/03.jpg",
+        "/assets/hamlet/units/6/04.jpg",
+        "/assets/hamlet/units/6/05.jpg",
+        "/assets/hamlet/units/6/06.jpg",
+        "/assets/hamlet/units/6/07.jpg",
+        "/assets/hamlet/units/6/08.jpg",
+        "/assets/hamlet/units/6/09.jpg",
+        "/assets/hamlet/units/6/10.jpg",
+        "/assets/hamlet/units/6/11.jpg",
+        "/assets/hamlet/units/6/12.jpg",
+        "/assets/hamlet/units/6/13.jpg",
+        "/assets/hamlet/units/6/14.jpg"
+      ]
+    }
+  ],
+  "woodridge": [
+    {
+      "unit": "1",
+      "type": "2 Bedroom",
+      "rent": 1421,
+      "image": "https://drive.google.com/drive/folders/1bU6J6IXN-TZgyQnBQgKMddeiWbORTTUZ?usp=drive_link",
+      "images": [
+        "/assets/woodridge/units/1/01.jpg",
+        "/assets/woodridge/units/1/02.jpg",
+        "/assets/woodridge/units/1/03.jpg",
+        "/assets/woodridge/units/1/04.jpg",
+        "/assets/woodridge/units/1/05.jpg",
+        "/assets/woodridge/units/1/06.jpg"
+      ]
+    },
+    {
+      "unit": "114",
+      "type": "2 Bedroom",
+      "rent": 1300,
+      "image": "https://drive.google.com/drive/folders/1jtSky6wEnzedW870sCFY2yIH0Ys4DBRE",
+      "images": [
+        "/assets/woodridge/units/114/01.jpg",
+        "/assets/woodridge/units/114/02.jpg",
+        "/assets/woodridge/units/114/03.jpg",
+        "/assets/woodridge/units/114/04.jpg",
+        "/assets/woodridge/units/114/05.jpg",
+        "/assets/woodridge/units/114/06.jpg",
+        "/assets/woodridge/units/114/07.jpg",
+        "/assets/woodridge/units/114/08.jpg"
+      ]
+    },
+    {
+      "unit": "120",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/1NoTFFOVN1Ns9ASE5L6fbB21nm8a2RZ6G",
+      "images": [
+        "/assets/woodridge/units/120/01.jpg",
+        "/assets/woodridge/units/120/02.jpg",
+        "/assets/woodridge/units/120/03.jpg",
+        "/assets/woodridge/units/120/04.jpg"
+      ]
+    },
+    {
+      "unit": "121",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/1hurQfR8YS5pe6c4NF7S5UYAy6ODRP7VG",
+      "images": [
+        "/assets/woodridge/units/121/01.jpg",
+        "/assets/woodridge/units/121/02.jpg",
+        "/assets/woodridge/units/121/03.jpg",
+        "/assets/woodridge/units/121/04.jpg"
+      ]
+    },
+    {
+      "unit": "213",
+      "type": "2 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/1Sz2DXp89Od2bH3_J6sE3y3z-TxOJVQXh",
+      "images": [
+        "/assets/woodridge/units/213/01.jpg",
+        "/assets/woodridge/units/213/02.jpg",
+        "/assets/woodridge/units/213/03.jpg",
+        "/assets/woodridge/units/213/04.jpg",
+        "/assets/woodridge/units/213/05.jpg",
+        "/assets/woodridge/units/213/06.jpg",
+        "/assets/woodridge/units/213/07.jpg",
+        "/assets/woodridge/units/213/08.jpg",
+        "/assets/woodridge/units/213/09.jpg",
+        "/assets/woodridge/units/213/10.jpg",
+        "/assets/woodridge/units/213/11.jpg",
+        "/assets/woodridge/units/213/12.jpg",
+        "/assets/woodridge/units/213/13.jpg"
+      ]
+    },
+    {
+      "unit": "216",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/1r5tPznkBKczEHgoezQaLxxH7mGn-_B8S",
+      "images": [
+        "/assets/woodridge/units/216/01.jpg",
+        "/assets/woodridge/units/216/02.jpg",
+        "/assets/woodridge/units/216/03.jpg",
+        "/assets/woodridge/units/216/04.jpg",
+        "/assets/woodridge/units/216/05.jpg"
+      ]
+    },
+    {
+      "unit": "221",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/1P0kk6stgO7a1JRZOUtEb4NgOuwEnfQ6t?usp=drive_link",
+      "images": [
+        "/assets/woodridge/units/221/01.jpg",
+        "/assets/woodridge/units/221/02.jpg",
+        "/assets/woodridge/units/221/03.jpg",
+        "/assets/woodridge/units/221/04.jpg"
+      ]
+    },
+    {
+      "unit": "317",
+      "type": "2 Bedroom",
+      "rent": 1421,
+      "image": "https://drive.google.com/drive/folders/1hOfv7l3MZs0SA8syGmo0kIMSXllkYrVt?usp=drive_link",
+      "images": [
+        "/assets/woodridge/units/317/01.jpg",
+        "/assets/woodridge/units/317/02.jpg",
+        "/assets/woodridge/units/317/03.jpg",
+        "/assets/woodridge/units/317/04.jpg",
+        "/assets/woodridge/units/317/05.jpg"
+      ]
+    },
+    {
+      "unit": "320",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/10VPy3996sfqilRComJ9POn0u-gGR_fKm",
+      "images": [
+        "/assets/woodridge/units/320/01.jpg",
+        "/assets/woodridge/units/320/02.jpg",
+        "/assets/woodridge/units/320/03.jpg",
+        "/assets/woodridge/units/320/04.jpg",
+        "/assets/woodridge/units/320/05.jpg"
+      ]
+    },
+    {
+      "unit": "322",
+      "type": "2 Bedroom",
+      "rent": 1300,
+      "image": "https://drive.google.com/drive/folders/1y-b0WGohU4Va1lqg-t_y0CB7029UToKt",
+      "images": [
+        "/assets/woodridge/units/322/01.jpg",
+        "/assets/woodridge/units/322/02.jpg",
+        "/assets/woodridge/units/322/03.jpg",
+        "/assets/woodridge/units/322/04.jpg",
+        "/assets/woodridge/units/322/05.jpg",
+        "/assets/woodridge/units/322/06.jpg",
+        "/assets/woodridge/units/322/07.jpg",
+        "/assets/woodridge/units/322/08.jpg",
+        "/assets/woodridge/units/322/09.jpg",
+        "/assets/woodridge/units/322/10.jpg",
+        "/assets/woodridge/units/322/11.jpg",
+        "/assets/woodridge/units/322/12.jpg",
+        "/assets/woodridge/units/322/13.jpg"
+      ]
+    },
+    {
+      "unit": "323",
+      "type": "1 Bedroom",
+      "rent": 1150,
+      "image": "https://drive.google.com/drive/folders/11rJ3OXsr84qSOTBmuxIFOQxeiSi1SgqQ",
+      "images": [
+        "/assets/woodridge/units/323/01.jpg",
+        "/assets/woodridge/units/323/02.jpg",
+        "/assets/woodridge/units/323/03.jpg",
+        "/assets/woodridge/units/323/04.jpg",
+        "/assets/woodridge/units/323/05.jpg",
+        "/assets/woodridge/units/323/06.jpg",
+        "/assets/woodridge/units/323/07.jpg",
+        "/assets/woodridge/units/323/08.jpg",
+        "/assets/woodridge/units/323/09.jpg",
+        "/assets/woodridge/units/323/10.jpg",
+        "/assets/woodridge/units/323/11.jpg"
+      ]
+    },
+    {
+      "unit": "324",
+      "type": "2 Bedroom",
+      "rent": 1421,
+      "image": "https://drive.google.com/drive/folders/1H1bjzW3ejy9H4ygzj4XQ0lTz8q2P2Q0C?usp=drive_link",
+      "images": [
+        "/assets/woodridge/units/324/01.jpg",
+        "/assets/woodridge/units/324/02.jpg",
+        "/assets/woodridge/units/324/03.jpg",
+        "/assets/woodridge/units/324/04.jpg",
+        "/assets/woodridge/units/324/05.jpg"
+      ]
+    }
+  ],
+  "royal-lady": [
+    {
+      "unit": "105",
+      "type": "1 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/1K-7bKqhvaqP626T6pTsAT5RsP2H12IbR?usp=drive_link",
+      "images": [
+        "/assets/royal-lady/units/105/01.jpg",
+        "/assets/royal-lady/units/105/02.jpg",
+        "/assets/royal-lady/units/105/03.jpg",
+        "/assets/royal-lady/units/105/04.jpg",
+        "/assets/royal-lady/units/105/05.jpg",
+        "/assets/royal-lady/units/105/06.jpg",
+        "/assets/royal-lady/units/105/07.jpg",
+        "/assets/royal-lady/units/105/08.jpg",
+        "/assets/royal-lady/units/105/09.jpg",
+        "/assets/royal-lady/units/105/10.jpg",
+        "/assets/royal-lady/units/105/11.jpg"
+      ]
+    },
+    {
+      "unit": "107",
+      "type": "1 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/1eJi5BhunpXhJN7VXI975wYPk3gu3BGYI?usp=drive_link",
+      "images": [
+        "/assets/royal-lady/units/107/01.jpg",
+        "/assets/royal-lady/units/107/02.jpg",
+        "/assets/royal-lady/units/107/03.jpg",
+        "/assets/royal-lady/units/107/04.jpg",
+        "/assets/royal-lady/units/107/05.jpg",
+        "/assets/royal-lady/units/107/06.jpg",
+        "/assets/royal-lady/units/107/07.jpg",
+        "/assets/royal-lady/units/107/08.jpg",
+        "/assets/royal-lady/units/107/09.jpg",
+        "/assets/royal-lady/units/107/10.jpg"
+      ]
+    },
+    {
+      "unit": "205",
+      "type": "1 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/1HvcZC6yEaSU5NPwkMrkG_SAB1WaAPTb8?usp=drive_link",
+      "images": [
+        "/assets/royal-lady/units/205/01.jpg",
+        "/assets/royal-lady/units/205/02.jpg",
+        "/assets/royal-lady/units/205/03.jpg",
+        "/assets/royal-lady/units/205/04.jpg",
+        "/assets/royal-lady/units/205/05.jpg",
+        "/assets/royal-lady/units/205/06.jpg",
+        "/assets/royal-lady/units/205/07.jpg",
+        "/assets/royal-lady/units/205/08.jpg",
+        "/assets/royal-lady/units/205/09.jpg",
+        "/assets/royal-lady/units/205/10.jpg"
+      ]
+    },
+    {
+      "unit": "302",
+      "type": "1 Bedroom",
+      "rent": 1070,
+      "image": "https://drive.google.com/drive/folders/1aFoXxpP7iKJi4SSKvx2FCjiSMxMMSb2x"
+    },
+    {
+      "unit": "303",
+      "type": "1 Bedroom",
+      "rent": 1005,
+      "image": "https://drive.google.com/drive/folders/1F8CXb5bcnt1eGPZPba6JCKDxBXl35x54",
+      "images": [
+        "/assets/royal-lady/units/303/01.jpg",
+        "/assets/royal-lady/units/303/02.jpg",
+        "/assets/royal-lady/units/303/03.jpg",
+        "/assets/royal-lady/units/303/04.jpg",
+        "/assets/royal-lady/units/303/05.jpg",
+        "/assets/royal-lady/units/303/06.jpg",
+        "/assets/royal-lady/units/303/07.jpg",
+        "/assets/royal-lady/units/303/08.jpg",
+        "/assets/royal-lady/units/303/09.jpg",
+        "/assets/royal-lady/units/303/10.jpg",
+        "/assets/royal-lady/units/303/11.jpg",
+        "/assets/royal-lady/units/303/12.jpg"
+      ]
+    },
+    {
+      "unit": "307",
+      "type": "1 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/1R_RYtNn6pXVmScR25PMrPCMNGuy7R4da?usp=drive_link",
+      "images": [
+        "/assets/royal-lady/units/307/01.jpg",
+        "/assets/royal-lady/units/307/02.jpg",
+        "/assets/royal-lady/units/307/03.jpg",
+        "/assets/royal-lady/units/307/04.jpg",
+        "/assets/royal-lady/units/307/05.jpg",
+        "/assets/royal-lady/units/307/06.jpg",
+        "/assets/royal-lady/units/307/07.jpg",
+        "/assets/royal-lady/units/307/08.jpg",
+        "/assets/royal-lady/units/307/09.jpg",
+        "/assets/royal-lady/units/307/10.jpg"
+      ]
+    },
+    {
+      "unit": "402",
+      "type": "1 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/18rccnctKqAAN2alj8iXkYvhnqjgjZrtd?usp=drive_link",
+      "images": [
+        "/assets/royal-lady/units/402/01.jpg",
+        "/assets/royal-lady/units/402/02.jpg",
+        "/assets/royal-lady/units/402/03.jpg",
+        "/assets/royal-lady/units/402/04.jpg",
+        "/assets/royal-lady/units/402/05.jpg",
+        "/assets/royal-lady/units/402/06.jpg",
+        "/assets/royal-lady/units/402/07.jpg",
+        "/assets/royal-lady/units/402/08.jpg",
+        "/assets/royal-lady/units/402/09.jpg",
+        "/assets/royal-lady/units/402/10.jpg"
+      ]
+    },
+    {
+      "unit": "405",
+      "type": "1 Bedroom",
+      "rent": 1200,
+      "image": "https://drive.google.com/drive/folders/1JRdyJ5jCQwMq6DEwgmISUkVF2tugDUZ7?usp=drive_link",
+      "images": [
+        "/assets/royal-lady/units/405/01.jpg",
+        "/assets/royal-lady/units/405/02.jpg",
+        "/assets/royal-lady/units/405/03.jpg",
+        "/assets/royal-lady/units/405/04.jpg",
+        "/assets/royal-lady/units/405/05.jpg",
+        "/assets/royal-lady/units/405/06.jpg",
+        "/assets/royal-lady/units/405/07.jpg",
+        "/assets/royal-lady/units/405/08.jpg",
+        "/assets/royal-lady/units/405/09.jpg",
+        "/assets/royal-lady/units/405/10.jpg"
+      ]
+    }
+  ],
+  "catalina-estates": [
+    {
+      "unit": "2",
+      "type": "1 Bedroom",
+      "rent": 1125,
+      "image": "https://drive.google.com/drive/folders/12gV2SmYV0qhcwivGGxehPkmFA9IBMYFC",
+      "images": [
+        "/assets/catalina-estates/units/2/01.jpg",
+        "/assets/catalina-estates/units/2/02.jpg",
+        "/assets/catalina-estates/units/2/03.jpg",
+        "/assets/catalina-estates/units/2/04.jpg",
+        "/assets/catalina-estates/units/2/05.jpg",
+        "/assets/catalina-estates/units/2/06.jpg",
+        "/assets/catalina-estates/units/2/07.jpg",
+        "/assets/catalina-estates/units/2/08.jpg",
+        "/assets/catalina-estates/units/2/09.jpg",
+        "/assets/catalina-estates/units/2/10.jpg",
+        "/assets/catalina-estates/units/2/11.jpg",
+        "/assets/catalina-estates/units/2/12.jpg"
+      ],
+      "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026"
+    }
+  ],
+  "layali": [
+    {
+      "unit": "7",
+      "type": "1 Bedroom",
+      "rent": 1025,
+      "image": "https://drive.google.com/drive/folders/12eQOFsQfiHo51x86xY1h61BZ2u6glT7m",
+      "images": [
+        "/assets/layali/units/7/01.jpg",
+        "/assets/layali/units/7/02.jpg",
+        "/assets/layali/units/7/03.jpg",
+        "/assets/layali/units/7/04.jpg",
+        "/assets/layali/units/7/05.jpg",
+        "/assets/layali/units/7/06.jpg",
+        "/assets/layali/units/7/07.jpg"
+      ]
+    },
+    {
+      "unit": "15",
+      "type": "2 Bedroom",
+      "rent": 1350,
+      "image": "https://drive.google.com/drive/folders/11h4fC4QLDmOw8DQ9lz7mXgzCgJfwxlgy",
+      "images": [
+        "/assets/layali/units/15/01.jpg",
+        "/assets/layali/units/15/02.jpg",
+        "/assets/layali/units/15/03.jpg",
+        "/assets/layali/units/15/04.jpg",
+        "/assets/layali/units/15/05.jpg",
+        "/assets/layali/units/15/06.jpg",
+        "/assets/layali/units/15/07.jpg",
+        "/assets/layali/units/15/08.jpg",
+        "/assets/layali/units/15/09.jpg",
+        "/assets/layali/units/15/10.jpg",
+        "/assets/layali/units/15/11.jpg"
+      ]
+    }
+  ],
+  "cedar-manor": [
+    {
+      "unit": "2",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/1ZCg4sJmjTkb84yVMz_ILTC1L5G3VWn8Q",
+      "images": [
+        "/assets/cedar-manor/units/2/01.jpg",
+        "/assets/cedar-manor/units/2/02.jpg",
+        "/assets/cedar-manor/units/2/03.jpg",
+        "/assets/cedar-manor/units/2/04.jpg",
+        "/assets/cedar-manor/units/2/05.jpg",
+        "/assets/cedar-manor/units/2/06.jpg",
+        "/assets/cedar-manor/units/2/07.jpg",
+        "/assets/cedar-manor/units/2/08.jpg",
+        "/assets/cedar-manor/units/2/09.jpg"
+      ]
+    },
+    {
+      "unit": "5",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/1Nds9YyIv5m8iHX4ABR1FioeZng0FN37F",
+      "images": [
+        "/assets/cedar-manor/units/5/01.jpg",
+        "/assets/cedar-manor/units/5/02.jpg",
+        "/assets/cedar-manor/units/5/03.jpg",
+        "/assets/cedar-manor/units/5/04.jpg",
+        "/assets/cedar-manor/units/5/05.jpg",
+        "/assets/cedar-manor/units/5/06.jpg",
+        "/assets/cedar-manor/units/5/07.jpg",
+        "/assets/cedar-manor/units/5/08.jpg"
+      ]
+    },
+    {
+      "unit": "7",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/1Aubuzm0ou7pTq_lspo2FrvsQgMuG-zQp",
+      "images": [
+        "/assets/cedar-manor/units/7/01.jpg",
+        "/assets/cedar-manor/units/7/02.jpg",
+        "/assets/cedar-manor/units/7/03.jpg",
+        "/assets/cedar-manor/units/7/04.jpg",
+        "/assets/cedar-manor/units/7/05.jpg",
+        "/assets/cedar-manor/units/7/06.jpg",
+        "/assets/cedar-manor/units/7/07.jpg"
+      ]
+    },
+    {
+      "unit": "8",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/1Egkfmszu9p6VM3nz8mmjm2lChP86BNhg",
+      "images": [
+        "/assets/cedar-manor/units/8/01.jpg",
+        "/assets/cedar-manor/units/8/02.jpg",
+        "/assets/cedar-manor/units/8/03.jpg",
+        "/assets/cedar-manor/units/8/04.jpg",
+        "/assets/cedar-manor/units/8/05.jpg",
+        "/assets/cedar-manor/units/8/06.jpg",
+        "/assets/cedar-manor/units/8/07.jpg",
+        "/assets/cedar-manor/units/8/08.jpg"
+      ]
+    },
+    {
+      "unit": "15",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/1MpPe018-Dca4wIS_PwpOBg7i_NS9HQSF",
+      "images": [
+        "/assets/cedar-manor/units/15/01.jpg",
+        "/assets/cedar-manor/units/15/02.jpg",
+        "/assets/cedar-manor/units/15/03.jpg",
+        "/assets/cedar-manor/units/15/04.jpg",
+        "/assets/cedar-manor/units/15/05.jpg",
+        "/assets/cedar-manor/units/15/06.jpg",
+        "/assets/cedar-manor/units/15/07.jpg",
+        "/assets/cedar-manor/units/15/08.jpg",
+        "/assets/cedar-manor/units/15/09.jpg"
+      ]
+    },
+    {
+      "unit": "17",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/1596nhZf-S5X2VUq28A_oNdj8RzX6L9Ga?usp=drive_link",
+      "images": [
+        "/assets/cedar-manor/units/17/01.jpg",
+        "/assets/cedar-manor/units/17/02.jpg",
+        "/assets/cedar-manor/units/17/03.jpg",
+        "/assets/cedar-manor/units/17/04.jpg",
+        "/assets/cedar-manor/units/17/05.jpg",
+        "/assets/cedar-manor/units/17/06.jpg",
+        "/assets/cedar-manor/units/17/07.jpg",
+        "/assets/cedar-manor/units/17/08.jpg",
+        "/assets/cedar-manor/units/17/09.jpg",
+        "/assets/cedar-manor/units/17/10.jpg",
+        "/assets/cedar-manor/units/17/11.jpg",
+        "/assets/cedar-manor/units/17/12.jpg",
+        "/assets/cedar-manor/units/17/13.jpg",
+        "/assets/cedar-manor/units/17/14.jpg",
+        "/assets/cedar-manor/units/17/15.jpg"
+      ]
+    }
+  ],
+  "courts-manor": [
+    {
+      "unit": "5",
+      "type": "1 Bedroom",
+      "rent": 1015,
+      "image": "https://drive.google.com/drive/folders/14Z_dnflv6nrhVSenCeLawIDfuWAmT2GY?usp=drive_link",
+      "images": [
+        "/assets/courts-manor/units/5/01.jpg",
+        "/assets/courts-manor/units/5/02.jpg",
+        "/assets/courts-manor/units/5/03.jpg",
+        "/assets/courts-manor/units/5/04.jpg",
+        "/assets/courts-manor/units/5/05.jpg",
+        "/assets/courts-manor/units/5/06.jpg",
+        "/assets/courts-manor/units/5/07.jpg",
+        "/assets/courts-manor/units/5/08.jpg",
+        "/assets/courts-manor/units/5/09.jpg",
+        "/assets/courts-manor/units/5/10.jpg",
+        "/assets/courts-manor/units/5/11.jpg",
+        "/assets/courts-manor/units/5/12.jpg",
+        "/assets/courts-manor/units/5/13.jpg"
+      ]
+    }
+  ],
+  "royal-manor": [
+    {
+      "unit": "9",
+      "type": "1 Bedroom",
+      "rent": 1185,
+      "image": "https://drive.google.com/drive/folders/1RSXCx-G_SEabZDc-VvwU1wUuyWj_0kaw",
+      "images": [
+        "/assets/royal-manor/units/9/01.jpg",
+        "/assets/royal-manor/units/9/02.jpg",
+        "/assets/royal-manor/units/9/03.jpg",
+        "/assets/royal-manor/units/9/04.jpg",
+        "/assets/royal-manor/units/9/05.jpg",
+        "/assets/royal-manor/units/9/06.jpg",
+        "/assets/royal-manor/units/9/07.jpg",
+        "/assets/royal-manor/units/9/08.jpg"
+      ]
+    },
+    {
+      "unit": "12",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/16se8oImLbhCnROLVHDWLxy6A7EeFOndK?usp=drive_link",
+      "images": [
+        "/assets/royal-manor/units/12/01.jpg",
+        "/assets/royal-manor/units/12/02.jpg",
+        "/assets/royal-manor/units/12/03.jpg",
+        "/assets/royal-manor/units/12/04.jpg"
+      ]
+    }
+  ],
+  "palisades": [
+    {
+      "unit": "204",
+      "type": "1 Bedroom",
+      "rent": 1090,
+      "image": "https://drive.google.com/drive/folders/11aChKUK1f7_ftb7cGMqcbp5aQVmEcJ2C?usp=drive_link",
+      "images": [
+        "/assets/palisades/units/204/01.jpg",
+        "/assets/palisades/units/204/02.jpg",
+        "/assets/palisades/units/204/03.jpg",
+        "/assets/palisades/units/204/04.jpg",
+        "/assets/palisades/units/204/05.jpg",
+        "/assets/palisades/units/204/06.jpg",
+        "/assets/palisades/units/204/07.jpg",
+        "/assets/palisades/units/204/08.jpg",
+        "/assets/palisades/units/204/09.jpg",
+        "/assets/palisades/units/204/10.jpg",
+        "/assets/palisades/units/204/11.jpg",
+        "/assets/palisades/units/204/12.jpg",
+        "/assets/palisades/units/204/13.jpg",
+        "/assets/palisades/units/204/14.jpg"
+      ]
+    },
+    {
+      "unit": "205",
+      "type": "2 Bedroom",
+      "rent": 1360,
+      "image": "https://drive.google.com/drive/folders/1prpbfQPmEXDjHQi5O-oOFaeOpiYsaEhx",
+      "images": [
+        "/assets/palisades/units/205/01.jpg",
+        "/assets/palisades/units/205/02.jpg",
+        "/assets/palisades/units/205/03.jpg",
+        "/assets/palisades/units/205/04.jpg",
+        "/assets/palisades/units/205/05.jpg",
+        "/assets/palisades/units/205/06.jpg",
+        "/assets/palisades/units/205/07.jpg",
+        "/assets/palisades/units/205/08.jpg",
+        "/assets/palisades/units/205/09.jpg",
+        "/assets/palisades/units/205/10.jpg"
+      ]
+    }
+  ],
+  "acadian": [
+    {
+      "unit": "103",
+      "type": "Studio",
+      "rent": 950,
+      "image": "https://drive.google.com/drive/folders/11BOsxAcLAbnGQQsuQd-Ny5Cvdj6J51lP?usp=drive_link",
+      "images": [
+        "/assets/acadian/units/103/01.jpg",
+        "/assets/acadian/units/103/02.jpg",
+        "/assets/acadian/units/103/03.jpg",
+        "/assets/acadian/units/103/04.jpg",
+        "/assets/acadian/units/103/05.jpg",
+        "/assets/acadian/units/103/06.jpg",
+        "/assets/acadian/units/103/07.jpg",
+        "/assets/acadian/units/103/08.jpg",
+        "/assets/acadian/units/103/09.jpg",
+        "/assets/acadian/units/103/10.jpg",
+        "/assets/acadian/units/103/11.jpg",
+        "/assets/acadian/units/103/12.jpg",
+        "/assets/acadian/units/103/13.jpg"
+      ]
+    },
+    {
+      "unit": "106",
+      "type": "1 Bedroom",
+      "rent": 1115,
+      "image": "https://drive.google.com/drive/folders/1Agy82BxShEa7CCtJaiuA8uGSNrJNQ8SX",
+      "images": [
+        "/assets/acadian/units/106/01.jpg",
+        "/assets/acadian/units/106/02.jpg",
+        "/assets/acadian/units/106/03.jpg",
+        "/assets/acadian/units/106/04.jpg",
+        "/assets/acadian/units/106/05.jpg",
+        "/assets/acadian/units/106/06.jpg",
+        "/assets/acadian/units/106/07.jpg",
+        "/assets/acadian/units/106/08.jpg",
+        "/assets/acadian/units/106/09.jpg",
+        "/assets/acadian/units/106/10.jpg",
+        "/assets/acadian/units/106/11.jpg",
+        "/assets/acadian/units/106/12.jpg",
+        "/assets/acadian/units/106/13.jpg",
+        "/assets/acadian/units/106/14.jpg",
+        "/assets/acadian/units/106/15.jpg"
+      ]
+    },
+    {
+      "unit": "201",
+      "type": "1 Bedroom",
+      "rent": 1095,
+      "image": "https://drive.google.com/drive/folders/10_Zpg29wddsKGTNRnnqj1HLUBc901ivS?usp=drive_link",
+      "images": [
+        "/assets/acadian/units/201/01.jpg",
+        "/assets/acadian/units/201/02.jpg",
+        "/assets/acadian/units/201/03.jpg",
+        "/assets/acadian/units/201/04.jpg",
+        "/assets/acadian/units/201/05.jpg",
+        "/assets/acadian/units/201/06.jpg",
+        "/assets/acadian/units/201/07.jpg",
+        "/assets/acadian/units/201/08.jpg",
+        "/assets/acadian/units/201/09.jpg",
+        "/assets/acadian/units/201/10.jpg",
+        "/assets/acadian/units/201/11.jpg",
+        "/assets/acadian/units/201/12.jpg",
+        "/assets/acadian/units/201/13.jpg",
+        "/assets/acadian/units/201/14.jpg"
+      ]
+    },
+    {
+      "unit": "205",
+      "type": "1 Bedroom",
+      "rent": 1220,
+      "image": "https://drive.google.com/drive/folders/10s5inKXryL0-_HdfZ8dAPGRa85PhfwUV?usp=drive_link",
+      "images": [
+        "/assets/acadian/units/205/01.jpg",
+        "/assets/acadian/units/205/02.jpg",
+        "/assets/acadian/units/205/03.jpg",
+        "/assets/acadian/units/205/04.jpg",
+        "/assets/acadian/units/205/05.jpg",
+        "/assets/acadian/units/205/06.jpg",
+        "/assets/acadian/units/205/07.jpg",
+        "/assets/acadian/units/205/08.jpg",
+        "/assets/acadian/units/205/09.jpg",
+        "/assets/acadian/units/205/10.jpg",
+        "/assets/acadian/units/205/11.jpg",
+        "/assets/acadian/units/205/12.jpg",
+        "/assets/acadian/units/205/13.jpg",
+        "/assets/acadian/units/205/14.jpg",
+        "/assets/acadian/units/205/15.jpg",
+        "/assets/acadian/units/205/16.jpg",
+        "/assets/acadian/units/205/17.jpg",
+        "/assets/acadian/units/205/18.jpg",
+        "/assets/acadian/units/205/19.jpg",
+        "/assets/acadian/units/205/20.jpg",
+        "/assets/acadian/units/205/21.jpg",
+        "/assets/acadian/units/205/22.jpg"
+      ]
+    },
+    {
+      "unit": "207",
+      "type": "1 Bedroom",
+      "rent": 1135,
+      "image": "https://drive.google.com/drive/folders/19VS4T3oLNdWmSKDJWe1sHN1gdE-t45nU",
+      "images": [
+        "/assets/acadian/units/207/01.jpg",
+        "/assets/acadian/units/207/02.jpg",
+        "/assets/acadian/units/207/03.jpg",
+        "/assets/acadian/units/207/04.jpg",
+        "/assets/acadian/units/207/05.jpg",
+        "/assets/acadian/units/207/06.jpg",
+        "/assets/acadian/units/207/07.jpg",
+        "/assets/acadian/units/207/08.jpg",
+        "/assets/acadian/units/207/09.jpg",
+        "/assets/acadian/units/207/10.jpg",
+        "/assets/acadian/units/207/11.jpg",
+        "/assets/acadian/units/207/12.jpg"
+      ]
+    },
+    {
+      "unit": "306",
+      "type": "1 Bedroom",
+      "rent": 1150,
+      "image": "https://drive.google.com/drive/folders/111IRCViZE_rZIyX5_PwUbcoI4wP5aD3b?usp=drive_link",
+      "images": [
+        "/assets/acadian/units/306/01.jpg",
+        "/assets/acadian/units/306/02.jpg",
+        "/assets/acadian/units/306/03.jpg",
+        "/assets/acadian/units/306/04.jpg",
+        "/assets/acadian/units/306/05.jpg",
+        "/assets/acadian/units/306/06.jpg",
+        "/assets/acadian/units/306/07.jpg",
+        "/assets/acadian/units/306/08.jpg",
+        "/assets/acadian/units/306/09.jpg",
+        "/assets/acadian/units/306/10.jpg",
+        "/assets/acadian/units/306/11.jpg",
+        "/assets/acadian/units/306/12.jpg",
+        "/assets/acadian/units/306/13.jpg"
+      ]
+    },
+    {
+      "unit": "302",
+      "type": "2 Bedroom",
+      "rent": 1295,
+      "image": "https://drive.google.com/drive/folders/1Po_NeOYvzFIwSPJ9fmsGFnZJsCpDcixA?usp=drive_link",
+      "images": [
+        "/assets/acadian/units/302/01.jpg",
+        "/assets/acadian/units/302/02.jpg",
+        "/assets/acadian/units/302/03.jpg",
+        "/assets/acadian/units/302/04.jpg",
+        "/assets/acadian/units/302/05.jpg",
+        "/assets/acadian/units/302/06.jpg",
+        "/assets/acadian/units/302/07.jpg",
+        "/assets/acadian/units/302/08.jpg",
+        "/assets/acadian/units/302/09.jpg",
+        "/assets/acadian/units/302/10.jpg"
+      ]
+    }
+  ],
+  "parkdale": [
+    {
+      "unit": "202",
+      "type": "2 Bedroom",
+      "rent": 1280,
+      "image": "https://drive.google.com/drive/folders/12lUgnP2BBPF5IAdWRXNjxTl8ZvsqIkWc",
+      "images": [
+        "/assets/parkdale/units/202/01.jpg",
+        "/assets/parkdale/units/202/02.jpg",
+        "/assets/parkdale/units/202/03.jpg",
+        "/assets/parkdale/units/202/04.jpg",
+        "/assets/parkdale/units/202/05.jpg",
+        "/assets/parkdale/units/202/06.jpg",
+        "/assets/parkdale/units/202/07.jpg",
+        "/assets/parkdale/units/202/08.jpg",
+        "/assets/parkdale/units/202/09.jpg",
+        "/assets/parkdale/units/202/10.jpg",
+        "/assets/parkdale/units/202/11.jpg",
+        "/assets/parkdale/units/202/12.jpg",
+        "/assets/parkdale/units/202/13.jpg",
+        "/assets/parkdale/units/202/14.jpg",
+        "/assets/parkdale/units/202/15.jpg"
+      ]
+    },
+    {
+      "unit": "208",
+      "type": "2 Bedroom",
+      "rent": 1245,
+      "image": "https://drive.google.com/drive/folders/1359w3N_1zEHSYpYxo20vIZNgGus7ga0X?usp=drive_link",
+      "images": [
+        "/assets/parkdale/units/208/01.jpg",
+        "/assets/parkdale/units/208/02.jpg",
+        "/assets/parkdale/units/208/03.jpg",
+        "/assets/parkdale/units/208/04.jpg",
+        "/assets/parkdale/units/208/05.jpg",
+        "/assets/parkdale/units/208/06.jpg",
+        "/assets/parkdale/units/208/07.jpg",
+        "/assets/parkdale/units/208/08.jpg",
+        "/assets/parkdale/units/208/09.jpg",
+        "/assets/parkdale/units/208/10.jpg",
+        "/assets/parkdale/units/208/11.jpg",
+        "/assets/parkdale/units/208/12.jpg",
+        "/assets/parkdale/units/208/13.jpg",
+        "/assets/parkdale/units/208/14.jpg"
+      ]
+    }
+  ],
+  "strathearn": [
+    {
+      "unit": "1",
+      "type": "1 Bedroom",
+      "rent": 1090,
+      "image": "https://drive.google.com/drive/folders/13RhkgkKjs3LicN7UEJ2EParOhT_95hWg",
+      "images": [
+        "/assets/strathearn/units/1/01.jpg",
+        "/assets/strathearn/units/1/02.jpg",
+        "/assets/strathearn/units/1/03.jpg",
+        "/assets/strathearn/units/1/04.jpg",
+        "/assets/strathearn/units/1/05.jpg",
+        "/assets/strathearn/units/1/06.jpg",
+        "/assets/strathearn/units/1/07.jpg",
+        "/assets/strathearn/units/1/08.jpg",
+        "/assets/strathearn/units/1/09.jpg",
+        "/assets/strathearn/units/1/10.jpg",
+        "/assets/strathearn/units/1/11.jpg",
+        "/assets/strathearn/units/1/12.jpg",
+        "/assets/strathearn/units/1/13.jpg",
+        "/assets/strathearn/units/1/14.jpg",
+        "/assets/strathearn/units/1/15.jpg",
+        "/assets/strathearn/units/1/16.jpg",
+        "/assets/strathearn/units/1/17.jpg",
+        "/assets/strathearn/units/1/18.jpg"
+      ]
+    }
+  ],
+  "beverly": [
+    {
+      "unit": "203",
+      "type": "1 Bedroom",
+      "rent": 1050,
+      "image": "https://drive.google.com/drive/folders/15IESPJZjxHzm6ZBy1KrdqELYObn8lP-U?usp=drive_link",
+      "images": [
+        "/assets/beverly/units/203/01.jpg",
+        "/assets/beverly/units/203/02.jpg",
+        "/assets/beverly/units/203/03.jpg",
+        "/assets/beverly/units/203/04.jpg",
+        "/assets/beverly/units/203/05.jpg",
+        "/assets/beverly/units/203/06.jpg",
+        "/assets/beverly/units/203/07.jpg",
+        "/assets/beverly/units/203/08.jpg",
+        "/assets/beverly/units/203/09.jpg",
+        "/assets/beverly/units/203/10.jpg",
+        "/assets/beverly/units/203/11.jpg",
+        "/assets/beverly/units/203/12.jpg",
+        "/assets/beverly/units/203/13.jpg",
+        "/assets/beverly/units/203/14.jpg",
+        "/assets/beverly/units/203/15.jpg",
+        "/assets/beverly/units/203/16.jpg",
+        "/assets/beverly/units/203/17.jpg"
+      ]
+    }
+  ]
+}

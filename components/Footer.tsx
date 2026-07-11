@@ -1,5 +1,6 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { SETTINGS } from '@/lib/settings';
 
 // Resident Portal + Maintenance Request are per-building (ZenRentals). Site-wide
 // links route to the residence list, where each property has its own buttons.
@@ -8,7 +9,10 @@ const MAINTENANCE_REQUEST_URL = '/residences';
 
 export function Footer() {
   const router = useRouter();
+  const pathname = usePathname();
   const go = (to: string) => router.push(to);
+  // The CMS portal has its own chrome — no public site footer there.
+  if (pathname.startsWith('/admin')) return null;
   return (
     <footer className="site-footer">
       <div className="inner">
@@ -66,7 +70,7 @@ export function Footer() {
             <ul>
               <li>
                 <a
-                  href="https://www.facebook.com/p/Balto-Capital-61583216199874/"
+                  href={SETTINGS.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -75,7 +79,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.instagram.com/baltocapital/"
+                  href={SETTINGS.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -84,7 +88,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://ca.linkedin.com/company/balto-capital-inc"
+                  href={SETTINGS.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -95,10 +99,10 @@ export function Footer() {
             <div style={{ marginTop: 24 }}>
               <h4 style={{ marginBottom: 10 }}>Inquiries</h4>
               <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
-                info@baltoproperties.ca
+                {SETTINGS.contactEmail}
               </div>
               <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
-                1-587-207-5171
+                {SETTINGS.contactPhone}
               </div>
             </div>
           </div>
