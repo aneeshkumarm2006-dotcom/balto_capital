@@ -15,7 +15,7 @@ import {
   type ChangeEvent,
   type DragEvent,
 } from 'react';
-import { getContent, putContent } from '@/components/admin/api';
+import { getContent, putContent, uploadLibraryFiles } from '@/components/admin/api';
 import {
   IconCheck,
   IconPlus,
@@ -136,25 +136,12 @@ function propertiesCount(n: number): string {
   return n === 1 ? '1 property' : `${n} properties`;
 }
 
-/** Library upload (dest=library) — server resizes, writes public/assets/library/,
-    registers files in media.json. Returns the added paths. */
+/** Library upload (dest=library) — compressed in the browser and sent one
+    file per request (Vercel's 4.5 MB body limit), registered in media.json.
+    Returns the added paths. */
 async function uploadToLibrary(files: File[]): Promise<string[]> {
-  const form = new FormData();
-  form.set('dest', 'library');
-  files.forEach((f) => form.append('files', f));
-  const res = await fetch('/api/admin/upload', { method: 'POST', body: form });
-  if (!res.ok) {
-    let message = `Upload failed (${res.status})`;
-    try {
-      const body = await res.json();
-      if (body?.error) message = body.error;
-    } catch {
-      /* keep default */
-    }
-    throw new Error(message);
-  }
-  const body = await res.json();
-  return Array.isArray(body?.added) ? body.added.filter(isSafeAssetPath) : [];
+  const added = await uploadLibraryFiles(files);
+  return added.filter(isSafeAssetPath);
 }
 
 /** Site-wide reusable media: top-level assets (hero, coming-soon,

@@ -28,17 +28,69 @@ export async function putContent(name: string, data: unknown): Promise<void> {
   if (!res.ok) throw await toError(res);
 }
 
+/* Vercel functions reject request bodies over ~4.5 MB (HTTP 413), so images
+   are downscaled in the browser first and sent ONE per request. */
+
+const CLIENT_MAX_EDGE = 1800;
+const REQUEST_LIMIT = 4 * 1024 * 1024; // stay safely under Vercel's 4.5 MB
+
+async function compressForUpload(file: File): Promise<Blob> {
+  try {
+    const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+    const scale = Math.min(1, CLIENT_MAX_EDGE / Math.max(bmp.width, bmp.height));
+    const w = Math.max(1, Math.round(bmp.width * scale));
+    const h = Math.max(1, Math.round(bmp.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return file;
+    ctx.drawImage(bmp, 0, 0, w, h);
+    bmp.close();
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, 'image/jpeg', 0.85)
+    );
+    // Keep the original if the browser couldn't encode or made it bigger.
+    return blob && blob.size < file.size ? blob : file;
+  } catch {
+    // Formats the browser can't decode (e.g. HEIC on Chrome) go up as-is.
+    return file;
+  }
+}
+
+async function uploadOne(
+  fields: Record<string, string>,
+  file: File
+): Promise<string[]> {
+  const blob = await compressForUpload(file);
+  if (blob.size > REQUEST_LIMIT) {
+    throw new Error(
+      `"${file.name}" is too large to upload (over 4 MB even after compression). Export it as JPG and try again.`
+    );
+  }
+  const form = new FormData();
+  for (const [k, v] of Object.entries(fields)) form.set(k, v);
+  const name = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+  form.append('files', blob, name);
+  const res = await fetch('/api/admin/upload', { method: 'POST', body: form });
+  if (!res.ok) throw await toError(res);
+  const body = await res.json();
+  return (body.added ?? []) as string[];
+}
+
 export async function uploadPhotos(
   slug: string,
   files: File[]
 ): Promise<string[]> {
-  const form = new FormData();
-  form.set('slug', slug);
-  for (const f of files) form.append('files', f);
-  const res = await fetch('/api/admin/upload', { method: 'POST', body: form });
-  if (!res.ok) throw await toError(res);
-  const body = await res.json();
-  return body.added as string[];
+  const added: string[] = [];
+  for (const f of files) added.push(...(await uploadOne({ slug }, f)));
+  return added;
+}
+
+export async function uploadLibraryFiles(files: File[]): Promise<string[]> {
+  const added: string[] = [];
+  for (const f of files) added.push(...(await uploadOne({ dest: 'library' }, f)));
+  return added;
 }
 
 export async function logout(): Promise<void> {

@@ -56,7 +56,7 @@ function LoginForm() {
     <div className="adm-login">
       <div className="adm-login-visual" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/hero-home.png" alt="" loading="eager" />
+        <img src="/assets/admin-login.jpg" alt="" loading="eager" />
         <div className="scrim" />
         <div className="visual-copy">
           <div className="adm-eyebrow">Balto Capital</div>
