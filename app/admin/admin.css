@@ -1022,3 +1022,175 @@
 
 .adm-tab:hover { color: var(--adm-ink); }
 .adm-tab.active { color: var(--adm-ink); border-bottom-color: var(--adm-gold); }
+
+/* ============================================================
+   Image editor (crop + rotate) — .adm-imged-*
+   ============================================================ */
+
+.adm-imged-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: min(1160px, 94vw);
+  max-height: 94dvh;
+  padding: 20px 24px 22px;
+  background: var(--adm-ink);
+  color: var(--adm-ivory);
+  border: 1px solid rgba(247, 243, 236, 0.14);
+  box-shadow: 0 24px 64px rgba(10, 25, 41, 0.55);
+  animation: adm-toast-in 200ms var(--adm-ease);
+  outline: none;
+}
+
+.adm-imged-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.adm-imged-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+.adm-imged-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.adm-imged-pill {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(247, 243, 236, 0.3);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(247, 243, 236, 0.75);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms var(--adm-ease), color 160ms var(--adm-ease),
+    background 160ms var(--adm-ease);
+}
+
+.adm-imged-pill:hover { border-color: var(--adm-ivory); color: var(--adm-ivory); }
+.adm-imged-pill.active { background: var(--adm-gold); border-color: var(--adm-gold); color: #fff; }
+.adm-imged-pill:disabled { opacity: 0.4; cursor: default; }
+
+.adm-imged-rotates { display: flex; gap: 6px; }
+
+.adm-imged-toolbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(247, 243, 236, 0.3);
+  background: transparent;
+  color: var(--adm-ivory);
+  cursor: pointer;
+  transition: border-color 160ms var(--adm-ease), color 160ms var(--adm-ease);
+}
+
+.adm-imged-toolbtn:hover { border-color: var(--adm-gold); color: var(--adm-gold); }
+.adm-imged-toolbtn:disabled { opacity: 0.4; cursor: default; }
+.adm-imged-toolbtn svg { width: 16px; height: 16px; }
+
+.adm-imged-stagewrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  padding: 12px;
+}
+
+.adm-imged-stage {
+  position: relative;
+  background: #06101d;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.adm-imged-img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+}
+
+/* Dim everything outside the crop; clipped to the stage so the giant
+   box-shadow cannot spill, while the handles below can still overhang. */
+.adm-imged-mask {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.adm-imged-maskrect {
+  position: absolute;
+  box-shadow: 0 0 0 9999px rgba(10, 25, 41, 0.62);
+}
+
+.adm-imged-crop {
+  position: absolute;
+  border: 1.5px solid var(--adm-gold);
+  cursor: move;
+  touch-action: none;
+}
+
+.adm-imged-handle {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.adm-imged-handle::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--adm-gold);
+  border: 1px solid var(--adm-ink);
+}
+
+.adm-imged-handle.h-nw { top: -11px; left: -11px; cursor: nwse-resize; }
+.adm-imged-handle.h-n { top: -11px; left: 50%; margin-left: -11px; cursor: ns-resize; }
+.adm-imged-handle.h-ne { top: -11px; right: -11px; cursor: nesw-resize; }
+.adm-imged-handle.h-e { top: 50%; right: -11px; margin-top: -11px; cursor: ew-resize; }
+.adm-imged-handle.h-se { bottom: -11px; right: -11px; cursor: nwse-resize; }
+.adm-imged-handle.h-s { bottom: -11px; left: 50%; margin-left: -11px; cursor: ns-resize; }
+.adm-imged-handle.h-sw { bottom: -11px; left: -11px; cursor: nesw-resize; }
+.adm-imged-handle.h-w { top: 50%; left: -11px; margin-top: -11px; cursor: ew-resize; }
+
+.adm-imged-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(247, 243, 236, 0.7);
+  font-size: 13px;
+}
+
+.adm-imged-loading svg { width: 18px; height: 18px; }
+
+.adm-imged-error { color: #e2a69a; font-size: 13.5px; }
+
+.adm-imged-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.adm-imged-foot .adm-imged-error { margin-right: auto; }

@@ -14,6 +14,7 @@ import {
   featuredResidences,
   type City,
 } from '@/lib/data';
+import { PAGES } from '@/lib/pages';
 
 /* ------------------------------------------------------------------ */
 /* 02 · Hero + rental search bar                                       */
@@ -101,10 +102,10 @@ function CinematicHero({
             letterSpacing: '0.18em',
           }}
         >
-          Family-operated · Western Canada
+          {PAGES.home.hero.eyebrow}
         </div>
         <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 1040 }}>
-          Homes across Western Canada. One standard.
+          {PAGES.home.hero.title}
         </h1>
         <p
           className="body"
@@ -116,8 +117,7 @@ function CinematicHero({
             maxWidth: 600,
           }}
         >
-          Thoughtfully maintained apartment homes across Western Canada, owned and
-          run by the same family team that answers your call.
+          {PAGES.home.hero.subtitle}
         </p>
 
         {/* Rental search bar, City · Max Rent · Bedrooms · Search */}
@@ -158,11 +158,11 @@ function CinematicHero({
             className="btn btn-primary"
             style={{ margin: 4, display: 'inline-flex', alignItems: 'center', gap: 8 }}
           >
-            <SearchIcon size={16} /> Search homes
+            <SearchIcon size={16} /> {PAGES.home.hero.searchButton}
           </button>
         </form>
         <p style={{ marginTop: 14, color: 'rgba(247,243,236,0.7)', fontSize: 12.5 }}>
-          Prices shown are net effective rent, what you actually pay after any promotion.
+          {PAGES.home.hero.disclaimer}
         </p>
       </div>
     </section>
@@ -194,7 +194,7 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
             padding: '6px 12px', fontSize: 10,
           }}
         >
-          Coming soon
+          {PAGES.home.cities.comingSoonBadge}
         </div>
       )}
       <div className="label">
@@ -206,7 +206,7 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
         </div>
         <div className="gold-rule" />
         <div className="small" style={{ color: 'rgba(247,243,236,0.82)', marginTop: 6 }}>
-          {comingSoon ? 'Register your interest →' : 'View residences →'}
+          {comingSoon ? PAGES.home.cities.comingSoonCta : PAGES.home.cities.liveCta}
         </div>
       </div>
     </a>
@@ -225,12 +225,11 @@ function OurCities() {
           }}
         >
           <div>
-            <Eyebrow style={{ marginBottom: 18 }}>OUR CITIES</Eyebrow>
-            <h2 className="h2 serif">Across Western Canada, and growing.</h2>
+            <Eyebrow style={{ marginBottom: 18 }}>{PAGES.home.cities.eyebrow}</Eyebrow>
+            <h2 className="h2 serif">{PAGES.home.cities.title}</h2>
           </div>
           <p className="body muted" style={{ maxWidth: 400, margin: 0 }}>
-            A focused portfolio across Western Canada, and growing. Every building
-            chosen, kept, and cared for with intent. Start with your city.
+            {PAGES.home.cities.blurb}
           </p>
         </div>
         <div
@@ -265,11 +264,11 @@ function FeaturedResidences() {
           }}
         >
           <div>
-            <Eyebrow style={{ marginBottom: 18 }}>FEATURED RESIDENCES</Eyebrow>
-            <h2 className="h2 serif">Homes available now.</h2>
+            <Eyebrow style={{ marginBottom: 18 }}>{PAGES.home.featured.eyebrow}</Eyebrow>
+            <h2 className="h2 serif">{PAGES.home.featured.title}</h2>
           </div>
           <button className="btn btn-ghost" onClick={() => router.push('/residences')}>
-            View all residences <ArrowRight size={14} />
+            {PAGES.home.featured.viewAllLabel} <ArrowRight size={14} />
           </button>
         </div>
         <div className="home-cards-3">
@@ -285,33 +284,25 @@ function FeaturedResidences() {
 /* ------------------------------------------------------------------ */
 /* 06 · Why rent with Balto                                            */
 /* ------------------------------------------------------------------ */
-const BENEFITS = [
-  { t: 'Family-operated', d: 'A brother-and-sister team that owns and runs the buildings.' },
-  { t: 'One-day response', d: 'Maintenance answered within one business day.' },
-  { t: 'Renovated & secured', d: 'Updated suites and upgraded building security.' },
-  { t: 'Pet-friendly homes', d: 'Many of our residences welcome pets.' },
-];
-
 function WhyRent() {
   return (
     <section className="section bg-ivory">
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: 56, maxWidth: 680, margin: '0 auto 56px' }}>
-          <Eyebrow style={{ marginBottom: 18 }}>WHY RENT WITH BALTO</Eyebrow>
-          <h2 className="h2 serif" style={{ marginBottom: 18 }}>We own what we manage.</h2>
+          <Eyebrow style={{ marginBottom: 18 }}>{PAGES.home.benefits.eyebrow}</Eyebrow>
+          <h2 className="h2 serif" style={{ marginBottom: 18 }}>{PAGES.home.benefits.title}</h2>
           <p className="body muted" style={{ fontSize: 17 }}>
-            No third-party manager between you and your home, the family that owns
-            the building is the one that looks after it.
+            {PAGES.home.benefits.subtitle}
           </p>
         </div>
         <div className="home-cards-4">
-          {BENEFITS.map((b, i) => (
-            <div key={b.t} style={{ borderTop: '2px solid var(--gold)', paddingTop: 24 }}>
+          {PAGES.home.benefits.items.map((b, i) => (
+            <div key={b.title} style={{ borderTop: '2px solid var(--gold)', paddingTop: 24 }}>
               <div className="serif italic" style={{ fontSize: 20, color: 'var(--gold)', marginBottom: 16 }}>
                 0{i + 1}
               </div>
-              <h3 className="h3 serif" style={{ marginBottom: 12 }}>{b.t}</h3>
-              <p className="body muted" style={{ fontSize: 15, lineHeight: 1.7 }}>{b.d}</p>
+              <h3 className="h3 serif" style={{ marginBottom: 12 }}>{b.title}</h3>
+              <p className="body muted" style={{ fontSize: 15, lineHeight: 1.7 }}>{b.body}</p>
             </div>
           ))}
         </div>
@@ -323,18 +314,16 @@ function WhyRent() {
 /* ------------------------------------------------------------------ */
 /* 07 · How to rent                                                    */
 /* ------------------------------------------------------------------ */
-const STEPS = ['Search', 'Book a viewing', 'Apply', 'Get approved', 'Move in'];
-
 function HowToRent() {
   return (
     <section className="section bg-ink">
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: 56 }}>
-          <Eyebrow style={{ marginBottom: 18 }}>HOW TO RENT</Eyebrow>
-          <h2 className="h2 serif" style={{ color: 'var(--ivory)' }}>Five steps to your new home.</h2>
+          <Eyebrow style={{ marginBottom: 18 }}>{PAGES.home.steps.eyebrow}</Eyebrow>
+          <h2 className="h2 serif" style={{ color: 'var(--ivory)' }}>{PAGES.home.steps.title}</h2>
         </div>
         <div className="steps-grid">
-          {STEPS.map((s, i) => (
+          {PAGES.home.steps.items.map((s, i) => (
             <div key={s} style={{ textAlign: 'center' }}>
               <div
                 className="serif"
@@ -380,34 +369,26 @@ function StoryStrip() {
             />
           </div>
           <div>
-            <Eyebrow style={{ marginBottom: 24 }}>OUR STORY</Eyebrow>
+            <Eyebrow style={{ marginBottom: 24 }}>{PAGES.home.story.eyebrow}</Eyebrow>
             <h2 className="h2 serif" style={{ marginBottom: 28 }}>
-              We buy buildings to keep them.
+              {PAGES.home.story.title}
             </h2>
             <p className="body muted" style={{ fontSize: 17, maxWidth: 540, marginBottom: 28 }}>
-              Balto began in 2023 as a private and mezzanine real estate lender. In
-              2025 we moved into direct ownership, acquiring, renovating, and
-              operating apartment communities across Western Canada, a portfolio that
-              continues to grow. We buy buildings to keep them, which is why we treat
-              every resident as a long-term relationship, not a transaction.
+              {PAGES.home.story.paragraph}
             </p>
             <div
               style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 36 }}
               className="story-timeline"
             >
-              {[
-                { y: '2023', t: 'Private & mezzanine lending' },
-                { y: '2025', t: 'First property acquisitions · direct ownership' },
-                { y: 'Today', t: '1,500+ doors across Western Canada, growing.' },
-              ].map((m) => (
-                <div key={m.y} style={{ borderLeft: '2px solid var(--gold)', paddingLeft: 14 }}>
-                  <div className="serif" style={{ fontSize: 20, fontWeight: 500 }}>{m.y}</div>
-                  <div className="small muted">{m.t}</div>
+              {PAGES.home.story.timeline.map((m) => (
+                <div key={m.year} style={{ borderLeft: '2px solid var(--gold)', paddingLeft: 14 }}>
+                  <div className="serif" style={{ fontSize: 20, fontWeight: 500 }}>{m.year}</div>
+                  <div className="small muted">{m.label}</div>
                 </div>
               ))}
             </div>
             <button className="btn btn-ghost" onClick={() => router.push('/about')}>
-              Our story <ArrowRight size={14} />
+              {PAGES.home.story.ctaLabel} <ArrowRight size={14} />
             </button>
           </div>
         </div>
@@ -424,17 +405,17 @@ function InquireCTA() {
   return (
     <section className="section bg-cream" style={{ textAlign: 'center' }}>
       <div className="container-narrow">
-        <Eyebrow style={{ marginBottom: 22 }}>BEGIN AN INQUIRY</Eyebrow>
-        <h2 className="h2 serif" style={{ marginBottom: 24 }}>Begin your inquiry.</h2>
+        <Eyebrow style={{ marginBottom: 22 }}>{PAGES.home.cta.eyebrow}</Eyebrow>
+        <h2 className="h2 serif" style={{ marginBottom: 24 }}>{PAGES.home.cta.title}</h2>
         <p className="body muted" style={{ fontSize: 18, maxWidth: 520, margin: '0 auto 40px' }}>
-          Tell us the city, the budget, and the move-in date, we’ll find the right home for you.
+          {PAGES.home.cta.body}
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <button className="btn btn-primary" onClick={() => router.push('/residences')}>
-            Browse residences <ArrowRight size={14} />
+            {PAGES.home.cta.primaryLabel} <ArrowRight size={14} />
           </button>
           <button className="btn btn-ghost" onClick={() => router.push('/inquire')}>
-            Contact us
+            {PAGES.home.cta.secondaryLabel}
           </button>
         </div>
       </div>

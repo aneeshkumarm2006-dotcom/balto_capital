@@ -1,0 +1,205 @@
+{
+  "home": {
+    "hero": {
+      "eyebrow": "Family-operated · Western Canada",
+      "title": "Homes across Western Canada. One standard.",
+      "subtitle": "Thoughtfully maintained apartment homes across Western Canada, owned and run by the same family team that answers your call.",
+      "searchButton": "Search homes",
+      "disclaimer": "Prices shown are net effective rent, what you actually pay after any promotion."
+    },
+    "cities": {
+      "eyebrow": "OUR CITIES",
+      "title": "Across Western Canada, and growing.",
+      "blurb": "A focused portfolio across Western Canada, and growing. Every building chosen, kept, and cared for with intent. Start with your city.",
+      "comingSoonBadge": "Coming soon",
+      "comingSoonCta": "Register your interest →",
+      "liveCta": "View residences →"
+    },
+    "featured": {
+      "eyebrow": "FEATURED RESIDENCES",
+      "title": "Homes available now.",
+      "viewAllLabel": "View all residences"
+    },
+    "benefits": {
+      "eyebrow": "WHY RENT WITH BALTO",
+      "title": "We own what we manage.",
+      "subtitle": "No third-party manager between you and your home, the family that owns the building is the one that looks after it.",
+      "items": [
+        { "title": "Family-operated", "body": "A brother-and-sister team that owns and runs the buildings." },
+        { "title": "One-day response", "body": "Maintenance answered within one business day." },
+        { "title": "Renovated & secured", "body": "Updated suites and upgraded building security." },
+        { "title": "Pet-friendly homes", "body": "Many of our residences welcome pets." }
+      ]
+    },
+    "steps": {
+      "eyebrow": "HOW TO RENT",
+      "title": "Five steps to your new home.",
+      "items": ["Search", "Book a viewing", "Apply", "Get approved", "Move in"]
+    },
+    "story": {
+      "eyebrow": "OUR STORY",
+      "title": "We buy buildings to keep them.",
+      "paragraph": "Balto began in 2023 as a private and mezzanine real estate lender. In 2025 we moved into direct ownership, acquiring, renovating, and operating apartment communities across Western Canada, a portfolio that continues to grow. We buy buildings to keep them, which is why we treat every resident as a long-term relationship, not a transaction.",
+      "timeline": [
+        { "year": "2023", "label": "Private & mezzanine lending" },
+        { "year": "2025", "label": "First property acquisitions · direct ownership" },
+        { "year": "Today", "label": "1,500+ doors across Western Canada, growing." }
+      ],
+      "ctaLabel": "Our story"
+    },
+    "cta": {
+      "eyebrow": "BEGIN AN INQUIRY",
+      "title": "Begin your inquiry.",
+      "body": "Tell us the city, the budget, and the move-in date, we’ll find the right home for you.",
+      "primaryLabel": "Browse residences",
+      "secondaryLabel": "Contact us"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "ABOUT BALTO CAPITAL",
+      "titleItalic": "Est.",
+      "titleRest": "2023.",
+      "subtitle": "A private real estate lender since 2023, owner-operator since 2025, today a growing portfolio of family-operated apartment homes across Western Canada."
+    },
+    "story": {
+      "eyebrow": "OUR STORY",
+      "lead": "At Balto Capital, we believe real estate is about more than buildings. It’s about creating spaces where people feel connected, supported, and inspired to grow.",
+      "cards": [
+        {
+          "numeral": "I",
+          "eyebrow": "VISION",
+          "quote": "Long-term value to the people and communities we serve.",
+          "body": "From our foundation to where we are today, our vision continues to guide everything we do: to develop and invest in properties that bring long-term value to the people and communities we serve."
+        },
+        {
+          "numeral": "II",
+          "eyebrow": "APPROACH",
+          "quote": "Lasting impressions of comfort, opportunity, and trust.",
+          "body": "We strive to create spaces that leave lasting impressions of comfort, opportunity, and trust. Whether residential, commercial, or mixed-use, each property is designed to be purposeful, welcoming, and future-focused."
+        },
+        {
+          "numeral": "III",
+          "eyebrow": "STANDARD",
+          "quote": "A standard of quality and service to rely on.",
+          "body": "Across Western Canada, residents, partners, and communities benefit from a standard of quality and service they can rely on. Through thoughtful management, strategic investment, and strong relationships, we create environments where people want to live, work, and build their future."
+        },
+        {
+          "numeral": "IV",
+          "eyebrow": "GROWTH",
+          "quote": "Shaped by the needs of those we serve.",
+          "body": "As we grow, our commitment to quality is shaped by the needs of those we serve. We listen, learn, and improve continuously. Guided by experience and community insight, we enhance every aspect of our work, from property development to daily service. Through each project, we aim to create spaces and opportunities with lasting impact. This is our purpose."
+        }
+      ],
+      "close": "Every day, we move forward together, making daily experiences more meaningful, collaborative, and inspiring. Our community is built on vision, partnership, and trust."
+    },
+    "standards": {
+      "eyebrow": "OUR STANDARDS",
+      "title": "The way we operate.",
+      "items": [
+        "Restoration over renovation, original detail is preserved where it exists.",
+        "A single resident manager per building, hired locally.",
+        "Maintenance requests addressed within one business day.",
+        "Long-term leases preferred; lease terms structured to incentivize stability.",
+        "Regular building inspections and preventative maintenance.",
+        "No third-party leasing agents, we represent every residence directly."
+      ]
+    },
+    "figures": {
+      "eyebrow": "BY THE NUMBERS",
+      "title": "The shape of the practice.",
+      "blurb": "Four figures that describe how Balto came to be, and how it operates today.",
+      "items": [
+        {
+          "value": "2023",
+          "label": "IN REAL ESTATE FINANCE",
+          "body": "Balto began in 2023 as a private and mezzanine real estate lender, learning buildings from the capital side first."
+        },
+        {
+          "value": "2025",
+          "label": "DIRECT OWNERSHIP",
+          "body": "In 2025 we moved into direct ownership, acquiring, renovating, and operating apartment communities ourselves."
+        },
+        {
+          "value": "1,500+",
+          "label": "DOORS, AND GROWING",
+          "body": "Apartment homes across Western Canada, with local teams in every city, a portfolio that keeps growing."
+        },
+        {
+          "value": "100%",
+          "label": "OPERATED IN-HOUSE",
+          "body": "No third-party managers, no leasing agents. Every resident speaks with someone at Balto."
+        }
+      ]
+    },
+    "cta": {
+      "eyebrow": "INQUIRE",
+      "title": "Begin a conversation.",
+      "buttonLabel": "Contact our team"
+    }
+  },
+  "whyBalto": {
+    "hero": {
+      "eyebrow": "WHY BALTO",
+      "title": "A different kind of landlord."
+    },
+    "intro": {
+      "pullQuote": "We buy buildings to keep them, which is why we treat every resident as a long-term relationship, not a transaction.",
+      "attribution": "THE BALTO FAMILY",
+      "paragraph1": "Most residential real estate is built to sell. The market measures buildings by turnover, units by yield, neighbourhoods by appreciation. Balto Capital does none of that. We measure our work in the number of residents who renew their lease without thinking about it.",
+      "paragraph2": "Balto began in 2023 as a private and mezzanine real estate lender, and moved into direct ownership in 2025. Today the portfolio is more than 1,500 doors across Western Canada, and growing, every one of them owned, renovated, and operated in-house."
+    },
+    "pillars": [
+      {
+        "eyebrow": "I · OWNERSHIP",
+        "title": "We own what we manage.",
+        "body": "Balto is run by a brother-and-sister team that owns the buildings outright, no third-party manager between you and your home. The people who answer your call are the people who own the building. It is our single biggest difference."
+      },
+      {
+        "eyebrow": "II · RENOVATION",
+        "title": "Renovated, updated, and secured.",
+        "body": "We buy buildings to keep them, then invest in them: modernized suites, refreshed kitchens and baths, and upgraded building security. Most of the portfolio is value-add, older buildings brought up to a standard worth staying in for years."
+      },
+      {
+        "eyebrow": "III · SERVICE",
+        "title": "24 Hours Maintenance Response Standard.",
+        "body": "Maintenance requests are answered within 24 hours, by a local team in your city, not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare."
+      }
+    ],
+    "stats": [
+      { "value": "1,500+", "label": "Doors across Western Canada" },
+      { "value": "24 hours", "label": "Maintenance response standard" },
+      { "value": "100%", "label": "Owned & operated in-house" }
+    ],
+    "cta": {
+      "title": "Discover our residences.",
+      "buttonLabel": "View the portfolio"
+    }
+  },
+  "careers": {
+    "hero": {
+      "eyebrow": "CAREERS",
+      "title": "Grow your career where ambition meets opportunity.",
+      "subtitle": "Start or grow your career with Balto Capital, a family-operated owner and operator of apartment communities across Western Canada. We invest in our buildings and in the people who care for them."
+    },
+    "openings": {
+      "eyebrow": "CAREER CENTRE",
+      "title": "Current openings.",
+      "noOpeningsMessage": "There are currently no job openings available. Please check back soon.",
+      "contactIntro": "We’re always glad to hear from talented people. To introduce yourself, email us at",
+      "buttonLabel": "Contact our team"
+    },
+    "benefits": {
+      "eyebrow": "KEY BENEFITS",
+      "title": "What we offer.",
+      "items": [
+        "Health and dental benefits",
+        "Paid time off and statutory holidays",
+        "Education and training support",
+        "Cross-training across the portfolio",
+        "Internal promotion opportunities",
+        "A close-knit, family-operated team"
+      ]
+    }
+  }
+}

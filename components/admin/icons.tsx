@@ -137,6 +137,14 @@ export const IconExternal = (p: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const IconFileText = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+    <path d="M14 2v6h6" />
+    <path d="M8 13h8M8 17h5" />
+  </svg>
+);
+
 export const IconChevronLeft = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}>
     <path d="m15 18-6-6 6-6" />
@@ -153,6 +161,34 @@ export const IconAlert = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}>
     <path d="M12 9v4M12 17h.01" />
     <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+  </svg>
+);
+
+export const IconClock = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+);
+
+export const IconCrop = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M6 2v14a2 2 0 0 0 2 2h14" />
+    <path d="M18 22V8a2 2 0 0 0-2-2H2" />
+  </svg>
+);
+
+export const IconRotate = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M21 8a9 9 0 1 0 .5 5" />
+    <path d="M21 3v5h-5" />
+  </svg>
+);
+
+export const IconUndo = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M3 7v6h6" />
+    <path d="M3 13a9 9 0 1 0 3-7.7L3 7" />
   </svg>
 );
 

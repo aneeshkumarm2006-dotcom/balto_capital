@@ -5,8 +5,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import { logout } from './api';
 import {
   IconBuilding,
+  IconClock,
   IconDashboard,
   IconExternal,
+  IconFileText,
   IconImage,
   IconLogout,
   IconSettings,
@@ -16,6 +18,8 @@ const NAV = [
   { href: '/admin', label: 'Dashboard', icon: IconDashboard, exact: true },
   { href: '/admin/properties', label: 'Properties', icon: IconBuilding },
   { href: '/admin/library', label: 'Library', icon: IconImage },
+  { href: '/admin/pages', label: 'Pages', icon: IconFileText },
+  { href: '/admin/history', label: 'History', icon: IconClock },
   { href: '/admin/settings', label: 'Site settings', icon: IconSettings },
 ];
 

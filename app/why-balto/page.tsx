@@ -4,28 +4,10 @@ import { Eyebrow } from '@/components/Eyebrow';
 import { SmartImage } from '@/components/SmartImage';
 import { ParallaxImage } from '@/components/ParallaxImage';
 import { ArrowRight } from '@/components/icons';
+import { PAGES } from '@/lib/pages';
 
-const PILLARS = [
-  {
-    eyebrow: 'I · OWNERSHIP',
-    title: 'We own what we manage.',
-    body: 'Balto is run by a brother-and-sister team that owns the buildings outright, no third-party manager between you and your home. The people who answer your call are the people who own the building. It is our single biggest difference.',
-    align: 'left' as const,
-  },
-  {
-    eyebrow: 'II · RENOVATION',
-    title: 'Renovated, updated, and secured.',
-    body: 'We buy buildings to keep them, then invest in them: modernized suites, refreshed kitchens and baths, and upgraded building security. Most of the portfolio is value-add, older buildings brought up to a standard worth staying in for years.',
-    align: 'right' as const,
-  },
-  {
-    eyebrow: 'III · SERVICE',
-    title: '24 Hours Maintenance Response Standard.',
-    body: 'Maintenance requests are answered within 24 hours, by a local team in your city, not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.',
-    align: 'left' as const,
-  },
-];
-
+// Layout only — copy for each pillar lives in content/pages.json (whyBalto.pillars).
+const PILLAR_ALIGNS = ['left', 'right', 'left'] as const;
 const PILLAR_IMAGES = ['/assets/city-saskatoon.png', '/assets/city-edmonton.png', '/assets/city-yellowknife.avif'];
 const PILLAR_TONES = ['warm', 'cool', 'deep'] as const;
 const PILLAR_CHARS = ['I', 'II', 'III'];
@@ -69,9 +51,9 @@ export default function WhyBaltoPage() {
             color: 'var(--ivory)',
           }}
         >
-          <Eyebrow color="gold" style={{ marginBottom: 24 }}>WHY BALTO</Eyebrow>
+          <Eyebrow color="gold" style={{ marginBottom: 24 }}>{PAGES.whyBalto.hero.eyebrow}</Eyebrow>
           <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 900 }}>
-            A different kind of landlord.
+            {PAGES.whyBalto.hero.title}
           </h1>
         </div>
       </section>
@@ -96,13 +78,13 @@ export default function WhyBaltoPage() {
                   maxWidth: 460,
                 }}
               >
-                &ldquo;We buy buildings to keep them, which is why we treat every resident as a long-term relationship, not a transaction.&rdquo;
+                &ldquo;{PAGES.whyBalto.intro.pullQuote}&rdquo;
               </p>
               <p
                 className="caption muted"
                 style={{ marginTop: 24, letterSpacing: '0.1em' }}
               >
-                THE BALTO FAMILY
+                {PAGES.whyBalto.intro.attribution}
               </p>
             </div>
             <div>
@@ -110,20 +92,20 @@ export default function WhyBaltoPage() {
                 className="body"
                 style={{ fontSize: 17, marginBottom: 24, maxWidth: 580 }}
               >
-                Most residential real estate is built to sell. The market measures buildings by turnover, units by yield, neighbourhoods by appreciation. Balto Capital does none of that. We measure our work in the number of residents who renew their lease without thinking about it.
+                {PAGES.whyBalto.intro.paragraph1}
               </p>
               <p
                 className="body muted"
                 style={{ fontSize: 16, lineHeight: 1.8, maxWidth: 580 }}
               >
-                Balto began in 2023 as a private and mezzanine real estate lender, and moved into direct ownership in 2025. Today the portfolio is more than 1,500 doors across Western Canada, and growing, every one of them owned, renovated, and operated in-house.
+                {PAGES.whyBalto.intro.paragraph2}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {PILLARS.map((p, i) => (
+      {PAGES.whyBalto.pillars.map((p, i) => (
         <section
           key={i}
           className="section"
@@ -136,7 +118,7 @@ export default function WhyBaltoPage() {
                 gridTemplateColumns: '1fr 1fr',
                 gap: 'clamp(40px, 7vw, 110px)',
                 alignItems: 'center',
-                direction: p.align === 'right' ? 'rtl' : 'ltr',
+                direction: PILLAR_ALIGNS[i] === 'right' ? 'rtl' : 'ltr',
               }}
               className="grid-3-md1"
             >
@@ -185,12 +167,8 @@ export default function WhyBaltoPage() {
             }}
             className="grid-3-md1"
           >
-            {[
-              { n: '1,500+', label: 'Doors across Western Canada' },
-              { n: '24 hours', label: 'Maintenance response standard' },
-              { n: '100%', label: 'Owned & operated in-house' },
-            ].map((s) => (
-              <div key={s.n}>
+            {PAGES.whyBalto.stats.map((s) => (
+              <div key={s.value}>
                 <div
                   className="serif"
                   style={{
@@ -201,7 +179,7 @@ export default function WhyBaltoPage() {
                     marginBottom: 24,
                   }}
                 >
-                  {s.n}
+                  {s.value}
                 </div>
                 <Eyebrow style={{ color: 'rgba(247,243,236,0.7)' }}>
                   {s.label}
@@ -215,13 +193,13 @@ export default function WhyBaltoPage() {
       <section className="section bg-ivory" style={{ textAlign: 'center' }}>
         <div className="container-narrow">
           <h2 className="h2 serif" style={{ marginBottom: 36 }}>
-            Discover our residences.
+            {PAGES.whyBalto.cta.title}
           </h2>
           <button
             className="btn btn-primary"
             onClick={() => router.push('/residences')}
           >
-            View the portfolio <ArrowRight size={14} />
+            {PAGES.whyBalto.cta.buttonLabel} <ArrowRight size={14} />
           </button>
         </div>
       </section>

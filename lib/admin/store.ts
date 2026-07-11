@@ -29,6 +29,7 @@ export const CONTENT_FILES = [
   'taxonomies',
   'geocoded',
   'media',
+  'pages',
 ] as const;
 
 export type ContentFile = (typeof CONTENT_FILES)[number];

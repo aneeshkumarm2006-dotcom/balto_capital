@@ -46,16 +46,30 @@ async function ghJson<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-/** Read a repo file's current content (UTF-8). */
-export async function ghReadFile(filePath: string): Promise<string> {
+/** Read a repo file's content (UTF-8), at HEAD or at a specific ref.
+ *  Returns null (rather than throwing) when the file doesn't exist there. */
+export async function ghReadFileAt(
+  filePath: string,
+  ref?: string
+): Promise<string | null> {
   const res = await gh(
-    `/repos/${repo()}/contents/${encodeURI(filePath)}?ref=${branch()}`,
+    `/repos/${repo()}/contents/${encodeURI(filePath)}?ref=${ref ?? branch()}`,
     { headers: { Accept: 'application/vnd.github.raw+json' } }
   );
+  if (res.status === 404) return null;
   if (!res.ok) {
     throw new Error(`Could not read ${filePath} from GitHub (${res.status}).`);
   }
   return res.text();
+}
+
+/** Read a repo file's current content (UTF-8). Throws if missing. */
+export async function ghReadFile(filePath: string): Promise<string> {
+  const text = await ghReadFileAt(filePath);
+  if (text === null) {
+    throw new Error(`Could not read ${filePath} from GitHub (missing).`);
+  }
+  return text;
 }
 
 /** List a repo directory (files only). */

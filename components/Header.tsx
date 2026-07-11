@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Logo } from './Logo';
 import { useFavorites } from './FavoritesContext';
 import { HeartIcon, MenuIcon, CloseIcon, ChevronDown } from './icons';
+import { PAGES } from '@/lib/pages';
 
 
 export function Header() {
@@ -118,8 +119,7 @@ export function Header() {
                     color: 'var(--muted)',
                   }}
                 >
-                  There are currently no job openings available. Please check
-                  back soon.
+                  {PAGES.careers.openings.noOpeningsMessage}
                 </div>
               </div>
             </div>

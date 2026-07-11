@@ -3,20 +3,13 @@ import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { ArrowRight } from '@/components/icons';
 import { SETTINGS } from '@/lib/settings';
+import { PAGES } from '@/lib/pages';
 
 // NOTE: Benefits + culture copy mirror the Delmar Cargo careers structure,
-// adapted to Balto's voice. Confirm the specific benefits with the client
-// before launch. Openings message + resume inbox are placeholders.
+// adapted to Balto's voice (editable in content/pages.json → careers).
+// Confirm the specific benefits with the client before launch.
+// Openings message + resume inbox are placeholders.
 const CAREERS_EMAIL = SETTINGS.contactEmail;
-
-const BENEFITS = [
-  'Health and dental benefits',
-  'Paid time off and statutory holidays',
-  'Education and training support',
-  'Cross-training across the portfolio',
-  'Internal promotion opportunities',
-  'A close-knit, family-operated team',
-];
 
 export default function CareersPage() {
   const router = useRouter();
@@ -32,7 +25,7 @@ export default function CareersPage() {
         }}
       >
         <div className="container-narrow" style={{ maxWidth: 760 }}>
-          <Eyebrow style={{ marginBottom: 28 }}>CAREERS</Eyebrow>
+          <Eyebrow style={{ marginBottom: 28 }}>{PAGES.careers.hero.eyebrow}</Eyebrow>
           <h1
             className="serif"
             style={{
@@ -43,7 +36,7 @@ export default function CareersPage() {
               marginBottom: 28,
             }}
           >
-            Grow your career where ambition meets opportunity.
+            {PAGES.careers.hero.title}
           </h1>
           <p
             className="body muted"
@@ -54,9 +47,7 @@ export default function CareersPage() {
               margin: '0 auto',
             }}
           >
-            Start or grow your career with Balto Capital, a family-operated
-            owner and operator of apartment communities across Western Canada.
-            We invest in our buildings and in the people who care for them.
+            {PAGES.careers.hero.subtitle}
           </p>
         </div>
       </section>
@@ -64,9 +55,9 @@ export default function CareersPage() {
       {/* 02 · Career centre, current openings */}
       <section className="section bg-ivory" style={{ textAlign: 'center' }}>
         <div className="container-narrow" style={{ maxWidth: 680 }}>
-          <Eyebrow style={{ marginBottom: 22 }}>CAREER CENTRE</Eyebrow>
+          <Eyebrow style={{ marginBottom: 22 }}>{PAGES.careers.openings.eyebrow}</Eyebrow>
           <h2 className="h2 serif" style={{ marginBottom: 28 }}>
-            Current openings.
+            {PAGES.careers.openings.title}
           </h2>
           <div
             style={{
@@ -76,13 +67,11 @@ export default function CareersPage() {
             }}
           >
             <p className="serif italic" style={{ fontSize: 20, lineHeight: 1.5, margin: 0 }}>
-              There are currently no job openings available. Please check back
-              soon.
+              {PAGES.careers.openings.noOpeningsMessage}
             </p>
           </div>
           <p className="body muted" style={{ fontSize: 16, marginTop: 32, lineHeight: 1.7 }}>
-            We&rsquo;re always glad to hear from talented people. To introduce
-            yourself, email us at{' '}
+            {PAGES.careers.openings.contactIntro}{' '}
             <a className="text-link" href={`mailto:${CAREERS_EMAIL}`}>
               {CAREERS_EMAIL}
             </a>
@@ -93,7 +82,7 @@ export default function CareersPage() {
             style={{ marginTop: 28 }}
             onClick={() => router.push('/inquire')}
           >
-            Contact our team <ArrowRight size={14} />
+            {PAGES.careers.openings.buttonLabel} <ArrowRight size={14} />
           </button>
         </div>
       </section>
@@ -102,8 +91,8 @@ export default function CareersPage() {
       <section className="section bg-cream">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
-            <Eyebrow style={{ marginBottom: 18 }}>KEY BENEFITS</Eyebrow>
-            <h2 className="h2 serif">What we offer.</h2>
+            <Eyebrow style={{ marginBottom: 18 }}>{PAGES.careers.benefits.eyebrow}</Eyebrow>
+            <h2 className="h2 serif">{PAGES.careers.benefits.title}</h2>
           </div>
           <div
             style={{
@@ -115,7 +104,7 @@ export default function CareersPage() {
             }}
             className="grid-4-md2"
           >
-            {BENEFITS.map((b, i) => (
+            {PAGES.careers.benefits.items.map((b, i) => (
               <div
                 key={b}
                 className="card"

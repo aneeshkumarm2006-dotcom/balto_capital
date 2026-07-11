@@ -2,38 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { ArrowRight } from '@/components/icons';
-
-const STANDARDS = [
-  'Restoration over renovation, original detail is preserved where it exists.',
-  'A single resident manager per building, hired locally.',
-  'Maintenance requests addressed within one business day.',
-  'Long-term leases preferred; lease terms structured to incentivize stability.',
-  'Regular building inspections and preventative maintenance.',
-  'No third-party leasing agents, we represent every residence directly.',
-];
-
-const FIGURES = [
-  {
-    n: '2023',
-    label: 'IN REAL ESTATE FINANCE',
-    body: 'Balto began in 2023 as a private and mezzanine real estate lender, learning buildings from the capital side first.',
-  },
-  {
-    n: '2025',
-    label: 'DIRECT OWNERSHIP',
-    body: 'In 2025 we moved into direct ownership, acquiring, renovating, and operating apartment communities ourselves.',
-  },
-  {
-    n: '1,500+',
-    label: 'DOORS, AND GROWING',
-    body: 'Apartment homes across Western Canada, with local teams in every city, a portfolio that keeps growing.',
-  },
-  {
-    n: '100%',
-    label: 'OPERATED IN-HOUSE',
-    body: 'No third-party managers, no leasing agents. Every resident speaks with someone at Balto.',
-  },
-];
+import { PAGES } from '@/lib/pages';
 
 export default function AboutPage() {
   const router = useRouter();
@@ -72,7 +41,7 @@ export default function AboutPage() {
           style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}
         >
           <Eyebrow color="ivory" style={{ marginBottom: 32 }}>
-            ABOUT BALTO CAPITAL
+            {PAGES.about.hero.eyebrow}
           </Eyebrow>
           <div
             className="serif"
@@ -84,7 +53,7 @@ export default function AboutPage() {
               color: 'var(--ivory)',
             }}
           >
-            <span className="italic">Est.</span> 2023.
+            <span className="italic">{PAGES.about.hero.titleItalic}</span> {PAGES.about.hero.titleRest}
           </div>
           <p
             className="body"
@@ -98,7 +67,7 @@ export default function AboutPage() {
               fontWeight: 300,
             }}
           >
-            A private real estate lender since 2023, owner-operator since 2025, today a growing portfolio of family-operated apartment homes across Western Canada.
+            {PAGES.about.hero.subtitle}
           </p>
         </div>
       </section>
@@ -109,7 +78,7 @@ export default function AboutPage() {
           style={{ textAlign: 'center', maxWidth: 720 }}
         >
           <Eyebrow style={{ marginBottom: 44, display: 'inline-block' }}>
-            OUR STORY
+            {PAGES.about.story.eyebrow}
           </Eyebrow>
 
           {/* Lead, manifesto in serif italic */}
@@ -124,7 +93,7 @@ export default function AboutPage() {
               letterSpacing: '-0.005em',
             }}
           >
-            At Balto Capital, we believe real estate is about more than buildings. It’s about creating spaces where people feel connected, supported, and inspired to grow.
+            {PAGES.about.story.lead}
           </p>
 
           {/* Gold divider */}
@@ -155,32 +124,7 @@ export default function AboutPage() {
               textAlign: 'left',
             }}
           >
-            {[
-              {
-                numeral: 'I',
-                eyebrow: 'VISION',
-                quote: 'Long-term value to the people and communities we serve.',
-                body: 'From our foundation to where we are today, our vision continues to guide everything we do: to develop and invest in properties that bring long-term value to the people and communities we serve.',
-              },
-              {
-                numeral: 'II',
-                eyebrow: 'APPROACH',
-                quote: 'Lasting impressions of comfort, opportunity, and trust.',
-                body: 'We strive to create spaces that leave lasting impressions of comfort, opportunity, and trust. Whether residential, commercial, or mixed-use, each property is designed to be purposeful, welcoming, and future-focused.',
-              },
-              {
-                numeral: 'III',
-                eyebrow: 'STANDARD',
-                quote: 'A standard of quality and service to rely on.',
-                body: 'Across Western Canada, residents, partners, and communities benefit from a standard of quality and service they can rely on. Through thoughtful management, strategic investment, and strong relationships, we create environments where people want to live, work, and build their future.',
-              },
-              {
-                numeral: 'IV',
-                eyebrow: 'GROWTH',
-                quote: 'Shaped by the needs of those we serve.',
-                body: 'As we grow, our commitment to quality is shaped by the needs of those we serve. We listen, learn, and improve continuously. Guided by experience and community insight, we enhance every aspect of our work, from property development to daily service. Through each project, we aim to create spaces and opportunities with lasting impact. This is our purpose.',
-              },
-            ].map((c) => (
+            {PAGES.about.story.cards.map((c) => (
               <div
                 key={c.numeral}
                 className="card"
@@ -270,7 +214,7 @@ export default function AboutPage() {
               margin: '0 auto',
             }}
           >
-            Every day, we move forward together, making daily experiences more meaningful, collaborative, and inspiring. Our community is built on vision, partnership, and trust.
+            {PAGES.about.story.close}
           </p>
         </div>
       </section>
@@ -286,11 +230,11 @@ export default function AboutPage() {
             className="grid-3-md1"
           >
             <div>
-              <Eyebrow style={{ marginBottom: 22 }}>OUR STANDARDS</Eyebrow>
-              <h2 className="h2 serif">The way we operate.</h2>
+              <Eyebrow style={{ marginBottom: 22 }}>{PAGES.about.standards.eyebrow}</Eyebrow>
+              <h2 className="h2 serif">{PAGES.about.standards.title}</h2>
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {STANDARDS.map((s, i) => (
+              {PAGES.about.standards.items.map((s, i) => (
                 <li
                   key={i}
                   style={{
@@ -334,14 +278,14 @@ export default function AboutPage() {
             }}
           >
             <div>
-              <Eyebrow style={{ marginBottom: 22 }}>BY THE NUMBERS</Eyebrow>
-              <h2 className="h2 serif">The shape of the practice.</h2>
+              <Eyebrow style={{ marginBottom: 22 }}>{PAGES.about.figures.eyebrow}</Eyebrow>
+              <h2 className="h2 serif">{PAGES.about.figures.title}</h2>
             </div>
             <p
               className="body muted"
               style={{ maxWidth: 380, margin: 0 }}
             >
-              Four figures that describe how Balto came to be, and how it operates today.
+              {PAGES.about.figures.blurb}
             </p>
           </div>
           <div
@@ -352,9 +296,9 @@ export default function AboutPage() {
             }}
             className="grid-4-md2"
           >
-            {FIGURES.map((f) => (
+            {PAGES.about.figures.items.map((f) => (
               <div
-                key={f.n}
+                key={f.value}
                 data-reveal
                 className="card"
                 style={{
@@ -375,7 +319,7 @@ export default function AboutPage() {
                     letterSpacing: '-0.01em',
                   }}
                 >
-                  {f.n}
+                  {f.value}
                 </div>
                 <div
                   className="divider-gold"
@@ -396,15 +340,15 @@ export default function AboutPage() {
 
       <section className="section bg-cream" style={{ textAlign: 'center' }}>
         <div className="container-narrow">
-          <Eyebrow style={{ marginBottom: 24 }}>INQUIRE</Eyebrow>
+          <Eyebrow style={{ marginBottom: 24 }}>{PAGES.about.cta.eyebrow}</Eyebrow>
           <h2 className="h2 serif" style={{ marginBottom: 32 }}>
-            Begin a conversation.
+            {PAGES.about.cta.title}
           </h2>
           <button
             className="btn btn-primary"
             onClick={() => router.push('/inquire')}
           >
-            Contact our team <ArrowRight size={14} />
+            {PAGES.about.cta.buttonLabel} <ArrowRight size={14} />
           </button>
         </div>
       </section>

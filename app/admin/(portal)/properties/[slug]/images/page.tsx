@@ -20,11 +20,13 @@ import {
 } from '@/components/admin/api';
 import { Field, PageHead, useToast } from '@/components/admin/ui';
 import { PropertyTabs } from '@/components/admin/PropertyTabs';
+import { ImageEditor } from '@/components/admin/ImageEditor';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
 import {
   IconCheck,
   IconChevronLeft,
   IconChevronRight,
+  IconCrop,
   IconEye,
   IconEyeOff,
   IconSpinner,
@@ -77,6 +79,9 @@ export default function PropertyImagesPage() {
   const [uploading, setUploading] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [dragging, setDragging] = useState(false);
+  /* Crop/rotate editor: path being edited (null = closed) + upload state. */
+  const [editingPath, setEditingPath] = useState<string | null>(null);
+  const [editBusy, setEditBusy] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -237,6 +242,63 @@ export default function PropertyImagesPage() {
     if (Object.keys(alt).length > 0) next.alt = alt;
     else delete next.alt;
     applyEntry(next, true);
+  };
+
+  /* ---------- Crop / rotate (stage only, like uploads) ---------- */
+
+  /** The editor exports a new file; upload it as a staged photo and swap
+   *  the old path for the new one everywhere in the draft. The old file
+   *  stays on disk/in the repo — harmless. */
+  const applyEditedPhoto = async (file: File) => {
+    if (editingPath === null || editBusy) return;
+    const oldPath = editingPath;
+    setEditBusy(true);
+    try {
+      const result = await uploadPhotos(slug, [file]);
+      const newPath = result.added[0];
+      if (!newPath) throw new Error('Upload did not return a photo path.');
+      setDraft((prev) => {
+        const next: Photos = {
+          ...prev,
+          hero: prev.hero === oldPath ? newPath : prev.hero,
+          gallery: (prev.gallery ?? []).map((p) => (p === oldPath ? newPath : p)),
+        };
+        if (prev.hidden) {
+          next.hidden = prev.hidden.map((p) => (p === oldPath ? newPath : p));
+        }
+        if (prev.tags && prev.tags[oldPath] !== undefined) {
+          const tags = { ...prev.tags };
+          tags[newPath] = tags[oldPath];
+          delete tags[oldPath];
+          next.tags = tags;
+        }
+        if (prev.alt && prev.alt[oldPath] !== undefined) {
+          const alt = { ...prev.alt };
+          alt[newPath] = alt[oldPath];
+          delete alt[oldPath];
+          next.alt = alt;
+        }
+        return next;
+      });
+      setStagedFiles((prev) => [...prev, ...result.staged]);
+      setPreviews((prev) => {
+        const next = { ...prev };
+        const oldUrl = next[oldPath];
+        if (oldUrl) {
+          URL.revokeObjectURL(oldUrl);
+          delete next[oldPath];
+        }
+        next[newPath] = URL.createObjectURL(file);
+        return next;
+      });
+      setSelected(new Set([newPath]));
+      setEditingPath(null);
+      toast('success', 'Photo edited — publish to make it live.');
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Could not save the edited photo.');
+    } finally {
+      setEditBusy(false);
+    }
   };
 
   /* ---------- Upload (stage only) ---------- */
@@ -495,6 +557,16 @@ export default function PropertyImagesPage() {
             <IconStar />
             Set as hero
           </button>
+          {singleSelection !== null && (
+            <button
+              type="button"
+              className="adm-btn"
+              onClick={() => setEditingPath(singleSelection)}
+            >
+              <IconCrop />
+              Edit photo
+            </button>
+          )}
           {galleryIndex >= 0 && (
             <>
               <button
@@ -573,6 +645,19 @@ export default function PropertyImagesPage() {
           </div>
         </div>
       )}
+
+      <ImageEditor
+        open={editingPath !== null}
+        src={editingPath !== null ? previews[editingPath] ?? editingPath : ''}
+        filename={
+          editingPath !== null ? editingPath.split('/').pop() ?? undefined : undefined
+        }
+        busy={editBusy}
+        onCancel={() => {
+          if (!editBusy) setEditingPath(null);
+        }}
+        onApply={applyEditedPhoto}
+      />
     </>
   );
 }
