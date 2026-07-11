@@ -6,6 +6,17 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
+  experimental: {
+    // The admin API routes touch public/ via fs only in local dev (in
+    // production, CMS_STORAGE=github routes everything through the GitHub
+    // API). Without this, Vercel traces the whole public/ image tree into
+    // the function bundles and blows the 250 MB limit.
+    outputFileTracingExcludes: {
+      '/api/admin/*': ['./public/**'],
+      '/api/admin/site-media': ['./public/**'],
+      '/api/admin/upload': ['./public/**'],
+    },
+  },
   async redirects() {
     return [
       { source: '/contact', destination: '/inquire', permanent: true },
