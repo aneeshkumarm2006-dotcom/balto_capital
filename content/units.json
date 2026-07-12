@@ -866,17 +866,5 @@
       "type": "1 Bedroom",
       "rent": 2000
     }
-  ],
-  "chicklet-house": [
-    {
-      "unit": "309",
-      "type": "1 Bedroom",
-      "rent": 1115,
-      "images": [
-        "/assets/chicklet-house/units/309/uploads/1783823086661-01.jpg",
-        "/assets/chicklet-house/units/309/uploads/1783823151788-01.jpg"
-      ],
-      "applyUrl": "https://promptverse.info/shared/3e266fb5bed2099c7dd2b7e8829e82db"
-    }
   ]
 }
