@@ -164,7 +164,9 @@
       "/assets/cedar-manor/06.png",
       "/assets/cedar-manor/07.png"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/cedar-manor/01-main.jpg"
+    ]
   },
   "kafa": {
     "hero": "/assets/kafa/01-main.jpg",
