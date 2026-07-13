@@ -79,14 +79,24 @@
     }
   },
   "hamlet": {
-    "hero": "/assets/hamlet/01-main.jpg",
+    "hero": "/assets/hamlet/uploads/1783958126398-01.jpg",
     "gallery": [
+      "/assets/hamlet/01-main.jpg",
       "/assets/hamlet/02.png",
       "/assets/hamlet/03.png",
       "/assets/hamlet/04.png",
       "/assets/hamlet/05.png"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/hamlet/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/hamlet/uploads/1783958126398-01.jpg": "Exterior",
+      "/assets/hamlet/02.png": "1 Bedroom",
+      "/assets/hamlet/03.png": "1 Bedroom",
+      "/assets/hamlet/04.png": "1 Bedroom",
+      "/assets/hamlet/05.png": "1 Bedroom"
+    }
   },
   "royal-lady": {
     "hero": "/assets/royal-lady/01-main.jpg",
