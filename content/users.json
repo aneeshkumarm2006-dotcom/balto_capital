@@ -6,5 +6,13 @@
     "passwordHash": "4fe46e257139c094a79f226e6122a2fe:b752f78b281ea3fa18df486015f3d6afa806a3c7bafa12cb13d32c960dd55d8faaa892849f186154f140acd8ee25789166f0d283b0d85b549444c0e3a6f4e014",
     "createdAt": "2026-07-13T11:46:23.418Z",
     "active": true
+  },
+  {
+    "email": "rafael@baltocapital.ca",
+    "name": "Rafael Salib",
+    "role": "editor",
+    "passwordHash": "fc8f147ceae2681a9264ab9cddc6df40:bad29de3af78614252c5fb76a5032ec94ad200820f90ee2d3df71b10e98f5149382780f0ca43048ba3a4933c9fb626d1a00941f8777ee9489733cef70f88ba49",
+    "createdAt": "2026-07-13T13:33:38.010Z",
+    "active": true
   }
 ]
