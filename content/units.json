@@ -608,7 +608,6 @@
       "rent": 950,
       "image": "https://drive.google.com/drive/folders/11BOsxAcLAbnGQQsuQd-Ny5Cvdj6J51lP?usp=drive_link",
       "images": [
-        "/assets/acadian/units/103/01.jpg",
         "/assets/acadian/units/103/02.jpg",
         "/assets/acadian/units/103/03.jpg",
         "/assets/acadian/units/103/04.jpg",
@@ -653,19 +652,13 @@
       "image": "https://drive.google.com/drive/folders/10_Zpg29wddsKGTNRnnqj1HLUBc901ivS?usp=drive_link",
       "images": [
         "/assets/acadian/units/201/01.jpg",
-        "/assets/acadian/units/201/02.jpg",
-        "/assets/acadian/units/201/03.jpg",
-        "/assets/acadian/units/201/04.jpg",
-        "/assets/acadian/units/201/05.jpg",
-        "/assets/acadian/units/201/06.jpg",
-        "/assets/acadian/units/201/07.jpg",
-        "/assets/acadian/units/201/08.jpg",
-        "/assets/acadian/units/201/09.jpg",
-        "/assets/acadian/units/201/10.jpg",
-        "/assets/acadian/units/201/11.jpg",
-        "/assets/acadian/units/201/12.jpg",
         "/assets/acadian/units/201/13.jpg",
-        "/assets/acadian/units/201/14.jpg"
+        "/assets/acadian/units/201/uploads/1783954671649-01.jpg",
+        "/assets/acadian/units/201/uploads/1783954673951-01.jpg",
+        "/assets/acadian/units/201/uploads/1783954675753-01.jpg",
+        "/assets/acadian/units/201/uploads/1783954678309-01.jpg",
+        "/assets/acadian/units/201/uploads/1783954680546-01.jpg",
+        "/assets/acadian/units/201/uploads/1783954683011-01.jpg"
       ]
     },
     {
@@ -696,7 +689,8 @@
         "/assets/acadian/units/205/20.jpg",
         "/assets/acadian/units/205/21.jpg",
         "/assets/acadian/units/205/22.jpg"
-      ]
+      ],
+      "applyUrl": "blob:https://balto-capital.vercel.app/1a53ba75-7e75-4ac5-b4f7-24d0f50c7cd6"
     },
     {
       "unit": "207",
