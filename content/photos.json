@@ -116,12 +116,23 @@
       "/assets/royal-lady/14.png",
       "/assets/royal-lady/15.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/royal-lady/13.png",
+      "/assets/royal-lady/14.png",
+      "/assets/royal-lady/15.png",
+      "/assets/royal-lady/08.png",
+      "/assets/royal-lady/07.png",
+      "/assets/royal-lady/06.png"
+    ],
     "tags": {
       "/assets/royal-lady/02.jpg": "1 Bedroom",
       "/assets/royal-lady/03.jpg": "1 Bedroom",
       "/assets/royal-lady/04.jpg": "1 Bedroom",
-      "/assets/royal-lady/05.jpg": "1 Bedroom"
+      "/assets/royal-lady/05.jpg": "1 Bedroom",
+      "/assets/royal-lady/09.png": "1 Bedroom",
+      "/assets/royal-lady/10.png": "1 Bedroom",
+      "/assets/royal-lady/11.png": "1 Bedroom",
+      "/assets/royal-lady/12.png": "1 Bedroom"
     }
   },
   "catalina-estates": {
