@@ -233,7 +233,9 @@
       "/assets/courts-manor/05.png",
       "/assets/courts-manor/06.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/courts-manor/01-main.jpg"
+    ],
     "tags": {
       "/assets/courts-manor/02.png": "1 Bedroom",
       "/assets/courts-manor/03.png": "1 Bedroom",
