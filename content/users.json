@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "email": "eda@davnoot.com",
+    "name": "Eda",
+    "role": "admin",
+    "passwordHash": "4fe46e257139c094a79f226e6122a2fe:b752f78b281ea3fa18df486015f3d6afa806a3c7bafa12cb13d32c960dd55d8faaa892849f186154f140acd8ee25789166f0d283b0d85b549444c0e3a6f4e014",
+    "createdAt": "2026-07-13T11:46:23.418Z",
+    "active": true
+  }
+]
