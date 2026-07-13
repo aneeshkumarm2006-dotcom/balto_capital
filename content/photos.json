@@ -168,9 +168,16 @@
     }
   },
   "sky-manor": {
-    "hero": "/assets/sky-manor/01-main.jpg",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/sky-manor/uploads/1783963973781-01.jpg",
+    "gallery": [
+      "/assets/sky-manor/01-main.jpg"
+    ],
+    "hidden": [
+      "/assets/sky-manor/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/sky-manor/uploads/1783963973781-01.jpg": "Exterior"
+    }
   },
   "cedar-manor": {
     "hero": "/assets/cedar-manor/uploads/1783956757292-01.jpg",
