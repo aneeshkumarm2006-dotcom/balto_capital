@@ -391,7 +391,12 @@
       "/assets/beverly/02.png",
       "/assets/beverly/03.png"
     ],
-    "hidden": []
+    "hidden": [],
+    "tags": {
+      "/assets/beverly/01-main.png": "1 Bedroom",
+      "/assets/beverly/02.png": "1 Bedroom",
+      "/assets/beverly/03.png": "1 Bedroom"
+    }
   },
   "royal-manor": {
     "hero": "/assets/royal-manor/01-main.jpg",
