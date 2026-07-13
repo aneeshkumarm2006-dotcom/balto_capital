@@ -207,9 +207,16 @@
     "hidden": []
   },
   "copper-manor": {
-    "hero": "/assets/copper-manor/01-main.jpg",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/copper-manor/uploads/1783957241055-01.jpg",
+    "gallery": [
+      "/assets/copper-manor/01-main.jpg"
+    ],
+    "hidden": [
+      "/assets/copper-manor/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/copper-manor/uploads/1783957241055-01.jpg": "Exterior"
+    }
   },
   "grandview-manor": {
     "hero": "/assets/grandview-manor/01-main.jpg",
