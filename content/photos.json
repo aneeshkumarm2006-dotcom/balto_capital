@@ -206,9 +206,13 @@
     "hidden": []
   },
   "balwin-manor": {
-    "hero": "/assets/balwin-manor/01-main.jpg",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/balwin-manor/uploads/1783955277525-01.jpg",
+    "gallery": [
+      "/assets/balwin-manor/01-main.jpg"
+    ],
+    "hidden": [
+      "/assets/balwin-manor/01-main.jpg"
+    ]
   },
   "parkdale": {
     "hero": "/assets/coming-soon.png",
