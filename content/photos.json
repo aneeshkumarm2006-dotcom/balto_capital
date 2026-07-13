@@ -232,7 +232,14 @@
       "/assets/courts-manor/05.png",
       "/assets/courts-manor/06.png"
     ],
-    "hidden": []
+    "hidden": [],
+    "tags": {
+      "/assets/courts-manor/02.png": "1 Bedroom",
+      "/assets/courts-manor/03.png": "1 Bedroom",
+      "/assets/courts-manor/04.png": "1 Bedroom",
+      "/assets/courts-manor/05.png": "1 Bedroom",
+      "/assets/courts-manor/06.png": "1 Bedroom"
+    }
   },
   "oakwood-manor": {
     "hero": "/assets/oakwood-manor/01-main.jpg",
