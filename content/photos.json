@@ -121,7 +121,12 @@
       "/assets/catalina-estates/08.png",
       "/assets/catalina-estates/09.png"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/catalina-estates/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/catalina-estates/uploads/1783956491394-01.jpg": "Exterior"
+    }
   },
   "layali": {
     "hero": "/assets/layali/01-main.jpg",
