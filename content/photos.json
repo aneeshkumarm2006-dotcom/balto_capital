@@ -109,8 +109,9 @@
     "hidden": []
   },
   "catalina-estates": {
-    "hero": "/assets/catalina-estates/01-main.jpg",
+    "hero": "/assets/catalina-estates/uploads/1783956491394-01.jpg",
     "gallery": [
+      "/assets/catalina-estates/01-main.jpg",
       "/assets/catalina-estates/02.png",
       "/assets/catalina-estates/03.png",
       "/assets/catalina-estates/04.png",
