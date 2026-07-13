@@ -154,8 +154,9 @@
     "hidden": []
   },
   "cedar-manor": {
-    "hero": "/assets/cedar-manor/01-main.jpg",
+    "hero": "/assets/cedar-manor/uploads/1783956757292-01.jpg",
     "gallery": [
+      "/assets/cedar-manor/01-main.jpg",
       "/assets/cedar-manor/02.png",
       "/assets/cedar-manor/03.png",
       "/assets/cedar-manor/04.png",
