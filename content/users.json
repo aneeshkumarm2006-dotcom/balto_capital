@@ -14,5 +14,13 @@
     "passwordHash": "fc8f147ceae2681a9264ab9cddc6df40:bad29de3af78614252c5fb76a5032ec94ad200820f90ee2d3df71b10e98f5149382780f0ca43048ba3a4933c9fb626d1a00941f8777ee9489733cef70f88ba49",
     "createdAt": "2026-07-13T13:33:38.010Z",
     "active": true
+  },
+  {
+    "email": "nazeeha@baltocapital.ca",
+    "name": "Nazeeha Nilamdeen",
+    "role": "editor",
+    "passwordHash": "62df4fcda6af1c65239da5c81653600e:649c1f081d53a0cad69308abfbfa2754d3591a8694ecf7c755b268b1ef664694db17317beeada1165541943e2baa3191d946a936f0222e8132f4b673b718bbe6",
+    "createdAt": "2026-07-13T13:34:52.860Z",
+    "active": true
   }
 ]
