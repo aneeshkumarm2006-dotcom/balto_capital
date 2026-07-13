@@ -224,14 +224,14 @@
     "hidden": []
   },
   "courts-manor": {
-    "hero": "/assets/courts-manor/01-main.jpg",
+    "hero": "/assets/courts-manor/uploads/1783957648354-01.jpg",
     "gallery": [
+      "/assets/courts-manor/01-main.jpg",
       "/assets/courts-manor/02.png",
       "/assets/courts-manor/03.png",
       "/assets/courts-manor/04.png",
       "/assets/courts-manor/05.png",
-      "/assets/courts-manor/06.png",
-      "/assets/courts-manor/uploads/1783957648354-01.jpg"
+      "/assets/courts-manor/06.png"
     ],
     "hidden": [],
     "tags": {
