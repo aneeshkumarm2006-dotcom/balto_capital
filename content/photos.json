@@ -148,15 +148,24 @@
     }
   },
   "layali": {
-    "hero": "/assets/layali/01-main.jpg",
+    "hero": "/assets/layali/uploads/1783958455324-01.jpg",
     "gallery": [
+      "/assets/layali/01-main.jpg",
       "/assets/layali/02.png",
       "/assets/layali/03.png",
       "/assets/layali/04.png",
       "/assets/layali/05.png",
       "/assets/layali/06.png"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/layali/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/layali/uploads/1783958455324-01.jpg": "Exterior",
+      "/assets/layali/02.png": "1 Bedroom",
+      "/assets/layali/03.png": "1 Bedroom",
+      "/assets/layali/04.png": "1 Bedroom"
+    }
   },
   "sky-manor": {
     "hero": "/assets/sky-manor/01-main.jpg",
