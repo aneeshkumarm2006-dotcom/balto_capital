@@ -212,7 +212,11 @@
     ],
     "hidden": [
       "/assets/balwin-manor/01-main.jpg"
-    ]
+    ],
+    "tags": {
+      "/assets/balwin-manor/uploads/1783955277525-01.jpg": "Exterior",
+      "/assets/balwin-manor/01-main.jpg": "Exterior"
+    }
   },
   "parkdale": {
     "hero": "/assets/coming-soon.png",
