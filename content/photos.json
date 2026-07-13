@@ -209,8 +209,9 @@
     }
   },
   "palisades": {
-    "hero": "/assets/palisades/01-main.jpg",
+    "hero": "/assets/palisades/uploads/1783958832431-01.jpg",
     "gallery": [
+      "/assets/palisades/01-main.jpg",
       "/assets/palisades/02.png",
       "/assets/palisades/03.png",
       "/assets/palisades/04.png",
@@ -230,7 +231,30 @@
       "/assets/palisades/18.png",
       "/assets/palisades/19.png"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/palisades/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/palisades/uploads/1783958832431-01.jpg": "Exterior",
+      "/assets/palisades/02.png": "1 Bedroom",
+      "/assets/palisades/03.png": "1 Bedroom",
+      "/assets/palisades/04.png": "1 Bedroom",
+      "/assets/palisades/05.png": "1 Bedroom",
+      "/assets/palisades/06.png": "1 Bedroom",
+      "/assets/palisades/07.png": "2 Bedroom",
+      "/assets/palisades/08.png": "2 Bedroom",
+      "/assets/palisades/09.png": "2 Bedroom",
+      "/assets/palisades/10.png": "2 Bedroom",
+      "/assets/palisades/11.png": "2 Bedroom",
+      "/assets/palisades/12.png": "1 Bedroom",
+      "/assets/palisades/13.png": "1 Bedroom",
+      "/assets/palisades/14.png": "1 Bedroom",
+      "/assets/palisades/15.png": "1 Bedroom",
+      "/assets/palisades/16.png": "2 Bedroom",
+      "/assets/palisades/17.png": "2 Bedroom",
+      "/assets/palisades/18.png": "2 Bedroom",
+      "/assets/palisades/19.png": "2 Bedroom"
+    }
   },
   "copper-manor": {
     "hero": "/assets/copper-manor/uploads/1783957241055-01.jpg",
