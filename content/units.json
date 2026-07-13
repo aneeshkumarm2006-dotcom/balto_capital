@@ -765,8 +765,6 @@
       "rent": 1280,
       "image": "https://drive.google.com/drive/folders/12lUgnP2BBPF5IAdWRXNjxTl8ZvsqIkWc",
       "images": [
-        "/assets/parkdale/units/202/01.jpg",
-        "/assets/parkdale/units/202/02.jpg",
         "/assets/parkdale/units/202/03.jpg",
         "/assets/parkdale/units/202/04.jpg",
         "/assets/parkdale/units/202/05.jpg",
@@ -777,7 +775,6 @@
         "/assets/parkdale/units/202/10.jpg",
         "/assets/parkdale/units/202/11.jpg",
         "/assets/parkdale/units/202/12.jpg",
-        "/assets/parkdale/units/202/13.jpg",
         "/assets/parkdale/units/202/14.jpg",
         "/assets/parkdale/units/202/15.jpg"
       ]
