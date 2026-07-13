@@ -30,8 +30,9 @@
     "hidden": []
   },
   "acadian": {
-    "hero": "/assets/acadian/01-main.jpg",
+    "hero": "/assets/acadian/uploads/1783952539029-01.jpg",
     "gallery": [
+      "/assets/acadian/01-main.jpg",
       "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png",
       "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png",
       "/assets/acadian/ai/01_studio_ai_furnished_kitchen.png",
@@ -49,10 +50,11 @@
       "/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png",
       "/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png",
       "/assets/acadian/ai/13_2bed_ai_furnished_living_room.png",
-      "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png",
-      "/assets/acadian/uploads/1783952539029-01.jpg"
+      "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/acadian/01-main.jpg"
+    ],
     "tags": {
       "/assets/acadian/01-main.jpg": "Exterior",
       "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png": "Studio",
@@ -72,7 +74,8 @@
       "/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png": "2 Bedroom",
       "/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png": "2 Bedroom",
       "/assets/acadian/ai/13_2bed_ai_furnished_living_room.png": "2 Bedroom",
-      "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png": "2 Bedroom"
+      "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png": "2 Bedroom",
+      "/assets/acadian/uploads/1783952539029-01.jpg": "Exterior"
     }
   },
   "hamlet": {
