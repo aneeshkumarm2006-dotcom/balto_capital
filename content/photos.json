@@ -360,7 +360,17 @@
       "/assets/strathearn/08.png",
       "/assets/strathearn/09.png"
     ],
-    "hidden": []
+    "hidden": [],
+    "tags": {
+      "/assets/strathearn/02.png": "1 Bedroom",
+      "/assets/strathearn/03.png": "1 Bedroom",
+      "/assets/strathearn/04.png": "1 Bedroom",
+      "/assets/strathearn/05.png": "1 Bedroom",
+      "/assets/strathearn/06.png": "1 Bedroom",
+      "/assets/strathearn/07.png": "1 Bedroom",
+      "/assets/strathearn/08.png": "1 Bedroom",
+      "/assets/strathearn/09.png": "1 Bedroom"
+    }
   },
   "rivergate": {
     "hero": "/assets/coming-soon.png",
