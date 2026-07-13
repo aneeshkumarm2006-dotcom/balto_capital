@@ -125,7 +125,16 @@
       "/assets/catalina-estates/01-main.jpg"
     ],
     "tags": {
-      "/assets/catalina-estates/uploads/1783956491394-01.jpg": "Exterior"
+      "/assets/catalina-estates/uploads/1783956491394-01.jpg": "Exterior",
+      "/assets/catalina-estates/01-main.jpg": "1 Bedroom",
+      "/assets/catalina-estates/02.png": "1 Bedroom",
+      "/assets/catalina-estates/03.png": "1 Bedroom",
+      "/assets/catalina-estates/04.png": "1 Bedroom",
+      "/assets/catalina-estates/09.png": "1 Bedroom",
+      "/assets/catalina-estates/08.png": "1 Bedroom",
+      "/assets/catalina-estates/07.png": "1 Bedroom",
+      "/assets/catalina-estates/06.png": "1 Bedroom",
+      "/assets/catalina-estates/05.png": "1 Bedroom"
     }
   },
   "layali": {
