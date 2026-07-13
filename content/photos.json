@@ -276,9 +276,16 @@
     }
   },
   "oakwood-manor": {
-    "hero": "/assets/oakwood-manor/01-main.jpg",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/oakwood-manor/uploads/1783958669664-01.jpg",
+    "gallery": [
+      "/assets/oakwood-manor/01-main.jpg"
+    ],
+    "hidden": [
+      "/assets/oakwood-manor/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/oakwood-manor/uploads/1783958669664-01.jpg": "Exterior"
+    }
   },
   "balwin-manor": {
     "hero": "/assets/balwin-manor/uploads/1783955277525-01.jpg",
