@@ -10,6 +10,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { getContent, putContent } from '@/components/admin/api';
 import { IconPlus, IconSpinner, IconX } from '@/components/admin/icons';
 import { ConfirmDialog, Field, PageHead, useToast } from '@/components/admin/ui';
+import { useMe } from '@/components/admin/useMe';
 import { PropertyTabs } from '@/components/admin/PropertyTabs';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
 
@@ -176,6 +177,7 @@ export default function PropertyDetailsPage() {
   const { slug } = useParams<{ slug: string }>();
   const router = useRouter();
   const toast = useToast();
+  const me = useMe();
 
   const [buildings, setBuildings] = useState<Building[] | null>(null);
   const [copyAll, setCopyAll] = useState<Record<string, CopyEntry>>({});
@@ -820,62 +822,64 @@ export default function PropertyDetailsPage() {
         </div>
       </section>
 
-      {/* ---------- Danger zone ---------- */}
-      <section className="adm-card" style={{ marginBottom: 22 }}>
-        <div className="adm-card-head">
-          <h2 className="adm-card-title">Danger zone</h2>
-        </div>
-        <div className="adm-card-pad">
-          <div className="adm-row" style={{ justifyContent: 'space-between', gap: 18 }}>
-            <div className="adm-grow">
-              <strong>{archived ? 'Restore property' : 'Archive property'}</strong>
-              <p className="adm-help" style={{ margin: '4px 0 0' }}>
-                {archived
-                  ? 'This property is archived and hidden from the website. Restoring it makes it visible again immediately.'
-                  : 'The property stays in the CMS but disappears from the website immediately.'}
-              </p>
+      {/* ---------- Danger zone (admins only) ---------- */}
+      {me?.role === 'admin' && (
+        <section className="adm-card" style={{ marginBottom: 22 }}>
+          <div className="adm-card-head">
+            <h2 className="adm-card-title">Danger zone</h2>
+          </div>
+          <div className="adm-card-pad">
+            <div className="adm-row" style={{ justifyContent: 'space-between', gap: 18 }}>
+              <div className="adm-grow">
+                <strong>{archived ? 'Restore property' : 'Archive property'}</strong>
+                <p className="adm-help" style={{ margin: '4px 0 0' }}>
+                  {archived
+                    ? 'This property is archived and hidden from the website. Restoring it makes it visible again immediately.'
+                    : 'The property stays in the CMS but disappears from the website immediately.'}
+                </p>
+              </div>
+              {archived ? (
+                <button
+                  type="button"
+                  className="adm-btn ghost"
+                  onClick={() => void applyArchived(false)}
+                  disabled={dangerBusy}
+                >
+                  {dangerBusy && <IconSpinner />}
+                  Restore property
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="adm-btn ghost"
+                  onClick={() => setConfirmArchive(true)}
+                  disabled={dangerBusy}
+                >
+                  Archive property
+                </button>
+              )}
             </div>
-            {archived ? (
+            <hr className="adm-divider" style={{ margin: '18px 0' }} />
+            <div className="adm-row" style={{ justifyContent: 'space-between', gap: 18 }}>
+              <div className="adm-grow">
+                <strong>Delete permanently</strong>
+                <p className="adm-help" style={{ margin: '4px 0 0' }}>
+                  Removes the building and all of its content from the CMS. This cannot be
+                  undone.
+                </p>
+              </div>
               <button
                 type="button"
-                className="adm-btn ghost"
-                onClick={() => void applyArchived(false)}
+                className="adm-btn danger"
+                onClick={() => setConfirmDelete(true)}
                 disabled={dangerBusy}
               >
-                {dangerBusy && <IconSpinner />}
-                Restore property
+                Delete permanently
               </button>
-            ) : (
-              <button
-                type="button"
-                className="adm-btn ghost"
-                onClick={() => setConfirmArchive(true)}
-                disabled={dangerBusy}
-              >
-                Archive property
-              </button>
-            )}
-          </div>
-          <hr className="adm-divider" style={{ margin: '18px 0' }} />
-          <div className="adm-row" style={{ justifyContent: 'space-between', gap: 18 }}>
-            <div className="adm-grow">
-              <strong>Delete permanently</strong>
-              <p className="adm-help" style={{ margin: '4px 0 0' }}>
-                Removes the building and all of its content from the CMS. This cannot be
-                undone.
-              </p>
             </div>
-            <button
-              type="button"
-              className="adm-btn danger"
-              onClick={() => setConfirmDelete(true)}
-              disabled={dangerBusy}
-            >
-              Delete permanently
-            </button>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <ConfirmDialog
         open={confirmArchive}

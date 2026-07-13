@@ -1,6 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { ghCommitFiles, ghReadFile, githubMode } from './github';
+import {
+  ghCommitFiles,
+  ghReadFile,
+  githubMode,
+  type CommitAuthor,
+} from './github';
 
 /* ============================================================
    BALTO CMS — content store.
@@ -51,13 +56,15 @@ export async function readContent<T = unknown>(name: ContentFile): Promise<T> {
 
 export async function writeContent(
   name: ContentFile,
-  data: unknown
+  data: unknown,
+  author?: CommitAuthor
 ): Promise<void> {
   const json = JSON.stringify(data, null, 2) + '\n';
   if (githubMode()) {
     await ghCommitFiles(
       [{ path: `content/${name}.json`, content: json }],
-      `cms: update ${name}`
+      `cms: update ${name}`,
+      author
     );
     return;
   }

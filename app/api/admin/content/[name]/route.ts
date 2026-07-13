@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server';
+import { authorFor, sessionFromRequest } from '@/lib/admin/auth';
 import { isContentFile, readContent, writeContent } from '@/lib/admin/store';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+/** Content files only Admins may save. */
+const ADMIN_ONLY = new Set(['settings']);
 
 type Params = { params: { name: string } };
 
@@ -18,6 +22,13 @@ export async function PUT(req: Request, { params }: Params) {
   if (!isContentFile(params.name)) {
     return NextResponse.json({ error: 'Unknown content file.' }, { status: 404 });
   }
+  const session = await sessionFromRequest(req);
+  if (ADMIN_ONLY.has(params.name) && session?.role !== 'admin') {
+    return NextResponse.json(
+      { error: 'Only admins can change site settings.' },
+      { status: 403 }
+    );
+  }
   let body: unknown;
   try {
     body = await req.json();
@@ -30,6 +41,6 @@ export async function PUT(req: Request, { params }: Params) {
       { status: 400 }
     );
   }
-  await writeContent(params.name, body);
+  await writeContent(params.name, body, authorFor(session));
   return NextResponse.json({ ok: true });
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { authorFor, sessionFromRequest } from '@/lib/admin/auth';
 import { ghCommitFiles, githubMode, type CommitFile } from '@/lib/admin/github';
 import { isContentFile, writeContent } from '@/lib/admin/store';
 
@@ -64,7 +65,8 @@ export async function POST(req: Request) {
       typeof body.message === 'string' && body.message.trim()
         ? `cms: ${body.message.trim().slice(0, 100)}`
         : `cms: publish ${files.length} photo(s) + ${content.length} content file(s)`;
-    await ghCommitFiles(commitFiles, message);
+    const session = await sessionFromRequest(req);
+    await ghCommitFiles(commitFiles, message, authorFor(session));
   } else {
     // Local mode: staged files were already written to disk by the upload
     // route; only the JSON needs saving.

@@ -53,7 +53,7 @@ export async function GET() {
       message: c.commit.message.split('\n')[0],
       author: c.commit.author.name,
       date: c.commit.author.date,
-      cms: c.commit.author.name === 'Balto Content Studio',
+      cms: c.commit.message.startsWith('cms:'),
     }));
   } else {
     try {
@@ -73,7 +73,7 @@ export async function GET() {
             message,
             author,
             date,
-            cms: author === 'Balto Content Studio' || message.startsWith('cms:'),
+            cms: message.startsWith('cms:'),
           };
         });
     } catch {

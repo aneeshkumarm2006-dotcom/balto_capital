@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { authorFor, sessionFromRequest } from '@/lib/admin/auth';
 import {
   ghCommitFiles,
   ghReadFileAt,
@@ -19,6 +20,13 @@ const run = promisify(execFile);
  *  the timeline, so a restore can itself be undone. Photos on disk are kept;
  *  restoring content simply re-points which of them the site shows. */
 export async function POST(req: Request) {
+  const session = await sessionFromRequest(req);
+  if (session?.role !== 'admin') {
+    return NextResponse.json(
+      { error: 'Only admins can restore history.' },
+      { status: 403 }
+    );
+  }
   const { sha } = (await req.json().catch(() => ({}))) as { sha?: string };
   if (!sha || !/^[0-9a-f]{7,40}$/i.test(sha)) {
     return NextResponse.json({ error: 'Invalid commit id.' }, { status: 400 });
@@ -38,7 +46,11 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    await ghCommitFiles(files, `cms: restore content to ${sha.slice(0, 7)}`);
+    await ghCommitFiles(
+      files,
+      `cms: restore content to ${sha.slice(0, 7)}`,
+      authorFor(session)
+    );
     return NextResponse.json({ ok: true, restored: files.length });
   }
 

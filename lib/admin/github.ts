@@ -117,12 +117,23 @@ export async function ghCreateBlob(content: string | Buffer): Promise<string> {
   return blob.sha;
 }
 
+export interface CommitAuthor {
+  name: string;
+  email: string;
+}
+
+const DEFAULT_AUTHOR: CommitAuthor = {
+  name: 'Balto Content Studio',
+  email: 'cms@baltoproperties.ca',
+};
+
 /** Commit one or more files atomically (Git Data API: blobs → tree →
  *  commit → ref). Entries may carry inline content or a pre-staged blob
  *  sha. Retries once on a ref race. */
 export async function ghCommitFiles(
   files: CommitFile[],
-  message: string
+  message: string,
+  author?: CommitAuthor
 ): Promise<void> {
   for (let attempt = 0; ; attempt++) {
     try {
@@ -156,10 +167,7 @@ export async function ghCommitFiles(
             message,
             tree: tree.sha,
             parents: [headSha],
-            author: {
-              name: 'Balto Content Studio',
-              email: 'cms@baltoproperties.ca',
-            },
+            author: author ?? DEFAULT_AUTHOR,
           }),
         }
       );

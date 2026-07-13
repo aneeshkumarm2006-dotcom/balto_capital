@@ -32,12 +32,22 @@ async function hmac(value: string, secret: string): Promise<string> {
   return toB64Url(new Uint8Array(sig));
 }
 
+export interface Session {
+  email: string;
+  name: string;
+  role: 'admin' | 'editor';
+}
+
 export async function createSessionToken(
-  email: string,
+  session: Session,
   secret: string
 ): Promise<string> {
   const exp = Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS;
-  const payload = toB64Url(encoder.encode(`${email}|${exp}`));
+  const payload = toB64Url(
+    encoder.encode(
+      JSON.stringify({ e: session.email, n: session.name, r: session.role, x: exp })
+    )
+  );
   const sig = await hmac(payload, secret);
   return `${payload}.${sig}`;
 }
@@ -45,7 +55,7 @@ export async function createSessionToken(
 export async function verifySessionToken(
   token: string,
   secret: string
-): Promise<{ email: string } | null> {
+): Promise<Session | null> {
   const dot = token.lastIndexOf('.');
   if (dot < 1) return null;
   const payload = token.slice(0, dot);
@@ -54,16 +64,40 @@ export async function verifySessionToken(
   // string comparison timing reveals nothing about the expected value.
   const expected = await hmac(payload, secret);
   if ((await hmac(sig, secret)) !== (await hmac(expected, secret))) return null;
-  let decoded: string;
   try {
-    decoded = fromB64Url(payload);
+    const decoded = JSON.parse(fromB64Url(payload)) as {
+      e?: string;
+      n?: string;
+      r?: string;
+      x?: number;
+    };
+    if (
+      typeof decoded.e !== 'string' ||
+      typeof decoded.x !== 'number' ||
+      decoded.x * 1000 < Date.now()
+    ) {
+      return null;
+    }
+    const role = decoded.r === 'admin' ? 'admin' : 'editor';
+    return { email: decoded.e, name: decoded.n ?? decoded.e, role };
   } catch {
     return null;
   }
-  const sep = decoded.lastIndexOf('|');
-  if (sep < 1) return null;
-  const email = decoded.slice(0, sep);
-  const exp = Number(decoded.slice(sep + 1));
-  if (!Number.isFinite(exp) || exp * 1000 < Date.now()) return null;
-  return { email };
 }
+
+/** Session from an API route's Request cookies (middleware has already
+ *  gated access; use this for role checks and commit attribution). */
+export async function sessionFromRequest(req: Request): Promise<Session | null> {
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) return null;
+  const cookie = req.headers.get('cookie') ?? '';
+  const match = cookie.match(new RegExp(`${SESSION_COOKIE}=([^;]+)`));
+  if (!match) return null;
+  return verifySessionToken(match[1], secret);
+}
+
+/** Commit author for a session — makes History show who made the change. */
+export const authorFor = (session: Session | null) => ({
+  name: session ? session.name : 'Balto Content Studio',
+  email: 'cms@baltoproperties.ca',
+});

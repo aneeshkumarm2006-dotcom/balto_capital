@@ -6,6 +6,7 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { IconSpinner, IconUndo } from '@/components/admin/icons';
 import { ConfirmDialog, PageHead, useToast } from '@/components/admin/ui';
+import { useMe } from '@/components/admin/useMe';
 
 interface HistoryEntry {
   sha: string;
@@ -98,6 +99,7 @@ function exactDate(iso: string): string {
 /* ---------- Page ---------- */
 
 export default function HistoryPage() {
+  const me = useMe();
   const toast = useToast();
   const [entries, setEntries] = useState<HistoryEntry[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -161,11 +163,18 @@ export default function HistoryPage() {
   };
 
   const head = (
-    <PageHead
-      eyebrow="Timeline"
-      title="Edit history"
-      lede="Every change to the website is recorded here. Restoring rewinds the content to that moment — as a new entry, so you can undo a restore too."
-    />
+    <>
+      <PageHead
+        eyebrow="Timeline"
+        title="Edit history"
+        lede="Every change to the website is recorded here. Restoring rewinds the content to that moment — as a new entry, so you can undo a restore too."
+      />
+      {me?.role === 'editor' && (
+        <p className="adm-muted" style={{ margin: '-16px 0 24px', fontSize: 12.5 }}>
+          Only admins can restore.
+        </p>
+      )}
+    </>
   );
 
   if (error && !entries) {
@@ -266,7 +275,7 @@ export default function HistoryPage() {
                   )}
                   {i === 0 ? (
                     <span className="adm-badge success">Current</span>
-                  ) : (
+                  ) : me?.role === 'admin' ? (
                     <button
                       className="adm-btn sm ghost"
                       onClick={() => setConfirmEntry(entry)}
@@ -275,7 +284,7 @@ export default function HistoryPage() {
                       <IconUndo />
                       Restore
                     </button>
-                  )}
+                  ) : null}
                 </div>
               </Fragment>
             );
