@@ -27,7 +27,24 @@
       "/assets/woodridge/24.png",
       "/assets/woodridge/25.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/woodridge/06.png",
+      "/assets/woodridge/07.png",
+      "/assets/woodridge/08.png",
+      "/assets/woodridge/09.png",
+      "/assets/woodridge/10.png",
+      "/assets/woodridge/11.png",
+      "/assets/woodridge/12.png",
+      "/assets/woodridge/13.png",
+      "/assets/woodridge/18.png",
+      "/assets/woodridge/19.png",
+      "/assets/woodridge/20.png",
+      "/assets/woodridge/21.png",
+      "/assets/woodridge/22.png",
+      "/assets/woodridge/23.png",
+      "/assets/woodridge/24.png",
+      "/assets/woodridge/25.png"
+    ],
     "tags": {
       "/assets/woodridge/02.jpg": "2 Bedroom",
       "/assets/woodridge/03.jpg": "2 Bedroom",
@@ -36,7 +53,8 @@
       "/assets/woodridge/15.png": "2 Bedroom",
       "/assets/woodridge/16.png": "2 Bedroom",
       "/assets/woodridge/17.png": "2 Bedroom",
-      "/assets/woodridge/14.png": "2 Bedroom"
+      "/assets/woodridge/14.png": "2 Bedroom",
+      "/assets/woodridge/01-main.jpg": "Exterior"
     }
   },
   "acadian": {
