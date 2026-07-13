@@ -188,9 +188,16 @@
     }
   },
   "kafa": {
-    "hero": "/assets/kafa/01-main.jpg",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/kafa/uploads/1783958318607-01.jpg",
+    "gallery": [
+      "/assets/kafa/01-main.jpg"
+    ],
+    "hidden": [
+      "/assets/kafa/01-main.jpg"
+    ],
+    "tags": {
+      "/assets/kafa/uploads/1783958318607-01.jpg": "Exterior"
+    }
   },
   "palisades": {
     "hero": "/assets/palisades/01-main.jpg",
