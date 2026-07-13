@@ -398,7 +398,17 @@
       "/assets/royal-manor/08.png",
       "/assets/royal-manor/09.png"
     ],
-    "hidden": []
+    "hidden": [],
+    "tags": {
+      "/assets/royal-manor/02.jpg": "1 Bedroom",
+      "/assets/royal-manor/05.jpg": "1 Bedroom",
+      "/assets/royal-manor/03.jpg": "1 Bedroom",
+      "/assets/royal-manor/06.png": "1 Bedroom",
+      "/assets/royal-manor/07.png": "1 Bedroom",
+      "/assets/royal-manor/08.png": "1 Bedroom",
+      "/assets/royal-manor/09.png": "1 Bedroom",
+      "/assets/royal-manor/04.jpg": "1 Bedroom"
+    }
   },
   "cielo": {
     "hero": "/assets/cielo/01-main.jpg",
