@@ -166,7 +166,13 @@
     ],
     "hidden": [
       "/assets/cedar-manor/01-main.jpg"
-    ]
+    ],
+    "tags": {
+      "/assets/cedar-manor/uploads/1783956757292-01.jpg": "1 Bedroom",
+      "/assets/cedar-manor/02.png": "1 Bedroom",
+      "/assets/cedar-manor/03.png": "1 Bedroom",
+      "/assets/cedar-manor/04.png": "1 Bedroom"
+    }
   },
   "kafa": {
     "hero": "/assets/kafa/01-main.jpg",
