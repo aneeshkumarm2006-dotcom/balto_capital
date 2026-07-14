@@ -802,29 +802,25 @@
   ],
   "strathearn": [
     {
-      "unit": "1",
+      "unit": "11",
       "type": "1 Bedroom",
       "rent": 1090,
       "image": "https://drive.google.com/drive/folders/13RhkgkKjs3LicN7UEJ2EParOhT_95hWg",
       "images": [
         "/assets/strathearn/units/1/01.jpg",
         "/assets/strathearn/units/1/02.jpg",
-        "/assets/strathearn/units/1/03.jpg",
         "/assets/strathearn/units/1/04.jpg",
         "/assets/strathearn/units/1/05.jpg",
         "/assets/strathearn/units/1/06.jpg",
-        "/assets/strathearn/units/1/07.jpg",
         "/assets/strathearn/units/1/08.jpg",
         "/assets/strathearn/units/1/09.jpg",
         "/assets/strathearn/units/1/10.jpg",
-        "/assets/strathearn/units/1/11.jpg",
         "/assets/strathearn/units/1/12.jpg",
         "/assets/strathearn/units/1/13.jpg",
         "/assets/strathearn/units/1/14.jpg",
         "/assets/strathearn/units/1/15.jpg",
         "/assets/strathearn/units/1/16.jpg",
-        "/assets/strathearn/units/1/17.jpg",
-        "/assets/strathearn/units/1/18.jpg"
+        "/assets/strathearn/units/1/17.jpg"
       ]
     }
   ],
