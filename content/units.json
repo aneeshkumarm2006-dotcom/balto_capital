@@ -409,7 +409,17 @@
     {
       "unit": "14",
       "type": "1 Bedroom",
-      "rent": 1175
+      "rent": 1175,
+      "images": [
+        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
+        "/assets/layali/units/14/uploads/1784039011286-01.jpg",
+        "/assets/layali/units/14/uploads/1784039012974-01.jpg",
+        "/assets/layali/units/14/uploads/1784039014580-01.jpg",
+        "/assets/layali/units/14/uploads/1784039016405-01.jpg",
+        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
+        "/assets/layali/units/14/uploads/1784039020500-01.jpg",
+        "/assets/layali/units/14/uploads/1784039022934-01.jpg"
+      ]
     },
     {
       "unit": "17",
