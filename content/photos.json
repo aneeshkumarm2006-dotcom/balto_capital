@@ -261,7 +261,13 @@
   "kafa": {
     "hero": "/assets/kafa/uploads/1783958318607-01.jpg",
     "gallery": [
-      "/assets/kafa/01-main.jpg"
+      "/assets/kafa/01-main.jpg",
+      "/assets/kafa/uploads/1784041036598-01.jpg",
+      "/assets/kafa/uploads/1784041039667-01.jpg",
+      "/assets/kafa/uploads/1784041034157-01.jpg",
+      "/assets/kafa/uploads/1784041001100-01.jpg",
+      "/assets/kafa/uploads/1784040992733-01.jpg",
+      "/assets/kafa/uploads/1784040995941-01.jpg"
     ],
     "hidden": [
       "/assets/kafa/01-main.jpg"
