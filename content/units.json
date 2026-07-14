@@ -392,6 +392,29 @@
         "/assets/layali/units/15/10.jpg",
         "/assets/layali/units/15/11.jpg"
       ]
+    },
+    {
+      "unit": "4",
+      "type": "1 Bedroom",
+      "rent": 1175,
+      "images": [
+        "/assets/layali/units/4/uploads/1784038372522-01.jpg",
+        "/assets/layali/units/4/uploads/1784038374382-01.jpg",
+        "/assets/layali/units/4/uploads/1784038375875-01.jpg",
+        "/assets/layali/units/4/uploads/1784038377441-01.jpg",
+        "/assets/layali/units/4/uploads/1784038378721-01.jpg",
+        "/assets/layali/units/4/uploads/1784038380120-01.jpg"
+      ]
+    },
+    {
+      "unit": "14",
+      "type": "1 Bedroom",
+      "rent": 1175
+    },
+    {
+      "unit": "17",
+      "type": "1 Bedroom",
+      "rent": 1175
     }
   ],
   "cedar-manor": [
