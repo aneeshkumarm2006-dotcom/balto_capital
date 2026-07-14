@@ -235,6 +235,7 @@
     "address": "2-11/A",
     "bedrooms": [
       0
-    ]
+    ],
+    "archived": true
   }
 ]
