@@ -157,6 +157,17 @@ export const IconChevronRight = (p: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const IconGrip = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)} fill="currentColor" stroke="none">
+    <circle cx="9" cy="5" r="1.4" />
+    <circle cx="9" cy="12" r="1.4" />
+    <circle cx="9" cy="19" r="1.4" />
+    <circle cx="15" cy="5" r="1.4" />
+    <circle cx="15" cy="12" r="1.4" />
+    <circle cx="15" cy="19" r="1.4" />
+  </svg>
+);
+
 export const IconAlert = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}>
     <path d="M12 9v4M12 17h.01" />

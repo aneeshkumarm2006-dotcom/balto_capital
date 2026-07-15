@@ -15,7 +15,11 @@ import {
 import { ConfirmDialog, PageHead, useToast } from '@/components/admin/ui';
 import { PropertyTabs } from '@/components/admin/PropertyTabs';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
+import { Lightbox } from '@/components/Lightbox';
 import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconGrip,
   IconImage,
   IconPlus,
   IconSpinner,
@@ -69,6 +73,22 @@ export default function PropertyUnitsPage() {
   const previewsRef = useRef<Record<string, string>>({});
   previewsRef.current = previews;
   const fileRef = useRef<HTMLInputElement>(null);
+  /* Drag-to-reorder state for a unit's own photo strip. `unit` is the row
+     index so a drag can never cross between units; `over` is the tile the
+     pointer is currently hovering. */
+  const [photoDrag, setPhotoDrag] = useState<
+    { unit: number; from: number; over: number } | null
+  >(null);
+  /* Full-screen preview of a unit's photos — reuses the public Lightbox so
+     it looks and browses exactly like the live listing. */
+  const [preview, setPreview] = useState<
+    { photos: string[]; index: number; label: string } | null
+  >(null);
+  /* Drag-to-reorder state for the unit rows (whole suites). `from` is the row
+     being dragged, `over` is the row currently under the pointer. */
+  const [rowDrag, setRowDrag] = useState<
+    { from: number; over: number } | null
+  >(null);
 
   /* Free object URLs when the page unmounts. */
   useEffect(
@@ -189,6 +209,59 @@ export default function PropertyUnitsPage() {
     }
   };
 
+  /** Reorder one photo within a unit's strip — both the drag handlers and the
+   *  ◀ ▶ buttons call this. Order is just array order, saved with the row on
+   *  Save changes, so the suite's gallery shows photos in this sequence. */
+  const moveUnitPhoto = (index: number, from: number, to: number) => {
+    const row = rows[index];
+    if (!row) return;
+    const images = [...(row.images ?? [])];
+    if (
+      from < 0 || from >= images.length ||
+      to < 0 || to >= images.length ||
+      from === to
+    ) {
+      return;
+    }
+    const [moved] = images.splice(from, 1);
+    images.splice(to, 0, moved);
+    editRow(index, { images });
+  };
+
+  /** Open the full-screen Lightbox at a given photo of a unit. Resolves staged
+   *  (not-yet-published) uploads through their local object URLs. */
+  const openPreview = (index: number, photoIndex: number) => {
+    const row = rows[index];
+    if (!row) return;
+    const photos = (row.images ?? []).map((p) => previews[p] ?? p);
+    if (photos.length === 0) return;
+    setPreview({
+      photos,
+      index: photoIndex,
+      label: `Unit ${row.unit.trim() || `#${index + 1}`}`,
+    });
+  };
+
+  /** Reorder whole unit rows (suites) by dragging the row's grip handle. The
+   *  new order is the table order, saved with Save changes and reflected in
+   *  the public "Available suites" list. */
+  const moveUnitRow = (from: number, to: number) => {
+    if (
+      from < 0 || to < 0 ||
+      from >= rows.length || to >= rows.length ||
+      from === to
+    ) {
+      return;
+    }
+    setRows((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(from, 1);
+      next.splice(to, 0, moved);
+      return next;
+    });
+    setOpenPhotos(null);
+  };
+
   const save = async () => {
     if (!valid || busy) return;
     setBusy(true);
@@ -291,6 +364,7 @@ export default function PropertyUnitsPage() {
             <table className="adm-table">
               <thead>
                 <tr>
+                  <th scope="col" aria-label="Reorder" style={{ width: 32 }} />
                   <th scope="col">Unit #</th>
                   <th scope="col">Type</th>
                   <th scope="col">Monthly rent</th>
@@ -302,7 +376,46 @@ export default function PropertyUnitsPage() {
               <tbody>
                 {rows.map((row, i) => (
                   <Fragment key={i}>
-                  <tr>
+                  <tr
+                    onDragOver={(e) => {
+                      if (!rowDrag) return;
+                      e.preventDefault();
+                      setRowDrag((d) =>
+                        d && d.over !== i ? { ...d, over: i } : d
+                      );
+                    }}
+                    onDrop={(e) => {
+                      if (!rowDrag) return;
+                      e.preventDefault();
+                      moveUnitRow(rowDrag.from, i);
+                      setRowDrag(null);
+                    }}
+                    style={{
+                      opacity: rowDrag?.from === i ? 0.4 : 1,
+                      background:
+                        rowDrag && rowDrag.over === i && rowDrag.from !== i
+                          ? 'rgba(184,150,90,0.12)'
+                          : undefined,
+                    }}
+                  >
+                    <td style={{ width: 32, paddingRight: 0 }}>
+                      <button
+                        type="button"
+                        className="adm-btn-bare"
+                        aria-label={`Drag to reorder unit ${row.unit.trim() || `#${i + 1}`}`}
+                        title="Drag to reorder this unit"
+                        draggable
+                        onDragStart={(e) => {
+                          e.dataTransfer.effectAllowed = 'move';
+                          setOpenPhotos(null);
+                          setRowDrag({ from: i, over: i });
+                        }}
+                        onDragEnd={() => setRowDrag(null)}
+                        style={{ cursor: 'grab' }}
+                      >
+                        <IconGrip />
+                      </button>
+                    </td>
                     <td>
                       <input
                         className="adm-input"
@@ -377,34 +490,118 @@ export default function PropertyUnitsPage() {
                   </tr>
                   {openPhotos === i && (
                     <tr>
-                      <td colSpan={6} style={{ background: 'rgba(239,232,220,0.3)' }}>
+                      <td colSpan={7} style={{ background: 'rgba(239,232,220,0.3)' }}>
                         <div className="adm-row" style={{ alignItems: 'flex-start', padding: '6px 0' }}>
                           <div className="adm-row adm-grow" style={{ gap: 10 }}>
-                            {(row.images ?? []).map((photo) => (
-                              <div key={photo} style={{ position: 'relative' }}>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                  src={previews[photo] ?? photo}
-                                  alt=""
-                                  loading="lazy"
-                                  style={{ width: 84, height: 64, objectFit: 'cover', border: '1px solid var(--adm-hairline)' }}
-                                />
-                                <button
-                                  type="button"
-                                  aria-label="Remove this photo"
-                                  onClick={() => removeUnitPhoto(i, photo)}
+                            {(row.images ?? []).map((photo, pi, arr) => {
+                              const isDragSource =
+                                photoDrag?.unit === i && photoDrag.from === pi;
+                              const isDragOver =
+                                photoDrag?.unit === i &&
+                                photoDrag.over === pi &&
+                                photoDrag.from !== pi;
+                              return (
+                              <div
+                                key={photo}
+                                draggable
+                                onDragStart={() =>
+                                  setPhotoDrag({ unit: i, from: pi, over: pi })
+                                }
+                                onDragOver={(e) => {
+                                  e.preventDefault();
+                                  setPhotoDrag((d) =>
+                                    d && d.unit === i && d.over !== pi
+                                      ? { ...d, over: pi }
+                                      : d
+                                  );
+                                }}
+                                onDrop={(e) => {
+                                  e.preventDefault();
+                                  if (photoDrag && photoDrag.unit === i) {
+                                    moveUnitPhoto(i, photoDrag.from, pi);
+                                  }
+                                  setPhotoDrag(null);
+                                }}
+                                onDragEnd={() => setPhotoDrag(null)}
+                                style={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: 4,
+                                  cursor: 'grab',
+                                  opacity: isDragSource ? 0.4 : 1,
+                                }}
+                              >
+                                <div
                                   style={{
-                                    position: 'absolute', top: -7, right: -7,
-                                    width: 20, height: 20, display: 'flex',
-                                    alignItems: 'center', justifyContent: 'center',
-                                    background: 'var(--adm-ink)', color: 'var(--adm-ivory)',
-                                    border: 0, borderRadius: '50%', cursor: 'pointer',
+                                    position: 'relative',
+                                    width: 84,
+                                    height: 64,
+                                    outline: isDragOver
+                                      ? '2px solid var(--adm-gold)'
+                                      : 'none',
+                                    outlineOffset: 1,
                                   }}
                                 >
-                                  <IconX style={{ width: 10, height: 10 }} />
-                                </button>
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={previews[photo] ?? photo}
+                                    alt=""
+                                    loading="lazy"
+                                    onClick={() => openPreview(i, pi)}
+                                    title="Click to preview full screen"
+                                    style={{
+                                      width: 84, height: 64, objectFit: 'cover',
+                                      border: '1px solid var(--adm-hairline)',
+                                      cursor: 'zoom-in',
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    aria-label="Remove this photo"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      removeUnitPhoto(i, photo);
+                                    }}
+                                    style={{
+                                      position: 'absolute', top: -7, right: -7,
+                                      width: 20, height: 20, display: 'flex',
+                                      alignItems: 'center', justifyContent: 'center',
+                                      background: 'var(--adm-ink)', color: 'var(--adm-ivory)',
+                                      border: 0, borderRadius: '50%', cursor: 'pointer',
+                                    }}
+                                  >
+                                    <IconX style={{ width: 10, height: 10 }} />
+                                  </button>
+                                </div>
+                                {arr.length > 1 && (
+                                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <button
+                                      type="button"
+                                      className="adm-btn-bare"
+                                      aria-label={`Move photo ${pi + 1} earlier`}
+                                      title="Move earlier"
+                                      disabled={pi === 0}
+                                      onClick={() => moveUnitPhoto(i, pi, pi - 1)}
+                                      style={{ padding: 2, opacity: pi === 0 ? 0.3 : 1 }}
+                                    >
+                                      <IconChevronLeft style={{ width: 15, height: 15 }} />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="adm-btn-bare"
+                                      aria-label={`Move photo ${pi + 1} later`}
+                                      title="Move later"
+                                      disabled={pi === arr.length - 1}
+                                      onClick={() => moveUnitPhoto(i, pi, pi + 1)}
+                                      style={{ padding: 2, opacity: pi === arr.length - 1 ? 0.3 : 1 }}
+                                    >
+                                      <IconChevronRight style={{ width: 15, height: 15 }} />
+                                    </button>
+                                  </div>
+                                )}
                               </div>
-                            ))}
+                              );
+                            })}
                             {(row.images ?? []).length === 0 && (
                               <span className="adm-muted" style={{ fontSize: 13 }}>
                                 No photos yet — renters see these in the suite&apos;s
@@ -509,6 +706,15 @@ export default function PropertyUnitsPage() {
           </div>
         </>
       )}
+
+      <Lightbox
+        open={preview !== null}
+        photos={preview?.photos ?? []}
+        index={preview?.index ?? 0}
+        label={preview?.label}
+        onIndexChange={(i) => setPreview((p) => (p ? { ...p, index: i } : p))}
+        onClose={() => setPreview(null)}
+      />
     </>
   );
 }
