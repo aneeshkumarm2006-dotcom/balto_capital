@@ -207,10 +207,22 @@
       "/assets/layali/03.png",
       "/assets/layali/04.png",
       "/assets/layali/05.png",
-      "/assets/layali/06.png"
+      "/assets/layali/06.png",
+      "/assets/layali/uploads/1784126541788-01.jpg",
+      "/assets/layali/uploads/1784126522982-01.jpg",
+      "/assets/layali/uploads/1784126535950-01.jpg",
+      "/assets/layali/uploads/1784126519033-01.jpg",
+      "/assets/layali/uploads/1784126530753-01.jpg",
+      "/assets/layali/uploads/1784126510923-01.jpg",
+      "/assets/layali/uploads/1784126515110-01.jpg"
     ],
     "hidden": [
-      "/assets/layali/01-main.jpg"
+      "/assets/layali/01-main.jpg",
+      "/assets/layali/02.png",
+      "/assets/layali/03.png",
+      "/assets/layali/04.png",
+      "/assets/layali/06.png",
+      "/assets/layali/05.png"
     ],
     "tags": {
       "/assets/layali/uploads/1783958455324-01.jpg": "Exterior",
