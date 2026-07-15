@@ -244,7 +244,15 @@
       "unit": "302",
       "type": "1 Bedroom",
       "rent": 1070,
-      "image": "https://drive.google.com/drive/folders/1aFoXxpP7iKJi4SSKvx2FCjiSMxMMSb2x"
+      "image": "https://drive.google.com/drive/folders/1aFoXxpP7iKJi4SSKvx2FCjiSMxMMSb2x",
+      "images": [
+        "/assets/royal-lady/units/302/uploads/1784141276536-01.jpg",
+        "/assets/royal-lady/units/302/uploads/1784141277850-01.jpg",
+        "/assets/royal-lady/units/302/uploads/1784141279540-01.jpg",
+        "/assets/royal-lady/units/302/uploads/1784141280907-01.jpg",
+        "/assets/royal-lady/units/302/uploads/1784141282045-01.jpg",
+        "/assets/royal-lady/units/302/uploads/1784141283339-01.jpg"
+      ]
     },
     {
       "unit": "303",
