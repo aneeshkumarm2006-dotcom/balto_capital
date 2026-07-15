@@ -139,7 +139,8 @@
       0,
       1
     ],
-    "featured": true
+    "featured": true,
+    "hideDetailGallery": true
   },
   {
     "slug": "parkdale",
