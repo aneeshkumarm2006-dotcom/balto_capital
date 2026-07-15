@@ -342,6 +342,20 @@
   ],
   "layali": [
     {
+      "unit": "4",
+      "type": "1 Bedroom",
+      "rent": 1175,
+      "images": [
+        "/assets/layali/units/4/uploads/1784038372522-01.jpg",
+        "/assets/layali/units/4/uploads/1784038374382-01.jpg",
+        "/assets/layali/units/4/uploads/1784038375875-01.jpg",
+        "/assets/layali/units/4/uploads/1784038377441-01.jpg",
+        "/assets/layali/units/4/uploads/1784038378721-01.jpg",
+        "/assets/layali/units/4/uploads/1784038380120-01.jpg"
+      ],
+      "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/layali-house/termsandotheritems.aspx"
+    },
+    {
       "unit": "7",
       "type": "1 Bedroom",
       "rent": 1025,
@@ -351,6 +365,21 @@
         "/assets/layali/units/7/02.jpg",
         "/assets/layali/units/7/03.jpg",
         "/assets/layali/units/7/04.jpg"
+      ]
+    },
+    {
+      "unit": "14",
+      "type": "1 Bedroom",
+      "rent": 1175,
+      "images": [
+        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
+        "/assets/layali/units/14/uploads/1784039011286-01.jpg",
+        "/assets/layali/units/14/uploads/1784039012974-01.jpg",
+        "/assets/layali/units/14/uploads/1784039014580-01.jpg",
+        "/assets/layali/units/14/uploads/1784039016405-01.jpg",
+        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
+        "/assets/layali/units/14/uploads/1784039020500-01.jpg",
+        "/assets/layali/units/14/uploads/1784039022934-01.jpg"
       ]
     },
     {
@@ -370,35 +399,6 @@
         "/assets/layali/units/15/09.jpg",
         "/assets/layali/units/15/10.jpg",
         "/assets/layali/units/15/11.jpg"
-      ]
-    },
-    {
-      "unit": "4",
-      "type": "1 Bedroom",
-      "rent": 1175,
-      "images": [
-        "/assets/layali/units/4/uploads/1784038372522-01.jpg",
-        "/assets/layali/units/4/uploads/1784038374382-01.jpg",
-        "/assets/layali/units/4/uploads/1784038375875-01.jpg",
-        "/assets/layali/units/4/uploads/1784038377441-01.jpg",
-        "/assets/layali/units/4/uploads/1784038378721-01.jpg",
-        "/assets/layali/units/4/uploads/1784038380120-01.jpg"
-      ],
-      "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/layali-house/termsandotheritems.aspx"
-    },
-    {
-      "unit": "14",
-      "type": "1 Bedroom",
-      "rent": 1175,
-      "images": [
-        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
-        "/assets/layali/units/14/uploads/1784039011286-01.jpg",
-        "/assets/layali/units/14/uploads/1784039012974-01.jpg",
-        "/assets/layali/units/14/uploads/1784039014580-01.jpg",
-        "/assets/layali/units/14/uploads/1784039016405-01.jpg",
-        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
-        "/assets/layali/units/14/uploads/1784039020500-01.jpg",
-        "/assets/layali/units/14/uploads/1784039022934-01.jpg"
       ]
     },
     {
