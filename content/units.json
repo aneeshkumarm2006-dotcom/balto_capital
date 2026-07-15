@@ -694,6 +694,24 @@
       ]
     },
     {
+      "unit": "302",
+      "type": "2 Bedroom",
+      "rent": 1295,
+      "image": "https://drive.google.com/drive/folders/1Po_NeOYvzFIwSPJ9fmsGFnZJsCpDcixA?usp=drive_link",
+      "images": [
+        "/assets/acadian/units/302/01.jpg",
+        "/assets/acadian/units/302/02.jpg",
+        "/assets/acadian/units/302/03.jpg",
+        "/assets/acadian/units/302/04.jpg",
+        "/assets/acadian/units/302/05.jpg",
+        "/assets/acadian/units/302/06.jpg",
+        "/assets/acadian/units/302/07.jpg",
+        "/assets/acadian/units/302/08.jpg",
+        "/assets/acadian/units/302/09.jpg",
+        "/assets/acadian/units/302/10.jpg"
+      ]
+    },
+    {
       "unit": "306",
       "type": "1 Bedroom",
       "rent": 1150,
@@ -710,24 +728,6 @@
         "/assets/acadian/units/306/11.jpg",
         "/assets/acadian/units/306/12.jpg",
         "/assets/acadian/units/306/13.jpg"
-      ]
-    },
-    {
-      "unit": "302",
-      "type": "2 Bedroom",
-      "rent": 1295,
-      "image": "https://drive.google.com/drive/folders/1Po_NeOYvzFIwSPJ9fmsGFnZJsCpDcixA?usp=drive_link",
-      "images": [
-        "/assets/acadian/units/302/01.jpg",
-        "/assets/acadian/units/302/02.jpg",
-        "/assets/acadian/units/302/03.jpg",
-        "/assets/acadian/units/302/04.jpg",
-        "/assets/acadian/units/302/05.jpg",
-        "/assets/acadian/units/302/06.jpg",
-        "/assets/acadian/units/302/07.jpg",
-        "/assets/acadian/units/302/08.jpg",
-        "/assets/acadian/units/302/09.jpg",
-        "/assets/acadian/units/302/10.jpg"
       ]
     }
   ],
