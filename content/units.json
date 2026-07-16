@@ -644,6 +644,11 @@
         "/assets/palisades/units/205/uploads/1784046280564-01.jpg",
         "/assets/palisades/units/205/uploads/1784046281994-01.jpg"
       ]
+    },
+    {
+      "unit": "test",
+      "type": "3 Bedroom",
+      "rent": 5000
     }
   ],
   "acadian": [
