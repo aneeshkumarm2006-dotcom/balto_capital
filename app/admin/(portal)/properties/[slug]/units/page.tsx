@@ -89,6 +89,9 @@ export default function PropertyUnitsPage() {
   const [rowDrag, setRowDrag] = useState<
     { from: number; over: number } | null
   >(null);
+  /* Highlight state for the per-unit drag-and-drop file upload zone. Only one
+     unit's photo panel is open at a time, so a single flag is enough. */
+  const [uploadDragOver, setUploadDragOver] = useState(false);
 
   /* Free object URLs when the page unmounts. */
   useEffect(
@@ -158,7 +161,9 @@ export default function PropertyUnitsPage() {
   };
 
   const addUnitPhotos = async (index: number, list: FileList | null) => {
-    const files = list ? Array.from(list) : [];
+    const files = (list ? Array.from(list) : []).filter((f) =>
+      f.type.startsWith('image/')
+    );
     const row = rows[index];
     if (!row || files.length === 0) return;
     const unitNo = row.unit.trim();
@@ -491,8 +496,8 @@ export default function PropertyUnitsPage() {
                   {openPhotos === i && (
                     <tr>
                       <td colSpan={7} style={{ background: 'rgba(239,232,220,0.3)' }}>
-                        <div className="adm-row" style={{ alignItems: 'flex-start', padding: '6px 0' }}>
-                          <div className="adm-row adm-grow" style={{ gap: 10 }}>
+                        <div style={{ padding: '10px 0' }}>
+                          <div className="adm-row" style={{ gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
                             {(row.images ?? []).map((photo, pi, arr) => {
                               const isDragSource =
                                 photoDrag?.unit === i && photoDrag.from === pi;
@@ -611,12 +616,30 @@ export default function PropertyUnitsPage() {
                           </div>
                           <button
                             type="button"
-                            className="adm-btn ghost sm"
+                            className={`adm-dropzone${uploadDragOver ? ' drag' : ''}`}
+                            style={{ width: '100%' }}
                             disabled={uploading}
                             onClick={() => fileRef.current?.click()}
+                            onDragOver={(e) => {
+                              if (!e.dataTransfer.types.includes('Files')) return;
+                              e.preventDefault();
+                              setUploadDragOver(true);
+                            }}
+                            onDragLeave={() => setUploadDragOver(false)}
+                            onDrop={(e) => {
+                              if (!e.dataTransfer.types.includes('Files')) return;
+                              e.preventDefault();
+                              setUploadDragOver(false);
+                              void addUnitPhotos(i, e.dataTransfer.files);
+                            }}
                           >
                             {uploading ? <IconSpinner /> : <IconUpload />}
-                            {uploading ? 'Uploading…' : 'Upload photos'}
+                            <span>
+                              {uploading ? 'Uploading…' : 'Drag photos here or click to upload'}
+                            </span>
+                            <span className="adm-muted" style={{ fontSize: 12 }}>
+                              JPG or PNG · resized automatically
+                            </span>
                           </button>
                         </div>
                         {!row.unit.trim() && (
