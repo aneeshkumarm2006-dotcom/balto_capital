@@ -795,6 +795,11 @@
         "/assets/acadian/units/306/12.jpg",
         "/assets/acadian/units/306/13.jpg"
       ]
+    },
+    {
+      "unit": "301",
+      "type": "1 Bedroom",
+      "rent": 1115
     }
   ],
   "parkdale": [
