@@ -573,6 +573,11 @@
         "/assets/courts-manor/units/5/11.jpg",
         "/assets/courts-manor/units/5/12.jpg"
       ]
+    },
+    {
+      "unit": "25",
+      "type": "1 Bedroom",
+      "rent": 1140
     }
   ],
   "royal-manor": [
