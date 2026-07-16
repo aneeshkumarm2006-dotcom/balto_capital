@@ -530,6 +530,11 @@
         "/assets/cedar-manor/units/17/uploads/1783969786078-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1783969860376-01.jpg"
       ]
+    },
+    {
+      "unit": "6",
+      "type": "1 Bedroom",
+      "rent": 1025
     }
   ],
   "courts-manor": [
