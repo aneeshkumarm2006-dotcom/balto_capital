@@ -465,6 +465,25 @@
       ]
     },
     {
+      "unit": "6",
+      "type": "1 Bedroom",
+      "rent": 1025,
+      "images": [
+        "/assets/cedar-manor/units/6/uploads/1784219415278-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219417110-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219418710-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219420253-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219421891-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219424148-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219425794-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219427408-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219429000-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219430612-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219432969-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219434604-01.jpg"
+      ]
+    },
+    {
       "unit": "7",
       "type": "1 Bedroom",
       "rent": 1015,
@@ -530,11 +549,6 @@
         "/assets/cedar-manor/units/17/uploads/1783969786078-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1783969860376-01.jpg"
       ]
-    },
-    {
-      "unit": "6",
-      "type": "1 Bedroom",
-      "rent": 1025
     }
   ],
   "courts-manor": [
