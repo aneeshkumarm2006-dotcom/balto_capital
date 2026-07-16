@@ -577,7 +577,19 @@
     {
       "unit": "25",
       "type": "1 Bedroom",
-      "rent": 1140
+      "rent": 1140,
+      "images": [
+        "/assets/courts-manor/units/25/uploads/1784230359894-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230361899-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230363492-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230365154-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230366751-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230368316-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230369884-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230371547-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230373113-01.jpg",
+        "/assets/courts-manor/units/25/uploads/1784230375032-01.jpg"
+      ]
     }
   ],
   "royal-manor": [
