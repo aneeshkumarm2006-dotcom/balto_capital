@@ -799,7 +799,18 @@
     {
       "unit": "301",
       "type": "1 Bedroom",
-      "rent": 1115
+      "rent": 1115,
+      "images": [
+        "/assets/acadian/units/301/uploads/1784236626719-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236631417-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236636055-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236640666-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236646230-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236650583-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236688222-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236693418-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236695914-01.jpg"
+      ]
     }
   ],
   "parkdale": [
