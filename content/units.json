@@ -202,7 +202,8 @@
         "/assets/royal-lady/units/105/09.jpg",
         "/assets/royal-lady/units/105/10.jpg",
         "/assets/royal-lady/units/105/11.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "107",
