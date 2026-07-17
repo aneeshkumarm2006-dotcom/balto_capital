@@ -113,6 +113,10 @@ export default function ResidenceDetailPage({
     ? r.units.map((u) => ({ unit: u.unit, type: u.type, price: u.rent, bed: BED_NUM[u.type] ?? -1, image: u.image, images: u.images, applyUrl: u.applyUrl }))
     : plans.map((p) => ({ unit: '—', type: p.label, price: p.price, bed: p.bed, image: undefined as string | undefined, images: undefined as string[] | undefined, applyUrl: undefined as string | undefined }));
 
+  // No available (non-archived) suites → the listing reads "—" bedrooms and
+  // "No" availability, matching the empty "Available suites" list below.
+  const hasUnits = (r.units?.length ?? 0) > 0;
+
   const others = residencesByCity(r.city)
     .filter((x) => x.id !== r.id)
     .slice(0, 3);
@@ -289,11 +293,17 @@ export default function ResidenceDetailPage({
               {[
                 {
                   label: 'Bedrooms',
-                  val: r.bedrooms.replace(' Bedrooms', '').replace(' Bedroom', ''),
+                  val: hasUnits
+                    ? r.bedrooms.replace(' Bedrooms', '').replace(' Bedroom', '')
+                    : '—',
                 },
                 {
                   label: 'Available',
-                  val: r.availability === 'available' ? 'Now' : 'Soon',
+                  val: !hasUnits
+                    ? 'No'
+                    : r.availability === 'available'
+                    ? 'Now'
+                    : 'Soon',
                 },
               ].map((s) => (
                 <div key={s.label}>
@@ -344,7 +354,7 @@ export default function ResidenceDetailPage({
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
             <h2 className="h2 serif" style={{ marginBottom: 12 }}>Available suites</h2>
-            {!r.units?.length ? (
+            {!hasUnits ? (
               <p className="small muted" style={{ marginTop: 16 }}>
                 There are no suites available at the moment.
               </p>
