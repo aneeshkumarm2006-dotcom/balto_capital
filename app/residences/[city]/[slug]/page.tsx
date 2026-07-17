@@ -267,12 +267,14 @@ export default function ResidenceDetailPage({
             <p className="body muted" style={{ fontSize: 16, marginBottom: 12 }}>
               {r.address}
             </p>
-            <p style={{ fontSize: 15 }}>
-              <span className="serif" style={{ fontSize: 19, fontWeight: 500 }}>
-                From {formatPrice(r.priceFrom)}
-              </span>
-              <span className="muted"> /month net · {bedroomShort(r.bedroomOptions)}</span>
-            </p>
+            {hasUnits && (
+              <p style={{ fontSize: 15 }}>
+                <span className="serif" style={{ fontSize: 19, fontWeight: 500 }}>
+                  From {formatPrice(r.priceFrom)}
+                </span>
+                <span className="muted"> /month net · {bedroomShort(r.bedroomOptions)}</span>
+              </p>
+            )}
             {r.promo && (
               <div className="promo-banner" style={{ marginTop: 18 }}>
                 <span className="promo-banner-tag">Limited offer</span>
@@ -513,7 +515,11 @@ export default function ResidenceDetailPage({
                 </span>
               </div>
               <div className="small muted" style={{ marginBottom: 6 }}>
-                {r.availability === 'available' ? 'Available now' : 'Coming soon'}
+                {!hasUnits
+                  ? 'Not available'
+                  : r.availability === 'available'
+                  ? 'Available now'
+                  : 'Coming soon'}
               </div>
               <div className="caption muted" style={{ marginBottom: 28 }}>
                 Net effective rent, what you pay after any promotion.
