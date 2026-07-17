@@ -633,7 +633,8 @@
         "/assets/royal-manor/units/9/06.jpg",
         "/assets/royal-manor/units/9/07.jpg",
         "/assets/royal-manor/units/9/08.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "12",
