@@ -821,7 +821,8 @@
         "/assets/acadian/units/306/11.jpg",
         "/assets/acadian/units/306/12.jpg",
         "/assets/acadian/units/306/13.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "301",
