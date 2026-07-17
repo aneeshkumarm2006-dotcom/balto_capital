@@ -17,6 +17,7 @@ import { PropertyTabs } from '@/components/admin/PropertyTabs';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
 import { Lightbox } from '@/components/Lightbox';
 import {
+  IconArchive,
   IconChevronLeft,
   IconChevronRight,
   IconGrip,
@@ -24,6 +25,7 @@ import {
   IconPlus,
   IconSpinner,
   IconTrash,
+  IconUndo,
   IconUpload,
   IconX,
 } from '@/components/admin/icons';
@@ -41,6 +43,7 @@ interface UnitRow {
   image?: string;
   images?: string[];
   applyUrl?: string;
+  archived?: boolean;
 }
 
 interface Taxonomies {
@@ -137,6 +140,21 @@ export default function PropertyUnitsPage() {
 
   const editRow = (index: number, patch: Partial<UnitRow>) => {
     setRows((prev) => prev.map((r, i) => (i === index ? { ...r, ...patch } : r)));
+  };
+
+  /** Archive or restore a single suite. Archived units stay in the CMS so they
+   *  can be brought back, but are hidden from the public "Available suites"
+   *  list and from-price. Applied to the draft — saved with Save changes. */
+  const toggleArchive = (index: number) => {
+    setRows((prev) =>
+      prev.map((r, i) => {
+        if (i !== index) return r;
+        const next = { ...r };
+        if (next.archived) delete next.archived;
+        else next.archived = true;
+        return next;
+      })
+    );
   };
 
   const addUnit = () => {
@@ -276,6 +294,7 @@ export default function PropertyUnitsPage() {
       if (applyUrl) next.applyUrl = applyUrl;
       else delete next.applyUrl;
       if (!next.images || next.images.length === 0) delete next.images;
+      if (!next.archived) delete next.archived;
       return next;
     });
     const nextRecord: UnitsRecord = { ...record };
@@ -400,6 +419,8 @@ export default function PropertyUnitsPage() {
                       background:
                         rowDrag && rowDrag.over === i && rowDrag.from !== i
                           ? 'rgba(184,150,90,0.12)'
+                          : row.archived
+                          ? 'rgba(107,122,143,0.10)'
                           : undefined,
                     }}
                   >
@@ -422,13 +443,21 @@ export default function PropertyUnitsPage() {
                       </button>
                     </td>
                     <td>
-                      <input
-                        className="adm-input"
-                        style={{ width: 90 }}
-                        value={row.unit}
-                        aria-label={`Unit number, row ${i + 1}`}
-                        onChange={(e) => editRow(i, { unit: e.target.value })}
-                      />
+                      <div
+                        className="adm-row"
+                        style={{ gap: 6, flexWrap: 'wrap', alignItems: 'center' }}
+                      >
+                        <input
+                          className="adm-input"
+                          style={{ width: 90 }}
+                          value={row.unit}
+                          aria-label={`Unit number, row ${i + 1}`}
+                          onChange={(e) => editRow(i, { unit: e.target.value })}
+                        />
+                        {row.archived && (
+                          <span className="adm-badge danger">Archived</span>
+                        )}
+                      </div>
                     </td>
                     <td>
                       <Dropdown
@@ -483,14 +512,37 @@ export default function PropertyUnitsPage() {
                       </button>
                     </td>
                     <td>
-                      <button
-                        type="button"
-                        className="adm-btn-bare"
-                        aria-label={`Remove unit ${row.unit.trim() || `#${i + 1}`}`}
-                        onClick={() => setPendingRemove(i)}
+                      <div
+                        className="adm-row"
+                        style={{ gap: 2, flexWrap: 'nowrap', justifyContent: 'flex-end' }}
                       >
-                        <IconTrash />
-                      </button>
+                        <button
+                          type="button"
+                          className="adm-btn-bare"
+                          aria-label={
+                            row.archived
+                              ? `Restore unit ${row.unit.trim() || `#${i + 1}`}`
+                              : `Archive unit ${row.unit.trim() || `#${i + 1}`}`
+                          }
+                          title={
+                            row.archived
+                              ? 'Restore — show on the website again'
+                              : 'Archive — hide from the website, keep in the CMS'
+                          }
+                          onClick={() => toggleArchive(i)}
+                        >
+                          {row.archived ? <IconUndo /> : <IconArchive />}
+                        </button>
+                        <button
+                          type="button"
+                          className="adm-btn-bare"
+                          aria-label={`Remove unit ${row.unit.trim() || `#${i + 1}`}`}
+                          title="Delete permanently"
+                          onClick={() => setPendingRemove(i)}
+                        >
+                          <IconTrash />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   {openPhotos === i && (

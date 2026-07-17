@@ -168,6 +168,14 @@ export const IconGrip = (p: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const IconArchive = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="3" y="4" width="18" height="4" rx="1" />
+    <path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8" />
+    <path d="M10 12h4" />
+  </svg>
+);
+
 export const IconAlert = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}>
     <path d="M12 9v4M12 17h.01" />

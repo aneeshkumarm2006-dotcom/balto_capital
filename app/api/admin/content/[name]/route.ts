@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { authorFor, sessionFromRequest } from '@/lib/admin/auth';
+import { currentRole } from '@/lib/admin/users';
 import { isContentFile, readContent, writeContent } from '@/lib/admin/store';
 
 export const runtime = 'nodejs';
@@ -23,7 +24,8 @@ export async function PUT(req: Request, { params }: Params) {
     return NextResponse.json({ error: 'Unknown content file.' }, { status: 404 });
   }
   const session = await sessionFromRequest(req);
-  if (ADMIN_ONLY.has(params.name) && session?.role !== 'admin') {
+  const role = session ? await currentRole(session.email, session.role) : null;
+  if (ADMIN_ONLY.has(params.name) && role !== 'admin') {
     return NextResponse.json(
       { error: 'Only admins can change site settings.' },
       { status: 403 }

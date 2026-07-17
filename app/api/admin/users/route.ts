@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { authorFor, sessionFromRequest } from '@/lib/admin/auth';
 import {
+  currentRole,
   hashPassword,
   isRootEmail,
   readUsers,
@@ -25,7 +26,9 @@ const publicUser = (u: User) => ({
 
 async function requireAdmin(req: Request) {
   const session = await sessionFromRequest(req);
-  if (!session || session.role !== 'admin') return null;
+  if (!session) return null;
+  const role = await currentRole(session.email, session.role);
+  if (role !== 'admin') return null;
   return session;
 }
 

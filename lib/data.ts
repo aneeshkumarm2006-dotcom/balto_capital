@@ -133,6 +133,9 @@ export interface Unit {
   images?: string[];
   /** Unit-specific ZenRentals apply URL. Overrides the per-bedroom-type link. */
   applyUrl?: string;
+  /** Archived in the CMS — kept so it can be restored, but never shown on the
+   *  public site (excluded from "Available suites" and from-price). */
+  archived?: boolean;
 }
 
 /** Non-renovated base rate card, applies to every property except Woodridge
@@ -339,7 +342,9 @@ export const portalLinksFor = (
 function makeResidence(raw: RawAsset, _idx: number): Residence {
   const seed = hashSeed(raw.slug);
   const cityLabel = CITIES[raw.city]?.label ?? raw.city;
-  const units = UNITS[raw.slug];
+  // Archived units stay in the CMS but never surface publicly — drop them
+  // before pricing and the "Available suites" list are derived.
+  const units = UNITS[raw.slug]?.filter((u) => !u.archived);
 
   let bedroomOptions: number[];
   let prices: Partial<Record<0 | 1 | 2 | 3, number>>;

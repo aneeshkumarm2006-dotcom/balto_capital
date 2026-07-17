@@ -9,6 +9,7 @@ import {
   type CommitFile,
 } from '@/lib/admin/github';
 import { CONTENT_FILES, writeContent } from '@/lib/admin/store';
+import { currentRole } from '@/lib/admin/users';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -21,7 +22,8 @@ const run = promisify(execFile);
  *  restoring content simply re-points which of them the site shows. */
 export async function POST(req: Request) {
   const session = await sessionFromRequest(req);
-  if (session?.role !== 'admin') {
+  const role = session ? await currentRole(session.email, session.role) : null;
+  if (role !== 'admin') {
     return NextResponse.json(
       { error: 'Only admins can restore history.' },
       { status: 403 }

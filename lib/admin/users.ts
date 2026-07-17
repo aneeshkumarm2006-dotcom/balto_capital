@@ -84,3 +84,18 @@ export async function writeUsers(
 export const isRootEmail = (email: string): boolean =>
   !!process.env.ADMIN_EMAIL &&
   email.trim().toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase();
+
+/** A user's CURRENT role, read from the store so it reflects a promotion or
+ *  demotion immediately. The session token freezes the role at login time —
+ *  which is why a freshly-promoted admin otherwise keeps Editor permissions
+ *  (and never sees the Danger Zone) until they sign out and back in. The
+ *  root/owner account (ADMIN_EMAIL) is always admin. Falls back to `fallback`
+ *  (the session's role) when the account isn't found — e.g. env-only setups. */
+export async function currentRole(email: string, fallback: Role): Promise<Role> {
+  if (isRootEmail(email)) return 'admin';
+  const users = await readUsers();
+  const u = users.find(
+    (x) => x.email.toLowerCase() === email.trim().toLowerCase()
+  );
+  return u && u.active ? u.role : fallback;
+}
