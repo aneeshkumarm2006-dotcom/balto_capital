@@ -856,7 +856,8 @@
         "/assets/parkdale/units/202/uploads/1784046961829-01.jpg",
         "/assets/parkdale/units/202/uploads/1784046962826-01.jpg",
         "/assets/parkdale/units/202/uploads/1784046963939-01.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "208",
@@ -878,7 +879,8 @@
         "/assets/parkdale/units/208/12.jpg",
         "/assets/parkdale/units/208/13.jpg",
         "/assets/parkdale/units/208/14.jpg"
-      ]
+      ],
+      "archived": true
     }
   ],
   "strathearn": [
