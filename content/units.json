@@ -944,5 +944,12 @@
       "type": "1 Bedroom",
       "rent": 1150
     }
+  ],
+  "arbour-green": [
+    {
+      "unit": "203",
+      "type": "1 Bedroom",
+      "rent": 1050
+    }
   ]
 }
