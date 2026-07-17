@@ -898,5 +898,22 @@
       "type": "1 Bedroom",
       "rent": 2000
     }
+  ],
+  "copper-manor": [
+    {
+      "unit": "1",
+      "type": "2 Bedroom",
+      "rent": 1375
+    },
+    {
+      "unit": "3",
+      "type": "1 Bedroom",
+      "rent": 1150
+    },
+    {
+      "unit": "4",
+      "type": "1 Bedroom",
+      "rent": 1150
+    }
   ]
 }
