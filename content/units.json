@@ -239,7 +239,8 @@
         "/assets/royal-lady/units/205/08.jpg",
         "/assets/royal-lady/units/205/09.jpg",
         "/assets/royal-lady/units/205/10.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "302",
@@ -285,7 +286,8 @@
         "/assets/royal-lady/units/307/08.jpg",
         "/assets/royal-lady/units/307/09.jpg",
         "/assets/royal-lady/units/307/10.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "402",
@@ -303,7 +305,8 @@
         "/assets/royal-lady/units/402/08.jpg",
         "/assets/royal-lady/units/402/09.jpg",
         "/assets/royal-lady/units/402/10.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "405",
@@ -321,7 +324,8 @@
         "/assets/royal-lady/units/405/08.jpg",
         "/assets/royal-lady/units/405/09.jpg",
         "/assets/royal-lady/units/405/10.jpg"
-      ]
+      ],
+      "archived": true
     }
   ],
   "catalina-estates": [
