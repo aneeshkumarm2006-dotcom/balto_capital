@@ -489,94 +489,110 @@ export default function ResidenceDetailPage({
                 padding: 36,
               }}
             >
-              <Eyebrow style={{ marginBottom: 10 }}>
-                {plans[selectedPlan]?.label.toUpperCase() ?? 'FROM'}
-              </Eyebrow>
-              <div
-                className="serif"
-                style={{
-                  fontSize: 'clamp(2.4rem, 3.5vw, 3rem)',
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  marginBottom: 8,
-                }}
-              >
-                {formatPrice(plans[selectedPlan]?.price ?? r.priceFrom)}
-                <span
-                  style={{
-                    fontSize: 15,
-                    fontFamily: 'var(--sans)',
-                    color: 'var(--muted)',
-                    marginLeft: 6,
-                    fontWeight: 400,
-                  }}
-                >
-                  /month
-                </span>
-              </div>
-              <div className="small muted" style={{ marginBottom: 6 }}>
-                {!hasUnits
-                  ? 'Not available'
-                  : r.availability === 'available'
-                  ? 'Available now'
-                  : 'Coming soon'}
-              </div>
-              <div className="caption muted" style={{ marginBottom: 28 }}>
-                Net effective rent, what you pay after any promotion.
-              </div>
-
-              <div className="divider" style={{ marginBottom: 22 }} />
-
-              <Eyebrow style={{ marginBottom: 16 }}>FLOOR PLANS</Eyebrow>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8,
-                  marginBottom: 28,
-                }}
-              >
-                {plans.map((p, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSelectedPlan(i)}
+              {hasUnits ? (
+                <>
+                  <Eyebrow style={{ marginBottom: 10 }}>
+                    {plans[selectedPlan]?.label.toUpperCase() ?? 'FROM'}
+                  </Eyebrow>
+                  <div
+                    className="serif"
                     style={{
-                      background:
-                        i === selectedPlan ? 'var(--cream)' : 'transparent',
-                      border:
-                        '1px solid ' +
-                        (i === selectedPlan
-                          ? 'var(--ink)'
-                          : 'var(--hairline-strong)'),
-                      padding: '14px 16px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      textAlign: 'left',
-                      fontFamily: 'var(--sans)',
-                      fontSize: 14,
-                      cursor: 'pointer',
-                      transition: 'all 200ms var(--ease)',
+                      fontSize: 'clamp(2.4rem, 3.5vw, 3rem)',
+                      fontWeight: 500,
+                      lineHeight: 1,
+                      marginBottom: 8,
                     }}
                   >
-                    <div
-                      className="serif"
-                      style={{ fontSize: 17, fontWeight: 500 }}
+                    {formatPrice(plans[selectedPlan]?.price ?? r.priceFrom)}
+                    <span
+                      style={{
+                        fontSize: 15,
+                        fontFamily: 'var(--sans)',
+                        color: 'var(--muted)',
+                        marginLeft: 6,
+                        fontWeight: 400,
+                      }}
                     >
-                      {p.label}
-                    </div>
-                    <div className="small serif" style={{ fontWeight: 500 }}>
-                      {formatPrice(p.price)}
-                      <span
-                        className="caption muted"
-                        style={{ fontFamily: 'var(--sans)', marginLeft: 4 }}
+                      /month
+                    </span>
+                  </div>
+                  <div className="small muted" style={{ marginBottom: 6 }}>
+                    {r.availability === 'available' ? 'Available now' : 'Coming soon'}
+                  </div>
+                  <div className="caption muted" style={{ marginBottom: 28 }}>
+                    Net effective rent, what you pay after any promotion.
+                  </div>
+
+                  <div className="divider" style={{ marginBottom: 22 }} />
+
+                  <Eyebrow style={{ marginBottom: 16 }}>FLOOR PLANS</Eyebrow>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 8,
+                      marginBottom: 28,
+                    }}
+                  >
+                    {plans.map((p, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setSelectedPlan(i)}
+                        style={{
+                          background:
+                            i === selectedPlan ? 'var(--cream)' : 'transparent',
+                          border:
+                            '1px solid ' +
+                            (i === selectedPlan
+                              ? 'var(--ink)'
+                              : 'var(--hairline-strong)'),
+                          padding: '14px 16px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          textAlign: 'left',
+                          fontFamily: 'var(--sans)',
+                          fontSize: 14,
+                          cursor: 'pointer',
+                          transition: 'all 200ms var(--ease)',
+                        }}
                       >
-                        /mo
-                      </span>
-                    </div>
-                  </button>
-                ))}
-              </div>
+                        <div
+                          className="serif"
+                          style={{ fontSize: 17, fontWeight: 500 }}
+                        >
+                          {p.label}
+                        </div>
+                        <div className="small serif" style={{ fontWeight: 500 }}>
+                          {formatPrice(p.price)}
+                          <span
+                            className="caption muted"
+                            style={{ fontFamily: 'var(--sans)', marginLeft: 4 }}
+                          >
+                            /mo
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Eyebrow style={{ marginBottom: 10 }}>Availability</Eyebrow>
+                  <div
+                    className="serif"
+                    style={{ fontSize: 24, fontWeight: 500, marginBottom: 10 }}
+                  >
+                    No suites available
+                  </div>
+                  <div className="caption muted" style={{ marginBottom: 28 }}>
+                    There are no suites available at this residence right now. Book
+                    a viewing to register interest and we&apos;ll be in touch when
+                    one opens up.
+                  </div>
+                  <div className="divider" style={{ marginBottom: 22 }} />
+                </>
+              )}
 
               <button
                 className="btn btn-primary full-w"
