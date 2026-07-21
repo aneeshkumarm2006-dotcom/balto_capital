@@ -362,6 +362,33 @@
         "/assets/catalina-estates/units/2/11.jpg"
       ],
       "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026"
+    },
+    {
+      "unit": "4",
+      "type": "1 Bedroom",
+      "rent": 1125,
+      "images": [
+        "/assets/catalina-estates/units/4/uploads/1784663330283-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663332619-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663334333-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663336115-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663339412-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663347034-01.jpg"
+      ]
+    },
+    {
+      "unit": "8",
+      "type": "1 Bedroom",
+      "rent": 1125
+    },
+    {
+      "unit": "9",
+      "type": "1 Bedroom",
+      "rent": 1125
     }
   ],
   "layali": [
