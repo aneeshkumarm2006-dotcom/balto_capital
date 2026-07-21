@@ -779,7 +779,8 @@
         "/assets/acadian/units/201/uploads/1784231439370-01.jpg",
         "/assets/acadian/units/201/uploads/1784231441458-01.jpg",
         "/assets/acadian/units/201/uploads/1784231443446-01.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "205",
@@ -827,6 +828,22 @@
       ]
     },
     {
+      "unit": "301",
+      "type": "1 Bedroom",
+      "rent": 1115,
+      "images": [
+        "/assets/acadian/units/301/uploads/1784236626719-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236631417-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236636055-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236640666-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236646230-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236650583-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236688222-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236693418-01.jpg",
+        "/assets/acadian/units/301/uploads/1784236695914-01.jpg"
+      ]
+    },
+    {
       "unit": "302",
       "type": "2 Bedroom",
       "rent": 1295,
@@ -842,7 +859,8 @@
         "/assets/acadian/units/302/08.jpg",
         "/assets/acadian/units/302/09.jpg",
         "/assets/acadian/units/302/10.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "306",
@@ -863,22 +881,6 @@
         "/assets/acadian/units/306/13.jpg"
       ],
       "archived": true
-    },
-    {
-      "unit": "301",
-      "type": "1 Bedroom",
-      "rent": 1115,
-      "images": [
-        "/assets/acadian/units/301/uploads/1784236626719-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236631417-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236636055-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236640666-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236646230-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236650583-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236688222-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236693418-01.jpg",
-        "/assets/acadian/units/301/uploads/1784236695914-01.jpg"
-      ]
     }
   ],
   "parkdale": [
