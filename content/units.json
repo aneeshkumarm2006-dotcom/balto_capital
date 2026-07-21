@@ -1028,5 +1028,37 @@
       "type": "1 Bedroom",
       "rent": 1140
     }
+  ],
+  "sky-manor": [
+    {
+      "unit": "201",
+      "type": "1 Bedroom",
+      "rent": 1240
+    },
+    {
+      "unit": "202",
+      "type": "2 Bedroom",
+      "rent": 1415
+    },
+    {
+      "unit": "204",
+      "type": "1 Bedroom",
+      "rent": 1240
+    },
+    {
+      "unit": "206",
+      "type": "2 Bedroom",
+      "rent": 1415
+    },
+    {
+      "unit": "303",
+      "type": "1 Bedroom",
+      "rent": 1240
+    },
+    {
+      "unit": "304",
+      "type": "2 Bedroom",
+      "rent": 1415
+    }
   ]
 }
