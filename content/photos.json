@@ -427,8 +427,9 @@
     }
   },
   "parkdale": {
-    "hero": "/assets/coming-soon.png",
+    "hero": "/assets/parkdale/uploads/1784648232081-01.jpg",
     "gallery": [
+      "/assets/coming-soon.png",
       "/assets/parkdale/01-main.png",
       "/assets/parkdale/02.png",
       "/assets/parkdale/03.png",
@@ -438,7 +439,9 @@
       "/assets/parkdale/uploads/1783953761619-01.jpg",
       "/assets/parkdale/uploads/1783953763216-01.jpg"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
     "tags": {
       "/assets/parkdale/01-main.png": "2 Bedroom",
       "/assets/parkdale/02.png": "2 Bedroom",
@@ -447,7 +450,8 @@
       "/assets/parkdale/uploads/1783953765898-01.jpg": "2 Bedroom",
       "/assets/parkdale/uploads/1783953764569-01.jpg": "2 Bedroom",
       "/assets/parkdale/uploads/1783953761619-01.jpg": "2 Bedroom",
-      "/assets/parkdale/uploads/1783953763216-01.jpg": "2 Bedroom"
+      "/assets/parkdale/uploads/1783953763216-01.jpg": "2 Bedroom",
+      "/assets/parkdale/uploads/1784648232081-01.jpg": "Exterior"
     }
   },
   "strathearn": {
