@@ -971,6 +971,11 @@
         "/assets/beverly/units/203/15.jpg",
         "/assets/beverly/units/203/17.jpg"
       ]
+    },
+    {
+      "unit": "202",
+      "type": "2 Bedroom",
+      "rent": 1250
     }
   ],
   "test-one": [
