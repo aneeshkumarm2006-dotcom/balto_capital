@@ -388,7 +388,16 @@
     {
       "unit": "9",
       "type": "1 Bedroom",
-      "rent": 1125
+      "rent": 1125,
+      "images": [
+        "/assets/catalina-estates/units/9/uploads/1784663647475-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663651126-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663653670-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663658404-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663661354-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663663203-01.jpg"
+      ]
     }
   ],
   "layali": [
