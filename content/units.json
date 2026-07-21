@@ -1062,5 +1062,12 @@
       "type": "2 Bedroom",
       "rent": 1415
     }
+  ],
+  "grandview-manor": [
+    {
+      "unit": "302",
+      "type": "1 Bedroom",
+      "rent": 1080
+    }
   ]
 }
