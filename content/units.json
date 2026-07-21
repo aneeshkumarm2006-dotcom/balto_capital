@@ -243,6 +243,11 @@
       "archived": true
     },
     {
+      "unit": "209",
+      "type": "1 Bedroom",
+      "rent": 1090
+    },
+    {
       "unit": "302",
       "type": "1 Bedroom",
       "rent": 1070,
@@ -314,6 +319,11 @@
       "archived": true
     },
     {
+      "unit": "403",
+      "type": "1 Bedroom",
+      "rent": 1090
+    },
+    {
       "unit": "405",
       "type": "1 Bedroom",
       "rent": 1200,
@@ -331,16 +341,6 @@
         "/assets/royal-lady/units/405/10.jpg"
       ],
       "archived": true
-    },
-    {
-      "unit": "209",
-      "type": "1 Bedroom",
-      "rent": 1090
-    },
-    {
-      "unit": "403",
-      "type": "1 Bedroom",
-      "rent": 1090
     }
   ],
   "catalina-estates": [
