@@ -1034,7 +1034,8 @@
     {
       "unit": "203",
       "type": "1 Bedroom",
-      "rent": 1050
+      "rent": 1050,
+      "archived": true
     },
     {
       "unit": "202",
