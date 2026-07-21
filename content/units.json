@@ -988,6 +988,11 @@
       "unit": "203",
       "type": "1 Bedroom",
       "rent": 1050
+    },
+    {
+      "unit": "202",
+      "type": "1 Bedroom",
+      "rent": 1140
     }
   ]
 }
