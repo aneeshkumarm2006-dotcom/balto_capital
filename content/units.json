@@ -677,18 +677,6 @@
       "archived": true
     },
     {
-      "unit": "12",
-      "type": "1 Bedroom",
-      "rent": 1238,
-      "image": "https://drive.google.com/drive/folders/16se8oImLbhCnROLVHDWLxy6A7EeFOndK?usp=drive_link",
-      "images": [
-        "/assets/royal-manor/units/12/uploads/1784138772963-01.jpg",
-        "/assets/royal-manor/units/12/uploads/1784138774046-01.jpg",
-        "/assets/royal-manor/units/12/uploads/1784138775123-01.jpg",
-        "/assets/royal-manor/units/12/uploads/1784138776168-01.jpg"
-      ]
-    },
-    {
       "unit": "10",
       "type": "1 Bedroom",
       "rent": 1090,
@@ -704,6 +692,26 @@
         "/assets/royal-manor/units/10/uploads/1784735172000-01.jpg",
         "/assets/royal-manor/units/10/uploads/1784735173810-01.jpg",
         "/assets/royal-manor/units/10/uploads/1784735175476-01.jpg"
+      ]
+    },
+    {
+      "unit": "12",
+      "type": "1 Bedroom",
+      "rent": 1238,
+      "image": "https://drive.google.com/drive/folders/16se8oImLbhCnROLVHDWLxy6A7EeFOndK?usp=drive_link",
+      "images": [
+        "/assets/royal-manor/units/12/uploads/1784736126246-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736128527-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736130490-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736132675-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736134307-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736136913-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736138733-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736140491-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736142232-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736144049-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736145711-01.jpg",
+        "/assets/royal-manor/units/12/uploads/1784736147583-01.jpg"
       ]
     }
   ],
