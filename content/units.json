@@ -348,8 +348,8 @@
       "images": [
         "/assets/catalina-estates/units/2/02.jpg",
         "/assets/catalina-estates/units/2/03.jpg",
-        "/assets/catalina-estates/units/2/05.jpg",
         "/assets/catalina-estates/units/2/04.jpg",
+        "/assets/catalina-estates/units/2/05.jpg",
         "/assets/catalina-estates/units/2/06.jpg"
       ],
       "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026"
@@ -359,13 +359,16 @@
       "type": "1 Bedroom",
       "rent": 1125,
       "images": [
-        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663330283-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663332619-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663334333-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663336115-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg"
+        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663339412-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663347034-01.jpg"
       ]
     },
     {
@@ -380,9 +383,9 @@
       "images": [
         "/assets/catalina-estates/units/9/uploads/1784663647475-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663651126-01.jpg",
-        "/assets/catalina-estates/units/9/uploads/1784663658404-01.jpg",
-        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663653670-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663658404-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663661354-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663663203-01.jpg"
       ]
@@ -423,12 +426,12 @@
       "type": "1 Bedroom",
       "rent": 1175,
       "images": [
-        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
+        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
         "/assets/layali/units/14/uploads/1784039011286-01.jpg",
         "/assets/layali/units/14/uploads/1784039012974-01.jpg",
-        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
         "/assets/layali/units/14/uploads/1784039014580-01.jpg",
         "/assets/layali/units/14/uploads/1784039016405-01.jpg",
+        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
         "/assets/layali/units/14/uploads/1784039020500-01.jpg",
         "/assets/layali/units/14/uploads/1784039022934-01.jpg"
       ]
@@ -441,13 +444,15 @@
       "images": [
         "/assets/layali/units/15/01.jpg",
         "/assets/layali/units/15/02.jpg",
-        "/assets/layali/units/15/04.jpg",
         "/assets/layali/units/15/03.jpg",
+        "/assets/layali/units/15/04.jpg",
+        "/assets/layali/units/15/05.jpg",
         "/assets/layali/units/15/06.jpg",
         "/assets/layali/units/15/07.jpg",
         "/assets/layali/units/15/08.jpg",
-        "/assets/layali/units/15/11.jpg",
-        "/assets/layali/units/15/09.jpg"
+        "/assets/layali/units/15/09.jpg",
+        "/assets/layali/units/15/10.jpg",
+        "/assets/layali/units/15/11.jpg"
       ]
     },
     {
@@ -460,10 +465,10 @@
         "/assets/layali/units/17/uploads/1784039565724-01.jpg",
         "/assets/layali/units/17/uploads/1784039567351-01.jpg",
         "/assets/layali/units/17/uploads/1784039569112-01.jpg",
-        "/assets/layali/units/17/uploads/1784039573006-01.jpg",
         "/assets/layali/units/17/uploads/1784039571421-01.jpg",
-        "/assets/layali/units/17/uploads/1784039575741-01.jpg",
-        "/assets/layali/units/17/uploads/1784039574398-01.jpg"
+        "/assets/layali/units/17/uploads/1784039573006-01.jpg",
+        "/assets/layali/units/17/uploads/1784039574398-01.jpg",
+        "/assets/layali/units/17/uploads/1784039575741-01.jpg"
       ]
     }
   ],
@@ -474,18 +479,18 @@
       "rent": 1015,
       "image": "https://drive.google.com/drive/folders/1ZCg4sJmjTkb84yVMz_ILTC1L5G3VWn8Q",
       "images": [
-        "/assets/cedar-manor/units/2/uploads/1784225986051-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225975610-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225969020-01.jpg",
-        "/assets/cedar-manor/units/2/uploads/1784225970981-01.jpg",
-        "/assets/cedar-manor/units/2/uploads/1784225977317-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225972564-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225974109-01.jpg",
+        "/assets/cedar-manor/units/2/uploads/1784225970981-01.jpg",
+        "/assets/cedar-manor/units/2/uploads/1784225977317-01.jpg",
+        "/assets/cedar-manor/units/2/uploads/1784225979630-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225981644-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225987674-01.jpg",
-        "/assets/cedar-manor/units/2/uploads/1784225984450-01.jpg",
         "/assets/cedar-manor/units/2/uploads/1784225982985-01.jpg",
-        "/assets/cedar-manor/units/2/uploads/1784225979630-01.jpg"
+        "/assets/cedar-manor/units/2/uploads/1784225984450-01.jpg",
+        "/assets/cedar-manor/units/2/uploads/1784225986051-01.jpg"
       ]
     },
     {
@@ -495,14 +500,16 @@
       "image": "https://drive.google.com/drive/folders/1Nds9YyIv5m8iHX4ABR1FioeZng0FN37F",
       "images": [
         "/assets/cedar-manor/units/5/uploads/1784217705211-01.jpg",
-        "/assets/cedar-manor/units/5/uploads/1784217703441-01.jpg",
         "/assets/cedar-manor/units/5/uploads/1784217710748-01.jpg",
-        "/assets/cedar-manor/units/5/uploads/1784217716850-01.jpg",
         "/assets/cedar-manor/units/5/uploads/1784217715319-01.jpg",
+        "/assets/cedar-manor/units/5/uploads/1784217716850-01.jpg",
+        "/assets/cedar-manor/units/5/uploads/1784217718479-01.jpg",
+        "/assets/cedar-manor/units/5/uploads/1784217706861-01.jpg",
         "/assets/cedar-manor/units/5/uploads/1784217713798-01.jpg",
         "/assets/cedar-manor/units/5/uploads/1784217712322-01.jpg",
+        "/assets/cedar-manor/units/5/uploads/1784217703441-01.jpg",
         "/assets/cedar-manor/units/5/uploads/1784217701326-01.jpg",
-        "/assets/cedar-manor/units/5/uploads/1784217718479-01.jpg"
+        "/assets/cedar-manor/units/5/uploads/1784217708510-01.jpg"
       ]
     },
     {
@@ -510,15 +517,15 @@
       "type": "1 Bedroom",
       "rent": 1025,
       "images": [
-        "/assets/cedar-manor/units/6/uploads/1784219415278-01.jpg",
         "/assets/cedar-manor/units/6/uploads/1784219425794-01.jpg",
-        "/assets/cedar-manor/units/6/uploads/1784219434604-01.jpg",
-        "/assets/cedar-manor/units/6/uploads/1784219420253-01.jpg",
-        "/assets/cedar-manor/units/6/uploads/1784219424148-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219415278-01.jpg",
         "/assets/cedar-manor/units/6/uploads/1784219417110-01.jpg",
         "/assets/cedar-manor/units/6/uploads/1784219418710-01.jpg",
-        "/assets/cedar-manor/units/6/uploads/1784219432969-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219420253-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219424148-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219434604-01.jpg",
         "/assets/cedar-manor/units/6/uploads/1784219427408-01.jpg",
+        "/assets/cedar-manor/units/6/uploads/1784219432969-01.jpg",
         "/assets/cedar-manor/units/6/uploads/1784219430612-01.jpg",
         "/assets/cedar-manor/units/6/uploads/1784219429000-01.jpg"
       ]
@@ -543,15 +550,16 @@
       "rent": 1015,
       "image": "https://drive.google.com/drive/folders/1Egkfmszu9p6VM3nz8mmjm2lChP86BNhg",
       "images": [
-        "/assets/cedar-manor/units/8/uploads/1784225353017-01.jpg",
         "/assets/cedar-manor/units/8/uploads/1784225344468-01.jpg",
-        "/assets/cedar-manor/units/8/uploads/1784225349862-01.jpg",
-        "/assets/cedar-manor/units/8/uploads/1784225356626-01.jpg",
-        "/assets/cedar-manor/units/8/uploads/1784225347603-01.jpg",
         "/assets/cedar-manor/units/8/uploads/1784225341033-01.jpg",
         "/assets/cedar-manor/units/8/uploads/1784225342774-01.jpg",
+        "/assets/cedar-manor/units/8/uploads/1784225347603-01.jpg",
+        "/assets/cedar-manor/units/8/uploads/1784225349862-01.jpg",
+        "/assets/cedar-manor/units/8/uploads/1784225356626-01.jpg",
+        "/assets/cedar-manor/units/8/uploads/1784225351565-01.jpg",
+        "/assets/cedar-manor/units/8/uploads/1784225358641-01.jpg",
         "/assets/cedar-manor/units/8/uploads/1784225354701-01.jpg",
-        "/assets/cedar-manor/units/8/uploads/1784225358641-01.jpg"
+        "/assets/cedar-manor/units/8/uploads/1784225353017-01.jpg"
       ]
     },
     {
@@ -590,14 +598,16 @@
       "rent": 1015,
       "image": "https://drive.google.com/drive/folders/1596nhZf-S5X2VUq28A_oNdj8RzX6L9Ga?usp=drive_link",
       "images": [
-        "/assets/cedar-manor/units/17/uploads/1784227397583-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227389421-01.jpg",
-        "/assets/cedar-manor/units/17/uploads/1784227395082-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227391371-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227393665-01.jpg",
+        "/assets/cedar-manor/units/17/uploads/1784227395082-01.jpg",
+        "/assets/cedar-manor/units/17/uploads/1784227397583-01.jpg",
+        "/assets/cedar-manor/units/17/uploads/1784227399987-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227401764-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227403949-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227405559-01.jpg",
+        "/assets/cedar-manor/units/17/uploads/1784227407071-01.jpg",
         "/assets/cedar-manor/units/17/uploads/1784227467108-01.jpg"
       ]
     }
@@ -1054,27 +1064,107 @@
     {
       "unit": "201",
       "type": "1 Bedroom",
-      "rent": 1240
+      "rent": 1240,
+      "images": [
+        "/assets/sky-manor/units/201/uploads/1784829879079-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829880538-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829865795-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829867835-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829882165-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829871412-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829869460-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829873400-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829875105-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829877147-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829884096-01.jpg"
+      ]
     },
     {
       "unit": "202",
       "type": "2 Bedroom",
-      "rent": 1415
+      "rent": 1415,
+      "images": [
+        "/assets/sky-manor/units/202/uploads/1784831457456-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831448318-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831450453-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831454050-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831452237-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831455806-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831459082-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831460719-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831462191-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831465558-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831467574-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831469536-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831471376-01.jpg",
+        "/assets/sky-manor/units/202/uploads/1784831463816-01.jpg"
+      ],
+      "archived": true
     },
     {
       "unit": "204",
       "type": "1 Bedroom",
-      "rent": 1240
+      "rent": 1240,
+      "images": [
+        "/assets/sky-manor/units/204/uploads/1784833028617-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833032309-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833046989-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833048607-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833014984-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833017285-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833019474-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833021542-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833023629-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833037960-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833039589-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833041319-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833043217-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833045178-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833035950-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833050477-01.jpg"
+      ]
     },
     {
       "unit": "206",
       "type": "2 Bedroom",
-      "rent": 1415
+      "rent": 1415,
+      "images": [
+        "/assets/sky-manor/units/206/uploads/1784833695082-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833697104-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833698949-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833700738-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833702460-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833704179-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833705720-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833707733-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833709421-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833711194-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833713096-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833714822-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833716457-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833718083-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833721742-01.jpg",
+        "/assets/sky-manor/units/206/uploads/1784833723721-01.jpg"
+      ]
     },
     {
       "unit": "303",
       "type": "1 Bedroom",
-      "rent": 1240
+      "rent": 1240,
+      "images": [
+        "/assets/sky-manor/units/303/uploads/1784834301425-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834303131-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834304795-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834306579-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834308467-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834310144-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834312616-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834314424-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834315976-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834317569-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834319421-01.jpg",
+        "/assets/sky-manor/units/303/uploads/1784834321141-01.jpg"
+      ]
     },
     {
       "unit": "304",
