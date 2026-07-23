@@ -10,9 +10,14 @@
    are structural — the public layouts are designed for exactly N items —
    so lists render fixed, numbered sub-blocks with no add/remove. */
 
-import { useEffect, useMemo, useState } from 'react';
-import { getContent, putContent } from '@/components/admin/api';
-import { IconSpinner } from '@/components/admin/icons';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  commitStaged,
+  getContent,
+  uploadLibraryFiles,
+  type StagedFile,
+} from '@/components/admin/api';
+import { IconSpinner, IconUpload, IconX } from '@/components/admin/icons';
 import { Field, PageHead, useToast } from '@/components/admin/ui';
 import type { PagesContent } from '@/lib/pages';
 
@@ -59,7 +64,7 @@ function countEmpty(v: unknown): number {
    Section config — human labels, no raw keys shown to the client
    ============================================================ */
 
-type Kind = 'input' | 'textarea' | 'textareaWide';
+type Kind = 'input' | 'textarea' | 'textareaWide' | 'image';
 
 interface FieldDef {
   key: string;
@@ -276,7 +281,11 @@ const SECTION_TABS: TabDef[] = [
       {
         title: 'Hero',
         path: ['whyBalto', 'hero'],
-        fields: [EYEBROW, TITLE],
+        fields: [
+          EYEBROW,
+          TITLE,
+          { key: 'image', label: 'Hero background image', kind: 'image' },
+        ],
       },
       {
         title: 'Introduction',
@@ -298,6 +307,7 @@ const SECTION_TABS: TabDef[] = [
             { key: 'eyebrow', label: 'Eyebrow (numeral and theme)', kind: 'input' },
             TITLE,
             { key: 'body', label: 'Body', kind: 'textareaWide' },
+            { key: 'image', label: 'Pillar image', kind: 'image' },
           ],
         },
       },
@@ -449,15 +459,224 @@ function StringItemField({
   );
 }
 
+/* ---------- Image field ---------- */
+
+interface ImageControls {
+  /** Local object-URLs for freshly uploaded (not-yet-saved) images. */
+  previews: Record<string, string>;
+  /** JSON.stringify(path) of the image currently uploading, or null. */
+  uploadingKey: string | null;
+  onUpload: (path: Path, file: File) => void;
+  onPick: (path: Path) => void;
+}
+
+function ImageField({
+  def,
+  path,
+  draft,
+  controls,
+}: {
+  def: FieldDef;
+  path: Path;
+  draft: PagesContent;
+  controls: ImageControls;
+}) {
+  const full = [...path, def.key];
+  const raw = getAt(draft, full);
+  const value = typeof raw === 'string' ? raw : '';
+  const src = controls.previews[value] ?? value;
+  const uploading = controls.uploadingKey === JSON.stringify(full);
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <Field label={def.label} help={def.help} span2>
+      <div className="adm-row" style={{ gap: 16, alignItems: 'flex-start', flexWrap: 'nowrap' }}>
+        <div
+          style={{
+            width: 132,
+            height: 96,
+            flex: 'none',
+            border: '1px solid var(--adm-hairline)',
+            background: 'var(--adm-cream, #efe8dc)',
+            overflow: 'hidden',
+          }}
+        >
+          {src && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          )}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) controls.onUpload(full, f);
+              e.target.value = '';
+            }}
+          />
+          <button
+            type="button"
+            className="adm-btn ghost sm"
+            disabled={uploading}
+            onClick={() => inputRef.current?.click()}
+          >
+            {uploading ? <IconSpinner /> : <IconUpload />}
+            {uploading ? 'Uploading…' : 'Upload new'}
+          </button>
+          <button
+            type="button"
+            className="adm-btn ghost sm"
+            onClick={() => controls.onPick(full)}
+          >
+            Choose from Library
+          </button>
+        </div>
+      </div>
+    </Field>
+  );
+}
+
+/* ---------- Library image picker ---------- */
+
+interface MediaItem {
+  path: string;
+  name: string;
+  group: string;
+}
+
+function LibraryPicker({
+  open,
+  onClose,
+  onSelect,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onSelect: (path: string) => void;
+}) {
+  const [items, setItems] = useState<MediaItem[] | null>(null);
+  useEffect(() => {
+    if (!open) return;
+    setItems(null);
+    fetch('/api/admin/site-media', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((d) => setItems(Array.isArray(d?.items) ? d.items : []))
+      .catch(() => setItems([]));
+  }, [open]);
+  if (!open) return null;
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(10,25,41,0.55)',
+        zIndex: 400,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'var(--adm-bone, #fff)',
+          width: 'min(900px, 96vw)',
+          maxHeight: '85vh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          className="adm-card-head"
+          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+        >
+          <h2 className="adm-card-title">Choose an image from the Library</h2>
+          <button type="button" className="adm-btn-bare" aria-label="Close" onClick={onClose}>
+            <IconX />
+          </button>
+        </div>
+        <div style={{ padding: 20, overflowY: 'auto' }}>
+          {items === null ? (
+            <p className="adm-muted">
+              <IconSpinner style={{ verticalAlign: '-0.15em', marginRight: 8 }} />
+              Loading…
+            </p>
+          ) : items.length === 0 ? (
+            <p className="adm-muted">No images in the Library yet. Upload one instead.</p>
+          ) : (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                gap: 12,
+              }}
+            >
+              {items.map((it) => (
+                <button
+                  key={it.path}
+                  type="button"
+                  onClick={() => onSelect(it.path)}
+                  title={`${it.name} · ${it.group}`}
+                  style={{
+                    border: '1px solid var(--adm-hairline)',
+                    background: 'var(--adm-cream, #efe8dc)',
+                    padding: 0,
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                    textAlign: 'left',
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={it.path}
+                    alt=""
+                    loading="lazy"
+                    style={{ width: '100%', height: 100, objectFit: 'cover', display: 'block' }}
+                  />
+                  <div
+                    className="adm-caption"
+                    style={{
+                      padding: '6px 8px',
+                      fontSize: 11,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {it.name}
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SectionCard({
   section,
   draft,
   onChange,
+  controls,
 }: {
   section: SectionDef;
   draft: PagesContent;
   onChange: UpdateFn;
+  controls: ImageControls;
 }) {
+  const renderField = (f: FieldDef, fieldPath: Path) =>
+    f.kind === 'image' ? (
+      <ImageField key={f.key} def={f} path={fieldPath} draft={draft} controls={controls} />
+    ) : (
+      <CopyField key={f.key} def={f} path={fieldPath} draft={draft} onChange={onChange} />
+    );
   const list = section.list;
   const listFields = list?.fields;
   const listPath = list ? [...section.path, list.key] : null;
@@ -472,15 +691,7 @@ function SectionCard({
       <div className="adm-card-pad">
         {section.fields && section.fields.length > 0 && (
           <div className="adm-form-grid">
-            {section.fields.map((f) => (
-              <CopyField
-                key={f.key}
-                def={f}
-                path={section.path}
-                draft={draft}
-                onChange={onChange}
-              />
-            ))}
+            {section.fields.map((f) => renderField(f, section.path))}
           </div>
         )}
 
@@ -503,15 +714,7 @@ function SectionCard({
                     {list.itemLabel} {i + 1}
                   </span>
                   <div className="adm-form-grid">
-                    {listFields.map((f) => (
-                      <CopyField
-                        key={f.key}
-                        def={f}
-                        path={[...listPath, i]}
-                        draft={draft}
-                        onChange={onChange}
-                      />
-                    ))}
+                    {listFields.map((f) => renderField(f, [...listPath, i]))}
                   </div>
                 </div>
               ))
@@ -534,15 +737,7 @@ function SectionCard({
 
         {section.fieldsAfter && section.fieldsAfter.length > 0 && (
           <div className="adm-form-grid" style={{ marginTop: 16 }}>
-            {section.fieldsAfter.map((f) => (
-              <CopyField
-                key={f.key}
-                def={f}
-                path={section.path}
-                draft={draft}
-                onChange={onChange}
-              />
-            ))}
+            {section.fieldsAfter.map((f) => renderField(f, section.path))}
           </div>
         )}
       </div>
@@ -561,6 +756,22 @@ export default function PagesPage() {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState<TabDef['id']>('home');
+  /* Page-image editing: staged uploads publish alongside the pages JSON in one
+     commit; previews render freshly-uploaded images before they're saved. */
+  const [stagedFiles, setStagedFiles] = useState<StagedFile[]>([]);
+  const [previews, setPreviews] = useState<Record<string, string>>({});
+  const previewsRef = useRef<Record<string, string>>({});
+  previewsRef.current = previews;
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
+  const [pickerPath, setPickerPath] = useState<Path | null>(null);
+
+  /* Free object URLs when the page unmounts. */
+  useEffect(
+    () => () => {
+      for (const u of Object.values(previewsRef.current)) URL.revokeObjectURL(u);
+    },
+    []
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -589,15 +800,49 @@ export default function PagesPage() {
   const update: UpdateFn = (path, v) =>
     setValue((cur) => (cur ? setAt(cur, path, v) : cur));
 
+  const uploadImage = async (path: Path, file: File) => {
+    if (!file.type.startsWith('image/')) return;
+    setUploadingKey(JSON.stringify(path));
+    try {
+      const result = await uploadLibraryFiles([file]);
+      const added = result.added[0];
+      if (!added) throw new Error('Upload did not return an image path.');
+      setValue((cur) => (cur ? setAt(cur, path, added) : cur));
+      setStagedFiles((prev) => [...prev, ...result.staged]);
+      setPreviews((prev) => ({ ...prev, [added]: URL.createObjectURL(file) }));
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Upload failed.');
+    } finally {
+      setUploadingKey(null);
+    }
+  };
+
+  const controls: ImageControls = {
+    previews,
+    uploadingKey,
+    onUpload: (path, file) => void uploadImage(path, file),
+    onPick: (path) => setPickerPath(path),
+  };
+
+  const selectImage = (imgPath: string) => {
+    setValue((cur) => (cur && pickerPath ? setAt(cur, pickerPath, imgPath) : cur));
+    setPickerPath(null);
+  };
+
   const save = async () => {
     if (!value || saving || emptyCount > 0) return;
     setSaving(true);
     try {
-      await putContent('pages', value);
+      await commitStaged({
+        message: 'update pages',
+        files: stagedFiles,
+        content: [{ name: 'pages', data: value }],
+      });
       setSnapshot(value);
-      toast('success', 'Page copy saved. Live in about 2 minutes on the deployed site.');
+      setStagedFiles([]);
+      toast('success', 'Pages saved. Live in about 2 minutes on the deployed site.');
     } catch (err) {
-      toast('error', err instanceof Error ? err.message : 'Failed to save page copy.');
+      toast('error', err instanceof Error ? err.message : 'Failed to save the pages.');
     } finally {
       setSaving(false);
     }
@@ -662,11 +907,17 @@ export default function PagesPage() {
         aria-labelledby={`pages-tab-${active.id}`}
       >
         {active.sections.map((s) => (
-          <SectionCard key={s.title} section={s} draft={value} onChange={update} />
+          <SectionCard
+            key={s.title}
+            section={s}
+            draft={value}
+            onChange={update}
+            controls={controls}
+          />
         ))}
       </div>
 
-      {dirty && (
+      {(dirty || stagedFiles.length > 0) && (
         <div className="adm-savebar">
           <span>
             You have unsaved changes
@@ -690,7 +941,12 @@ export default function PagesPage() {
                 color: 'var(--adm-ivory)',
                 background: 'transparent',
               }}
-              onClick={() => setValue(snapshot)}
+              onClick={() => {
+                setValue(snapshot);
+                setStagedFiles([]);
+                for (const u of Object.values(previews)) URL.revokeObjectURL(u);
+                setPreviews({});
+              }}
               disabled={saving}
             >
               Discard
@@ -706,6 +962,12 @@ export default function PagesPage() {
           </div>
         </div>
       )}
+
+      <LibraryPicker
+        open={pickerPath !== null}
+        onClose={() => setPickerPath(null)}
+        onSelect={selectImage}
+      />
     </>
   );
 }

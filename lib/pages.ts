@@ -111,6 +111,8 @@ export interface WhyBaltoPillar {
   eyebrow: string;
   title: string;
   body: string;
+  /** Section image, managed in the CMS Pages editor. */
+  image: string;
 }
 
 export interface WhyBaltoStat {
@@ -122,6 +124,8 @@ export interface WhyBaltoContent {
   hero: {
     eyebrow: string;
     title: string;
+    /** Hero background image, managed in the CMS Pages editor. */
+    image: string;
   };
   intro: {
     pullQuote: string;

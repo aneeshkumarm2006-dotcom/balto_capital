@@ -6,9 +6,9 @@ import { ParallaxImage } from '@/components/ParallaxImage';
 import { ArrowRight } from '@/components/icons';
 import { PAGES } from '@/lib/pages';
 
-// Layout only — copy for each pillar lives in content/pages.json (whyBalto.pillars).
+// Layout only — copy and images for each pillar live in content/pages.json
+// (whyBalto.pillars), editable in the CMS Pages editor.
 const PILLAR_ALIGNS = ['left', 'right', 'left'] as const;
-const PILLAR_IMAGES = ['/assets/city-saskatoon.png', '/assets/city-edmonton.png', '/assets/city-yellowknife.avif'];
 const PILLAR_TONES = ['warm', 'cool', 'deep'] as const;
 const PILLAR_CHARS = ['I', 'II', 'III'];
 
@@ -25,7 +25,7 @@ export default function WhyBaltoPage() {
         }}
       >
         <ParallaxImage
-          src="/assets/city-regina.png"
+          src={PAGES.whyBalto.hero.image}
           alt="Heritage architecture"
           kenBurns
           eager
@@ -130,7 +130,7 @@ export default function WhyBaltoPage() {
                 }}
               >
                 <SmartImage
-                  src={PILLAR_IMAGES[i]}
+                  src={p.image}
                   alt={`${p.eyebrow}, imagery`}
                   fallbackLabel={`Pillar ${i + 1} · imagery`}
                   fallbackTone={PILLAR_TONES[i]}

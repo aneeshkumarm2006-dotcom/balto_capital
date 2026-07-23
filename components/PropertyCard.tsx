@@ -24,6 +24,8 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
   const r = residence;
   const to = `/residences/${r.city}/${r.slug}`;
   const cardTone = tone ?? TONES[(r.id.charCodeAt(2) + r.id.length) % 4];
+  // No available (non-archived) units → the card shows "—" for bedrooms and price.
+  const hasUnits = (r.units?.length ?? 0) > 0;
 
   return (
     <a
@@ -87,17 +89,23 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
           }}
         >
           <div className="small" style={{ color: 'var(--ink)' }}>
-            {bedroomShort(r.bedroomOptions)}
+            {hasUnits ? bedroomShort(r.bedroomOptions) : '—'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div className="serif" style={{ fontSize: 18, fontWeight: 500 }}>
-              From {formatPrice(r.priceFrom)}
-              <span
-                className="caption muted"
-                style={{ marginLeft: 4, fontFamily: 'var(--sans)' }}
-              >
-                /mo net
-              </span>
+              {hasUnits ? (
+                <>
+                  From {formatPrice(r.priceFrom)}
+                  <span
+                    className="caption muted"
+                    style={{ marginLeft: 4, fontFamily: 'var(--sans)' }}
+                  >
+                    /mo net
+                  </span>
+                </>
+              ) : (
+                '—'
+              )}
             </div>
             <FavoriteHeart id={r.id} size={18} />
           </div>

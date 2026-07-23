@@ -268,11 +268,16 @@ export default function HistoryPage() {
                       </span>
                     </div>
                   </div>
-                  {entry.cms ? (
-                    <span className="adm-badge gold">Content Studio</span>
-                  ) : (
-                    <span className="adm-badge">{entry.author}</span>
-                  )}
+                  <span
+                    className={`adm-badge${entry.cms ? ' gold' : ''}`}
+                    title={
+                      entry.cms
+                        ? 'Edited in the Content Studio'
+                        : 'Code deploy'
+                    }
+                  >
+                    {entry.author}
+                  </span>
                   {i === 0 ? (
                     <span className="adm-badge success">Current</span>
                   ) : me?.role === 'admin' ? (
