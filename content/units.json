@@ -6,13 +6,13 @@
       "rent": 1075,
       "image": "https://drive.google.com/drive/folders/1o-WcAM4Kfu4b7wRjhjOAgmAE_DRqoqi1",
       "images": [
-        "/assets/hamlet/units/6/uploads/1784062356333-01.jpg",
-        "/assets/hamlet/units/6/uploads/1784062357552-01.jpg",
-        "/assets/hamlet/units/6/uploads/1784062358574-01.jpg",
         "/assets/hamlet/units/6/uploads/1784062461832-01.jpg",
         "/assets/hamlet/units/6/uploads/1784062463024-01.jpg",
         "/assets/hamlet/units/6/uploads/1784062464142-01.jpg",
-        "/assets/hamlet/units/6/uploads/1784062465186-01.jpg"
+        "/assets/hamlet/units/6/uploads/1784062465186-01.jpg",
+        "/assets/hamlet/units/6/uploads/1784062358574-01.jpg",
+        "/assets/hamlet/units/6/uploads/1784062357552-01.jpg",
+        "/assets/hamlet/units/6/uploads/1784062356333-01.jpg"
       ]
     }
   ],
