@@ -252,10 +252,19 @@
   "sky-manor": {
     "hero": "/assets/sky-manor/uploads/1783963973781-01.jpg",
     "gallery": [
-      "/assets/sky-manor/01-main.jpg"
+      "/assets/sky-manor/01-main.jpg",
+      "/assets/sky-manor/uploads/1784835499155-01.jpg",
+      "/assets/sky-manor/uploads/1784835503500-01.jpg",
+      "/assets/sky-manor/uploads/1784835508816-01.jpg",
+      "/assets/sky-manor/uploads/1784835520824-01.jpg",
+      "/assets/sky-manor/uploads/1784835527321-01.jpg",
+      "/assets/sky-manor/uploads/1784835534399-01.jpg",
+      "/assets/sky-manor/uploads/1784835540719-01.jpg",
+      "/assets/sky-manor/uploads/1784835550471-01.jpg"
     ],
     "hidden": [
-      "/assets/sky-manor/01-main.jpg"
+      "/assets/sky-manor/01-main.jpg",
+      "/assets/sky-manor/uploads/1784835503500-01.jpg"
     ],
     "tags": {
       "/assets/sky-manor/uploads/1783963973781-01.jpg": "Exterior"
