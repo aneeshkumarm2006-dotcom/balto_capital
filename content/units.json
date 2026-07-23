@@ -348,8 +348,8 @@
       "images": [
         "/assets/catalina-estates/units/2/02.jpg",
         "/assets/catalina-estates/units/2/03.jpg",
-        "/assets/catalina-estates/units/2/04.jpg",
         "/assets/catalina-estates/units/2/05.jpg",
+        "/assets/catalina-estates/units/2/04.jpg",
         "/assets/catalina-estates/units/2/06.jpg"
       ],
       "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026"
@@ -359,16 +359,13 @@
       "type": "1 Bedroom",
       "rent": 1125,
       "images": [
-        "/assets/catalina-estates/units/4/uploads/1784663330283-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663332619-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663334333-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663336115-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663339412-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663347034-01.jpg"
+        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg"
       ]
     },
     {
@@ -383,9 +380,9 @@
       "images": [
         "/assets/catalina-estates/units/9/uploads/1784663647475-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663651126-01.jpg",
-        "/assets/catalina-estates/units/9/uploads/1784663653670-01.jpg",
-        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663658404-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663653670-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663661354-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663663203-01.jpg"
       ]
