@@ -1104,7 +1104,25 @@
     {
       "unit": "204",
       "type": "1 Bedroom",
-      "rent": 1240
+      "rent": 1240,
+      "images": [
+        "/assets/sky-manor/units/204/uploads/1784833014984-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833017285-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833019474-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833021542-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833023629-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833028617-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833032309-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833035950-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833037960-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833039589-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833041319-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833043217-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833045178-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833046989-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833048607-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833050477-01.jpg"
+      ]
     },
     {
       "unit": "206",
