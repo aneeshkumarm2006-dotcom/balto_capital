@@ -23,12 +23,12 @@
       "rent": 1421,
       "image": "https://drive.google.com/drive/folders/1bU6J6IXN-TZgyQnBQgKMddeiWbORTTUZ?usp=drive_link",
       "images": [
-        "/assets/woodridge/units/1/01.jpg",
-        "/assets/woodridge/units/1/02.jpg",
-        "/assets/woodridge/units/1/03.jpg",
         "/assets/woodridge/units/1/04.jpg",
         "/assets/woodridge/units/1/05.jpg",
-        "/assets/woodridge/units/1/06.jpg"
+        "/assets/woodridge/units/1/06.jpg",
+        "/assets/woodridge/units/1/01.jpg",
+        "/assets/woodridge/units/1/03.jpg",
+        "/assets/woodridge/units/1/02.jpg"
       ]
     },
     {
