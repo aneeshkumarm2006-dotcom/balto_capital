@@ -47,6 +47,9 @@
     "3 Bedroom",
     "Amenity",
     "Floor plan",
-    "Neighbourhood"
+    "Neighbourhood",
+    "Kitchen",
+    "Living Room",
+    "Bathroom"
   ]
 }
