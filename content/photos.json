@@ -214,12 +214,15 @@
       "/assets/layali/uploads/1784126541788-01.jpg",
       "/assets/layali/uploads/1784126522982-01.jpg",
       "/assets/layali/uploads/1784821770916-01.jpg",
+      "/assets/layali/uploads/1784823174791-01.jpg",
       "/assets/layali/uploads/1784126535950-01.jpg",
+      "/assets/layali/uploads/1784827682540-01.jpg",
       "/assets/layali/uploads/1784126519033-01.jpg",
       "/assets/layali/uploads/1784126530753-01.jpg",
       "/assets/layali/uploads/1784126510923-01.jpg",
+      "/assets/layali/uploads/1784827789237-01.jpg",
       "/assets/layali/uploads/1784126838837-01.jpg",
-      "/assets/layali/uploads/1784823174791-01.jpg"
+      "/assets/layali/uploads/1784829265948-01.jpg"
     ],
     "hidden": [
       "/assets/layali/01-main.jpg",
@@ -235,14 +238,16 @@
       "/assets/layali/02.png": "1 Bedroom",
       "/assets/layali/03.png": "1 Bedroom",
       "/assets/layali/04.png": "1 Bedroom",
-      "/assets/layali/uploads/1784126519033-01.jpg": "1 Bedroom",
+      "/assets/layali/uploads/1784126519033-01.jpg": "Bathroom",
       "/assets/layali/uploads/1784126838837-01.jpg": "1 Bedroom",
       "/assets/layali/uploads/1784126510923-01.jpg": "1 Bedroom",
       "/assets/layali/uploads/1784126530753-01.jpg": "1 Bedroom",
-      "/assets/layali/uploads/1784126541788-01.jpg": "1 Bedroom",
-      "/assets/layali/uploads/1784126522982-01.jpg": "1 Bedroom",
-      "/assets/layali/uploads/1784126535950-01.jpg": "1 Bedroom",
-      "/assets/layali/uploads/1784821770916-01.jpg": "Living Room"
+      "/assets/layali/uploads/1784126541788-01.jpg": "Living Room",
+      "/assets/layali/uploads/1784126522982-01.jpg": "Living Room",
+      "/assets/layali/uploads/1784126535950-01.jpg": "Kitchen",
+      "/assets/layali/uploads/1784821770916-01.jpg": "Living Room",
+      "/assets/layali/uploads/1784823174791-01.jpg": "Living Room",
+      "/assets/layali/uploads/1784827682540-01.jpg": "Kitchen"
     }
   },
   "sky-manor": {
