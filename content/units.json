@@ -348,8 +348,8 @@
       "images": [
         "/assets/catalina-estates/units/2/02.jpg",
         "/assets/catalina-estates/units/2/03.jpg",
-        "/assets/catalina-estates/units/2/05.jpg",
         "/assets/catalina-estates/units/2/04.jpg",
+        "/assets/catalina-estates/units/2/05.jpg",
         "/assets/catalina-estates/units/2/06.jpg"
       ],
       "applyUrl": "https://zenrentals.securecafe.com/onlineleasing/catalina-estates/rentaloptions.aspx?UnitID=47297289&FloorPlanID=6295462&myOlePropertyid=2312211&MoveInDate=04/07/2026"
@@ -359,13 +359,16 @@
       "type": "1 Bedroom",
       "rent": 1125,
       "images": [
-        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663330283-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663332619-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663334333-01.jpg",
         "/assets/catalina-estates/units/4/uploads/1784663336115-01.jpg",
-        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg"
+        "/assets/catalina-estates/units/4/uploads/1784663337776-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663339412-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663340945-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663342636-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663344624-01.jpg",
+        "/assets/catalina-estates/units/4/uploads/1784663347034-01.jpg"
       ]
     },
     {
@@ -380,9 +383,9 @@
       "images": [
         "/assets/catalina-estates/units/9/uploads/1784663647475-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663651126-01.jpg",
-        "/assets/catalina-estates/units/9/uploads/1784663658404-01.jpg",
-        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663653670-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663655439-01.jpg",
+        "/assets/catalina-estates/units/9/uploads/1784663658404-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663661354-01.jpg",
         "/assets/catalina-estates/units/9/uploads/1784663663203-01.jpg"
       ]
@@ -423,12 +426,12 @@
       "type": "1 Bedroom",
       "rent": 1175,
       "images": [
-        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
+        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
         "/assets/layali/units/14/uploads/1784039011286-01.jpg",
         "/assets/layali/units/14/uploads/1784039012974-01.jpg",
-        "/assets/layali/units/14/uploads/1784039009208-01.jpg",
         "/assets/layali/units/14/uploads/1784039014580-01.jpg",
         "/assets/layali/units/14/uploads/1784039016405-01.jpg",
+        "/assets/layali/units/14/uploads/1784039018549-01.jpg",
         "/assets/layali/units/14/uploads/1784039020500-01.jpg",
         "/assets/layali/units/14/uploads/1784039022934-01.jpg"
       ]
@@ -441,13 +444,15 @@
       "images": [
         "/assets/layali/units/15/01.jpg",
         "/assets/layali/units/15/02.jpg",
-        "/assets/layali/units/15/04.jpg",
         "/assets/layali/units/15/03.jpg",
+        "/assets/layali/units/15/04.jpg",
+        "/assets/layali/units/15/05.jpg",
         "/assets/layali/units/15/06.jpg",
         "/assets/layali/units/15/07.jpg",
         "/assets/layali/units/15/08.jpg",
-        "/assets/layali/units/15/11.jpg",
-        "/assets/layali/units/15/09.jpg"
+        "/assets/layali/units/15/09.jpg",
+        "/assets/layali/units/15/10.jpg",
+        "/assets/layali/units/15/11.jpg"
       ]
     },
     {
@@ -460,10 +465,10 @@
         "/assets/layali/units/17/uploads/1784039565724-01.jpg",
         "/assets/layali/units/17/uploads/1784039567351-01.jpg",
         "/assets/layali/units/17/uploads/1784039569112-01.jpg",
-        "/assets/layali/units/17/uploads/1784039573006-01.jpg",
         "/assets/layali/units/17/uploads/1784039571421-01.jpg",
-        "/assets/layali/units/17/uploads/1784039575741-01.jpg",
-        "/assets/layali/units/17/uploads/1784039574398-01.jpg"
+        "/assets/layali/units/17/uploads/1784039573006-01.jpg",
+        "/assets/layali/units/17/uploads/1784039574398-01.jpg",
+        "/assets/layali/units/17/uploads/1784039575741-01.jpg"
       ]
     }
   ],
@@ -1059,7 +1064,20 @@
     {
       "unit": "201",
       "type": "1 Bedroom",
-      "rent": 1240
+      "rent": 1240,
+      "images": [
+        "/assets/sky-manor/units/201/uploads/1784829865795-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829867835-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829869460-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829871412-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829873400-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829875105-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829877147-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829879079-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829880538-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829882165-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829884096-01.jpg"
+      ]
     },
     {
       "unit": "202",
