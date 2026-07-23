@@ -174,11 +174,11 @@
       "rent": 1421,
       "image": "https://drive.google.com/drive/folders/1H1bjzW3ejy9H4ygzj4XQ0lTz8q2P2Q0C?usp=drive_link",
       "images": [
-        "/assets/woodridge/units/324/01.jpg",
-        "/assets/woodridge/units/324/02.jpg",
-        "/assets/woodridge/units/324/03.jpg",
         "/assets/woodridge/units/324/04.jpg",
-        "/assets/woodridge/units/324/05.jpg"
+        "/assets/woodridge/units/324/05.jpg",
+        "/assets/woodridge/units/324/03.jpg",
+        "/assets/woodridge/units/324/02.jpg",
+        "/assets/woodridge/units/324/01.jpg"
       ]
     }
   ],
