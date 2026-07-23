@@ -722,7 +722,8 @@
         "/assets/palisades/units/204/uploads/1784045014148-01.jpg",
         "/assets/palisades/units/204/uploads/1784045015320-01.jpg",
         "/assets/palisades/units/204/uploads/1784045016666-01.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "205",
