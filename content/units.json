@@ -1071,8 +1071,8 @@
         "/assets/sky-manor/units/201/uploads/1784829865795-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829867835-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829882165-01.jpg",
-        "/assets/sky-manor/units/201/uploads/1784829869460-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829871412-01.jpg",
+        "/assets/sky-manor/units/201/uploads/1784829869460-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829873400-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829875105-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829877147-01.jpg",
@@ -1099,7 +1099,8 @@
         "/assets/sky-manor/units/202/uploads/1784831471376-01.jpg",
         "/assets/sky-manor/units/202/uploads/1784831463816-01.jpg"
       ],
-      "archived": true
+      "archived": true,
+      "applyUrl": "I"
     },
     {
       "unit": "204",
@@ -1120,8 +1121,8 @@
         "/assets/sky-manor/units/204/uploads/1784833043217-01.jpg",
         "/assets/sky-manor/units/204/uploads/1784833045178-01.jpg",
         "/assets/sky-manor/units/204/uploads/1784833046989-01.jpg",
-        "/assets/sky-manor/units/204/uploads/1784833048607-01.jpg",
-        "/assets/sky-manor/units/204/uploads/1784833050477-01.jpg"
+        "/assets/sky-manor/units/204/uploads/1784833050477-01.jpg",
+        "/assets/sky-manor/units/204/uploads/1784833048607-01.jpg"
       ]
     },
     {
