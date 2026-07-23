@@ -394,11 +394,13 @@
       "/assets/courts-manor/01-main.jpg"
     ],
     "tags": {
-      "/assets/courts-manor/03.png": "1 Bedroom",
-      "/assets/courts-manor/04.png": "1 Bedroom",
-      "/assets/courts-manor/05.png": "1 Bedroom",
+      "/assets/courts-manor/03.png": "Kitchen",
+      "/assets/courts-manor/04.png": "Living Room",
+      "/assets/courts-manor/05.png": "Kitchen",
       "/assets/courts-manor/06.png": "1 Bedroom",
-      "/assets/courts-manor/uploads/1783957648354-01.jpg": "Exterior"
+      "/assets/courts-manor/uploads/1783957648354-01.jpg": "Exterior",
+      "/assets/courts-manor/02.png": "1 Bedroom",
+      "/assets/courts-manor/uploads/1784820854940-01.jpg": "1 Bedroom"
     }
   },
   "oakwood-manor": {
