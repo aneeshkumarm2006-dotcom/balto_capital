@@ -1166,6 +1166,11 @@
         "/assets/sky-manor/units/304/uploads/1784834494413-01.jpg",
         "/assets/sky-manor/units/304/uploads/1784834492465-01.jpg"
       ]
+    },
+    {
+      "unit": "302",
+      "type": "2 Bedroom",
+      "rent": 1270
     }
   ],
   "grandview-manor": [
