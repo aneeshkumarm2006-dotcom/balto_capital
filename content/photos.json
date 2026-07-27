@@ -647,9 +647,16 @@
     "hidden": []
   },
   "pioneer": {
-    "hero": "/assets/coming-soon.png",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/pioneer/uploads/1785177451913-01.jpg",
+    "gallery": [
+      "/assets/coming-soon.png"
+    ],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
+    "tags": {
+      "/assets/pioneer/uploads/1785177451913-01.jpg": "Exterior"
+    }
   },
   "arbour-green": {
     "hero": "/assets/arbour-green/uploads/1785176310787-01.jpg",
