@@ -529,17 +529,21 @@
     }
   },
   "beverly": {
-    "hero": "/assets/coming-soon.png",
+    "hero": "/assets/beverly/uploads/1785174947115-01.jpg",
     "gallery": [
+      "/assets/coming-soon.png",
       "/assets/beverly/01-main.png",
       "/assets/beverly/02.png",
       "/assets/beverly/03.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
     "tags": {
       "/assets/beverly/01-main.png": "1 Bedroom",
       "/assets/beverly/02.png": "1 Bedroom",
-      "/assets/beverly/03.png": "1 Bedroom"
+      "/assets/beverly/03.png": "1 Bedroom",
+      "/assets/beverly/uploads/1785174947115-01.jpg": "Exterior"
     }
   },
   "royal-manor": {
