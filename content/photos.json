@@ -652,9 +652,16 @@
     "hidden": []
   },
   "arbour-green": {
-    "hero": "/assets/coming-soon.png",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/arbour-green/uploads/1785176310787-01.jpg",
+    "gallery": [
+      "/assets/coming-soon.png"
+    ],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
+    "tags": {
+      "/assets/arbour-green/uploads/1785176310787-01.jpg": "Exterior"
+    }
   },
   "ten-one-26-154": {
     "hero": "/assets/coming-soon.png",
