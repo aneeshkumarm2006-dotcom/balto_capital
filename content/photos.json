@@ -513,9 +513,16 @@
     }
   },
   "rivergate": {
-    "hero": "/assets/coming-soon.png",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/rivergate/uploads/1785164489398-01.jpg",
+    "gallery": [
+      "/assets/coming-soon.png"
+    ],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
+    "tags": {
+      "/assets/rivergate/uploads/1785164489398-01.jpg": "Exterior"
+    }
   },
   "beverly": {
     "hero": "/assets/coming-soon.png",
