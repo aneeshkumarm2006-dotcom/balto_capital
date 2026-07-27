@@ -489,8 +489,9 @@
     }
   },
   "strathearn": {
-    "hero": "/assets/coming-soon.png",
+    "hero": "/assets/strathearn/uploads/1785174699832-01.jpg",
     "gallery": [
+      "/assets/coming-soon.png",
       "/assets/strathearn/02.png",
       "/assets/strathearn/03.png",
       "/assets/strathearn/04.png",
@@ -500,7 +501,9 @@
       "/assets/strathearn/08.png",
       "/assets/strathearn/09.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
     "tags": {
       "/assets/strathearn/02.png": "1 Bedroom",
       "/assets/strathearn/03.png": "1 Bedroom",
@@ -509,7 +512,8 @@
       "/assets/strathearn/06.png": "1 Bedroom",
       "/assets/strathearn/07.png": "1 Bedroom",
       "/assets/strathearn/08.png": "1 Bedroom",
-      "/assets/strathearn/09.png": "1 Bedroom"
+      "/assets/strathearn/09.png": "1 Bedroom",
+      "/assets/strathearn/uploads/1785174699832-01.jpg": "Exterior"
     }
   },
   "rivergate": {
