@@ -662,9 +662,14 @@
     "hidden": []
   },
   "britnell-landing": {
-    "hero": "/assets/coming-soon.png",
-    "gallery": [],
-    "hidden": []
+    "hero": "/assets/britnell-landing/uploads/1785175235474-01.jpg",
+    "gallery": [
+      "/assets/coming-soon.png"
+    ],
+    "hidden": [],
+    "tags": {
+      "/assets/britnell-landing/uploads/1785175235474-01.jpg": "Exterior"
+    }
   },
   "chicklet-house": {
     "hero": "/assets/coming-soon.png",
