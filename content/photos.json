@@ -414,7 +414,14 @@
   "grandview-manor": {
     "hero": "/assets/grandview-manor/uploads/1783957869153-01.jpg",
     "gallery": [
-      "/assets/grandview-manor/01-main.jpg"
+      "/assets/grandview-manor/01-main.jpg",
+      "/assets/grandview-manor/uploads/1785262825033-01.jpg",
+      "/assets/grandview-manor/uploads/1785262827548-01.jpg",
+      "/assets/grandview-manor/uploads/1785262829800-01.jpg",
+      "/assets/grandview-manor/uploads/1785262831638-01.jpg",
+      "/assets/grandview-manor/uploads/1785262833674-01.jpg",
+      "/assets/grandview-manor/uploads/1785262835987-01.jpg",
+      "/assets/grandview-manor/uploads/1785262838010-01.jpg"
     ],
     "hidden": [
       "/assets/grandview-manor/01-main.jpg"
