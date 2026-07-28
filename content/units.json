@@ -737,7 +737,20 @@
     {
       "unit": "103",
       "type": "2 Bedroom",
-      "rent": 1250
+      "rent": 1250,
+      "images": [
+        "/assets/palisades/units/103/uploads/1785268634432-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268636822-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268638824-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268640994-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268642736-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268644388-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268646217-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268648381-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268650323-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268652292-01.jpg",
+        "/assets/palisades/units/103/uploads/1785268654260-01.jpg"
+      ]
     }
   ],
   "acadian": [
