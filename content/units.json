@@ -1177,7 +1177,16 @@
     {
       "unit": "302",
       "type": "1 Bedroom",
-      "rent": 1080
+      "rent": 1080,
+      "images": [
+        "/assets/grandview-manor/units/302/uploads/1785262655103-01.jpg",
+        "/assets/grandview-manor/units/302/uploads/1785262657319-01.jpg",
+        "/assets/grandview-manor/units/302/uploads/1785262659184-01.jpg",
+        "/assets/grandview-manor/units/302/uploads/1785262661057-01.jpg",
+        "/assets/grandview-manor/units/302/uploads/1785262663188-01.jpg",
+        "/assets/grandview-manor/units/302/uploads/1785262664970-01.jpg",
+        "/assets/grandview-manor/units/302/uploads/1785262666884-01.jpg"
+      ]
     }
   ]
 }
