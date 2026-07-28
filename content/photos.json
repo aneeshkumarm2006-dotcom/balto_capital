@@ -552,15 +552,17 @@
     }
   },
   "beverly": {
-    "hero": "/assets/beverly/uploads/1785174947115-01.jpg",
+    "hero": "/assets/beverly/uploads/1785265320378-01.jpg",
     "gallery": [
+      "/assets/beverly/uploads/1785174947115-01.jpg",
       "/assets/coming-soon.png",
       "/assets/beverly/01-main.png",
       "/assets/beverly/02.png",
       "/assets/beverly/03.png"
     ],
     "hidden": [
-      "/assets/coming-soon.png"
+      "/assets/coming-soon.png",
+      "/assets/beverly/uploads/1785174947115-01.jpg"
     ],
     "tags": {
       "/assets/beverly/01-main.png": "1 Bedroom",
