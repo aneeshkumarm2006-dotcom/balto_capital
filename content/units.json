@@ -996,7 +996,18 @@
     {
       "unit": "202",
       "type": "2 Bedroom",
-      "rent": 1250
+      "rent": 1250,
+      "images": [
+        "/assets/beverly/units/202/uploads/1785269049596-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269052141-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269054592-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269056801-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269059027-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269061126-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269063380-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269065293-01.jpg",
+        "/assets/beverly/units/202/uploads/1785269067248-01.jpg"
+      ]
     }
   ],
   "test-one": [
