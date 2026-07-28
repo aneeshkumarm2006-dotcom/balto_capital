@@ -708,7 +708,9 @@
     "gallery": [
       "/assets/coming-soon.png"
     ],
-    "hidden": [],
+    "hidden": [
+      "/assets/coming-soon.png"
+    ],
     "tags": {
       "/assets/britnell-landing/uploads/1785175235474-01.jpg": "Exterior"
     }
