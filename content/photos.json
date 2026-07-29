@@ -67,9 +67,9 @@
       "/assets/acadian/ai/02_studio_ai_furnished_living_area.png",
       "/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png",
       "/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png",
+      "/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png",
       "/assets/acadian/ai/10_1bed_ai_unfurnished_living_room.png",
       "/assets/acadian/ai/07_1bed_ai_furnished__living_room.png",
-      "/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png",
       "/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png",
       "/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png",
       "/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png",
@@ -87,7 +87,10 @@
       "/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png",
       "/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png",
       "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png",
-      "/assets/acadian/ai/02_studio_ai_furnished_living_area.png"
+      "/assets/acadian/ai/02_studio_ai_furnished_living_area.png",
+      "/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png",
+      "/assets/acadian/ai/13_2bed_ai_furnished_living_room.png",
+      "/assets/acadian/ai/11_2bed_ai_furnished_bedroom.png"
     ],
     "tags": {
       "/assets/acadian/01-main.jpg": "Exterior",
