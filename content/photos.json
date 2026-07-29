@@ -446,7 +446,16 @@
     ],
     "hidden": [
       "/assets/grandview-manor/01-main.jpg"
-    ]
+    ],
+    "tags": {
+      "/assets/grandview-manor/uploads/1785262829800-01.jpg": "Kitchen",
+      "/assets/grandview-manor/uploads/1785264512938-01.jpg": "Kitchen",
+      "/assets/grandview-manor/uploads/1785262833674-01.jpg": "Bathroom",
+      "/assets/grandview-manor/uploads/1785264879772-01.jpg": "Bathroom",
+      "/assets/grandview-manor/uploads/1785262827548-01.jpg": "Living Room",
+      "/assets/grandview-manor/uploads/1785262825033-01.jpg": "Living Room",
+      "/assets/grandview-manor/uploads/1785263415234-01.jpg": "Living Room"
+    }
   },
   "courts-manor": {
     "hero": "/assets/courts-manor/uploads/1783957648354-01.jpg",
