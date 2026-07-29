@@ -62,15 +62,15 @@
     "gallery": [
       "/assets/acadian/01-main.jpg",
       "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png",
-      "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png",
       "/assets/acadian/ai/01_studio_ai_furnished_kitchen.png",
+      "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png",
       "/assets/acadian/ai/02_studio_ai_furnished_living_area.png",
       "/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png",
       "/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png",
       "/assets/acadian/ai/10_1bed_ai_unfurnished_living_room.png",
+      "/assets/acadian/ai/07_1bed_ai_furnished__living_room.png",
       "/assets/acadian/ai/05_1bed_ai_furnished__bedroom.png",
       "/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png",
-      "/assets/acadian/ai/07_1bed_ai_furnished__living_room.png",
       "/assets/acadian/ai/15_2bed_ai_unfurnished_bedroom.png",
       "/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png",
       "/assets/acadian/ai/17_2bed_ai_unfurnished_living_room.png",
@@ -81,13 +81,19 @@
       "/assets/acadian/ai/14_2bed_ai_furnished_master_bedroom.png"
     ],
     "hidden": [
-      "/assets/acadian/01-main.jpg"
+      "/assets/acadian/01-main.jpg",
+      "/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png",
+      "/assets/acadian/ai/06_1bed_ai_furnished__kitchen.png",
+      "/assets/acadian/ai/16_2bed_ai_unfurnished_kitchen.png",
+      "/assets/acadian/ai/12_2bed_ai_furnished_kitchen.png",
+      "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png",
+      "/assets/acadian/ai/02_studio_ai_furnished_living_area.png"
     ],
     "tags": {
       "/assets/acadian/01-main.jpg": "Exterior",
-      "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png": "Studio",
+      "/assets/acadian/ai/03_studio_ai_unfurnished_kitchen.png": "Kitchen",
       "/assets/acadian/ai/04_studio_ai_unfurnished_living_area.png": "Studio",
-      "/assets/acadian/ai/01_studio_ai_furnished_kitchen.png": "Studio",
+      "/assets/acadian/ai/01_studio_ai_furnished_kitchen.png": "Kitchen",
       "/assets/acadian/ai/02_studio_ai_furnished_living_area.png": "Studio",
       "/assets/acadian/ai/08_1bed_ai_unfurnished_bedroom.png": "1 Bedroom",
       "/assets/acadian/ai/09_1bed_ai_unfurnished_kitchen.png": "1 Bedroom",
