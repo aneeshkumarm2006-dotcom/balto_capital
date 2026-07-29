@@ -178,12 +178,12 @@
     "gallery": [
       "/assets/catalina-estates/01-main.jpg",
       "/assets/catalina-estates/02.png",
-      "/assets/catalina-estates/03.png",
-      "/assets/catalina-estates/04.png",
-      "/assets/catalina-estates/05.png",
       "/assets/catalina-estates/06.png",
+      "/assets/catalina-estates/03.png",
       "/assets/catalina-estates/07.png",
+      "/assets/catalina-estates/04.png",
       "/assets/catalina-estates/08.png",
+      "/assets/catalina-estates/05.png",
       "/assets/catalina-estates/09.png"
     ],
     "hidden": [
@@ -192,14 +192,14 @@
     "tags": {
       "/assets/catalina-estates/uploads/1783956491394-01.jpg": "Exterior",
       "/assets/catalina-estates/01-main.jpg": "1 Bedroom",
-      "/assets/catalina-estates/02.png": "1 Bedroom",
-      "/assets/catalina-estates/03.png": "1 Bedroom",
+      "/assets/catalina-estates/02.png": "Living Room",
+      "/assets/catalina-estates/03.png": "Kitchen",
       "/assets/catalina-estates/04.png": "1 Bedroom",
-      "/assets/catalina-estates/09.png": "1 Bedroom",
+      "/assets/catalina-estates/09.png": "Bathroom",
       "/assets/catalina-estates/08.png": "1 Bedroom",
-      "/assets/catalina-estates/07.png": "1 Bedroom",
-      "/assets/catalina-estates/06.png": "1 Bedroom",
-      "/assets/catalina-estates/05.png": "1 Bedroom"
+      "/assets/catalina-estates/07.png": "Kitchen",
+      "/assets/catalina-estates/06.png": "Living Room",
+      "/assets/catalina-estates/05.png": "Bathroom"
     }
   },
   "layali": {
