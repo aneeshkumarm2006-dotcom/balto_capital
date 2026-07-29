@@ -398,7 +398,19 @@
     {
       "unit": "410",
       "type": "1 Bedroom",
-      "rent": 1050
+      "rent": 1050,
+      "images": [
+        "/assets/royal-lady/units/410/uploads/1785360995757-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785360997969-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785360999780-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361001531-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361003234-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361005001-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361006756-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361008541-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361010180-01.jpg",
+        "/assets/royal-lady/units/410/uploads/1785361011825-01.jpg"
+      ]
     }
   ],
   "catalina-estates": [
