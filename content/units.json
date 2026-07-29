@@ -1064,7 +1064,8 @@
         "/assets/copper-manor/units/1/uploads/1784557137935-01.jpg",
         "/assets/copper-manor/units/1/uploads/1784557139561-01.jpg",
         "/assets/copper-manor/units/1/uploads/1784557141447-01.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "3",
@@ -1087,7 +1088,8 @@
         "/assets/copper-manor/units/4/uploads/1784557828881-01.jpg",
         "/assets/copper-manor/units/4/uploads/1784557830344-01.jpg",
         "/assets/copper-manor/units/4/uploads/1784557833178-01.jpg"
-      ]
+      ],
+      "archived": true
     }
   ],
   "arbour-green": [
