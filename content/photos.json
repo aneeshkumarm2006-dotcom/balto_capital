@@ -605,23 +605,23 @@
     "hero": "/assets/royal-manor/01-main.jpg",
     "gallery": [
       "/assets/royal-manor/02.jpg",
-      "/assets/royal-manor/03.jpg",
-      "/assets/royal-manor/04.jpg",
-      "/assets/royal-manor/05.jpg",
       "/assets/royal-manor/06.png",
+      "/assets/royal-manor/03.jpg",
       "/assets/royal-manor/07.png",
+      "/assets/royal-manor/04.jpg",
       "/assets/royal-manor/08.png",
+      "/assets/royal-manor/05.jpg",
       "/assets/royal-manor/09.png"
     ],
     "hidden": [],
     "tags": {
-      "/assets/royal-manor/02.jpg": "1 Bedroom",
-      "/assets/royal-manor/05.jpg": "1 Bedroom",
-      "/assets/royal-manor/03.jpg": "1 Bedroom",
-      "/assets/royal-manor/06.png": "1 Bedroom",
-      "/assets/royal-manor/07.png": "1 Bedroom",
+      "/assets/royal-manor/02.jpg": "Living Room",
+      "/assets/royal-manor/05.jpg": "Bathroom",
+      "/assets/royal-manor/03.jpg": "Kitchen",
+      "/assets/royal-manor/06.png": "Living Room",
+      "/assets/royal-manor/07.png": "Kitchen",
       "/assets/royal-manor/08.png": "1 Bedroom",
-      "/assets/royal-manor/09.png": "1 Bedroom",
+      "/assets/royal-manor/09.png": "Bathroom",
       "/assets/royal-manor/04.jpg": "1 Bedroom",
       "/assets/royal-manor/01-main.jpg": "Exterior"
     }
