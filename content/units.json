@@ -502,7 +502,22 @@
     {
       "unit": "12",
       "type": "2 Bedroom",
-      "rent": 1250
+      "rent": 1250,
+      "images": [
+        "/assets/layali/units/12/uploads/1785354261738-01.jpg",
+        "/assets/layali/units/12/uploads/1785354263513-01.jpg",
+        "/assets/layali/units/12/uploads/1785354265224-01.jpg",
+        "/assets/layali/units/12/uploads/1785354266882-01.jpg",
+        "/assets/layali/units/12/uploads/1785354268565-01.jpg",
+        "/assets/layali/units/12/uploads/1785354270262-01.jpg",
+        "/assets/layali/units/12/uploads/1785354271837-01.jpg",
+        "/assets/layali/units/12/uploads/1785354273350-01.jpg",
+        "/assets/layali/units/12/uploads/1785354274948-01.jpg",
+        "/assets/layali/units/12/uploads/1785354276584-01.jpg",
+        "/assets/layali/units/12/uploads/1785354279198-01.jpg",
+        "/assets/layali/units/12/uploads/1785354281479-01.jpg",
+        "/assets/layali/units/12/uploads/1785354283629-01.jpg"
+      ]
     }
   ],
   "cedar-manor": [
