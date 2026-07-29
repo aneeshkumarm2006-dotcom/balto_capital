@@ -589,8 +589,7 @@
     {
       "unit": "13",
       "type": "1 Bedroom",
-      "rent": 1025,
-      "archived": true
+      "rent": 1025
     },
     {
       "unit": "15",
