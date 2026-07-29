@@ -415,7 +415,7 @@
     {
       "unit": "4",
       "type": "1 Bedroom",
-      "rent": 1150,
+      "rent": 1175,
       "images": [
         "/assets/layali/units/4/uploads/1784038372522-01.jpg",
         "/assets/layali/units/4/uploads/1784038374382-01.jpg",
@@ -444,7 +444,7 @@
     {
       "unit": "14",
       "type": "1 Bedroom",
-      "rent": 1150,
+      "rent": 1175,
       "images": [
         "/assets/layali/units/14/uploads/1784039009208-01.jpg",
         "/assets/layali/units/14/uploads/1784039011286-01.jpg",
@@ -594,7 +594,16 @@
     {
       "unit": "13",
       "type": "1 Bedroom",
-      "rent": 1025
+      "rent": 1025,
+      "images": [
+        "/assets/cedar-manor/units/13/uploads/1785350582269-01.jpg",
+        "/assets/cedar-manor/units/13/uploads/1785350622751-01.jpg",
+        "/assets/cedar-manor/units/13/uploads/1785350607000-01.jpg",
+        "/assets/cedar-manor/units/13/uploads/1785350620827-01.jpg",
+        "/assets/cedar-manor/units/13/uploads/1785350627669-01.jpg",
+        "/assets/cedar-manor/units/13/uploads/1785350625092-01.jpg",
+        "/assets/cedar-manor/units/13/uploads/1785350584822-01.jpg"
+      ]
     },
     {
       "unit": "15",
@@ -1109,7 +1118,7 @@
     {
       "unit": "201",
       "type": "1 Bedroom",
-      "rent": 1160,
+      "rent": 1240,
       "images": [
         "/assets/sky-manor/units/201/uploads/1784829879079-01.jpg",
         "/assets/sky-manor/units/201/uploads/1784829880538-01.jpg",
@@ -1149,7 +1158,7 @@
     {
       "unit": "204",
       "type": "1 Bedroom",
-      "rent": 1160,
+      "rent": 1240,
       "images": [
         "/assets/sky-manor/units/204/uploads/1784833028617-01.jpg",
         "/assets/sky-manor/units/204/uploads/1784833032309-01.jpg",
@@ -1172,7 +1181,7 @@
     {
       "unit": "206",
       "type": "2 Bedroom",
-      "rent": 1370,
+      "rent": 1415,
       "images": [
         "/assets/sky-manor/units/206/uploads/1784833704179-01.jpg",
         "/assets/sky-manor/units/206/uploads/1784833718083-01.jpg",
@@ -1195,7 +1204,7 @@
     {
       "unit": "303",
       "type": "1 Bedroom",
-      "rent": 1160,
+      "rent": 1240,
       "images": [
         "/assets/sky-manor/units/303/uploads/1784834301425-01.jpg",
         "/assets/sky-manor/units/303/uploads/1784834306579-01.jpg",
@@ -1214,7 +1223,7 @@
     {
       "unit": "304",
       "type": "2 Bedroom",
-      "rent": 1370,
+      "rent": 1415,
       "images": [
         "/assets/sky-manor/units/304/uploads/1784834485597-01.jpg",
         "/assets/sky-manor/units/304/uploads/1784834488892-01.jpg",
