@@ -552,24 +552,25 @@
     "gallery": [
       "/assets/coming-soon.png",
       "/assets/strathearn/02.png",
-      "/assets/strathearn/03.png",
-      "/assets/strathearn/04.png",
-      "/assets/strathearn/05.png",
       "/assets/strathearn/06.png",
+      "/assets/strathearn/03.png",
       "/assets/strathearn/07.png",
+      "/assets/strathearn/04.png",
       "/assets/strathearn/08.png",
+      "/assets/strathearn/05.png",
       "/assets/strathearn/09.png"
     ],
     "hidden": [
-      "/assets/coming-soon.png"
+      "/assets/coming-soon.png",
+      "/assets/strathearn/05.png"
     ],
     "tags": {
-      "/assets/strathearn/02.png": "1 Bedroom",
-      "/assets/strathearn/03.png": "1 Bedroom",
+      "/assets/strathearn/02.png": "Living Room",
+      "/assets/strathearn/03.png": "Kitchen",
       "/assets/strathearn/04.png": "1 Bedroom",
       "/assets/strathearn/05.png": "1 Bedroom",
-      "/assets/strathearn/06.png": "1 Bedroom",
-      "/assets/strathearn/07.png": "1 Bedroom",
+      "/assets/strathearn/06.png": "Living Room",
+      "/assets/strathearn/07.png": "Kitchen",
       "/assets/strathearn/08.png": "1 Bedroom",
       "/assets/strathearn/09.png": "1 Bedroom",
       "/assets/strathearn/uploads/1785174699832-01.jpg": "Exterior"
