@@ -245,6 +245,22 @@
       "archived": true
     },
     {
+      "unit": "207",
+      "type": "1 Bedroom",
+      "rent": 1040,
+      "images": [
+        "/assets/royal-lady/units/207/uploads/1785355817703-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355819866-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355822126-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355824144-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355827215-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355830485-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355832831-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355834502-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355836423-01.jpg"
+      ]
+    },
+    {
       "unit": "209",
       "type": "1 Bedroom",
       "rent": 1050,
@@ -259,6 +275,11 @@
         "/assets/royal-lady/units/209/uploads/1785351335542-01.jpg",
         "/assets/royal-lady/units/209/uploads/1785351333647-01.jpg"
       ]
+    },
+    {
+      "unit": "210",
+      "type": "1 Bedroom",
+      "rent": 1030
     },
     {
       "unit": "302",
@@ -341,28 +362,17 @@
       "rent": 1200,
       "image": "https://drive.google.com/drive/folders/1JRdyJ5jCQwMq6DEwgmISUkVF2tugDUZ7?usp=drive_link",
       "images": [
-        "/assets/royal-lady/units/405/01.jpg",
-        "/assets/royal-lady/units/405/02.jpg",
-        "/assets/royal-lady/units/405/03.jpg",
-        "/assets/royal-lady/units/405/04.jpg",
-        "/assets/royal-lady/units/405/05.jpg",
-        "/assets/royal-lady/units/405/06.jpg",
-        "/assets/royal-lady/units/405/07.jpg",
-        "/assets/royal-lady/units/405/08.jpg",
-        "/assets/royal-lady/units/405/09.jpg",
-        "/assets/royal-lady/units/405/10.jpg"
+        "/assets/royal-lady/units/207/uploads/1785355764420-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355766995-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355768994-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355770887-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355772959-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355774764-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355776963-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355778646-01.jpg",
+        "/assets/royal-lady/units/207/uploads/1785355780485-01.jpg"
       ],
       "archived": true
-    },
-    {
-      "unit": "207",
-      "type": "1 Bedroom",
-      "rent": 1040
-    },
-    {
-      "unit": "210",
-      "type": "1 Bedroom",
-      "rent": 1030
     },
     {
       "unit": "410",
