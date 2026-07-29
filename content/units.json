@@ -29,7 +29,8 @@
         "/assets/woodridge/units/1/01.jpg",
         "/assets/woodridge/units/1/03.jpg",
         "/assets/woodridge/units/1/02.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "114",
@@ -45,7 +46,8 @@
         "/assets/woodridge/units/114/uploads/1784043364440-01.jpg",
         "/assets/woodridge/units/114/uploads/1784043362166-01.jpg",
         "/assets/woodridge/units/114/uploads/1784043368163-01.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "120",
@@ -98,7 +100,8 @@
         "/assets/woodridge/units/216/02.jpg",
         "/assets/woodridge/units/216/05.jpg",
         "/assets/woodridge/units/216/04.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "221",
@@ -123,7 +126,8 @@
         "/assets/woodridge/units/317/02.jpg",
         "/assets/woodridge/units/317/03.jpg",
         "/assets/woodridge/units/317/01.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "320",
@@ -136,7 +140,8 @@
         "/assets/woodridge/units/320/03.jpg",
         "/assets/woodridge/units/320/04.jpg",
         "/assets/woodridge/units/320/05.jpg"
-      ]
+      ],
+      "archived": true
     },
     {
       "unit": "322",
