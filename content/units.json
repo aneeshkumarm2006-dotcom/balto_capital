@@ -1273,7 +1273,21 @@
     {
       "unit": "302",
       "type": "2 Bedroom",
-      "rent": 1270
+      "rent": 1270,
+      "images": [
+        "/assets/sky-manor/units/302/uploads/1785354595273-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354597533-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354599447-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354601322-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354603422-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354605385-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354607410-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354609208-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354610922-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354612567-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354614116-01.jpg",
+        "/assets/sky-manor/units/302/uploads/1785354615753-01.jpg"
+      ]
     }
   ],
   "grandview-manor": [
