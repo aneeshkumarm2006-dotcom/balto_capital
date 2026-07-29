@@ -667,7 +667,7 @@
     {
       "unit": "25",
       "type": "1 Bedroom",
-      "rent": 1025,
+      "rent": 1140,
       "images": [
         "/assets/courts-manor/units/25/uploads/1784230361899-01.jpg",
         "/assets/courts-manor/units/25/uploads/1784230368316-01.jpg",
@@ -718,7 +718,7 @@
     {
       "unit": "12",
       "type": "1 Bedroom",
-      "rent": 1090,
+      "rent": 1238,
       "image": "https://drive.google.com/drive/folders/16se8oImLbhCnROLVHDWLxy6A7EeFOndK?usp=drive_link",
       "images": [
         "/assets/royal-manor/units/12/uploads/1784736144049-01.jpg",
@@ -868,13 +868,16 @@
       "rent": 1135,
       "image": "https://drive.google.com/drive/folders/19VS4T3oLNdWmSKDJWe1sHN1gdE-t45nU",
       "images": [
-        "/assets/acadian/units/207/uploads/1785263261142-01.jpg",
-        "/assets/acadian/units/207/uploads/1785263263984-01.jpg",
-        "/assets/acadian/units/207/uploads/1785263270829-01.jpg",
-        "/assets/acadian/units/207/uploads/1785263272747-01.jpg",
-        "/assets/acadian/units/207/uploads/1785263274981-01.jpg",
-        "/assets/acadian/units/207/uploads/1785263277177-01.jpg",
-        "/assets/acadian/units/207/uploads/1785263280090-01.jpg"
+        "/assets/acadian/units/207/uploads/1785351037210-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351035408-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351033464-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351034504-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351039205-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351040792-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351036261-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351038392-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351041845-01.jpg",
+        "/assets/acadian/units/207/uploads/1785351043018-01.jpg"
       ]
     },
     {
