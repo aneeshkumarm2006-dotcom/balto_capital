@@ -337,6 +337,21 @@
         "/assets/royal-lady/units/405/10.jpg"
       ],
       "archived": true
+    },
+    {
+      "unit": "207",
+      "type": "1 Bedroom",
+      "rent": 1040
+    },
+    {
+      "unit": "210",
+      "type": "1 Bedroom",
+      "rent": 1030
+    },
+    {
+      "unit": "410",
+      "type": "1 Bedroom",
+      "rent": 1050
     }
   ],
   "catalina-estates": [
