@@ -247,7 +247,18 @@
     {
       "unit": "209",
       "type": "1 Bedroom",
-      "rent": 1050
+      "rent": 1050,
+      "images": [
+        "/assets/royal-lady/units/209/uploads/1785351319670-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351321727-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351323679-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351325725-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351327546-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351329531-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351331728-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351335542-01.jpg",
+        "/assets/royal-lady/units/209/uploads/1785351333647-01.jpg"
+      ]
     },
     {
       "unit": "302",
