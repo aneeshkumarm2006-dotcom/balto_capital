@@ -52,10 +52,7 @@ export default function FavoritesPage() {
               </button>
             </div>
           ) : (
-            <div
-              className="grid grid-residences-city"
-              style={{ gap: 'clamp(28px, 3vw, 44px)' }}
-            >
+            <div className="cards-grid">
               {saved.map((r) => (
                 <PropertyCard key={r.id} residence={r} />
               ))}

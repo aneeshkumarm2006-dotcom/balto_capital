@@ -16,7 +16,8 @@
       "lng": -106.665,
       "spreadLat": 0.025,
       "spreadLng": 0.045
-    }
+    },
+    "portfolioLayout": true
   },
   "edmonton": {
     "slug": "edmonton",

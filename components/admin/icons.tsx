@@ -157,6 +157,30 @@ export const IconChevronRight = (p: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const IconArrowUp = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 19V5" />
+    <path d="m5 12 7-7 7 7" />
+  </svg>
+);
+
+export const IconArrowDown = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 5v14" />
+    <path d="m19 12-7 7-7-7" />
+  </svg>
+);
+
+export const IconSortAZ = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M11 5h10" />
+    <path d="M11 12h7" />
+    <path d="M11 19h4" />
+    <path d="M3 8l3-4 3 4" />
+    <path d="M6 4v16" />
+  </svg>
+);
+
 export const IconGrip = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)} fill="currentColor" stroke="none">
     <circle cx="9" cy="5" r="1.4" />

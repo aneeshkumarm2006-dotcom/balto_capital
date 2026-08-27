@@ -7,16 +7,10 @@ import { PAGES } from '@/lib/pages';
 export default function AboutPage() {
   const router = useRouter();
   return (
-    <main className="page-enter">
-      <section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          background: 'var(--ink)',
-          paddingTop: 'clamp(80px, 12vw, 160px)',
-          paddingBottom: 'clamp(80px, 12vw, 160px)',
-        }}
-      >
+    <main className="page-enter has-overlay-hero">
+      {/* The film runs the full screen, edge to edge and behind the navigation;
+          everything else on the page is set over it in a single centred column. */}
+      <section className="about-hero">
         <video
           className="about-hero-video"
           autoPlay
@@ -28,47 +22,36 @@ export default function AboutPage() {
         >
           <source src="/video/about-bg.mp4" type="video/mp4" />
         </video>
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(to bottom, rgba(10,25,41,0.62) 0%, rgba(10,25,41,0.38) 40%, rgba(10,25,41,0.72) 100%)',
-          }}
-        />
-        <div
-          className="container"
-          style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}
-        >
-          <Eyebrow color="ivory" style={{ marginBottom: 32 }}>
+        <div className="about-hero-scrim" />
+        <div className="container about-hero-copy">
+          <Eyebrow
+            color="ivory"
+            className="hero-rise"
+            style={{ ['--rise-delay' as string]: '160ms', marginBottom: 32 }}
+          >
             {PAGES.about.hero.eyebrow}
           </Eyebrow>
           <div
-            className="serif"
-            style={{
-              fontSize: 'clamp(5rem, 14vw, 13rem)',
-              fontWeight: 400,
-              lineHeight: 0.95,
-              letterSpacing: '-0.01em',
-              color: 'var(--ivory)',
-            }}
+            className="serif about-hero-title hero-rise"
+            style={{ ['--rise-delay' as string]: '300ms' }}
           >
-            <span className="italic">{PAGES.about.hero.titleItalic}</span> {PAGES.about.hero.titleRest}
+            <span className="italic">{PAGES.about.hero.titleItalic}</span>{' '}
+            {PAGES.about.hero.titleRest}
           </div>
           <p
-            className="body"
-            style={{
-              fontSize: 18,
-              marginTop: 36,
-              maxWidth: 540,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              color: 'rgba(247,243,236,0.88)',
-              fontWeight: 300,
-            }}
+            className="body about-hero-sub hero-rise"
+            style={{ ['--rise-delay' as string]: '460ms' }}
           >
             {PAGES.about.hero.subtitle}
           </p>
+        </div>
+        <div
+          className="about-hero-cue hero-rise"
+          style={{ ['--rise-delay' as string]: '900ms' }}
+          aria-hidden="true"
+        >
+          <span className="eyebrow">Scroll</span>
+          <span className="line" />
         </div>
       </section>
 
@@ -118,7 +101,7 @@ export default function AboutPage() {
           }}
         >
           <div
-            className="grid grid-residences"
+            className="grid-2up"
             style={{
               gap: 'clamp(20px, 2.4vw, 32px)',
               textAlign: 'left',

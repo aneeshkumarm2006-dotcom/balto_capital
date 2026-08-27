@@ -5,8 +5,13 @@ import { usePathname } from 'next/navigation';
 import { Logo } from './Logo';
 import { useFavorites } from './FavoritesContext';
 import { HeartIcon, MenuIcon, CloseIcon, ChevronDown } from './icons';
+import { NAV_CITIES } from '@/lib/data';
 import { PAGES } from '@/lib/pages';
 
+
+/* Routes whose first section is a full-bleed film that runs edge to edge —
+   the header sits over it, transparent, until the visitor scrolls past. */
+const OVERLAY_HERO_ROUTES = ['/about'];
 
 export function Header() {
   const pathname = usePathname();
@@ -14,10 +19,30 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [careersOpen, setCareersOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  const overlayHero = OVERLAY_HERO_ROUTES.includes(pathname);
+
+  /* The bar lifts off the page once it stops being the top of the document.
+     Over a full-bleed hero it stays transparent for the whole first screen,
+     then resolves into the normal bar as the copy comes up behind it. */
+  useEffect(() => {
+    const onScroll = () => {
+      const threshold = overlayHero ? window.innerHeight * 0.8 : 24;
+      setScrolled(window.scrollY > threshold);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [overlayHero]);
 
   const isActive = (prefix: string) =>
     pathname === prefix || pathname.startsWith(prefix + '/');
@@ -27,10 +52,16 @@ export function Header() {
 
   return (
     <>
-      <header className="site-header">
+      <header
+        className={
+          'site-header' +
+          (overlayHero ? ' overlay' : '') +
+          (scrolled ? ' scrolled' : '')
+        }
+      >
         <div className="inner">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo variant="light" height={80} />
+          <div className="brand-mark">
+            <Logo variant={overlayHero && !scrolled ? 'dark' : 'light'} height={80} />
           </div>
 
           <nav className="nav" aria-label="Primary">
@@ -57,18 +88,21 @@ export function Header() {
                   pointerEvents: dropdownOpen ? 'auto' : undefined,
                 }}
               >
-                <Link className="dropdown-item" href="/residences/saskatoon">
-                  Saskatoon
-                </Link>
-                <Link className="dropdown-item" href="/residences/edmonton">
-                  Edmonton
-                </Link>
-                <Link className="dropdown-item" href="/residences/regina">
-                  Regina
-                </Link>
-                <Link className="dropdown-item" href="/residences/yellowknife">
-                  Yellowknife <span style={{ color: 'var(--muted)', fontSize: 11 }}>· Coming soon</span>
-                </Link>
+                {NAV_CITIES.map((c) => (
+                  <Link
+                    key={c.slug}
+                    className="dropdown-item"
+                    href={`/residences/${c.slug}`}
+                  >
+                    {c.label}
+                    {c.comingSoon && (
+                      <span style={{ color: 'var(--muted)', fontSize: 11 }}>
+                        {' '}
+                        · Coming soon
+                      </span>
+                    )}
+                  </Link>
+                ))}
               </div>
             </div>
             <Link
@@ -140,7 +174,14 @@ export function Header() {
               <HeartIcon
                 filled={count > 0}
                 size={20}
-                style={{ color: count > 0 ? 'var(--gold)' : 'var(--ink)' }}
+                style={{
+                  color:
+                    count > 0
+                      ? 'var(--gold)'
+                      : overlayHero && !scrolled
+                      ? 'var(--ivory)'
+                      : 'var(--ink)',
+                }}
               />
               <span className="favorites-count">{count}</span>
             </Link>
@@ -174,10 +215,12 @@ export function Header() {
         </div>
         <nav>
           <Link href="/residences">Properties</Link>
-          <Link className="sub" href="/residences/saskatoon">Saskatoon</Link>
-          <Link className="sub" href="/residences/edmonton">Edmonton</Link>
-          <Link className="sub" href="/residences/regina">Regina</Link>
-          <Link className="sub" href="/residences/yellowknife">Yellowknife (Coming soon)</Link>
+          {NAV_CITIES.map((c) => (
+            <Link key={c.slug} className="sub" href={`/residences/${c.slug}`}>
+              {c.label}
+              {c.comingSoon && ' (Coming soon)'}
+            </Link>
+          ))}
           <Link href="/why-balto">Why Balto</Link>
           <Link href="/about">About</Link>
           {/* Placeholder, destination pending client direction on content. */}

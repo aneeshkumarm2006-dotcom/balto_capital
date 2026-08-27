@@ -1,5 +1,6 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
+import { NAV_CITIES } from '@/lib/data';
 import { SETTINGS } from '@/lib/settings';
 
 // Resident Portal + Maintenance Request are per-building (ZenRentals). Site-wide
@@ -44,10 +45,14 @@ export function Footer() {
           <div>
             <h4>Residences</h4>
             <ul>
-              <li><a onClick={() => go('/residences/saskatoon')}>Saskatoon</a></li>
-              <li><a onClick={() => go('/residences/edmonton')}>Edmonton</a></li>
-              <li><a onClick={() => go('/residences/regina')}>Regina</a></li>
-              <li><a onClick={() => go('/residences/yellowknife')}>Yellowknife · Coming soon</a></li>
+              {NAV_CITIES.map((c) => (
+                <li key={c.slug}>
+                  <a onClick={() => go(`/residences/${c.slug}`)}>
+                    {c.label}
+                    {c.comingSoon && ' · Coming soon'}
+                  </a>
+                </li>
+              ))}
               <li><a onClick={() => go('/residences')}>All residences</a></li>
             </ul>
           </div>

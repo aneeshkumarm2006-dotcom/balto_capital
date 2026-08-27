@@ -668,10 +668,7 @@ export default function ResidenceDetailPage({
             <h2 className="h2 serif" style={{ marginBottom: 48 }}>
               Other residences in {r.cityLabel}.
             </h2>
-            <div
-              className="grid grid-residences-city"
-              style={{ gap: 'clamp(28px, 3vw, 44px)' }}
-            >
+            <div className="cards-grid">
               {others.map((o) => (
                 <PropertyCard key={o.id} residence={o} hideCity />
               ))}

@@ -5,6 +5,7 @@ import { FiltersPanel, DEFAULT_FILTERS, type Filters } from '@/components/Filter
 import { SortDropdown } from '@/components/SortDropdown';
 import { PropertyCard } from '@/components/PropertyCard';
 import { MapView } from '@/components/MapViewClient';
+import { PortfolioCity } from '@/components/PortfolioCity';
 import { Eyebrow } from '@/components/Eyebrow';
 import { SlidersIcon, ArrowRight } from '@/components/icons';
 import { CITIES, residencesByCity, type City, type CitySlug } from '@/lib/data';
@@ -122,6 +123,10 @@ export default function CityListingPage({
   // Announced-but-not-live markets (Yellowknife): register-interest, not listings.
   if (city.comingSoon) return <ComingSoonCity city={city} />;
 
+  // Markets switched to the portfolio layout in the Content Studio get the
+  // cover-image + editorial-rows treatment instead of the grid + sticky map.
+  if (city.portfolioLayout) return <PortfolioCity city={city} />;
+
   return (
     <main className="page-enter">
       <FiltersPanel
@@ -208,10 +213,7 @@ export default function CityListingPage({
               </button>
             </div>
           ) : (
-            <div
-              className="grid grid-residences-city"
-              style={{ gap: 'clamp(28px, 3vw, 44px)' }}
-            >
+            <div className="cards-grid">
               {filtered.map((r) => (
                 <PropertyCard key={r.id} residence={r} hideCity />
               ))}

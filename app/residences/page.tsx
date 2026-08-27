@@ -235,10 +235,7 @@ function ResidencesAllInner() {
               </button>
             </div>
           ) : (
-            <div
-              className="grid grid-residences"
-              style={{ gap: 'clamp(28px, 3vw, 44px)' }}
-            >
+            <div className="cards-grid">
               {filtered.map((r) => (
                 <PropertyCard key={r.id} residence={r} />
               ))}

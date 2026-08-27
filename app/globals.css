@@ -248,7 +248,17 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .property-card .image-wrap { transition: box-shadow 400ms var(--ease); }
 .property-card { transition: transform 500ms var(--ease); }
 
-/* ---------- About hero video ---------- */
+/* ---------- About hero: full-screen film ---------- */
+.about-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .about-hero-video {
   position: absolute;
   inset: 0;
@@ -256,6 +266,72 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   height: 100%;
   object-fit: cover;
   z-index: 0;
+}
+/* Light at the centre so the film reads, weighted at the edges so the
+   navigation above and the type below both stay legible. */
+.about-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(10, 25, 41, 0.66) 0%,
+      rgba(10, 25, 41, 0.26) 42%,
+      rgba(10, 25, 41, 0.74) 100%
+    );
+}
+.about-hero-copy {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-top: var(--header-h);
+}
+.about-hero-title {
+  /* Floor sized so "Est. 2023." still fits a 320px screen on one line. */
+  font-size: clamp(3.6rem, 13vw, 12rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  color: var(--ivory);
+}
+.about-hero-sub {
+  font-size: 18px;
+  font-weight: 300;
+  margin: 36px auto 0;
+  max-width: 540px;
+  color: rgba(247, 243, 236, 0.88);
+}
+.about-hero-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(28px, 4vw, 52px);
+  z-index: 1;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: rgba(247, 243, 236, 0.72);
+}
+.about-hero-cue .line {
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(
+    to bottom,
+    rgba(247, 243, 236, 0.7),
+    rgba(247, 243, 236, 0)
+  );
+  animation: cueDrift 2600ms cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  transform-origin: top center;
+}
+@keyframes cueDrift {
+  0%   { transform: scaleY(0.2); opacity: 0.2; }
+  45%  { transform: scaleY(1);   opacity: 1; }
+  100% { transform: scaleY(1);   opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-cue .line { animation: none; }
 }
 
 /* ---------- City card ---------- */
@@ -287,6 +363,57 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   z-index: 50;
   background: var(--ivory);
   border-bottom: 1px solid var(--hairline);
+  transition:
+    background 400ms var(--ease),
+    border-color 400ms var(--ease),
+    box-shadow 400ms var(--ease);
+}
+/* Once the page has moved, the bar lifts off the content: translucent,
+   blurred and shadowed, with the wordmark easing down a notch. The height
+   never changes — every sticky offset on the site is measured from it. */
+.site-header.scrolled {
+  background: rgba(247, 243, 236, 0.86);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom-color: transparent;
+  box-shadow: 0 10px 30px -18px rgba(10, 25, 41, 0.45);
+}
+/* Over a full-bleed hero the bar is invisible and its type flips to ivory,
+   so the film runs behind it unbroken. It keeps `position: sticky`, so the
+   page below is pulled up under it with a negative margin (.has-overlay-hero)
+   rather than the header being lifted out of flow. */
+.site-header.overlay:not(.scrolled) {
+  background: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.site-header.overlay:not(.scrolled) .nav-item,
+.site-header.overlay:not(.scrolled) .favorites-link,
+.site-header.overlay:not(.scrolled) .menu-trigger {
+  color: var(--ivory);
+}
+.site-header.overlay:not(.scrolled) .nav-item:hover,
+.site-header.overlay:not(.scrolled) .favorites-link:hover {
+  color: var(--gold-soft);
+}
+.site-header.overlay:not(.scrolled) .nav-item[aria-disabled='true'] {
+  color: rgba(247, 243, 236, 0.6);
+}
+
+/* The page under an overlay header starts at the very top of the viewport. */
+.has-overlay-hero { margin-top: calc(-1 * var(--header-h)); }
+
+.site-header .brand-mark {
+  display: flex;
+  align-items: center;
+  transform-origin: left center;
+  transition: transform 480ms var(--ease);
+}
+.site-header.scrolled .brand-mark { transform: scale(0.84); }
+@media (prefers-reduced-motion: reduce) {
+  .site-header.scrolled .brand-mark { transform: none; }
 }
 .site-header .inner {
   display: grid;
@@ -758,8 +885,19 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 /* ============================================================
    Page-specific responsive grids
    ============================================================ */
-.grid-residences { display: grid; grid-template-columns: repeat(2, 1fr); }
-.grid-residences-city { display: grid; grid-template-columns: repeat(3, 1fr); }
+/* ONE property-card grid for the whole site. The client asked for the compact
+   card size used on a city listing (e.g. /residences/edmonton) everywhere, so
+   the track is a fixed ~300px minimum and auto-fill decides the column count
+   from whatever width the grid sits in: 3-up beside the sticky map, 4-up in a
+   full-width container, fewer as the viewport narrows. */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 260px), 1fr));
+  gap: clamp(24px, 2.4vw, 40px);
+}
+
+/* Two-up editorial cards (About pull-quotes) — not property cards. */
+.grid-2up { display: grid; grid-template-columns: repeat(2, 1fr); }
 .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
 
 /* Detail gallery: main image + 2x2 thumbnails share one height so their top
@@ -776,10 +914,8 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 @media (max-width: 1180px) {
   .residences-layout { grid-template-columns: 1fr !important; }
   .residences-map { display: none; }
-  .grid-residences { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 980px) {
-  .grid-residences-city { grid-template-columns: repeat(2, 1fr); }
   .featured-grid { grid-template-columns: repeat(2, 1fr); }
   .portfolio-grid { grid-template-columns: 1fr !important; }
   .city-carousel-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -793,8 +929,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .quick-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 32px !important; }
 }
 @media (max-width: 720px) {
-  .grid-residences { grid-template-columns: 1fr; }
-  .grid-residences-city { grid-template-columns: 1fr; }
+  .grid-2up { grid-template-columns: 1fr; }
   .featured-grid { grid-template-columns: 1fr; }
   .city-carousel-grid { grid-template-columns: 1fr !important; }
   .grid-4-md2 { grid-template-columns: repeat(2, 1fr); }
@@ -810,17 +945,14 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 /* ============================================================
    Homepage (Build Spec), grids & hero search
    ============================================================ */
-.home-cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .home-cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 3vw, 48px); }
 .steps-grid   { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(16px, 2vw, 32px); }
 
 @media (max-width: 980px) {
-  .home-cards-3 { grid-template-columns: repeat(2, 1fr); }
   .home-cards-4 { grid-template-columns: repeat(2, 1fr); }
   .steps-grid   { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-  .home-cards-3 { grid-template-columns: 1fr; }
   .home-cards-4 { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
@@ -866,25 +998,273 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .detail-grid .map-controls { display: none; }
 
 /* ============================================================
+   PORTFOLIO city listing (Saskatoon) — full-bleed cover, then the
+   residences as large editorial rows. Photography starts desaturated
+   and resolves to colour as each row scrolls in.
+   ============================================================ */
+.portfolio-cover {
+  position: relative;
+  height: clamp(460px, 78vh, 820px);
+  overflow: hidden;
+  background: var(--ink);
+  display: flex;
+  align-items: flex-end;
+}
+.portfolio-cover .parallax-frame { position: absolute; inset: 0; }
+.portfolio-cover-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 25, 41, 0.52) 0%,
+    rgba(10, 25, 41, 0.22) 38%,
+    rgba(10, 25, 41, 0.82) 100%
+  );
+}
+.portfolio-cover-copy {
+  position: relative;
+  z-index: 1;
+  padding-bottom: clamp(44px, 6vw, 84px);
+  color: var(--ivory);
+}
+.portfolio-cover-copy .breadcrumb,
+.portfolio-cover-copy .breadcrumb .sep,
+.portfolio-cover-copy .breadcrumb .text-link {
+  color: rgba(247, 243, 236, 0.72);
+}
+.portfolio-cover-copy .breadcrumb .text-link:hover { color: var(--gold-soft); }
+.portfolio-cover-blurb {
+  max-width: 560px;
+  margin: 22px 0 0;
+  font-size: 17px;
+  font-weight: 300;
+  color: rgba(247, 243, 236, 0.86);
+}
+
+/* Sticky toolbar: filters · list/map · sort */
+.portfolio-toolbar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+  background: var(--ivory);
+  border-bottom: 1px solid var(--hairline);
+}
+.portfolio-toolbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.portfolio-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* List / Map segmented control */
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline-strong);
+}
+.view-toggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  padding: 10px 16px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: background 260ms var(--ease), color 260ms var(--ease);
+}
+.view-toggle button + button { border-left: 1px solid var(--hairline-strong); }
+.view-toggle button:hover { color: var(--ink); }
+.view-toggle button.active { background: var(--ink); color: var(--ivory); }
+
+/* Map view replaces the list in place */
+.portfolio-map {
+  height: calc(100vh - var(--header-h) - 68px);
+  min-height: 460px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Editorial rows */
+.portfolio-list {
+  padding-top: clamp(56px, 7vw, 104px);
+  padding-bottom: clamp(72px, 9vw, 140px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(72px, 9vw, 148px);
+}
+.portfolio-row {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: clamp(32px, 5vw, 76px);
+  align-items: center;
+}
+.portfolio-row.flipped .portfolio-media { order: 2; }
+.portfolio-row.flipped .portfolio-copy { order: 1; }
+
+.portfolio-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--cream);
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+}
+.portfolio-media img,
+.portfolio-media .placeholder-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* "Black image type" until the row scrolls in — then full colour. */
+  filter: grayscale(1) contrast(1.04) brightness(0.94);
+  transform: scale(1.02);
+  transition:
+    filter 1100ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.portfolio-row.is-inview .portfolio-media img,
+.portfolio-row.is-inview .portfolio-media .placeholder-img {
+  filter: grayscale(0) contrast(1) brightness(1);
+  transform: scale(1);
+}
+.portfolio-media:hover img { transform: scale(1.045); }
+
+.portfolio-index {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  z-index: 1;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  color: var(--ivory);
+  text-shadow: 0 1px 12px rgba(10, 25, 41, 0.6);
+}
+
+.portfolio-facts {
+  display: flex;
+  gap: clamp(28px, 4vw, 56px);
+  margin: 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline-strong);
+}
+.portfolio-facts div { margin: 0; }
+.portfolio-facts dt { margin-bottom: 6px; }
+.portfolio-facts dd {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+@media (max-width: 980px) {
+  .portfolio-row { grid-template-columns: 1fr; }
+  .portfolio-row.flipped .portfolio-media,
+  .portfolio-row.flipped .portfolio-copy { order: 0; }
+  .portfolio-media { aspect-ratio: 3 / 2; }
+  .portfolio-toolbar-inner { justify-content: flex-start; }
+}
+@media (max-width: 720px) {
+  /* A three-row toolbar would eat half a phone screen if it stayed pinned. */
+  .portfolio-toolbar { position: static; }
+  .portfolio-toolbar-inner { padding-top: 14px; padding-bottom: 14px; }
+  .portfolio-map { height: 72vh; min-height: 380px; }
+}
+@media (max-width: 560px) {
+  .view-toggle { width: 100%; }
+  .view-toggle button { flex: 1; justify-content: center; padding: 10px 12px; letter-spacing: 0.1em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-media img,
+  .portfolio-media .placeholder-img {
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================================
    MOTION, scroll-reveal + ken-burns + premium hovers
    ============================================================ */
+/* The reveal moves elements with the INDEPENDENT `translate` / `scale`
+   properties rather than `transform`. Cards own `transform` for their tilt,
+   and card images own it for the hover push-in — driving the reveal through
+   the same property would out-specify both and freeze them. The independent
+   properties compose with `transform` instead of replacing it. */
 .reveal-on-scroll {
   opacity: 0;
   transition:
     opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, transform;
+    translate 900ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    scale 900ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    clip-path 1100ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    width 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, translate;
 }
-.reveal-on-scroll:not(.reveal-x) {
-  transform: translateY(22px);
+/* Every variant class is exactly one class deep so `.is-revealed`, declared
+   last at the same weight, always wins the cascade. ScrollReveal tags each
+   element with one of them — `reveal-y` is the default rise. */
+.reveal-on-scroll.reveal-y {
+  translate: 0 22px;
 }
 .reveal-on-scroll.reveal-x {
-  transform: translateX(-32px);
+  translate: -32px 0;
 }
+
+/* Named variants (opt in with data-reveal="…") */
+.reveal-on-scroll.reveal-mask {
+  clip-path: inset(0 0 100% 0);
+}
+.reveal-on-scroll.reveal-pop {
+  scale: 0.92;
+}
+.reveal-on-scroll.reveal-rule {
+  width: 0;
+}
+
 .reveal-on-scroll.is-revealed {
   opacity: 1;
-  transform: translate(0, 0);
+  translate: none;
+  scale: none;
 }
+.reveal-on-scroll.reveal-mask.is-revealed {
+  clip-path: inset(0 0 0 0);
+}
+.reveal-on-scroll.reveal-rule.is-revealed {
+  width: 100%;
+}
+
+/* ---------- Hero entrance (above the fold, so CSS-driven not observed) ---- */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-rise {
+  opacity: 0;
+  animation: heroRise 1000ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Hero photograph: a very slow push-in anchored to the top of the frame so
+   the resident stays in shot for the whole drift. */
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.09); }
+}
+.hero-zoom {
+  transform-origin: center top;
+  animation: heroZoom 26s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
 
 @keyframes kenBurnsDrift {
   0%   { transform: scale(1.0) translate(0, 0); }
@@ -894,6 +1274,12 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   animation: kenBurnsDrift 22s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
   transform-origin: center center;
 }
+/* A drift inside a block that has not been revealed yet would be over before
+   the visitor ever saw it — hold it until the block arrives. */
+.reveal-on-scroll:not(.is-revealed) .ken-burns,
+.reveal-on-scroll:not(.is-revealed) .ken-burns-soft {
+  animation-play-state: paused;
+}
 
 @keyframes pageInPremium {
   from { opacity: 0.85; transform: translateY(6px); }
@@ -901,12 +1287,32 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 }
 .page-enter { animation: pageInPremium 500ms cubic-bezier(0.22, 0.61, 0.36, 1); }
 
-body.reveal-safety .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+/* Safety net: anything the observer never got to (a stale observer, a page
+   restored from bfcache) is forced visible. Scoped to elements that have NOT
+   revealed so it never overrides a card's own hover transform. */
+body.reveal-safety .reveal-on-scroll:not(.is-revealed) {
+  opacity: 1 !important;
+  translate: none !important;
+  scale: none !important;
+  clip-path: none !important;
+}
+body.reveal-safety .reveal-on-scroll.reveal-rule:not(.is-revealed) {
+  width: 100% !important;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .reveal-on-scroll.reveal-rule { width: 100% !important; }
+  .hero-rise { opacity: 1 !important; animation: none !important; }
   .ken-burns,
-  .ken-burns-soft { animation: none !important; }
+  .ken-burns-soft,
+  .hero-zoom { animation: none !important; }
 }
 
 /* ---------- Parallax image frame ---------- */
@@ -938,7 +1344,13 @@ body.reveal-safety .reveal-on-scroll { opacity: 1 !important; transform: none !i
 .city-card {
   transform-style: preserve-3d;
   transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-  transition: transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* This rule sits after .reveal-on-scroll and `transition` is a shorthand,
+     so the reveal's own timings have to be restated here or a revealed card
+     would snap into place instead of drifting. */
+  transition:
+    transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 900ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    translate 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .property-card.is-tilting,
 .city-card.is-tilting {

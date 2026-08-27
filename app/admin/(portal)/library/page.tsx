@@ -28,9 +28,12 @@ import {
   type StagedFile,
 } from '@/components/admin/api';
 import {
+  IconArrowDown,
+  IconArrowUp,
   IconCheck,
   IconPlus,
   IconSearch,
+  IconSortAZ,
   IconSpinner,
   IconUpload,
   IconX,
@@ -58,6 +61,20 @@ interface City {
   bounds: { minLng: number; maxLng: number; minLat: number; maxLat: number };
   center?: CityCenter;
   comingSoon?: boolean;
+  /** Manual position on the site. Cities without one fall back to A–Z. */
+  order?: number;
+  /** Portfolio layout for this city's listing page (cover image + rows). */
+  portfolioLayout?: boolean;
+}
+
+/** Same order the public site uses: manual position first, then A–Z. */
+function sortCities(list: City[]): City[] {
+  return [...list].sort((a, b) => {
+    const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
+    const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
+    if (ao !== bo) return ao - bo;
+    return a.label.localeCompare(b.label, 'en');
+  });
 }
 
 type Cities = Record<string, City>;
@@ -497,6 +514,8 @@ export default function LibraryPage() {
             buildings={buildings}
             staged={staged}
             mediaDraft={mediaDraft}
+            media={media}
+            previews={previews}
             onUpload={stageUploads}
             onPoolPublished={onPoolPublished}
           />
@@ -913,6 +932,8 @@ function CitiesTab({
   buildings,
   staged,
   mediaDraft,
+  media,
+  previews,
   onUpload,
   onPoolPublished,
 }: {
@@ -923,12 +944,16 @@ function CitiesTab({
   buildings: Building[];
   staged: StagedFile[];
   mediaDraft: MediaUpload[];
+  media: SiteMediaItem[];
+  previews: Record<string, string>;
   onUpload: (files: File[]) => Promise<string[]>;
   onPoolPublished: () => void;
 }) {
   const toast = useToast();
   const [saving, setSaving] = useState(false);
   const [confirmRemove, setConfirmRemove] = useState<string | null>(null);
+  /* Slug whose card image is being picked from the Library, or null. */
+  const [pickerSlug, setPickerSlug] = useState<string | null>(null);
 
   /* Add-city form */
   const [newLabel, setNewLabel] = useState('');
@@ -955,6 +980,40 @@ function CitiesTab({
     setDraft((d) => {
       const next = { ...d };
       delete next[slug];
+      return next;
+    });
+  };
+
+  /* Reordering writes an explicit `order` on every city, so the site renders
+     exactly this sequence. "Sort A–Z" clears them again and the site falls
+     back to alphabetical. */
+  const applyOrder = (list: City[]) => {
+    setDraft((d) => {
+      const next: Cities = { ...d };
+      list.forEach((c, i) => {
+        next[c.slug] = { ...next[c.slug], order: i };
+      });
+      return next;
+    });
+  };
+
+  const moveCity = (slug: string, delta: -1 | 1) => {
+    const list = sortCities(Object.values(draft));
+    const from = list.findIndex((c) => c.slug === slug);
+    const to = from + delta;
+    if (from < 0 || to < 0 || to >= list.length) return;
+    const next = [...list];
+    [next[from], next[to]] = [next[to], next[from]];
+    applyOrder(next);
+  };
+
+  const sortAlphabetically = () => {
+    setDraft((d) => {
+      const next: Cities = {};
+      for (const [slug, city] of Object.entries(d)) {
+        const { order: _drop, ...rest } = city;
+        next[slug] = rest;
+      }
       return next;
     });
   };
@@ -1033,20 +1092,48 @@ function CitiesTab({
     }
   };
 
-  const cityList = Object.values(draft);
+  const cityList = sortCities(Object.values(draft));
+  const customOrder = cityList.some((c) => typeof c.order === 'number');
   const pendingRemove = confirmRemove ? draft[confirmRemove] : undefined;
 
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        {cityList.map((city) => (
+        <div className="adm-card">
+          <div className="adm-card-pad adm-row" style={{ gap: 14 }}>
+            <span className="adm-help adm-grow" style={{ margin: 0 }}>
+              Cities appear on the site in this order — the homepage grid, the
+              Properties menu and the footer. Use the arrows on each card to
+              rearrange them.{' '}
+              {customOrder
+                ? 'A custom order is in place.'
+                : 'They are currently in alphabetical order.'}
+            </span>
+            <button
+              className="adm-btn sm ghost"
+              onClick={sortAlphabetically}
+              disabled={!customOrder}
+              title="Clear the manual order and sort A–Z"
+            >
+              <IconSortAZ />
+              Sort A–Z
+            </button>
+          </div>
+        </div>
+
+        {cityList.map((city, i) => (
           <CityCard
             key={city.slug}
             city={city}
+            position={i}
+            total={cityList.length}
             usedBy={usageCount(city.slug)}
+            previews={previews}
             onChange={(patch) => updateCity(city.slug, patch)}
             onRemove={() => setConfirmRemove(city.slug)}
+            onMove={(delta) => moveCity(city.slug, delta)}
             onUpload={onUpload}
+            onPickFromLibrary={() => setPickerSlug(city.slug)}
           />
         ))}
 
@@ -1095,6 +1182,17 @@ function CitiesTab({
 
       {dirty && <SaveBar saving={saving} onDiscard={() => setDraft(saved)} onSave={() => void save()} />}
 
+      <MediaPicker
+        open={pickerSlug !== null}
+        items={media}
+        previews={previews}
+        onClose={() => setPickerSlug(null)}
+        onSelect={(path) => {
+          if (pickerSlug) updateCity(pickerSlug, { image: path });
+          setPickerSlug(null);
+        }}
+      />
+
       <ConfirmDialog
         open={confirmRemove !== null}
         title={`Remove ${pendingRemove?.label ?? 'city'}?`}
@@ -1111,18 +1209,184 @@ function CitiesTab({
   );
 }
 
+/** Pick an existing site image instead of uploading a new one. Reads the
+ *  same Media register the Media tab shows, plus anything staged this session
+ *  (those only exist as local previews until the save publishes them). */
+function MediaPicker({
+  open,
+  items,
+  previews,
+  onClose,
+  onSelect,
+}: {
+  open: boolean;
+  items: SiteMediaItem[];
+  previews: Record<string, string>;
+  onClose: () => void;
+  onSelect: (path: string) => void;
+}) {
+  const [query, setQuery] = useState('');
+  const staged: SiteMediaItem[] = useMemo(
+    () =>
+      Object.keys(previews)
+        .filter((path) => !items.some((i) => i.path === path))
+        .map((path) => ({
+          path,
+          name: fileTail(path),
+          group: 'Library upload' as SiteMediaGroup,
+        })),
+    [previews, items]
+  );
+  const all = useMemo(() => [...staged, ...items], [staged, items]);
+  const shown = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return all;
+    return all.filter(
+      (i) =>
+        i.name.toLowerCase().includes(q) || i.path.toLowerCase().includes(q)
+    );
+  }, [all, query]);
+
+  if (!open) return null;
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(10,25,41,0.55)',
+        zIndex: 400,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'var(--adm-bone, #fff)',
+          width: 'min(900px, 96vw)',
+          maxHeight: '85vh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          className="adm-card-head"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <h2 className="adm-card-title">Choose a city image</h2>
+          <button
+            type="button"
+            className="adm-btn-bare"
+            aria-label="Close"
+            onClick={onClose}
+          >
+            <IconX />
+          </button>
+        </div>
+        <div className="adm-card-pad" style={{ paddingBottom: 0 }}>
+          <div className="adm-row" style={{ flexWrap: 'nowrap' }}>
+            <IconSearch />
+            <input
+              className="adm-input adm-grow"
+              value={query}
+              placeholder="Search images…"
+              aria-label="Search images"
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+        </div>
+        <div style={{ padding: 20, overflowY: 'auto' }}>
+          {shown.length === 0 ? (
+            <p className="adm-muted">
+              No images match. Upload one on the Media tab instead.
+            </p>
+          ) : (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                gap: 12,
+              }}
+            >
+              {shown.map((it) => (
+                <button
+                  key={it.path}
+                  type="button"
+                  onClick={() => onSelect(it.path)}
+                  title={`${it.name} · ${it.group}`}
+                  style={{
+                    border: '1px solid var(--adm-hairline)',
+                    background: 'var(--adm-cream, #efe8dc)',
+                    padding: 0,
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                    textAlign: 'left',
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={previews[it.path] ?? it.path}
+                    alt=""
+                    loading="lazy"
+                    style={{
+                      width: '100%',
+                      height: 100,
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                  <div
+                    className="adm-caption"
+                    style={{
+                      padding: '6px 8px',
+                      fontSize: 11,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {it.name}
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CityCard({
   city,
+  position,
+  total,
   usedBy,
+  previews,
   onChange,
   onRemove,
+  onMove,
   onUpload,
+  onPickFromLibrary,
 }: {
   city: City;
+  position: number;
+  total: number;
   usedBy: number;
+  previews: Record<string, string>;
   onChange: (patch: Partial<City>) => void;
   onRemove: () => void;
+  onMove: (delta: -1 | 1) => void;
   onUpload: (files: File[]) => Promise<string[]>;
+  onPickFromLibrary: () => void;
 }) {
   const toast = useToast();
   const imageRef = useRef<HTMLInputElement>(null);
@@ -1150,15 +1414,45 @@ function CityCard({
     }
   };
 
+  const imageSrc = previews[city.image] ?? city.image;
+
   return (
     <div className="adm-card">
-      <div className="adm-card-head">
+      <div
+        className="adm-card-head adm-row"
+        style={{ justifyContent: 'space-between', gap: 12 }}
+      >
         <div className="adm-row" style={{ gap: 10 }}>
+          <span className="adm-muted" style={{ fontSize: 12.5, minWidth: 22 }}>
+            {position + 1}.
+          </span>
           <h2 className="adm-card-title">{city.label || 'Untitled city'}</h2>
           <span className="adm-muted" style={{ fontSize: 12.5 }}>
             {city.province}
           </span>
           {city.comingSoon && <span className="adm-badge gold">Coming soon</span>}
+        </div>
+        <div className="adm-row" style={{ gap: 6, flexWrap: 'nowrap' }}>
+          <button
+            type="button"
+            className="adm-btn sm ghost"
+            aria-label={`Move ${city.label} up`}
+            title="Move up"
+            disabled={position === 0}
+            onClick={() => onMove(-1)}
+          >
+            <IconArrowUp />
+          </button>
+          <button
+            type="button"
+            className="adm-btn sm ghost"
+            aria-label={`Move ${city.label} down`}
+            title="Move down"
+            disabled={position === total - 1}
+            onClick={() => onMove(1)}
+          >
+            <IconArrowDown />
+          </button>
         </div>
       </div>
       <div className="adm-card-pad">
@@ -1184,22 +1478,63 @@ function CityCard({
               onChange={(e) => onChange({ blurb: e.target.value })}
             />
           </Field>
-          <Field label="Card image path" help="Shown on the city cards across the site.">
-            <div className="adm-row" style={{ flexWrap: 'nowrap' }}>
-              <input
-                className="adm-input adm-grow"
-                value={city.image}
-                onChange={(e) => onChange({ image: e.target.value })}
-                placeholder="/assets/library/…"
-              />
-              <button
-                className="adm-btn sm ghost"
-                onClick={() => imageRef.current?.click()}
-                disabled={uploading}
+          <Field
+            label="Card image"
+            help="Shown on the city cards across the site."
+            span2
+          >
+            <div
+              className="adm-row"
+              style={{ gap: 16, alignItems: 'flex-start', flexWrap: 'nowrap' }}
+            >
+              <div
+                style={{
+                  width: 132,
+                  height: 96,
+                  flex: 'none',
+                  border: '1px solid var(--adm-hairline)',
+                  background: 'var(--adm-cream, #efe8dc)',
+                  overflow: 'hidden',
+                }}
               >
-                {uploading ? <IconSpinner /> : <IconUpload />}
-                {uploading ? 'Uploading…' : 'Upload'}
-              </button>
+                {imageSrc && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={imageSrc}
+                    alt=""
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
+              </div>
+              <div
+                className="adm-grow"
+                style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
+              >
+                <input
+                  className="adm-input"
+                  value={city.image}
+                  onChange={(e) => onChange({ image: e.target.value })}
+                  placeholder="/assets/library/…"
+                  aria-label={`${city.label} card image path`}
+                />
+                <div className="adm-row" style={{ gap: 8 }}>
+                  <button
+                    className="adm-btn sm ghost"
+                    onClick={() => imageRef.current?.click()}
+                    disabled={uploading}
+                  >
+                    {uploading ? <IconSpinner /> : <IconUpload />}
+                    {uploading ? 'Uploading…' : 'Upload new'}
+                  </button>
+                  <button
+                    type="button"
+                    className="adm-btn sm ghost"
+                    onClick={onPickFromLibrary}
+                  >
+                    Choose from Library
+                  </button>
+                </div>
+              </div>
               <input
                 ref={imageRef}
                 type="file"
@@ -1220,6 +1555,20 @@ function CityCard({
               />
               <span className="track" />
               Coming soon (register interest only)
+            </label>
+          </Field>
+          <Field
+            label="Listing layout"
+            help="Portfolio shows a full-width cover photo, then the residences as large editorial rows with a list / map switch."
+          >
+            <label className="adm-switch">
+              <input
+                type="checkbox"
+                checked={Boolean(city.portfolioLayout)}
+                onChange={(e) => onChange({ portfolioLayout: e.target.checked })}
+              />
+              <span className="track" />
+              Portfolio layout
             </label>
           </Field>
         </div>

@@ -58,6 +58,7 @@ function CinematicHero({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        className="hero-zoom"
         src="/assets/hero-home.png"
         alt="A resident at home with her dog in a Balto apartment"
         loading="eager"
@@ -92,8 +93,9 @@ function CinematicHero({
         }}
       >
         <div
-          className="eyebrow gold"
+          className="eyebrow gold hero-rise"
           style={{
+            ['--rise-delay' as string]: '120ms',
             marginBottom: 26,
             fontFamily: 'var(--serif)',
             fontStyle: 'italic',
@@ -104,12 +106,20 @@ function CinematicHero({
         >
           {PAGES.home.hero.eyebrow}
         </div>
-        <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 1040 }}>
+        <h1
+          className="display hero-rise"
+          style={{
+            ['--rise-delay' as string]: '260ms',
+            color: 'var(--ivory)',
+            maxWidth: 1040,
+          }}
+        >
           {PAGES.home.hero.title}
         </h1>
         <p
-          className="body"
+          className="body hero-rise"
           style={{
+            ['--rise-delay' as string]: '400ms',
             color: 'rgba(247,243,236,0.88)',
             fontWeight: 300,
             marginTop: 22,
@@ -126,8 +136,9 @@ function CinematicHero({
             e.preventDefault();
             onSearch({ city, maxRent, beds });
           }}
-          className="hero-search"
+          className="hero-search hero-rise"
           style={{
+            ['--rise-delay' as string]: '560ms',
             marginTop: 44,
             background: 'var(--ivory)',
             width: 'min(880px, 96%)',
@@ -161,7 +172,15 @@ function CinematicHero({
             <SearchIcon size={16} /> {PAGES.home.hero.searchButton}
           </button>
         </form>
-        <p style={{ marginTop: 14, color: 'rgba(247,243,236,0.7)', fontSize: 12.5 }}>
+        <p
+          className="hero-rise"
+          style={{
+            ['--rise-delay' as string]: '700ms',
+            marginTop: 14,
+            color: 'rgba(247,243,236,0.7)',
+            fontSize: 12.5,
+          }}
+        >
           {PAGES.home.hero.disclaimer}
         </p>
       </div>
@@ -183,7 +202,7 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
       style={comingSoon ? { filter: 'grayscale(0.7)', opacity: 0.82 } : undefined}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={c.image} alt={c.label} />
+      <img src={c.image} alt={c.label} data-reveal="mask" />
       <div className="overlay" />
       {comingSoon && (
         <div
@@ -253,7 +272,8 @@ function OurCities() {
 /* ------------------------------------------------------------------ */
 function FeaturedResidences() {
   const router = useRouter();
-  const featured = featuredResidences().slice(0, 6);
+  // Compact cards lay out 4-up in the container, so show up to two full rows.
+  const featured = featuredResidences().slice(0, 8);
   return (
     <section className="section bg-cream">
       <div className="container">
@@ -271,7 +291,7 @@ function FeaturedResidences() {
             {PAGES.home.featured.viewAllLabel} <ArrowRight size={14} />
           </button>
         </div>
-        <div className="home-cards-3">
+        <div className="cards-grid">
           {featured.map((r) => (
             <PropertyCard key={r.id} residence={r} />
           ))}
@@ -297,8 +317,16 @@ function WhyRent() {
         </div>
         <div className="home-cards-4">
           {PAGES.home.benefits.items.map((b, i) => (
-            <div key={b.title} style={{ borderTop: '2px solid var(--gold)', paddingTop: 24 }}>
-              <div className="serif italic" style={{ fontSize: 20, color: 'var(--gold)', marginBottom: 16 }}>
+            <div key={b.title} data-reveal data-reveal-delay={i * 110}>
+              <div
+                data-reveal="rule"
+                data-reveal-delay={i * 110 + 120}
+                style={{ height: 2, background: 'var(--gold)' }}
+              />
+              <div
+                className="serif italic"
+                style={{ fontSize: 20, color: 'var(--gold)', margin: '24px 0 16px' }}
+              >
                 0{i + 1}
               </div>
               <h3 className="h3 serif" style={{ marginBottom: 12 }}>{b.title}</h3>
@@ -327,6 +355,8 @@ function HowToRent() {
             <div key={s} style={{ textAlign: 'center' }}>
               <div
                 className="serif"
+                data-reveal="pop"
+                data-reveal-delay={i * 130}
                 style={{
                   width: 56, height: 56, borderRadius: '50%', margin: '0 auto 18px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -359,13 +389,14 @@ function StoryStrip() {
           }}
           className="grid-3-md1"
         >
-          <div style={{ aspectRatio: '4 / 5', overflow: 'hidden' }}>
+          <div style={{ aspectRatio: '4 / 5', overflow: 'hidden' }} data-reveal="mask">
             <SmartImage
               src={IMAGES.detail_brick}
               alt="Architectural detail · brick masonry"
               fallbackLabel="Architectural detail"
               fallbackTone="deep"
               fallbackChar="B"
+              kenBurns
             />
           </div>
           <div>

@@ -2,6 +2,26 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
+/* ============================================================
+   Scroll choreography.
+
+   Every page gets the same treatment without touching its markup:
+   headings and body copy drift in from the side, cards and images
+   rise and un-mask, and grid children stagger behind one another so
+   a section resolves rather than snapping into place.
+
+   Anything already on screen at mount is left alone — an element the
+   visitor is looking at should never animate under them.
+
+   Opt a specific element into a named motion with `data-reveal`:
+     data-reveal            → the default rise
+     data-reveal="mask"     → image wipes up from its own bottom edge
+     data-reveal="pop"      → scales up from 92%
+     data-reveal="rule"     → a hairline draws out from the left
+     data-reveal="fade"     → opacity only
+   and delay it with `data-reveal-delay="240"` (milliseconds).
+   ============================================================ */
+
 const TEXT_SELECTORS = [
   '.display',
   '.h1',
@@ -17,9 +37,11 @@ const BLOCK_SELECTORS = [
   '.property-card',
   '.city-card',
   '.featured-grid > *',
-  '.grid-residences > *',
-  '.grid-residences-city > *',
+  '.cards-grid > *',
   '.city-carousel-grid > *',
+  '.portfolio-row',
+  '.grid-2up > .card',
+  '.grid-4-md2 > .card',
   '[data-reveal]',
 ];
 
@@ -28,10 +50,15 @@ const TEXT_SELECTOR_STR = TEXT_SELECTORS.join(',');
 
 const GRID_CLASSES = [
   'featured-grid',
-  'grid-residences',
-  'grid-residences-city',
+  'cards-grid',
   'city-carousel-grid',
+  'home-cards-4',
+  'steps-grid',
+  'grid-2up',
+  'grid-4-md2',
 ];
+
+const VARIANTS = new Set(['mask', 'pop', 'rule', 'fade']);
 
 export function ScrollReveal() {
   const pathname = usePathname();
@@ -70,19 +97,28 @@ export function ScrollReveal() {
 
         el.dataset.revealInit = '1';
         el.classList.add('reveal-on-scroll');
-        if (el.matches(TEXT_SELECTOR_STR)) {
+
+        const variant = el.dataset.reveal;
+        if (variant && VARIANTS.has(variant)) {
+          el.classList.add(`reveal-${variant}`);
+        } else if (el.matches(TEXT_SELECTOR_STR)) {
           el.classList.add('reveal-x');
+        } else {
+          el.classList.add('reveal-y');
         }
 
+        /* Grid children trail the one before them, so a row of cards
+           resolves left-to-right instead of all at once. */
+        let delay = Number(el.dataset.revealDelay ?? 0);
         const parent = el.parentElement;
-        if (parent) {
+        if (parent && !el.dataset.revealDelay) {
           const hit = GRID_CLASSES.find((c) => parent.classList.contains(c));
           if (hit) {
-            const siblings = Array.from(parent.children);
-            const idx = siblings.indexOf(el);
-            el.style.transitionDelay = `${Math.min(idx * 90, 540)}ms`;
+            const idx = Array.from(parent.children).indexOf(el);
+            delay = Math.min(idx * 90, 540);
           }
         }
+        if (delay) el.style.transitionDelay = `${delay}ms`;
 
         observer.observe(el);
       });

@@ -118,3 +118,13 @@ export const MapIcon = (p: IconProps) => (
     <path d="M3 6.5 9 3l6 3 6-3v15l-6 3-6-3-6 3.5z" />
   </Icon>
 );
+export const ListIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <line x1="9" x2="20" y1="6" y2="6" />
+    <line x1="9" x2="20" y1="12" y2="12" />
+    <line x1="9" x2="20" y1="18" y2="18" />
+    <line x1="4" x2="4.01" y1="6" y2="6" />
+    <line x1="4" x2="4.01" y1="12" y2="12" />
+    <line x1="4" x2="4.01" y1="18" y2="18" />
+  </Icon>
+);

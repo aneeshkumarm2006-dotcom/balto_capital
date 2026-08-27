@@ -62,14 +62,33 @@ export interface City {
   center?: { lat: number; lng: number; spreadLat: number; spreadLng: number };
   /** Market is announced but not yet live, render as register-interest, not listings. */
   comingSoon?: boolean;
+  /** Manual display position set in the Content Studio (Library → Cities).
+   *  Unset cities fall back to alphabetical order. */
+  order?: number;
+  /** Render the city listing in the portfolio layout (full-bleed cover image
+   *  + editorial rows) instead of the standard grid + sticky map. Set per city
+   *  in the Content Studio so the layout can be rolled out one market at a
+   *  time — currently Saskatoon only. */
+  portfolioLayout?: boolean;
 }
 
 export const CITIES: Record<string, City> = citiesJson as Record<string, City>;
 
+/** Display order for every city list on the site: the manual order set in the
+ *  Content Studio when present, otherwise alphabetical by name. */
+const byCityOrder = (a: City, b: City): number => {
+  const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
+  const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
+  if (ao !== bo) return ao - bo;
+  return a.label.localeCompare(b.label, 'en');
+};
+
 /** Cities in display order: live markets first, coming-soon markets last. */
-export const CITY_LIST: City[] = Object.values(CITIES);
+export const CITY_LIST: City[] = Object.values(CITIES).sort(byCityOrder);
 export const LIVE_CITIES: City[] = CITY_LIST.filter((c) => !c.comingSoon);
 export const COMING_SOON_CITIES: City[] = CITY_LIST.filter((c) => c.comingSoon);
+/** Every city for navigation menus: live markets first, coming soon last. */
+export const NAV_CITIES: City[] = [...LIVE_CITIES, ...COMING_SOON_CITIES];
 
 export type Availability = 'available' | 'coming-soon';
 
