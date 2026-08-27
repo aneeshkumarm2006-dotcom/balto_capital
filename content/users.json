@@ -26,7 +26,7 @@
   {
     "email": "info@davnoot.com",
     "name": "Eda",
-    "role": "editor",
+    "role": "admin",
     "passwordHash": "ab01fcad3734d9ed0ec82258b024e232:2d4bbf4ea1ba0d92dc2e0e84617fa0ba109b8a1f337ffb0815c6be5077a0f425862be7ba55133aca80a1f75e957d91d27c44750c104d52d92d79d36d91b4b92c",
     "createdAt": "2026-07-14T17:00:55.814Z",
     "active": true
