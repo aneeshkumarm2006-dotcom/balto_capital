@@ -11,3 +11,5 @@ Images/Edmonton/
 Images/Saskatoon/
 Images/Regina/
 Images/Yellowknife/
+.vercel
+.env*
