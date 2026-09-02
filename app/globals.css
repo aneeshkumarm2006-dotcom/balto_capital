@@ -1004,7 +1004,12 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
    ============================================================ */
 .portfolio-cover {
   position: relative;
-  height: clamp(460px, 78vh, 820px);
+  /* Fills the screen below the header so the filter bar and view toggle sit
+     just past the fold — at 78vh they stayed visible on entry, which was the
+     client's complaint. svh (not vh) so mobile browser chrome doesn't push the
+     toolbar back into view. */
+  height: calc(100svh - var(--header-h));
+  min-height: 460px;
   overflow: hidden;
   background: var(--ink);
   display: flex;
