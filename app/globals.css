@@ -4,8 +4,8 @@
    ============================================================ */
 
 :root {
-  --ink:        #0A1929;
-  --ink-soft:   #1A2F47;
+  --ink:        #001E4A;
+  --ink-soft:   #103468;
   --ivory:      #F7F3EC;
   --cream:      #EFE8DC;
   --bone:       #FFFFFF;
@@ -276,9 +276,9 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   background:
     linear-gradient(
       to bottom,
-      rgba(10, 25, 41, 0.66) 0%,
-      rgba(10, 25, 41, 0.26) 42%,
-      rgba(10, 25, 41, 0.74) 100%
+      rgba(0,30,74, 0.66) 0%,
+      rgba(0,30,74, 0.26) 42%,
+      rgba(0,30,74, 0.74) 100%
     );
 }
 .about-hero-copy {
@@ -340,7 +340,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .city-card:hover img { transform: scale(1.05); }
 .city-card .overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(10,25,41,0.55) 0%, rgba(10,25,41,0.0) 50%);
+  background: linear-gradient(to top, rgba(0,30,74,0.55) 0%, rgba(0,30,74,0.0) 50%);
 }
 .city-card .label {
   position: absolute;
@@ -376,7 +376,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   backdrop-filter: saturate(1.4) blur(12px);
   -webkit-backdrop-filter: saturate(1.4) blur(12px);
   border-bottom-color: transparent;
-  box-shadow: 0 10px 30px -18px rgba(10, 25, 41, 0.45);
+  box-shadow: 0 10px 30px -18px rgba(0,30,74, 0.45);
 }
 /* Over a full-bleed hero the bar is invisible and its type flips to ivory,
    so the film runs behind it unbroken. It keeps `position: sticky`, so the
@@ -546,7 +546,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .mobile-menu nav a.sub { font-size: 18px; padding-left: 14px; }
 .mobile-backdrop {
   position: fixed; inset: 0;
-  background: rgba(10,25,41,0.4);
+  background: rgba(0,30,74,0.4);
   z-index: 1050;
   opacity: 0;
   pointer-events: none;
@@ -684,7 +684,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   font-family: var(--serif);
   font-style: italic;
   font-size: 28px;
-  color: rgba(10, 25, 41, 0.18);
+  color: rgba(0,30,74, 0.18);
   letter-spacing: 0.04em;
 }
 
@@ -693,7 +693,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
    inquire / gallery modals overlay maps cleanly. */
 .modal-backdrop {
   position: fixed; inset: 0;
-  background: rgba(10, 25, 41, 0.6);
+  background: rgba(0,30,74, 0.6);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -740,7 +740,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   position: fixed;
   inset: 0;
   z-index: 2500;
-  background: rgba(10, 25, 41, 0.94);
+  background: rgba(0,30,74, 0.94);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -825,7 +825,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .filters-panel.open { transform: translateX(0); }
 .filters-overlay {
   position: fixed; inset: 0;
-  background: rgba(10,25,41,0.4);
+  background: rgba(0,30,74,0.4);
   opacity: 0;
   pointer-events: none;
   transition: opacity 240ms var(--ease);
@@ -1016,9 +1016,9 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(10, 25, 41, 0.52) 0%,
-    rgba(10, 25, 41, 0.22) 38%,
-    rgba(10, 25, 41, 0.82) 100%
+    rgba(0,30,74, 0.52) 0%,
+    rgba(0,30,74, 0.22) 38%,
+    rgba(0,30,74, 0.82) 100%
   );
 }
 .portfolio-cover-copy {
@@ -1147,7 +1147,7 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   font-size: 15px;
   letter-spacing: 0.14em;
   color: var(--ivory);
-  text-shadow: 0 1px 12px rgba(10, 25, 41, 0.6);
+  text-shadow: 0 1px 12px rgba(0,30,74, 0.6);
 }
 
 .portfolio-facts {
@@ -1438,12 +1438,12 @@ body.reveal-safety .reveal-on-scroll.reveal-rule:not(.is-revealed) {
   border: 1px solid var(--hairline-strong);
   display: flex;
   cursor: pointer;
-  box-shadow: 0 8px 32px -16px rgba(10, 25, 41, 0.30);
+  box-shadow: 0 8px 32px -16px rgba(0,30,74, 0.30);
   transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
 }
 .balto-mapview .map-preview-card:hover {
   transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 12px 40px -16px rgba(10, 25, 41, 0.38);
+  box-shadow: 0 12px 40px -16px rgba(0,30,74, 0.38);
 }
 .balto-mapview .map-preview-card .thumb { width: 100px; aspect-ratio: 1 / 1; flex-shrink: 0; overflow: hidden; }
 .balto-mapview .map-preview-card .thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -1530,7 +1530,7 @@ body.reveal-safety .reveal-on-scroll.reveal-rule:not(.is-revealed) {
   list-style: none;
   background: #fff;
   border: 1px solid #c9c0ae;
-  box-shadow: 0 14px 40px rgba(10, 25, 41, 0.16);
+  box-shadow: 0 14px 40px rgba(0,30,74, 0.16);
   z-index: 260;
   animation: bd-pop 160ms var(--ease);
 }
@@ -1565,7 +1565,7 @@ body.reveal-safety .reveal-on-scroll.reveal-rule:not(.is-revealed) {
   width: 296px;
   background: #fff;
   border: 1px solid #c9c0ae;
-  box-shadow: 0 14px 40px rgba(10, 25, 41, 0.16);
+  box-shadow: 0 14px 40px rgba(0,30,74, 0.16);
   z-index: 260;
   padding: 14px;
   animation: bd-pop 160ms var(--ease);
@@ -1650,3 +1650,46 @@ body.reveal-safety .reveal-on-scroll.reveal-rule:not(.is-revealed) {
   cursor: pointer;
 }
 .bd-cal-clear:hover { color: var(--ink); text-decoration: underline; }
+
+/* ---------- Tenant portal ---------- */
+.tenant-portal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: color 200ms var(--ease);
+}
+.tenant-portal-link:hover { color: var(--gold) !important; }
+@media (max-width: 1180px) { .tenant-portal-link-text { display: none; } }
+@media (max-width: 900px)  { .tenant-portal-link { display: none; } }
+
+.tenant-portal-list { display: flex; flex-direction: column; }
+.tenant-portal-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 4px;
+  border-top: 1px solid var(--hairline);
+  color: var(--ink);
+  transition: background 220ms var(--ease), padding-left 220ms var(--ease);
+}
+.tenant-portal-row:last-child { border-bottom: 1px solid var(--hairline); }
+.tenant-portal-row:hover { background: var(--cream); padding-left: 14px; }
+.tenant-portal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px; height: 42px; flex: 0 0 42px;
+  border: 1px solid var(--hairline-strong);
+  color: var(--ink);
+}
+.tenant-portal-label { display: block; margin-bottom: 2px; }
+.tenant-portal-address { display: block; }
+.tenant-portal-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--gold); white-space: nowrap;
+}
+@media (max-width: 560px) { .tenant-portal-cta { display: none; } }

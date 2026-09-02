@@ -64,7 +64,7 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
               color: 'var(--ivory)',
-              background: 'rgba(10,25,41,0.65)',
+              background: 'rgba(0,30,74,0.65)',
               padding: '6px 10px',
             }}
           >

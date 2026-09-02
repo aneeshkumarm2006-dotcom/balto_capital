@@ -37,7 +37,7 @@ export default function WhyBaltoPage() {
             position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(to bottom, rgba(10,25,41,0.4), rgba(10,25,41,0.55))',
+              'linear-gradient(to bottom, rgba(0,30,74,0.4), rgba(0,30,74,0.55))',
           }}
         />
         <div

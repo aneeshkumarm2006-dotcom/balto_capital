@@ -5,7 +5,8 @@
       "title": "Homes across Western Canada. One standard.",
       "subtitle": "Thoughtfully maintained apartment homes across Western Canada, owned and run by the same family team that answers your call.",
       "searchButton": "Search homes",
-      "disclaimer": "Prices shown are net effective rent, what you actually pay after any promotion."
+      "disclaimer": "Prices shown are net effective rent, what you actually pay after any promotion.",
+      "image": "/assets/hero-home.png"
     },
     "cities": {
       "eyebrow": "OUR CITIES",
@@ -72,7 +73,8 @@
           "label": "1,500+ doors across Western Canada, growing."
         }
       ],
-      "ctaLabel": "Our story"
+      "ctaLabel": "Our story",
+      "image": "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1600&q=85&auto=format&fit=crop"
     },
     "cta": {
       "eyebrow": "BEGIN AN INQUIRY",
@@ -87,7 +89,8 @@
       "eyebrow": "ABOUT BALTO CAPITAL",
       "titleItalic": "Est.",
       "titleRest": "2023.",
-      "subtitle": "A private real estate lender since 2023, owner-operator since 2025, today a growing portfolio of family-operated apartment homes across Western Canada."
+      "subtitle": "A private real estate lender since 2023, owner-operator since 2025, today a growing portfolio of family-operated apartment homes across Western Canada.",
+      "image": "/assets/city-edmonton.png"
     },
     "story": {
       "eyebrow": "OUR STORY",

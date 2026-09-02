@@ -18,7 +18,7 @@ export default function AboutPage() {
           loop
           playsInline
           preload="auto"
-          poster="/assets/city-edmonton.png"
+          poster={PAGES.about.hero.image}
         >
           <source src="/video/about-bg.mp4" type="video/mp4" />
         </video>

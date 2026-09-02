@@ -38,7 +38,7 @@ function ComingSoonCity({ city }: { city: City }) {
         <div
           style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(to bottom, rgba(10,25,41,0.62), rgba(10,25,41,0.80))',
+            background: 'linear-gradient(to bottom, rgba(0,30,74,0.62), rgba(0,30,74,0.80))',
           }}
         />
         <div className="container" style={{ position: 'relative', color: 'var(--ivory)' }}>

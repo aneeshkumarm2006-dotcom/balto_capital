@@ -1,4 +1,5 @@
 import pagesJson from '@/content/pages.json';
+import tenantPortalJson from '@/content/tenant-portal.json';
 
 /** Marketing copy for the public pages (home, about, why-balto, careers),
  *  managed via the CMS portal (content/pages.json). Single source of truth —
@@ -22,6 +23,8 @@ export interface HomeContent {
     subtitle: string;
     searchButton: string;
     disclaimer: string;
+    /** Hero image, managed in the CMS Pages editor. */
+    image: string;
   };
   cities: {
     eyebrow: string;
@@ -53,6 +56,8 @@ export interface HomeContent {
     paragraph: string;
     timeline: HomeTimelineEntry[];
     ctaLabel: string;
+    /** Section image, managed in the CMS Pages editor. */
+    image: string;
   };
   cta: {
     eyebrow: string;
@@ -82,6 +87,8 @@ export interface AboutContent {
     titleItalic: string;
     titleRest: string;
     subtitle: string;
+    /** Hero video poster image, managed in the CMS Pages editor. */
+    image: string;
   };
   story: {
     eyebrow: string;
@@ -169,3 +176,23 @@ export interface PagesContent {
 }
 
 export const PAGES: PagesContent = pagesJson;
+
+/* ---------------------------------------------------------------- */
+/* Tenant portal — resident sign-in links, maintained by the client   */
+/* in Content Studio so new buildings don't need a code change.       */
+/* ---------------------------------------------------------------- */
+export interface TenantPortalEntry {
+  id: string;
+  label: string;
+  address: string;
+  url: string;
+}
+
+export interface TenantPortalContent {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  entries: TenantPortalEntry[];
+}
+
+export const TENANT_PORTAL: TenantPortalContent = tenantPortalJson;

@@ -242,9 +242,24 @@ const TABS = [
   { id: 'cities', label: 'Cities' },
   { id: 'types', label: 'Property types' },
   { id: 'tags', label: 'Tags' },
+  { id: 'tenant', label: 'Tenant portal' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
+
+interface TenantEntry {
+  id: string;
+  label: string;
+  address: string;
+  url: string;
+}
+interface TenantPortal {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  entries: TenantEntry[];
+}
+const EMPTY_TENANT: TenantPortal = { eyebrow: '', title: '', intro: '', entries: [] };
 
 function SaveBar({
   saving,
@@ -298,6 +313,8 @@ export default function LibraryPage() {
   const [copy, setCopy] = useState<Copy>({});
 
   /* Cities draft + snapshot */
+  const [tenantSaved, setTenantSaved] = useState<TenantPortal>(EMPTY_TENANT);
+  const [tenantDraft, setTenantDraft] = useState<TenantPortal>(EMPTY_TENANT);
   const [citiesSaved, setCitiesSaved] = useState<Cities>({});
   const [citiesDraft, setCitiesDraft] = useState<Cities>({});
 
@@ -339,8 +356,10 @@ export default function LibraryPage() {
       getContent<Taxonomies>('taxonomies'),
       /* media.json may not exist yet — start the register empty then. */
       getContent<unknown>('media').catch(() => []),
+      /* Same for tenant-portal.json on installs that predate the feature. */
+      getContent<TenantPortal>('tenant-portal').catch(() => EMPTY_TENANT),
     ])
-      .then(([m, p, b, u, c, cities, tax, md]) => {
+      .then(([m, p, b, u, c, cities, tax, md, tenant]) => {
         if (cancelled) return;
         setMedia(m);
         setPhotos(p && typeof p === 'object' ? p : {});
@@ -350,6 +369,14 @@ export default function LibraryPage() {
         const safeCities = cities && typeof cities === 'object' ? cities : {};
         setCitiesSaved(safeCities);
         setCitiesDraft(safeCities);
+        const safeTenant: TenantPortal = {
+          eyebrow: tenant?.eyebrow ?? '',
+          title: tenant?.title ?? '',
+          intro: tenant?.intro ?? '',
+          entries: Array.isArray(tenant?.entries) ? tenant.entries : [],
+        };
+        setTenantSaved(safeTenant);
+        setTenantDraft(safeTenant);
         const safeTax: Taxonomies = {
           tiers: Array.isArray(tax?.tiers) ? tax.tiers : [],
           unitTypes: Array.isArray(tax?.unitTypes) ? tax.unitTypes : [],
@@ -518,6 +545,14 @@ export default function LibraryPage() {
             previews={previews}
             onUpload={stageUploads}
             onPoolPublished={onPoolPublished}
+          />
+        )}
+        {tab === 'tenant' && (
+          <TenantPortalTab
+            draft={tenantDraft}
+            saved={tenantSaved}
+            setDraft={setTenantDraft}
+            setSaved={setTenantSaved}
           />
         )}
         {tab === 'types' && (
@@ -923,6 +958,156 @@ function MediaTab({
 /* ============================================================
    TAB 2 — Cities
    ============================================================ */
+
+/* Resident sign-in links. Deliberately a plain list the client can extend on
+   their own — the brief was "give them access in the studio, so you don't do
+   all of them". */
+function TenantPortalTab({
+  draft,
+  saved,
+  setDraft,
+  setSaved,
+}: {
+  draft: TenantPortal;
+  saved: TenantPortal;
+  setDraft: (t: TenantPortal | ((t: TenantPortal) => TenantPortal)) => void;
+  setSaved: (t: TenantPortal) => void;
+}) {
+  const toast = useToast();
+  const [saving, setSaving] = useState(false);
+  const dirty = JSON.stringify(draft) !== JSON.stringify(saved);
+
+  const patch = (i: number, p: Partial<TenantEntry>) =>
+    setDraft((d) => ({
+      ...d,
+      entries: d.entries.map((e, n) => (n === i ? { ...e, ...p } : e)),
+    }));
+
+  const addEntry = () =>
+    setDraft((d) => ({
+      ...d,
+      entries: [...d.entries, { id: `entry-${Date.now()}`, label: '', address: '', url: '' }],
+    }));
+
+  const removeEntry = (i: number) =>
+    setDraft((d) => ({ ...d, entries: d.entries.filter((_, n) => n !== i) }));
+
+  const move = (i: number, dir: -1 | 1) => {
+    const to = i + dir;
+    if (to < 0 || to >= draft.entries.length) return;
+    setDraft((d) => {
+      const next = [...d.entries];
+      const [m] = next.splice(i, 1);
+      next.splice(to, 0, m);
+      return { ...d, entries: next };
+    });
+  };
+
+  const save = async () => {
+    for (const e of draft.entries) {
+      if (!e.label.trim() || !e.url.trim()) {
+        toast('error', 'Every building needs a name and a sign-in link.');
+        return;
+      }
+      if (!/^https?:\/\//i.test(e.url.trim())) {
+        toast('error', `\u201C${e.label}\u201D needs a full link starting with https://`);
+        return;
+      }
+    }
+    setSaving(true);
+    try {
+      await putContent('tenant-portal', draft);
+      setSaved(draft);
+      toast('success', 'Tenant portal saved.');
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Failed to save.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <>
+      <div className="adm-card">
+        <div className="adm-card-head">
+          <h2 className="adm-card-title">Page heading</h2>
+        </div>
+        <div className="adm-card-pad">
+          <div className="adm-form-grid">
+            <Field label="Eyebrow">
+              <input
+                className="adm-input"
+                value={draft.eyebrow}
+                onChange={(e) => setDraft((d) => ({ ...d, eyebrow: e.target.value }))}
+              />
+            </Field>
+            <Field label="Title">
+              <input
+                className="adm-input"
+                value={draft.title}
+                onChange={(e) => setDraft((d) => ({ ...d, title: e.target.value }))}
+              />
+            </Field>
+            <Field label="Intro" span2>
+              <textarea
+                className="adm-input"
+                rows={2}
+                value={draft.intro}
+                onChange={(e) => setDraft((d) => ({ ...d, intro: e.target.value }))}
+              />
+            </Field>
+          </div>
+        </div>
+      </div>
+
+      {draft.entries.map((e, i) => (
+        <div className="adm-card" key={e.id} style={{ marginTop: 18 }}>
+          <div className="adm-card-head">
+            <div className="adm-row" style={{ gap: 10 }}>
+              <span className="adm-muted" style={{ fontSize: 12.5 }}>{i + 1}.</span>
+              <h2 className="adm-card-title">{e.label || 'Untitled building'}</h2>
+            </div>
+            <div className="adm-row" style={{ gap: 6 }}>
+              <button type="button" className="adm-btn ghost" aria-label="Move up"
+                disabled={i === 0} onClick={() => move(i, -1)}>↑</button>
+              <button type="button" className="adm-btn ghost" aria-label="Move down"
+                disabled={i === draft.entries.length - 1} onClick={() => move(i, 1)}>↓</button>
+              <button type="button" className="adm-btn danger" onClick={() => removeEntry(i)}>
+                Remove
+              </button>
+            </div>
+          </div>
+          <div className="adm-card-pad">
+            <div className="adm-form-grid">
+              <Field label="Building name" required>
+                <input className="adm-input" value={e.label}
+                  onChange={(ev) => patch(i, { label: ev.target.value })} />
+              </Field>
+              <Field label="Location">
+                <input className="adm-input" value={e.address}
+                  onChange={(ev) => patch(i, { address: ev.target.value })} />
+              </Field>
+              <Field label="Sign-in link" required span2
+                help="The full resident portal URL, starting with https://">
+                <input className="adm-input" value={e.url} placeholder="https://\u2026"
+                  onChange={(ev) => patch(i, { url: ev.target.value })} />
+              </Field>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <div className="adm-row" style={{ gap: 10, marginTop: 18 }}>
+        <button type="button" className="adm-btn ghost" onClick={addEntry}>
+          Add a building
+        </button>
+        <button type="button" className="adm-btn primary" disabled={!dirty || saving} onClick={save}>
+          {saving ? 'Saving\u2026' : 'Save changes'}
+        </button>
+      </div>
+    </>
+  );
+}
 
 function CitiesTab({
   draft,

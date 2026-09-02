@@ -35,6 +35,7 @@ export const CONTENT_FILES = [
   'geocoded',
   'media',
   'pages',
+  'tenant-portal',
 ] as const;
 
 export type ContentFile = (typeof CONTENT_FILES)[number];

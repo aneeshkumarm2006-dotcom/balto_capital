@@ -1,0 +1,19 @@
+{
+  "eyebrow": "RESIDENTS",
+  "title": "Tenant portal.",
+  "intro": "Pay rent, submit a maintenance request, or check your lease. Choose your building to sign in.",
+  "entries": [
+    {
+      "id": "woodridge",
+      "label": "Woodridge",
+      "address": "Edmonton, AB",
+      "url": "https://zenrentals.securecafe.com/residentservices/woodridge-5/userlogin.aspx"
+    },
+    {
+      "id": "kafa-manor",
+      "label": "Kafa Manor",
+      "address": "Edmonton, AB",
+      "url": "https://zenrentals.securecafe.com/residentservices/kafa-manor/userlogin.aspx"
+    }
+  ]
+}

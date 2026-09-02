@@ -59,7 +59,7 @@ function CinematicHero({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="hero-zoom"
-        src="/assets/hero-home.png"
+        src={PAGES.home.hero.image}
         alt="A resident at home with her dog in a Balto apartment"
         loading="eager"
         style={{
@@ -77,7 +77,7 @@ function CinematicHero({
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to bottom, rgba(10,25,41,0.58) 0%, rgba(10,25,41,0.40) 45%, rgba(10,25,41,0.66) 100%)',
+            'linear-gradient(to bottom, rgba(0,30,74,0.58) 0%, rgba(0,30,74,0.40) 45%, rgba(0,30,74,0.66) 100%)',
         }}
       />
       <div
@@ -209,7 +209,7 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
           className="eyebrow"
           style={{
             position: 'absolute', top: 16, left: 16, zIndex: 2,
-            background: 'rgba(10,25,41,0.72)', color: 'var(--gold)',
+            background: 'rgba(0,30,74,0.72)', color: 'var(--gold)',
             padding: '6px 12px', fontSize: 10,
           }}
         >

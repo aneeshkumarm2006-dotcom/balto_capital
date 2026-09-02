@@ -15,9 +15,9 @@ function pinSvg(active: boolean): string {
   const w = 32 * scale;
   const h = 44 * scale;
   return `
-    <svg width="${w}" height="${h}" viewBox="0 0 32 44" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(10,25,41,0.30));">
+    <svg width="${w}" height="${h}" viewBox="0 0 32 44" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(0,30,74,0.30));">
       <path d="M16 1 C 7.7 1, 1 7.7, 1 16 C 1 26, 16 43, 16 43 C 16 43, 31 26, 31 16 C 31 7.7, 24.3 1, 16 1 Z"
-            fill="#0A1929" stroke="#F7F3EC" stroke-width="1.2" />
+            fill="#001E4A" stroke="#F7F3EC" stroke-width="1.2" />
       <circle cx="16" cy="16" r="4.5" fill="#F7F3EC" />
     </svg>
   `;

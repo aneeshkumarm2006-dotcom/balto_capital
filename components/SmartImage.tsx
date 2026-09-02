@@ -4,10 +4,10 @@ import { useState, type CSSProperties } from 'react';
 type Tone = 'warm' | 'cool' | 'deep' | 'light';
 
 const TONES: Record<Tone, { from: string; to: string; mark: string }> = {
-  warm:  { from: '#E8DEC8', to: '#D4C3A0', mark: 'rgba(10,25,41,0.18)' },
-  cool:  { from: '#DDD8CD', to: '#BAB5A8', mark: 'rgba(10,25,41,0.20)' },
-  deep:  { from: '#C9BFA6', to: '#A89C7E', mark: 'rgba(10,25,41,0.22)' },
-  light: { from: '#F1ECDF', to: '#E0D9C8', mark: 'rgba(10,25,41,0.16)' },
+  warm:  { from: '#E8DEC8', to: '#D4C3A0', mark: 'rgba(0,30,74,0.18)' },
+  cool:  { from: '#DDD8CD', to: '#BAB5A8', mark: 'rgba(0,30,74,0.20)' },
+  deep:  { from: '#C9BFA6', to: '#A89C7E', mark: 'rgba(0,30,74,0.22)' },
+  light: { from: '#F1ECDF', to: '#E0D9C8', mark: 'rgba(0,30,74,0.16)' },
 };
 
 interface PlaceholderProps {

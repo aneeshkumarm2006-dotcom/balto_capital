@@ -122,6 +122,7 @@ const SECTION_TABS: TabDef[] = [
             label: 'Pricing disclaimer (fine print under the search button)',
             kind: 'textarea',
           },
+          { key: 'image', label: 'Hero image', kind: 'image' },
         ],
       },
       {
@@ -175,6 +176,7 @@ const SECTION_TABS: TabDef[] = [
           EYEBROW,
           TITLE,
           { key: 'paragraph', label: 'Paragraph', kind: 'textareaWide' },
+          { key: 'image', label: 'Story image', kind: 'image' },
         ],
         list: {
           key: 'timeline',
@@ -216,6 +218,7 @@ const SECTION_TABS: TabDef[] = [
           },
           { key: 'titleRest', label: 'Title — remaining part', kind: 'input' },
           { key: 'subtitle', label: 'Subtitle', kind: 'textareaWide' },
+          { key: 'image', label: 'Hero video poster image', kind: 'image' },
         ],
       },
       {

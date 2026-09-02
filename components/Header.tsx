@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from './Logo';
 import { useFavorites } from './FavoritesContext';
-import { HeartIcon, MenuIcon, CloseIcon, ChevronDown } from './icons';
+import { HeartIcon, MenuIcon, CloseIcon, ChevronDown, HomeIcon } from './icons';
 import { NAV_CITIES } from '@/lib/data';
 import { PAGES } from '@/lib/pages';
 
@@ -185,6 +185,19 @@ export function Header() {
               />
               <span className="favorites-count">{count}</span>
             </Link>
+            <Link
+              href="/tenant-portal"
+              className="tenant-portal-link"
+              aria-label="Tenant portal"
+              title="Tenant portal"
+              style={{
+                color:
+                  overlayHero && !scrolled ? 'var(--ivory)' : 'var(--ink)',
+              }}
+            >
+              <HomeIcon size={18} />
+              <span className="tenant-portal-link-text">Tenant Portal</span>
+            </Link>
             <button
               className="menu-trigger"
               aria-label="Open menu"
@@ -230,6 +243,7 @@ export function Header() {
             No openings · check back soon
           </span>
           <Link href="/inquire">Contact Us</Link>
+          <Link href="/tenant-portal">Tenant Portal</Link>
           <Link href="/favorites">
             Favorites{' '}
             <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>

@@ -128,3 +128,11 @@ export const ListIcon = (p: IconProps) => (
     <line x1="4" x2="4.01" y1="18" y2="18" />
   </Icon>
 );
+
+export const HomeIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 10.5 12 3l9 7.5" />
+    <path d="M5 9.5V21h14V9.5" />
+    <path d="M9.5 21v-6h5v6" />
+  </Icon>
+);

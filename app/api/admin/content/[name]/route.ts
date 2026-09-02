@@ -6,6 +6,22 @@ import { isContentFile, readContent, writeContent } from '@/lib/admin/store';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+/* The content store can fail for reasons that have nothing to do with the
+   request: in github mode an expired or revoked GITHUB_TOKEN makes every read
+   and write throw. Left unhandled that surfaces as a bare 500 with no body,
+   which the admin UI can only render as "Request failed (500)". Report it as
+   502 (upstream storage is the thing that failed) and pass the reason through
+   so the cause is visible in the UI. 401 is deliberately NOT used here — the
+   client maps that to "your session has expired", which would be misleading. */
+function storageError(action: 'load' | 'save', name: string, err: unknown) {
+  const detail = err instanceof Error ? err.message : String(err);
+  console.error(`[cms] ${action} ${name} failed:`, detail);
+  return NextResponse.json(
+    { error: `Could not ${action} ${name}. ${detail}` },
+    { status: 502 }
+  );
+}
+
 /** Content files only Admins may save. */
 const ADMIN_ONLY = new Set(['settings']);
 
@@ -15,8 +31,12 @@ export async function GET(_req: Request, { params }: Params) {
   if (!isContentFile(params.name)) {
     return NextResponse.json({ error: 'Unknown content file.' }, { status: 404 });
   }
-  const data = await readContent(params.name);
-  return NextResponse.json(data);
+  try {
+    const data = await readContent(params.name);
+    return NextResponse.json(data);
+  } catch (err) {
+    return storageError('load', params.name, err);
+  }
 }
 
 export async function PUT(req: Request, { params }: Params) {
@@ -43,6 +63,10 @@ export async function PUT(req: Request, { params }: Params) {
       { status: 400 }
     );
   }
-  await writeContent(params.name, body, authorFor(session));
+  try {
+    await writeContent(params.name, body, authorFor(session));
+  } catch (err) {
+    return storageError('save', params.name, err);
+  }
   return NextResponse.json({ ok: true });
 }
