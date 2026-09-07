@@ -12,13 +12,23 @@ import {
   ChevronRight,
   HomeIcon,
 } from './icons';
-import { NAV_CITIES } from '@/lib/data';
+import { CITIES, NAV_CITIES } from '@/lib/data';
 import { PAGES, TENANT_PORTAL } from '@/lib/pages';
 
 
 /* Routes whose first section is a full-bleed film that runs edge to edge —
    the header sits over it, transparent, until the visitor scrolls past. */
 const OVERLAY_HERO_ROUTES = ['/about'];
+
+/* Portfolio city listings open on the same kind of full-screen cover, so the
+   bar has to go transparent over those too. Read from the city config rather
+   than a hard-coded list, so a market switched to the portfolio layout in the
+   Content Studio picks the treatment up on its own. */
+function isOverlayHeroRoute(pathname: string): boolean {
+  if (OVERLAY_HERO_ROUTES.includes(pathname)) return true;
+  const m = /^\/residences\/([^/]+)\/?$/.exec(pathname);
+  return Boolean(m && CITIES[m[1]]?.portfolioLayout);
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -53,7 +63,7 @@ export function Header() {
     };
   }, [portalOpen]);
 
-  const overlayHero = OVERLAY_HERO_ROUTES.includes(pathname);
+  const overlayHero = isOverlayHeroRoute(pathname);
 
   /* The bar fills in as soon as the page moves. Over a full-bleed hero it is
      transparent only while the visitor is still at the very top — waiting for

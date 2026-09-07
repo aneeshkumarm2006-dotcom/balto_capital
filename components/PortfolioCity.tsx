@@ -412,7 +412,9 @@ export function PortfolioCity({ city }: { city: City }) {
   );
 
   return (
-    <main className="page-enter">
+    /* `has-overlay-hero` pulls the page up under the header so the cover runs
+       the full screen behind the navigation, the same as the About film. */
+    <main className="page-enter has-overlay-hero">
       <FiltersPanel
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
