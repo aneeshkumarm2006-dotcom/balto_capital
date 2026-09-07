@@ -17,7 +17,8 @@
       "spreadLat": 0.025,
       "spreadLng": 0.045
     },
-    "portfolioLayout": true
+    "portfolioLayout": true,
+    "mapListing": true
   },
   "edmonton": {
     "slug": "edmonton",

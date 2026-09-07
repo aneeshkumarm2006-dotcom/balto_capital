@@ -64,7 +64,32 @@ export function ScrollReveal() {
   const pathname = usePathname();
 
   useEffect(() => {
-    document.body.classList.remove('reveal-safety');
+    let observer: IntersectionObserver | null = null;
+    let pending: HTMLElement[] = [];
+    let sweepQueued = false;
+
+    /* Safety net. An element the observer never reported — a stale observer,
+       a page restored from bfcache — must not sit invisible in front of the
+       visitor, so anything that has scrolled into view is revealed by hand.
+       Only what is actually on screen: forcing every pending element (which
+       is what a blanket timer did) left nothing below the fold to animate. */
+    const sweep = () => {
+      sweepQueued = false;
+      if (!pending.length) return;
+      const limit = window.innerHeight * 0.92;
+      pending = pending.filter((el) => {
+        if (el.classList.contains('is-revealed')) return false;
+        if (el.getBoundingClientRect().top > limit) return true;
+        el.classList.add('is-revealed');
+        observer?.unobserve(el);
+        return false;
+      });
+    };
+    const queueSweep = () => {
+      if (sweepQueued) return;
+      sweepQueued = true;
+      requestAnimationFrame(sweep);
+    };
 
     const initTimer = window.setTimeout(() => {
       const els = Array.from(
@@ -72,12 +97,12 @@ export function ScrollReveal() {
       );
       if (!els.length) return;
 
-      const observer = new IntersectionObserver(
+      observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting) {
               e.target.classList.add('is-revealed');
-              observer.unobserve(e.target);
+              observer?.unobserve(e.target);
             }
           });
         },
@@ -120,17 +145,24 @@ export function ScrollReveal() {
         }
         if (delay) el.style.transitionDelay = `${delay}ms`;
 
-        observer.observe(el);
+        pending.push(el);
+        observer!.observe(el);
       });
+
+      window.addEventListener('scroll', queueSweep, { passive: true });
+      window.addEventListener('resize', queueSweep);
     }, 60);
 
-    const safety = window.setTimeout(() => {
-      document.body.classList.add('reveal-safety');
-    }, 1800);
+    /* One pass once the page has settled, for anything already on screen that
+       the observer missed on its first run. */
+    const safety = window.setTimeout(sweep, 1800);
 
     return () => {
       window.clearTimeout(initTimer);
       window.clearTimeout(safety);
+      window.removeEventListener('scroll', queueSweep);
+      window.removeEventListener('resize', queueSweep);
+      observer?.disconnect();
     };
   }, [pathname]);
 

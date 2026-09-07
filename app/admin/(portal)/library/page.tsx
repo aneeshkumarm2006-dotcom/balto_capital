@@ -65,6 +65,7 @@ interface City {
   order?: number;
   /** Portfolio layout for this city's listing page (cover image + rows). */
   portfolioLayout?: boolean;
+  mapListing?: boolean;
 }
 
 /** Same order the public site uses: manual position first, then A–Z. */
@@ -1744,7 +1745,7 @@ function CityCard({
           </Field>
           <Field
             label="Listing layout"
-            help="Portfolio shows a full-width cover photo, then the residences as large editorial rows with a list / map switch."
+            help="Portfolio shows a full-width cover photo, then the residences as large editorial rows. Map + list keeps the cover but presents the residences as a scrolling list beside a map of the city."
           >
             <label className="adm-switch">
               <input
@@ -1754,6 +1755,19 @@ function CityCard({
               />
               <span className="track" />
               Portfolio layout
+            </label>
+            <label
+              className="adm-switch"
+              style={{ marginTop: 10, opacity: city.portfolioLayout ? 1 : 0.45 }}
+            >
+              <input
+                type="checkbox"
+                disabled={!city.portfolioLayout}
+                checked={Boolean(city.mapListing)}
+                onChange={(e) => onChange({ mapListing: e.target.checked })}
+              />
+              <span className="track" />
+              Map + list view (replaces the editorial rows)
             </label>
           </Field>
         </div>

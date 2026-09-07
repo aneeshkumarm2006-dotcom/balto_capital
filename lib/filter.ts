@@ -2,8 +2,9 @@ import type { Residence } from './data';
 import type { Filters } from '@/components/FiltersPanel';
 
 /** Bedroom count from a unit's type label. "Studio" -> 0, "2 Bedroom" -> 2.
- *  Returns -1 when the label has no recognisable size. */
-function unitBeds(type: string): number {
+ *  Returns -1 when the label has no recognisable size. Exported so a listing
+ *  can offer only the sizes its own market actually stocks. */
+export function unitBeds(type: string): number {
   if (/studio/i.test(type)) return 0;
   const m = type.match(/(\d+)/);
   return m ? Number(m[1]) : -1;

@@ -67,6 +67,7 @@ export default function AboutPage() {
           {/* Lead, manifesto in serif italic */}
           <p
             className="serif italic"
+            data-reveal
             style={{
               fontSize: 'clamp(1.4rem, 2.4vw, 1.95rem)',
               lineHeight: 1.4,
@@ -81,11 +82,14 @@ export default function AboutPage() {
 
           {/* Gold divider */}
           <div
+            data-reveal="fade"
             style={{
               width: 44,
               height: 1,
-              background: 'var(--gold)',
-              opacity: 0.6,
+              /* The tint lives in the colour, not in `opacity` — an inline
+                 opacity would out-specify the reveal's fade and the rule
+                 would simply appear. */
+              background: 'rgba(184, 150, 90, 0.6)',
               margin: 'clamp(48px, 6vw, 72px) auto',
             }}
           />
@@ -177,11 +181,14 @@ export default function AboutPage() {
         >
           {/* Gold divider */}
           <div
+            data-reveal="fade"
             style={{
               width: 44,
               height: 1,
-              background: 'var(--gold)',
-              opacity: 0.6,
+              /* The tint lives in the colour, not in `opacity` — an inline
+                 opacity would out-specify the reveal's fade and the rule
+                 would simply appear. */
+              background: 'rgba(184, 150, 90, 0.6)',
               margin: 'clamp(56px, 6vw, 72px) auto clamp(40px, 5vw, 56px)',
             }}
           />
@@ -189,6 +196,7 @@ export default function AboutPage() {
           {/* Close, serif italic, smaller than the lead */}
           <p
             className="serif italic"
+            data-reveal
             style={{
               fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)',
               lineHeight: 1.55,
@@ -220,6 +228,8 @@ export default function AboutPage() {
               {PAGES.about.standards.items.map((s, i) => (
                 <li
                   key={i}
+                  data-reveal
+                  data-reveal-delay={String(Math.min(i * 90, 540))}
                   style={{
                     padding: '24px 0',
                     borderBottom: '1px solid var(--hairline-strong)',

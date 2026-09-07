@@ -69,6 +69,10 @@ export interface City {
    *  + editorial rows) instead of the standard grid + sticky map. Set per city
    *  in the Content Studio so the layout can be rolled out one market at a
    *  time — currently Saskatoon only. */
+  /** Modifier on `portfolioLayout`: keep the cover, but present the
+   *  residences as a scrolling list beside a sticky map of the city rather
+   *  than as stacked editorial rows. */
+  mapListing?: boolean;
   portfolioLayout?: boolean;
 }
 

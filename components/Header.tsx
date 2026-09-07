@@ -1,12 +1,19 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from './Logo';
 import { useFavorites } from './FavoritesContext';
-import { HeartIcon, MenuIcon, CloseIcon, ChevronDown, HomeIcon } from './icons';
+import {
+  HeartIcon,
+  MenuIcon,
+  CloseIcon,
+  ChevronDown,
+  ChevronRight,
+  HomeIcon,
+} from './icons';
 import { NAV_CITIES } from '@/lib/data';
-import { PAGES } from '@/lib/pages';
+import { PAGES, TENANT_PORTAL } from '@/lib/pages';
 
 
 /* Routes whose first section is a full-bleed film that runs edge to edge —
@@ -19,20 +26,42 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [careersOpen, setCareersOpen] = useState(false);
+  const [portalOpen, setPortalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const portalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMenuOpen(false);
+    setPortalOpen(false);
   }, [pathname]);
+
+  /* The tenant-portal panel is a click-to-open list, not a hover dropdown —
+     residents read down it and pick their building, so it has to stay put. */
+  useEffect(() => {
+    if (!portalOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (!portalRef.current?.contains(e.target as Node)) setPortalOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setPortalOpen(false);
+    };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [portalOpen]);
 
   const overlayHero = OVERLAY_HERO_ROUTES.includes(pathname);
 
-  /* The bar lifts off the page once it stops being the top of the document.
-     Over a full-bleed hero it stays transparent for the whole first screen,
-     then resolves into the normal bar as the copy comes up behind it. */
+  /* The bar fills in as soon as the page moves. Over a full-bleed hero it is
+     transparent only while the visitor is still at the very top — waiting for
+     most of the first screen left the navigation floating over the hero type
+     for the whole scroll, which is what read as broken. */
   useEffect(() => {
     const onScroll = () => {
-      const threshold = overlayHero ? window.innerHeight * 0.8 : 24;
+      const threshold = overlayHero ? 64 : 24;
       setScrolled(window.scrollY > threshold);
     };
     onScroll();
@@ -43,6 +72,10 @@ export function Header() {
       window.removeEventListener('resize', onScroll);
     };
   }, [overlayHero]);
+
+  /* Ivory type whenever the bar is dark behind it — over the film at the top
+     of an overlay hero, and on the navy band once the page has scrolled. */
+  const onDark = overlayHero || scrolled;
 
   const isActive = (prefix: string) =>
     pathname === prefix || pathname.startsWith(prefix + '/');
@@ -61,7 +94,7 @@ export function Header() {
       >
         <div className="inner">
           <div className="brand-mark">
-            <Logo variant={overlayHero && !scrolled ? 'dark' : 'light'} height={80} />
+            <Logo variant={onDark ? 'dark' : 'light'} height={80} />
           </div>
 
           <nav className="nav" aria-label="Primary">
@@ -178,26 +211,87 @@ export function Header() {
                   color:
                     count > 0
                       ? 'var(--gold)'
-                      : overlayHero && !scrolled
+                      : onDark
                       ? 'var(--ivory)'
                       : 'var(--ink)',
                 }}
               />
               <span className="favorites-count">{count}</span>
             </Link>
-            <Link
-              href="/tenant-portal"
-              className="tenant-portal-link"
-              aria-label="Tenant portal"
-              title="Tenant portal"
-              style={{
-                color:
-                  overlayHero && !scrolled ? 'var(--ivory)' : 'var(--ink)',
-              }}
-            >
-              <HomeIcon size={18} />
-              <span className="tenant-portal-link-text">Tenant Portal</span>
-            </Link>
+            <div className="tenant-portal-nav" ref={portalRef}>
+              <button
+                type="button"
+                className="tenant-portal-link"
+                aria-label="Tenant portal"
+                aria-haspopup="true"
+                aria-expanded={portalOpen}
+                onClick={() => setPortalOpen((o) => !o)}
+                style={{
+                  color: onDark ? 'var(--ivory)' : 'var(--ink)',
+                  background: 'transparent',
+                  border: 0,
+                  padding: 0,
+                }}
+              >
+                <HomeIcon size={18} />
+                <span className="tenant-portal-link-text">Tenant Portal</span>
+                <ChevronDown
+                  size={12}
+                  style={{
+                    transition: 'transform 220ms var(--ease)',
+                    transform: portalOpen ? 'rotate(180deg)' : 'none',
+                  }}
+                />
+              </button>
+
+              <div
+                className={'tenant-portal-menu' + (portalOpen ? ' open' : '')}
+                role="menu"
+                aria-hidden={!portalOpen}
+              >
+                <div className="tenant-portal-menu-head eyebrow">
+                  {TENANT_PORTAL.eyebrow}
+                </div>
+                {TENANT_PORTAL.entries.length === 0 ? (
+                  <p className="tenant-portal-menu-empty small muted">
+                    Resident portals are being set up. Please contact your
+                    building manager in the meantime.
+                  </p>
+                ) : (
+                  TENANT_PORTAL.entries.map((e) => (
+                    <a
+                      key={e.id}
+                      role="menuitem"
+                      className="tenant-portal-menu-item"
+                      href={e.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setPortalOpen(false)}
+                    >
+                      <span className="tenant-portal-menu-icon" aria-hidden>
+                        <HomeIcon size={14} />
+                      </span>
+                      <span className="tenant-portal-menu-text">
+                        <span className="tenant-portal-menu-label serif">
+                          {e.label}
+                        </span>
+                        <span className="tenant-portal-menu-address">
+                          {e.address}
+                        </span>
+                      </span>
+                      <ChevronRight size={13} />
+                    </a>
+                  ))
+                )}
+                <Link
+                  href="/tenant-portal"
+                  className="tenant-portal-menu-all"
+                  onClick={() => setPortalOpen(false)}
+                >
+                  All resident portals <ChevronRight size={12} />
+                </Link>
+              </div>
+            </div>
             <button
               className="menu-trigger"
               aria-label="Open menu"
