@@ -411,7 +411,9 @@ export default function MapView({
               {preview.name}
             </div>
             <div className="caption muted">
-              {bedroomShort(preview.bedroomOptions)}
+              {preview.bedroomTypes.length
+                ? bedroomShort(preview.bedroomTypes)
+                : SITE.propertyCard.noPriceDash}
             </div>
             <div className="small serif" style={{ marginTop: 4 }}>
               {SITE.propertyCard.pricePrefix} {formatPrice(preview.priceFrom)}

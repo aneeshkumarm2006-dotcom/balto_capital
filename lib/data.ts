@@ -112,7 +112,16 @@ export interface Residence {
   coordinates: { lat: number; lng: number };
   description: string;
   longDescription: string;
+  /** Display label for the bedroom mix the building offers, e.g. "1, 2
+   *  Bedrooms". Derived from `bedroomTypes`, so it is independent of what
+   *  happens to be vacant. Empty when the mix has not been set in the CMS. */
   bedrooms: string;
+  /** Bedroom mix the building offers (0=Studio, 1..3), managed in the CMS and
+   *  shown regardless of availability. Empty when the CMS has no value and no
+   *  units are listed. */
+  bedroomTypes: number[];
+  /** Bedroom types with an available suite right now — drives pricing, the
+   *  floor-plan rows, and the "Available suites" list. */
   bedroomOptions: number[];
   /** Monthly rent by bedroom count. Keys: 0=Studio, 1..3=Bedroom count. */
   prices: Partial<Record<0 | 1 | 2 | 3, number>>;
@@ -206,8 +215,10 @@ interface RawAsset {
   incentives?: string[];
   unitLabels?: string[];
   /** Bedroom configs the building actually offers (0=Studio, 1..3=bedrooms),
-   *  from the client's Apartment Type data. Overrides the city default.
-   *  Buildings the client left blank keep the default until data arrives. */
+   *  edited in the CMS (Property details -> "Bedroom types offered"). This is
+   *  the advertised mix and is shown whether or not a suite of that size is
+   *  vacant. Buildings left blank fall back to the types their listed units
+   *  have; with neither, the listing reads "-". */
   bedrooms?: number[];
   /** Archived in the CMS: kept in content/buildings.json but never rendered. */
   archived?: boolean;
@@ -401,6 +412,20 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
       if (v !== undefined) prices[b as 0 | 1 | 2 | 3] = v;
     });
   }
+  // Advertised bedroom mix. Deliberately NOT tied to the availability sheet:
+  // the client wants every suite type the building offers on the listing, even
+  // when none of that type is vacant. The CMS value wins; the fallback is the
+  // types the real units cover — never the seeded BEDROOM_VARIANTS guess,
+  // which only exists to keep placeholder pricing sane and must not be
+  // advertised as the building's suite mix.
+  const bedroomTypes = raw.bedrooms?.length
+    ? Array.from(new Set(raw.bedrooms))
+        .filter((b) => b >= 0 && b <= 3)
+        .sort((a, b) => a - b)
+    : units && units.length
+    ? bedroomOptions
+    : [];
+
   const priceFrom = Math.min(...(Object.values(prices) as number[]));
   // Promotional banner (client promo is scoped to Edmonton properties).
   const promo = raw.city === 'edmonton' ? promoText(freeMonthsFor(raw.slug)) : undefined;
@@ -439,7 +464,8 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     longDescription: copy
       ? TIER_LINE[copy.tier] ?? GENERIC_TIER_LINE
       : `${raw.name} is held within the Balto portfolio at ${raw.address}. The building is operated to the Balto standard, restored where appropriate, maintained by a resident manager, and let on terms intended to favour long stays. Detailed unit plans, finishes, and current availability are released on request.`,
-    bedrooms: bedroomLabel(bedroomOptions),
+    bedrooms: bedroomTypes.length ? bedroomLabel(bedroomTypes) : '',
+    bedroomTypes,
     bedroomOptions,
     prices,
     priceFrom,

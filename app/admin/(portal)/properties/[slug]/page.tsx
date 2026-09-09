@@ -73,6 +73,9 @@ interface Draft {
   featured: boolean;
   featuredRank: string;
   hideDetailGallery: boolean;
+  /** Bedroom types the building offers (0=Studio, 1..3). Advertised on the
+   *  listing whether or not a suite of that size is currently vacant. */
+  bedrooms: number[];
   incentives: string[];
   neighbourhood: string;
   tier: string;
@@ -93,12 +96,23 @@ const BED_LABELS: Record<BedKey, string> = {
   '3': '3 Bedroom',
 };
 
+const BED_VALUES: number[] = BED_KEYS.map(Number);
+
 /* ---------- Untrusted-data coercion ---------- */
 
 function asStringArray(value: unknown): string[] {
   return Array.isArray(value)
     ? value.filter((v): v is string => typeof v === 'string')
     : [];
+}
+
+/** Bedroom values from the CMS file, de-duped, in range, and sorted. */
+function asBedroomList(value: unknown): number[] {
+  if (!Array.isArray(value)) return [];
+  const nums = value.filter(
+    (v): v is number => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v <= 3
+  );
+  return Array.from(new Set(nums)).sort((a, b) => a - b);
 }
 
 function asOption(value: unknown, options: DropdownOption[]): string {
@@ -267,6 +281,7 @@ export default function PropertyDetailsPage() {
               ? String(building.featuredRank)
               : '',
           hideDetailGallery: building.hideDetailGallery === true,
+          bedrooms: asBedroomList(building.bedrooms),
           incentives: asStringArray(building.incentives),
           neighbourhood: typeof copy?.neighbourhood === 'string' ? copy.neighbourhood : '',
           tier: asOption(copy?.tier, tierOpts),
@@ -301,6 +316,18 @@ export default function PropertyDetailsPage() {
   const patch = (partial: Partial<Draft>) =>
     setDraft((d) => (d ? { ...d, ...partial } : d));
 
+  const toggleBedroom = (value: number) =>
+    setDraft((d) =>
+      d
+        ? {
+            ...d,
+            bedrooms: d.bedrooms.includes(value)
+              ? d.bedrooms.filter((b) => b !== value)
+              : [...d.bedrooms, value].sort((a, b) => a - b),
+          }
+        : d
+    );
+
   const handleDiscard = () => {
     if (snapshot) setDraft(JSON.parse(snapshot) as Draft);
   };
@@ -330,6 +357,8 @@ export default function PropertyDetailsPage() {
         else delete merged.featuredRank;
         if (draft.hideDetailGallery) merged.hideDetailGallery = true;
         else delete merged.hideDetailGallery;
+        if (draft.bedrooms.length > 0) merged.bedrooms = draft.bedrooms;
+        else delete merged.bedrooms;
         if (draft.incentives.length > 0) merged.incentives = draft.incentives;
         else delete merged.incentives;
         return merged;
@@ -659,6 +688,37 @@ export default function PropertyDetailsPage() {
                 its hero.
               </span>
             </div>
+            <Field
+              label="Bedroom types offered"
+              span2
+              help="The suite mix advertised on the listing card and the property page. Independent of availability — a type stays listed even when no suite of that size is vacant. Leave all unticked to fall back to the types of the currently listed units."
+            >
+              <div className="adm-chip-row">
+                {BED_VALUES.map((b) => {
+                  const key = String(b) as BedKey;
+                  const on = draft.bedrooms.includes(b);
+                  return (
+                    <label
+                      key={b}
+                      className="adm-chip"
+                      style={{
+                        cursor: 'pointer',
+                        borderColor: on ? 'var(--adm-gold)' : undefined,
+                        background: on ? 'rgba(184, 150, 90, 0.08)' : undefined,
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={on}
+                        onChange={() => toggleBedroom(b)}
+                        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
+                      />
+                      {BED_LABELS[key]}
+                    </label>
+                  );
+                })}
+              </div>
+            </Field>
             <Field
               label="Description"
               span2

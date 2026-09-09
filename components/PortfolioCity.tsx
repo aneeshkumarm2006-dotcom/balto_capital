@@ -137,7 +137,9 @@ function PortfolioRow({ r, index }: { r: Residence; index: number }) {
           <div>
             <dt className="eyebrow">{T.portfolio.row.suitesLabel}</dt>
             <dd className="serif">
-              {hasUnits ? bedroomShort(r.bedroomOptions) : T.portfolio.row.unavailableValue}
+              {r.bedroomTypes.length
+                ? bedroomShort(r.bedroomTypes)
+                : T.portfolio.row.unavailableValue}
             </dd>
           </div>
           <div>

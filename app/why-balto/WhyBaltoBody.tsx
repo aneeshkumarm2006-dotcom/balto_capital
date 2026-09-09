@@ -15,15 +15,10 @@ const PILLAR_CHARS = ['I', 'II', 'III'];
 export function WhyBaltoBody() {
   const router = useRouter();
   return (
-    <main className="page-enter">
-      <section
-        style={{
-          position: 'relative',
-          height: 'min(64vh, 620px)',
-          minHeight: 420,
-          overflow: 'hidden',
-        }}
-      >
+    <main className="page-enter has-overlay-hero">
+      {/* Full screen, edge to edge and behind the navigation — the same cover
+          treatment as the About film and the portfolio city listings. */}
+      <section className="why-hero">
         <ParallaxImage
           src={PAGES.whyBalto.hero.image}
           alt={PAGES.whyBalto.hero.imageAlt}
@@ -32,25 +27,18 @@ export function WhyBaltoBody() {
           speed={0.15}
           style={{ position: 'absolute', inset: 0 }}
         />
+        {/* Two passes, as on the portfolio covers: an even wash so the film
+            sits back, and a bottom-weighted one so the title block keeps its
+            contrast against a bright skyline. */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(to bottom, rgba(0,30,74,0.4), rgba(0,30,74,0.55))',
+              'linear-gradient(to bottom, rgba(0,30,74,0.50) 0%, rgba(0,30,74,0.28) 40%, rgba(0,30,74,0.62) 78%, rgba(0,30,74,0.86) 100%)',
           }}
         />
-        <div
-          style={{
-            position: 'relative',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            padding: 'clamp(40px, 8vw, 96px) clamp(20px, 5vw, 96px)',
-            color: 'var(--ivory)',
-          }}
-        >
+        <div className="why-hero-inner">
           <Eyebrow color="gold" style={{ marginBottom: 24 }}>{PAGES.whyBalto.hero.eyebrow}</Eyebrow>
           <h1 className="display" style={{ color: 'var(--ivory)', maxWidth: 900 }}>
             {PAGES.whyBalto.hero.title}

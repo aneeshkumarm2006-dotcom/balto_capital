@@ -43,14 +43,10 @@ function CinematicHero({
   const [beds, setBeds] = useState('');
 
   return (
-    <section
-      style={{
-        position: 'relative',
-        height: 'calc(100vh - var(--header-h))',
-        minHeight: 640,
-        overflow: 'hidden',
-      }}
-    >
+    /* Full screen, edge to edge and behind the navigation — the same treatment
+       as the About film and the portfolio covers. Sizing lives in .home-hero
+       so the narrow-screen case can grow past the fold instead of clipping. */
+    <section className="home-hero">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="hero-zoom"
@@ -75,18 +71,7 @@ function CinematicHero({
             'linear-gradient(to bottom, rgba(0,30,74,0.58) 0%, rgba(0,30,74,0.40) 45%, rgba(0,30,74,0.66) 100%)',
         }}
       />
-      <div
-        style={{
-          position: 'relative',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '0 24px',
-        }}
-      >
+      <div className="home-hero-inner">
         <div
           className="eyebrow gold hero-rise"
           style={{
@@ -477,7 +462,7 @@ export function HomeBody() {
   };
 
   return (
-    <main className="page-enter">
+    <main className="page-enter has-overlay-hero">
       <CinematicHero onSearch={onSearch} />
       <OurCities />
       <FeaturedResidences />

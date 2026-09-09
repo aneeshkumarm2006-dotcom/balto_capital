@@ -977,6 +977,58 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .steps-grid { grid-template-columns: 1fr; }
 }
 
+/* ---------- Home hero: full-screen cover ---------- */
+/* Runs edge to edge and behind the navigation, the same treatment as the About
+   film and the portfolio covers — the page is pulled up under the bar with
+   .has-overlay-hero. min-height rather than a fixed height: on a narrow screen
+   the copy plus the search card is taller than the fold, and clipping it hid
+   the eyebrow behind the bar and cut the search button off the bottom. */
+.home-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+}
+.home-hero-inner {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Top clears the transparent bar overhead so the block sits centred in the
+     band the visitor can actually see. */
+  padding: calc(var(--header-h) + 32px) 24px 56px;
+}
+
+/* ---------- Why Balto hero: full-screen cover ---------- */
+/* Same treatment as the About film and the portfolio covers: the photograph
+   runs the full screen behind the navigation instead of stopping two-thirds
+   down with the cream section below it filling the rest of the fold. */
+.why-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+}
+.why-hero .parallax-frame { position: absolute; inset: 0; }
+.why-hero-inner {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--ivory);
+  /* Top clears the transparent bar overhead; the title block seats on the
+     bottom rule the way the portfolio covers do. */
+  padding: calc(var(--header-h) + clamp(40px, 8vw, 96px)) clamp(20px, 5vw, 96px)
+           clamp(48px, 6vw, 86px);
+}
+/* Soft gold, not the flat --gold: the darker tone disappears into a bright
+   skyline at eyebrow weight, the same way it did on the portfolio covers. */
+.why-hero-inner .eyebrow { color: var(--gold-soft); }
+.why-hero-inner .display { text-shadow: 0 2px 40px rgba(0, 30, 74, 0.5); }
+
 .hero-search-div { width: 1px; background: var(--hairline); align-self: stretch; margin: 8px 0; }
 @media (max-width: 640px) {
   .hero-search { flex-direction: column; }
@@ -2057,13 +2109,20 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   transition: color 200ms var(--ease);
 }
 .tenant-portal-link:hover { color: var(--gold) !important; }
-@media (max-width: 1180px) { .tenant-portal-link-text { display: none; } }
-@media (max-width: 900px)  { .tenant-portal-nav { display: none; } }
 
 /* Resident sign-in panel, hung off the house icon in the header. The buildings
    come from content/tenant-portal.json, so the client adds one in Content
-   Studio rather than waiting on a deploy. */
-.tenant-portal-nav { position: relative; }
+   Studio rather than waiting on a deploy.
+
+   The wrapper is a flex box rather than a block: as a block it laid the
+   inline-flex button out on a text baseline, and the descender space left
+   under it lifted the control a few pixels clear of the favourites heart
+   sitting beside it. The rule stays above the media queries so the 900px
+   `display: none` still wins. */
+.tenant-portal-nav { position: relative; display: flex; align-items: center; }
+
+@media (max-width: 1180px) { .tenant-portal-link-text { display: none; } }
+@media (max-width: 900px)  { .tenant-portal-nav { display: none; } }
 .tenant-portal-menu {
   position: absolute;
   top: calc(100% + 14px);

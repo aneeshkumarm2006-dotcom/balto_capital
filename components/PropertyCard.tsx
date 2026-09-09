@@ -90,7 +90,9 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
           }}
         >
           <div className="small" style={{ color: 'var(--ink)' }}>
-            {hasUnits ? bedroomShort(r.bedroomOptions) : SITE.propertyCard.noPriceDash}
+            {r.bedroomTypes.length
+              ? bedroomShort(r.bedroomTypes)
+              : SITE.propertyCard.noPriceDash}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div className="serif" style={{ fontSize: 18, fontWeight: 500 }}>

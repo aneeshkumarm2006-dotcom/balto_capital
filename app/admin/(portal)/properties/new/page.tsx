@@ -303,7 +303,7 @@ export default function NewPropertyPage() {
 
             <Field
               label="Bedroom types offered"
-              help="Used for the search filters and the bedrooms line on the listing."
+              help="The suite mix advertised on the listing. Shown whether or not a suite of that size is vacant. You can change this later in Property details."
               span2
             >
               <div className="adm-chip-row">

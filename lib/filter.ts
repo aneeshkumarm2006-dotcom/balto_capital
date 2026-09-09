@@ -10,6 +10,11 @@ export function unitBeds(type: string): number {
   return m ? Number(m[1]) : -1;
 }
 
+/** Largest advertised bedroom count, or -1 when the mix is unset. */
+function maxBeds(r: Residence): number {
+  return r.bedroomTypes.length ? Math.max(...r.bedroomTypes) : -1;
+}
+
 export function applyFilters(
   residences: Residence[],
   filters: Filters,
@@ -59,9 +64,9 @@ export function applyFilters(
       out.sort((a, b) => b.priceFrom - a.priceFrom);
       break;
     case 'bedrooms':
-      out.sort(
-        (a, b) => Math.max(...a.bedroomOptions) - Math.max(...b.bedroomOptions)
-      );
+      // Sorts on the advertised mix (CMS), not on what is vacant, so a
+      // building with no available suites still orders by the sizes it offers.
+      out.sort((a, b) => maxBeds(a) - maxBeds(b));
       break;
     case 'name':
     default:
