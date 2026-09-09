@@ -6,6 +6,9 @@ import { formatPrice } from '@/lib/data';
 import { FavoriteHeart } from './FavoriteHeart';
 import { ArrowRight } from './icons';
 import { PlaceholderImg } from './SmartImage';
+import { PAGES } from '@/lib/pages';
+
+const T = PAGES.city.portfolio.splitRow;
 
 /* Horizontal listing row for the map + list view: photograph left, name /
    address / rent right. The media keeps the .portfolio-media class so it
@@ -54,7 +57,7 @@ export function PropertyRow({
             {r.name.charAt(0)}
           </PlaceholderImg>
         )}
-        {r.featured && <span className="portfolio-listing-badge">Featured</span>}
+        {r.featured && <span className="portfolio-listing-badge">{T.featuredBadge}</span>}
       </a>
 
       <div className="portfolio-listing-copy">
@@ -72,12 +75,12 @@ export function PropertyRow({
         <p className="portfolio-listing-price">
           {hasUnits ? (
             <>
-              <span className="from">From</span>{' '}
+              <span className="from">{T.priceFromLabel}</span>{' '}
               <span className="serif amount">{formatPrice(r.priceFrom)}</span>{' '}
-              <span className="per">/mo</span>
+              <span className="per">{T.priceSuffix}</span>
             </>
           ) : (
-            <span className="from">Enquire for availability</span>
+            <span className="from">{T.noPriceLabel}</span>
           )}
         </p>
       </div>
@@ -87,7 +90,7 @@ export function PropertyRow({
         <button
           type="button"
           className="portfolio-listing-go"
-          aria-label={`View ${r.name}`}
+          aria-label={T.viewLabel.replace('{name}', r.name)}
           onClick={() => router.push(to)}
         >
           <ArrowRight size={15} />

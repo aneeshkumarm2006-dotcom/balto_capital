@@ -1,5 +1,6 @@
 'use client';
 import type { Residence } from '@/lib/data';
+import { SITE } from '@/lib/site';
 import { Eyebrow } from './Eyebrow';
 import { CloseIcon } from './icons';
 
@@ -51,7 +52,7 @@ export function GalleryModal({ open, onClose, residence, photos, labels, title, 
           }}
         >
           <button
-            aria-label="Close"
+            aria-label={SITE.ui.closeLabel}
             onClick={onClose}
             style={{
               position: 'absolute',
@@ -63,7 +64,7 @@ export function GalleryModal({ open, onClose, residence, photos, labels, title, 
           >
             <CloseIcon size={18} />
           </button>
-          <Eyebrow style={{ marginBottom: 6 }}>{eyebrow ?? 'GALLERY'}</Eyebrow>
+          <Eyebrow style={{ marginBottom: 6 }}>{eyebrow ?? SITE.ui.gallery.eyebrow}</Eyebrow>
           <h2 className="h2 serif" style={{ marginBottom: 4, fontSize: 28 }}>
             {heading}
           </h2>
@@ -71,7 +72,10 @@ export function GalleryModal({ open, onClose, residence, photos, labels, title, 
             className="small muted"
             style={{ fontFamily: 'var(--sans)' }}
           >
-            {allPhotos.length} {allPhotos.length === 1 ? 'photo' : 'photos'}
+            {(allPhotos.length === 1
+              ? SITE.ui.gallery.photoCountSingular
+              : SITE.ui.gallery.photoCountPlural
+            ).replace('{count}', String(allPhotos.length))}
           </div>
         </div>
 
@@ -106,7 +110,7 @@ export function GalleryModal({ open, onClose, residence, photos, labels, title, 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={src}
-                  alt={`${heading} · ${i + 1}`}
+                  alt={SITE.ui.gallery.photoAlt.replace('{title}', heading).replace('{number}', String(i + 1))}
                   loading="lazy"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />

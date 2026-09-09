@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, type FormEvent } from 'react';
 import type { Residence } from '@/lib/data';
+import { PAGES } from '@/lib/pages';
 import { Eyebrow } from './Eyebrow';
 import { CloseIcon } from './icons';
 
@@ -23,7 +24,7 @@ export function InquireModal({ open, onClose, residence }: Props) {
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <button
-          aria-label="Close"
+          aria-label={PAGES.inquire.modal.closeAriaLabel}
           onClick={onClose}
           style={{
             position: 'absolute',
@@ -37,12 +38,12 @@ export function InquireModal({ open, onClose, residence }: Props) {
         </button>
         {!sent ? (
           <>
-            <Eyebrow style={{ marginBottom: 14 }}>INQUIRE</Eyebrow>
+            <Eyebrow style={{ marginBottom: 14 }}>{PAGES.inquire.modal.eyebrow}</Eyebrow>
             <h2 className="h2 serif" style={{ marginBottom: 8 }}>
               {residence.name}
             </h2>
             <p className="small muted" style={{ marginBottom: 32 }}>
-              A member of our team will respond within one business day.
+              {PAGES.inquire.modal.intro}
             </p>
             <form
               onSubmit={(e: FormEvent) => {
@@ -51,19 +52,22 @@ export function InquireModal({ open, onClose, residence }: Props) {
               }}
             >
               <label className="field">
-                <Eyebrow>FULL NAME</Eyebrow>
+                <Eyebrow>{PAGES.inquire.modal.nameLabel}</Eyebrow>
                 <input className="input" required />
               </label>
               <label className="field">
-                <Eyebrow>EMAIL</Eyebrow>
+                <Eyebrow>{PAGES.inquire.modal.emailLabel}</Eyebrow>
                 <input className="input" type="email" required />
               </label>
               <label className="field">
-                <Eyebrow>MESSAGE</Eyebrow>
+                <Eyebrow>{PAGES.inquire.modal.messageLabel}</Eyebrow>
                 <textarea
                   className="input"
                   rows={3}
-                  defaultValue={`I am interested in ${residence.name}.`}
+                  defaultValue={PAGES.inquire.modal.messageDefault.replaceAll(
+                    '{residence}',
+                    residence.name,
+                  )}
                 />
               </label>
               <button
@@ -71,21 +75,21 @@ export function InquireModal({ open, onClose, residence }: Props) {
                 className="btn btn-primary full-w"
                 style={{ width: '100%', marginTop: 12 }}
               >
-                Send inquiry
+                {PAGES.inquire.modal.submitLabel}
               </button>
             </form>
           </>
         ) : (
           <div style={{ textAlign: 'center', padding: '20px 0' }}>
-            <Eyebrow style={{ marginBottom: 14 }}>THANK YOU</Eyebrow>
+            <Eyebrow style={{ marginBottom: 14 }}>{PAGES.inquire.modal.thankYou.eyebrow}</Eyebrow>
             <h2 className="h2 serif" style={{ marginBottom: 12 }}>
-              Your inquiry is with us.
+              {PAGES.inquire.modal.thankYou.title}
             </h2>
             <p className="body muted" style={{ marginBottom: 28 }}>
-              We&apos;ll be in touch within one business day.
+              {PAGES.inquire.modal.thankYou.body}
             </p>
             <button className="btn btn-ghost" onClick={onClose}>
-              Close
+              {PAGES.inquire.modal.thankYou.closeLabel}
             </button>
           </div>
         )}

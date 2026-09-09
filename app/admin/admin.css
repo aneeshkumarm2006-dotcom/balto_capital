@@ -316,6 +316,9 @@
   transition: color 160ms var(--adm-ease);
 }
 .adm-btn-bare:hover { color: var(--adm-ink); }
+.adm-btn-bare:disabled { opacity: 0.35; cursor: default; }
+.adm-btn-bare:disabled:hover { color: var(--adm-muted); }
+.adm-btn-bare.danger:hover { color: var(--adm-danger); }
 .adm-btn-bare svg { width: 15px; height: 15px; }
 
 /* ---------- Forms ---------- */

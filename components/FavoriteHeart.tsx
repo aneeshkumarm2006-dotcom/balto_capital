@@ -2,6 +2,7 @@
 import { useState, type MouseEvent } from 'react';
 import { useFavorites } from './FavoritesContext';
 import { HeartIcon } from './icons';
+import { PAGES } from '@/lib/pages';
 
 interface FavoriteHeartProps {
   id: string;
@@ -25,7 +26,11 @@ export function FavoriteHeart({ id, size = 20, onClick }: FavoriteHeartProps) {
   return (
     <button
       onClick={handle}
-      aria-label={filled ? 'Remove from favorites' : 'Save to favorites'}
+      aria-label={
+        filled
+          ? PAGES.favorites.heart.removeLabel
+          : PAGES.favorites.heart.saveLabel
+      }
       aria-pressed={filled}
       style={{
         background: 'transparent',

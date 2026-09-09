@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Residence } from '@/lib/data';
 import { bedroomShort, formatPrice } from '@/lib/data';
+import { SITE } from '@/lib/site';
 import { Eyebrow } from './Eyebrow';
 import { FavoriteHeart } from './FavoriteHeart';
 import { PlaceholderImg } from './SmartImage';
@@ -36,20 +37,20 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
         router.push(to);
       }}
       className="property-card"
-      aria-label={`${r.name}, ${r.cityLabel}`}
+      aria-label={SITE.propertyCard.cardAriaLabel.replace('{name}', r.name).replace('{city}', r.cityLabel)}
     >
       <div className="image-wrap">
         {r.heroImage && !imgErrored ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={r.heroImage}
-            alt={r.name}
+            alt={SITE.propertyCard.imageAlt.replace('{name}', r.name)}
             loading="lazy"
             onError={() => setImgErrored(true)}
             style={r.heroImage === '/assets/coming-soon.png' ? { objectFit: 'contain', background: '#fff' } : undefined}
           />
         ) : (
-          <PlaceholderImg label={`${r.name} · exterior`} tone={cardTone}>
+          <PlaceholderImg label={SITE.propertyCard.placeholderCaption.replace('{name}', r.name)} tone={cardTone}>
             {r.name.charAt(0)}
           </PlaceholderImg>
         )}
@@ -68,7 +69,7 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
               padding: '6px 10px',
             }}
           >
-            Coming soon
+            {SITE.propertyCard.comingSoonBadge}
           </div>
         )}
       </div>
@@ -89,22 +90,22 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
           }}
         >
           <div className="small" style={{ color: 'var(--ink)' }}>
-            {hasUnits ? bedroomShort(r.bedroomOptions) : '—'}
+            {hasUnits ? bedroomShort(r.bedroomOptions) : SITE.propertyCard.noPriceDash}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div className="serif" style={{ fontSize: 18, fontWeight: 500 }}>
               {hasUnits ? (
                 <>
-                  From {formatPrice(r.priceFrom)}
+                  {SITE.propertyCard.pricePrefix} {formatPrice(r.priceFrom)}
                   <span
                     className="caption muted"
                     style={{ marginLeft: 4, fontFamily: 'var(--sans)' }}
                   >
-                    /mo net
+                    {SITE.propertyCard.perMonthSuffix}
                   </span>
                 </>
               ) : (
-                '—'
+                SITE.propertyCard.noPriceDash
               )}
             </div>
             <FavoriteHeart id={r.id} size={18} />
@@ -114,7 +115,7 @@ export function PropertyCard({ residence, tone, hideCity }: Props) {
           className="caption"
           style={{ marginTop: 16, color: 'var(--gold)', letterSpacing: '0.04em' }}
         >
-          Book a viewing →
+          {SITE.propertyCard.bookingCta}
         </div>
       </div>
     </a>

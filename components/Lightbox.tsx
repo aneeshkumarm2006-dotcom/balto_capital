@@ -1,6 +1,15 @@
 'use client';
 import { useCallback, useEffect, useRef } from 'react';
+import { PAGES } from '@/lib/pages';
 import { CloseIcon } from './icons';
+
+const L = PAGES.property.lightbox;
+
+/** Replace {token} placeholders in a CMS string. Single pass, and the values are
+ *  inserted literally — a photo label containing "$&" or "{number}" is never
+ *  re-interpreted the way String.replace(pattern, value) would. */
+const fill = (t: string, vars: Record<string, string | number>): string =>
+  t.replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? String(vars[k]) : m));
 
 interface Props {
   open: boolean;
@@ -52,14 +61,14 @@ export function Lightbox({ open, photos, index, onIndexChange, onClose, label = 
 
   return (
     <div className="lightbox" onClick={onClose} role="dialog" aria-modal="true">
-      <button className="lightbox-close" aria-label="Close" onClick={onClose}>
+      <button className="lightbox-close" aria-label={L.closeLabel} onClick={onClose}>
         <CloseIcon size={22} />
       </button>
 
       {total > 1 && (
         <button
           className="lightbox-nav prev"
-          aria-label="Previous photo"
+          aria-label={L.previousLabel}
           onClick={(e) => {
             e.stopPropagation();
             go(-1);
@@ -85,7 +94,7 @@ export function Lightbox({ open, photos, index, onIndexChange, onClose, label = 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
-          alt={label ? `${label} · photo ${index + 1}` : `Photo ${index + 1}`}
+          alt={label ? fill(L.photoAlt, { label, number: index + 1 }) : fill(L.photoAltFallback, { number: index + 1 })}
           style={isComingSoon ? { background: '#fff' } : undefined}
         />
       </figure>
@@ -93,7 +102,7 @@ export function Lightbox({ open, photos, index, onIndexChange, onClose, label = 
       {total > 1 && (
         <button
           className="lightbox-nav next"
-          aria-label="Next photo"
+          aria-label={L.nextLabel}
           onClick={(e) => {
             e.stopPropagation();
             go(1);
@@ -119,7 +128,7 @@ export function Lightbox({ open, photos, index, onIndexChange, onClose, label = 
               {labels[index]}
             </span>
           )}
-          <span>{index + 1} / {total}</span>
+          <span>{fill(L.counter, { current: index + 1, total })}</span>
         </div>
       )}
     </div>

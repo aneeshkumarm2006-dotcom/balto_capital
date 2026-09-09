@@ -14,11 +14,34 @@ import {
 } from './icons';
 import { CITIES, NAV_CITIES } from '@/lib/data';
 import { PAGES, TENANT_PORTAL } from '@/lib/pages';
+import { SITE } from '@/lib/site';
 
 
 /* Routes whose first section is a full-bleed film that runs edge to edge —
    the header sits over it, transparent, until the visitor scrolls past. */
 const OVERLAY_HERO_ROUTES = ['/about'];
+
+/* Navigation labels and destinations come from content/site.json. The entries
+   are looked up by key rather than mapped over, because each one has its own
+   layout — the city dropdown, the careers dropdown, a placeholder that is not
+   a link, and plain links — and the markup for those is not interchangeable. */
+interface NavEntry {
+  key: string;
+  label: string;
+  href: string;
+}
+
+/* The header is chrome on every page, so a content edit must never be able to
+   take it down. If a key is renamed or deleted in Content Studio the lookup
+   falls back to a blank entry instead of throwing on `NAV.<key>.label` and
+   losing the navigation site-wide. */
+const NAV: Record<string, NavEntry> = new Proxy(
+  Object.fromEntries(SITE.header.nav.map((n) => [n.key, n])) as Record<string, NavEntry>,
+  {
+    get: (target, prop: string) =>
+      target[prop] ?? { key: prop, label: '', href: '' },
+  }
+);
 
 /* Portfolio city listings open on the same kind of full-screen cover, so the
    bar has to go transparent over those too. Read from the city config rather
@@ -87,8 +110,11 @@ export function Header() {
      of an overlay hero, and on the navy band once the page has scrolled. */
   const onDark = overlayHero || scrolled;
 
+  /* A blank prefix means the CMS entry has no destination (a placeholder, or a
+     link the client cleared). Without the guard '' matches every route, because
+     every path starts with '/', and the whole nav would light up as active. */
   const isActive = (prefix: string) =>
-    pathname === prefix || pathname.startsWith(prefix + '/');
+    prefix !== '' && (pathname === prefix || pathname.startsWith(prefix + '/'));
 
   // The CMS portal has its own chrome — no public site header there.
   if (pathname.startsWith('/admin')) return null;
@@ -107,14 +133,14 @@ export function Header() {
             <Logo variant={onDark ? 'dark' : 'light'} height={80} />
           </div>
 
-          <nav className="nav" aria-label="Primary">
+          <nav className="nav" aria-label={SITE.header.navAriaLabel}>
             <div
-              className={'nav-item has-dropdown ' + (isActive('/residences') ? 'active' : '')}
+              className={'nav-item has-dropdown ' + (isActive(NAV.properties.href) ? 'active' : '')}
               onMouseEnter={() => setDropdownOpen(true)}
               onMouseLeave={() => setDropdownOpen(false)}
             >
               <Link
-                href="/residences"
+                href={NAV.properties.href}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -122,7 +148,7 @@ export function Header() {
                   color: 'inherit',
                 }}
               >
-                Properties <ChevronDown size={14} />
+                {NAV.properties.label} <ChevronDown size={14} />
               </Link>
               <div
                 className="dropdown"
@@ -140,8 +166,7 @@ export function Header() {
                     {c.label}
                     {c.comingSoon && (
                       <span style={{ color: 'var(--muted)', fontSize: 11 }}>
-                        {' '}
-                        · Coming soon
+                        {SITE.header.propertiesMenu.comingSoonSuffix}
                       </span>
                     )}
                   </Link>
@@ -149,28 +174,28 @@ export function Header() {
               </div>
             </div>
             <Link
-              href="/why-balto"
-              className={'nav-item ' + (isActive('/why-balto') ? 'active' : '')}
+              href={NAV.whyBalto.href}
+              className={'nav-item ' + (isActive(NAV.whyBalto.href) ? 'active' : '')}
             >
-              Why Balto
+              {NAV.whyBalto.label}
             </Link>
             <Link
-              href="/about"
-              className={'nav-item ' + (isActive('/about') ? 'active' : '')}
+              href={NAV.about.href}
+              className={'nav-item ' + (isActive(NAV.about.href) ? 'active' : '')}
             >
-              About
+              {NAV.about.label}
             </Link>
             {/* Placeholder, destination pending client direction on content. */}
             <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
-              Community Involvement
+              {NAV.community.label}
             </span>
             <div
-              className={'nav-item has-dropdown ' + (isActive('/careers') ? 'active' : '')}
+              className={'nav-item has-dropdown ' + (isActive(NAV.careers.href) ? 'active' : '')}
               onMouseEnter={() => setCareersOpen(true)}
               onMouseLeave={() => setCareersOpen(false)}
             >
               <Link
-                href="/careers"
+                href={NAV.careers.href}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -178,7 +203,7 @@ export function Header() {
                   color: 'inherit',
                 }}
               >
-                Careers <ChevronDown size={14} />
+                {NAV.careers.label} <ChevronDown size={14} />
               </Link>
               <div
                 className="dropdown"
@@ -201,18 +226,18 @@ export function Header() {
               </div>
             </div>
             <Link
-              href="/inquire"
-              className={'nav-item ' + (isActive('/inquire') ? 'active' : '')}
+              href={NAV.contact.href}
+              className={'nav-item ' + (isActive(NAV.contact.href) ? 'active' : '')}
             >
-              Contact Us
+              {NAV.contact.label}
             </Link>
           </nav>
 
           <div className="nav-right">
             <Link
-              href="/favorites"
+              href={SITE.header.favorites.href}
               className="favorites-link"
-              aria-label={`Favorites (${count})`}
+              aria-label={SITE.header.favorites.ariaLabel.replace('{count}', String(count))}
             >
               <HeartIcon
                 filled={count > 0}
@@ -232,7 +257,7 @@ export function Header() {
               <button
                 type="button"
                 className="tenant-portal-link"
-                aria-label="Tenant portal"
+                aria-label={SITE.header.tenantPortal.ariaLabel}
                 aria-haspopup="true"
                 aria-expanded={portalOpen}
                 onClick={() => setPortalOpen((o) => !o)}
@@ -244,7 +269,7 @@ export function Header() {
                 }}
               >
                 <HomeIcon size={18} />
-                <span className="tenant-portal-link-text">Tenant Portal</span>
+                <span className="tenant-portal-link-text">{SITE.header.tenantPortal.label}</span>
                 <ChevronDown
                   size={12}
                   style={{
@@ -264,8 +289,7 @@ export function Header() {
                 </div>
                 {TENANT_PORTAL.entries.length === 0 ? (
                   <p className="tenant-portal-menu-empty small muted">
-                    Resident portals are being set up. Please contact your
-                    building manager in the meantime.
+                    {TENANT_PORTAL.emptyMessage}
                   </p>
                 ) : (
                   TENANT_PORTAL.entries.map((e) => (
@@ -294,17 +318,17 @@ export function Header() {
                   ))
                 )}
                 <Link
-                  href="/tenant-portal"
+                  href={SITE.header.tenantPortal.allHref}
                   className="tenant-portal-menu-all"
                   onClick={() => setPortalOpen(false)}
                 >
-                  All resident portals <ChevronRight size={12} />
+                  {TENANT_PORTAL.allPortalsLabel} <ChevronRight size={12} />
                 </Link>
               </div>
             </div>
             <button
               className="menu-trigger"
-              aria-label="Open menu"
+              aria-label={SITE.header.mobile.openLabel}
               onClick={() => setMenuOpen(true)}
             >
               <MenuIcon size={22} />
@@ -323,7 +347,7 @@ export function Header() {
       >
         <div className="close-row">
           <button
-            aria-label="Close menu"
+            aria-label={SITE.header.mobile.closeLabel}
             onClick={() => setMenuOpen(false)}
             style={{ background: 'transparent', border: 0 }}
           >
@@ -331,25 +355,27 @@ export function Header() {
           </button>
         </div>
         <nav>
-          <Link href="/residences">Properties</Link>
+          <Link href={NAV.properties.href}>{NAV.properties.label}</Link>
           {NAV_CITIES.map((c) => (
             <Link key={c.slug} className="sub" href={`/residences/${c.slug}`}>
               {c.label}
-              {c.comingSoon && ' (Coming soon)'}
+              {c.comingSoon && SITE.header.mobile.comingSoonSuffix}
             </Link>
           ))}
-          <Link href="/why-balto">Why Balto</Link>
-          <Link href="/about">About</Link>
+          <Link href={NAV.whyBalto.href}>{NAV.whyBalto.label}</Link>
+          <Link href={NAV.about.href}>{NAV.about.label}</Link>
           {/* Placeholder, destination pending client direction on content. */}
-          <span aria-disabled="true">Community Involvement</span>
-          <Link href="/careers">Careers</Link>
+          <span aria-disabled="true">{NAV.community.label}</span>
+          <Link href={NAV.careers.href}>{NAV.careers.label}</Link>
           <span className="sub" aria-disabled="true">
-            No openings · check back soon
+            {SITE.header.mobile.careersSubLine}
           </span>
-          <Link href="/inquire">Contact Us</Link>
-          <Link href="/tenant-portal">Tenant Portal</Link>
-          <Link href="/favorites">
-            Favorites{' '}
+          <Link href={NAV.contact.href}>{NAV.contact.label}</Link>
+          <Link href={SITE.header.tenantPortal.allHref}>
+            {SITE.header.tenantPortal.label}
+          </Link>
+          <Link href={SITE.header.favorites.href}>
+            {SITE.header.favorites.label}{' '}
             <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>
               {count}
             </span>

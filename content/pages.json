@@ -6,7 +6,52 @@
       "subtitle": "Thoughtfully maintained apartment homes across Western Canada, owned and run by the same family team that answers your call.",
       "searchButton": "Search homes",
       "disclaimer": "Prices shown are net effective rent, what you actually pay after any promotion.",
-      "image": "/assets/hero-home.png"
+      "image": "/assets/hero-home.png",
+      "imageAlt": "A resident at home with her dog in a Balto apartment",
+      "search": {
+        "cityLabel": "City",
+        "cityAnyLabel": "All cities",
+        "rentLabel": "Max rent",
+        "rentAnyLabel": "Any",
+        "rentOptions": [
+          {
+            "value": "1400",
+            "label": "Up to $1,400"
+          },
+          {
+            "value": "1600",
+            "label": "Up to $1,600"
+          },
+          {
+            "value": "1800",
+            "label": "Up to $1,800"
+          },
+          {
+            "value": "2200",
+            "label": "Up to $2,200"
+          }
+        ],
+        "bedsLabel": "Bedrooms",
+        "bedsAnyLabel": "Any",
+        "bedOptions": [
+          {
+            "value": "0",
+            "label": "Studio"
+          },
+          {
+            "value": "1",
+            "label": "1 Bedroom"
+          },
+          {
+            "value": "2",
+            "label": "2 Bedrooms"
+          },
+          {
+            "value": "3",
+            "label": "3+ Bedrooms"
+          }
+        ]
+      }
     },
     "cities": {
       "eyebrow": "OUR CITIES",
@@ -14,12 +59,14 @@
       "blurb": "A focused portfolio across Western Canada, and growing. Every building chosen, kept, and cared for with intent. Start with your city.",
       "comingSoonBadge": "Coming soon",
       "comingSoonCta": "Register your interest →",
-      "liveCta": "View residences →"
+      "liveCta": "View residences →",
+      "emptyMessage": "Our next cities are on the way. Check back soon."
     },
     "featured": {
       "eyebrow": "FEATURED RESIDENCES",
       "title": "Homes available now.",
-      "viewAllLabel": "View all residences"
+      "viewAllLabel": "View all residences",
+      "emptyMessage": "No homes are available right now. New residences are added regularly, please check back soon."
     },
     "benefits": {
       "eyebrow": "WHY RENT WITH BALTO",
@@ -74,7 +121,8 @@
         }
       ],
       "ctaLabel": "Our story",
-      "image": "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1600&q=85&auto=format&fit=crop"
+      "image": "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1600&q=85&auto=format&fit=crop",
+      "imageAlt": "Architectural detail · brick masonry"
     },
     "cta": {
       "eyebrow": "BEGIN AN INQUIRY",
@@ -82,6 +130,10 @@
       "body": "Tell us the city, the budget, and the move-in date, we’ll find the right home for you.",
       "primaryLabel": "Browse residences",
       "secondaryLabel": "Contact us"
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
     }
   },
   "about": {
@@ -90,7 +142,9 @@
       "titleItalic": "Est.",
       "titleRest": "2023.",
       "subtitle": "A private real estate lender since 2023, owner-operator since 2025, today a growing portfolio of family-operated apartment homes across Western Canada.",
-      "image": "/assets/city-edmonton.png"
+      "image": "/assets/city-edmonton.png",
+      "video": "/video/about-bg.mp4",
+      "scrollCue": "Scroll"
     },
     "story": {
       "eyebrow": "OUR STORY",
@@ -166,13 +220,18 @@
       "eyebrow": "INQUIRE",
       "title": "Begin a conversation.",
       "buttonLabel": "Contact our team"
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
     }
   },
   "whyBalto": {
     "hero": {
       "eyebrow": "WHY BALTO",
       "title": "A different kind of landlord.",
-      "image": "/assets/city-regina.png"
+      "image": "/assets/city-regina.png",
+      "imageAlt": "Heritage architecture"
     },
     "intro": {
       "pullQuote": "We buy buildings to keep them, which is why we treat every resident as a long-term relationship, not a transaction.",
@@ -185,19 +244,22 @@
         "eyebrow": "I · OWNERSHIP",
         "title": "We own what we manage.",
         "body": "Balto is run by a brother-and-sister team that owns the buildings outright, no third-party manager between you and your home. The people who answer your call are the people who own the building. It is our single biggest difference.",
-        "image": "/assets/city-saskatoon.png"
+        "image": "/assets/city-saskatoon.png",
+        "imageAlt": "I · OWNERSHIP, imagery"
       },
       {
         "eyebrow": "II · RENOVATION",
         "title": "Renovated, updated, and secured.",
         "body": "We buy buildings to keep them, then invest in them: modernized suites, refreshed kitchens and baths, and upgraded building security. Most of the portfolio is value-add, older buildings brought up to a standard worth staying in for years.",
-        "image": "/assets/city-edmonton.png"
+        "image": "/assets/city-edmonton.png",
+        "imageAlt": "II · RENOVATION, imagery"
       },
       {
         "eyebrow": "III · SERVICE",
         "title": "24 Hours Maintenance Response Standard.",
         "body": "Maintenance requests are answered within 24 hours, by a local team in your city, not a call centre two provinces away. Many of our residences are pet-friendly. It is the kind of service that used to be standard, and is now rare.",
-        "image": "/assets/city-yellowknife.avif"
+        "image": "/assets/city-yellowknife.avif",
+        "imageAlt": "III · SERVICE, imagery"
       }
     ],
     "stats": [
@@ -217,6 +279,10 @@
     "cta": {
       "title": "Discover our residences.",
       "buttonLabel": "View the portfolio"
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
     }
   },
   "careers": {
@@ -230,7 +296,8 @@
       "title": "Current openings.",
       "noOpeningsMessage": "There are currently no job openings available. Please check back soon.",
       "contactIntro": "We’re always glad to hear from talented people. To introduce yourself, email us at",
-      "buttonLabel": "Contact our team"
+      "buttonLabel": "Contact our team",
+      "contactOutro": "."
     },
     "benefits": {
       "eyebrow": "KEY BENEFITS",
@@ -243,6 +310,403 @@
         "Internal promotion opportunities",
         "A close-knit, family-operated team"
       ]
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+    }
+  },
+  "residences": {
+    "breadcrumb": {
+      "homeLabel": "Home",
+      "currentLabel": "Residences"
+    },
+    "title": "All residences.",
+    "resultCount": "{count} of {total} residences across Western Canada",
+    "searchChip": {
+      "prefix": "Searching"
+    },
+    "toolbar": {
+      "showFiltersLabel": "Show filters"
+    },
+    "emptyState": {
+      "title": "No residences match these filters.",
+      "clearLabel": "Clear all"
+    },
+    "loading": {
+      "mapLabel": "Loading map"
+    },
+    "filters": {
+      "eyebrow": "FILTERS",
+      "closeLabel": "Close",
+      "bedrooms": {
+        "heading": "Bedrooms",
+        "options": [
+          {
+            "beds": 0,
+            "label": "Studio"
+          },
+          {
+            "beds": 1,
+            "label": "1"
+          },
+          {
+            "beds": 2,
+            "label": "2"
+          },
+          {
+            "beds": 3,
+            "label": "3+"
+          }
+        ]
+      },
+      "price": {
+        "heading": "Price range",
+        "readoutPrefix": "From",
+        "readoutSeparator": "to",
+        "readoutSuffix": " /mo"
+      },
+      "amenities": {
+        "heading": "Amenities",
+        "options": [
+          {
+            "key": "in-suite laundry",
+            "label": "In-suite laundry"
+          },
+          {
+            "key": "communal laundry",
+            "label": "Communal laundry"
+          },
+          {
+            "key": "surface parking",
+            "label": "Surface parking"
+          },
+          {
+            "key": "heated underground parking",
+            "label": "Heated underground parking"
+          },
+          {
+            "key": "pet-friendly",
+            "label": "Pet-friendly"
+          },
+          {
+            "key": "balcon",
+            "label": "Balcony"
+          },
+          {
+            "key": "elevator",
+            "label": "Elevator"
+          },
+          {
+            "key": "storage locker",
+            "label": "Storage lockers"
+          },
+          {
+            "key": "resident lounge",
+            "label": "Resident lounge"
+          },
+          {
+            "key": "resident concierge",
+            "label": "Resident concierge"
+          },
+          {
+            "key": "mail and parcel concierge",
+            "label": "Mail & parcel concierge"
+          },
+          {
+            "key": "shared mail",
+            "label": "Shared mail area"
+          },
+          {
+            "key": "updated common areas",
+            "label": "Updated common areas"
+          },
+          {
+            "key": "newly renovated suites",
+            "label": "Newly renovated suites"
+          },
+          {
+            "key": "heat and hot water",
+            "label": "Heat & hot water"
+          }
+        ]
+      },
+      "clearLabel": "Clear",
+      "applyLabel": "Apply"
+    },
+    "sort": {
+      "triggerPrefix": "Sort by:",
+      "options": [
+        {
+          "value": "name",
+          "label": "Alphabetical (A–Z)"
+        },
+        {
+          "value": "price-asc",
+          "label": "Price (low to high)"
+        },
+        {
+          "value": "price-desc",
+          "label": "Price (high to low)"
+        },
+        {
+          "value": "bedrooms",
+          "label": "Bedrooms"
+        }
+      ]
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+    }
+  },
+  "city": {
+    "breadcrumb": {
+      "homeLabel": "Home",
+      "residencesLabel": "Residences"
+    },
+    "comingSoon": {
+      "eyebrow": "COMING SOON · {province}",
+      "title": "{city}.",
+      "body": "Balto is expanding north. We're bringing our family-operated, locally-managed approach to the Northwest Territories. Register your interest and we'll be in touch as homes become available.",
+      "emailPlaceholder": "Your email",
+      "submitLabel": "Register interest",
+      "successMessage": "Thank you, we'll be in touch as homes become available.",
+      "footnote": "Closing on 129 units · register interest only"
+    },
+    "listing": {
+      "title": "{city}.",
+      "countSingular": "{count} residence available",
+      "countPlural": "{count} residences available",
+      "showFiltersLabel": "Show filters",
+      "emptyTitle": "No residences match these filters.",
+      "emptyClearLabel": "Clear all",
+      "paginationLabel": "Page 1 of 1"
+    },
+    "portfolio": {
+      "cover": {
+        "eyebrow": "{province} · Portfolio",
+        "title": "{city}.",
+        "imageAlt": "{city}, {province}"
+      },
+      "toolbar": {
+        "countSingular": "{count} residence in {city}",
+        "countPlural": "{count} residences in {city}",
+        "countAreaSuffix": "in this area",
+        "showFiltersLabel": "Show filters",
+        "moreFiltersLabel": "More filters",
+        "cityFilterLabel": "City",
+        "allCitiesLabel": "All cities",
+        "bedroomsFilterLabel": "Bedrooms",
+        "allBedroomsLabel": "All bedrooms",
+        "bedroomStudioLabel": "Studio",
+        "bedroomSingular": "{count} bedroom",
+        "bedroomPlural": "{count} bedrooms",
+        "bedroomMaxLabel": "3+ bedrooms",
+        "viewToggleLabel": "View",
+        "listViewLabel": "List view",
+        "mapViewLabel": "Map view",
+        "hideMapLabel": "Hide map",
+        "showMapLabel": "Show map"
+      },
+      "row": {
+        "imageLabel": "{name}, {city}",
+        "placeholderCaption": "{name} · exterior",
+        "suitesLabel": "Suites",
+        "priceFromLabel": "From",
+        "priceSuffix": "/mo net",
+        "unavailableValue": "—",
+        "viewResidenceLabel": "View residence"
+      },
+      "splitRow": {
+        "featuredBadge": "Featured",
+        "priceFromLabel": "From",
+        "priceSuffix": "/mo",
+        "noPriceLabel": "Enquire for availability",
+        "viewLabel": "View {name}"
+      },
+      "empty": {
+        "title": "No residences match these filters.",
+        "clearLabel": "Clear all",
+        "inAreaTitle": "No residences in this part of the map.",
+        "clearAreaLabel": "Show the whole city"
+      }
+    },
+    "meta": {
+      "titleTemplate": "Balto Capital | Apartment homes across Western Canada",
+      "descriptionTemplate": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+    }
+  },
+  "property": {
+    "breadcrumb": {
+      "home": "Home",
+      "residences": "Residences",
+      "separator": "/"
+    },
+    "header": {
+      "eyebrowSeparator": "·",
+      "title": "{name}."
+    },
+    "gallery": {
+      "viewAllLabel": "View all photos",
+      "mainPhotoAlt": "{name} · main",
+      "thumbPhotoAlt": "{name} · {number}",
+      "emptyThumbCaption": "·",
+      "unitModalEyebrow": "UNIT PHOTOS",
+      "unitModalTitle": "{name} · {unit}"
+    },
+    "lightbox": {
+      "closeLabel": "Close",
+      "previousLabel": "Previous photo",
+      "nextLabel": "Next photo",
+      "photoAlt": "{label} · photo {number}",
+      "photoAltFallback": "Photo {number}",
+      "counter": "{current} / {total}"
+    },
+    "price": {
+      "fromPrefix": "From",
+      "perMonthSuffix": "/month net",
+      "bedroomsSeparator": "·"
+    },
+    "promo": {
+      "tag": "Limited offer",
+      "offerSingular": "Up to {count} month free on a 12-month lease",
+      "offerPlural": "Up to {count} months free on a 12-month lease"
+    },
+    "quickStats": {
+      "bedroomsLabel": "Bedrooms",
+      "bedroomsNoneValue": "—",
+      "availabilityLabel": "Available",
+      "availabilityNoneValue": "No",
+      "availabilityNowValue": "Now",
+      "availabilitySoonValue": "Soon"
+    },
+    "sections": {
+      "overviewTitle": "Overview",
+      "incentivesTitle": "Incentives",
+      "featuresTitle": "Residence features",
+      "unitPhotosTitle": "Unit Photos",
+      "amenitiesTitle": "Building amenities",
+      "suitesTitle": "Available suites",
+      "locationTitle": "Location",
+      "nearbyEyebrow": "NEARBY"
+    },
+    "suites": {
+      "emptyMessage": "There are no suites available at the moment.",
+      "disclaimer": "Rents shown are net effective, what you pay after any promotion. Live availability is confirmed at viewing.",
+      "unitNumberHeader": "Unit Number",
+      "unitTypeHeader": "Unit Type",
+      "rentHeader": "Rent (net)",
+      "imagesHeader": "Images",
+      "applyColumnLabel": "Apply",
+      "unitNumberUnknownValue": "—",
+      "rentSuffix": "/mo",
+      "viewLabel": "View",
+      "noPhotosValue": "—",
+      "applyLabel": "Apply",
+      "unitPhotosLabel": "Unit {unit}"
+    },
+    "sidebar": {
+      "planEyebrowFallback": "FROM",
+      "perMonthSuffix": "/month",
+      "availableNowLine": "Available now",
+      "comingSoonLine": "Coming soon",
+      "netEffectiveNote": "Net effective rent, what you pay after any promotion.",
+      "floorPlansEyebrow": "FLOOR PLANS",
+      "planPriceSuffix": "/mo",
+      "noSuitesEyebrow": "Availability",
+      "noSuitesTitle": "No suites available",
+      "noSuitesBody": "There are no suites available at this residence right now. Book a viewing to register interest and we'll be in touch when one opens up.",
+      "bookViewingLabel": "Book a viewing",
+      "residentPortalLabel": "Resident Portal",
+      "residentPortalComingSoonLabel": "Resident Portal · Coming soon",
+      "maintenanceLabel": "Maintenance Request",
+      "maintenanceComingSoonLabel": "Maintenance Request · Coming soon",
+      "favoritesLabel": "Save to favorites",
+      "contactEyebrow": "CONTACT"
+    },
+    "similar": {
+      "eyebrow": "YOU MAY ALSO LIKE",
+      "title": "Other residences in {city}."
+    },
+    "meta": {
+      "titleTemplate": "Balto Capital | Apartment homes across Western Canada",
+      "descriptionTemplate": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+    }
+  },
+  "inquire": {
+    "hero": {
+      "eyebrow": "INQUIRE",
+      "titleLine1": "Begin a",
+      "titleLine2": "conversation.",
+      "intro": "Tell us what you're looking for. A member of our team will respond within one business day."
+    },
+    "contact": {
+      "emailLabel": "EMAIL",
+      "phoneLabel": "TELEPHONE",
+      "officeLabel": "OFFICE",
+      "officeHoursLabel": "OFFICE HOURS"
+    },
+    "form": {
+      "eyebrow": "SEND AN INQUIRY",
+      "nameLabel": "FULL NAME",
+      "emailLabel": "EMAIL",
+      "phoneLabel": "TELEPHONE",
+      "phonePlaceholder": "Optional",
+      "cityLabel": "CITY OF INTEREST",
+      "cityAriaLabel": "City of interest",
+      "cityPlaceholderOption": "Select a city",
+      "moveInLabel": "PREFERRED MOVE-IN DATE",
+      "moveInAriaLabel": "Preferred move-in date",
+      "moveInPlaceholder": "Optional",
+      "residenceLabel": "RESIDENCE OF INTEREST",
+      "residencePlaceholder": "Optional",
+      "messageLabel": "MESSAGE",
+      "submitLabel": "Send inquiry"
+    },
+    "thankYou": {
+      "eyebrow": "THANK YOU",
+      "title": "Your inquiry is with us.",
+      "body": "A member of our team will respond within one business day."
+    },
+    "modal": {
+      "eyebrow": "INQUIRE",
+      "intro": "A member of our team will respond within one business day.",
+      "closeAriaLabel": "Close",
+      "nameLabel": "FULL NAME",
+      "emailLabel": "EMAIL",
+      "messageLabel": "MESSAGE",
+      "messageDefault": "I am interested in {residence}.",
+      "submitLabel": "Send inquiry",
+      "thankYou": {
+        "eyebrow": "THANK YOU",
+        "title": "Your inquiry is with us.",
+        "body": "We'll be in touch within one business day.",
+        "closeLabel": "Close"
+      }
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+    }
+  },
+  "favorites": {
+    "eyebrow": "FAVORITES",
+    "title": "Your saved residences.",
+    "countNone": "Nothing saved yet.",
+    "countSingular": "{count} residence kept for you.",
+    "countPlural": "{count} residences kept for you.",
+    "empty": {
+      "quote": "No residences saved yet.",
+      "ctaLabel": "Discover residences"
+    },
+    "heart": {
+      "saveLabel": "Save to favorites",
+      "removeLabel": "Remove from favorites"
+    },
+    "meta": {
+      "title": "Balto Capital | Apartment homes across Western Canada",
+      "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
     }
   }
 }

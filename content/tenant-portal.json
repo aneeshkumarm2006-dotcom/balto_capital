@@ -2,6 +2,9 @@
   "eyebrow": "RESIDENTS",
   "title": "Tenant portal.",
   "intro": "Pay rent, submit a maintenance request, or check your lease. Choose your building to sign in.",
+  "signInLabel": "Sign in",
+  "emptyMessage": "Resident portals are being set up. Please contact your building manager in the meantime.",
+  "allPortalsLabel": "All resident portals",
   "entries": [
     {
       "id": "woodridge",
@@ -15,5 +18,9 @@
       "address": "Edmonton, AB",
       "url": "https://zenrentals.securecafe.com/residentservices/kafa-manor/userlogin.aspx"
     }
-  ]
+  ],
+  "meta": {
+    "title": "Balto Capital | Apartment homes across Western Canada",
+    "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+  }
 }

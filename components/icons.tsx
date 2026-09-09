@@ -118,6 +118,16 @@ export const MapIcon = (p: IconProps) => (
     <path d="M3 6.5 9 3l6 3 6-3v15l-6 3-6-3-6 3.5z" />
   </Icon>
 );
+/* Map with a strike through it — "hide the map" on the split listing. */
+export const MapOffIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 5.5V18" />
+    <path d="M15 6V15" />
+    <path d="M3 6.5 9 3l6 3 6-3v11" />
+    <path d="M21 20.5 15 18l-6 3-6-3.5V6.6" />
+    <line x1="3" x2="21" y1="21" y2="3" />
+  </Icon>
+);
 export const ListIcon = (p: IconProps) => (
   <Icon {...p}>
     <line x1="9" x2="20" y1="6" y2="6" />

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Map as LeafletMap, Marker } from 'leaflet';
 import type { Residence } from '@/lib/data';
 import { bedroomShort, formatPrice } from '@/lib/data';
+import { SITE } from '@/lib/site';
 import { Eyebrow } from './Eyebrow';
 import { SearchIcon } from './icons';
 import { PlaceholderImg } from './SmartImage';
@@ -356,19 +357,19 @@ export default function MapView({
             setAreaDirty(false);
           }}
         >
-          Search this area <SearchIcon size={13} />
+          {SITE.map.searchAreaLabel} <SearchIcon size={13} />
         </button>
       )}
 
       {showLegend && (
         <div className="map-legend">
           <span>
-            <PinGlyph variant="default" /> Available properties
+            <PinGlyph variant="default" /> {SITE.map.legendAvailable}
           </span>
           {/* Only keyed when there is actually a gold pin on the map. */}
           {hasFeatured && (
             <span>
-              <PinGlyph variant="featured" /> Featured property
+              <PinGlyph variant="featured" /> {SITE.map.legendFeatured}
             </span>
           )}
         </div>
@@ -384,7 +385,7 @@ export default function MapView({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={preview.heroImage}
-                alt={preview.name}
+                alt={SITE.propertyCard.imageAlt.replace('{name}', preview.name)}
                 loading="lazy"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
@@ -413,12 +414,12 @@ export default function MapView({
               {bedroomShort(preview.bedroomOptions)}
             </div>
             <div className="small serif" style={{ marginTop: 4 }}>
-              From {formatPrice(preview.priceFrom)}
+              {SITE.propertyCard.pricePrefix} {formatPrice(preview.priceFrom)}
               <span
                 className="caption muted"
                 style={{ fontFamily: 'var(--sans)' }}
               >
-                {' '}/mo
+                {' '}{SITE.propertyCard.perMonthShortSuffix}
               </span>
             </div>
           </div>

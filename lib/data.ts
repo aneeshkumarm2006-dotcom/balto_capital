@@ -7,6 +7,8 @@ import linksJson from '@/content/links.json';
 import citiesJson from '@/content/cities.json';
 import geocodedJson from '@/content/geocoded.json';
 import taxonomiesJson from '@/content/taxonomies.json';
+import { PAGES } from '@/lib/pages';
+import { SITE } from '@/lib/site';
 
 const IMG = (id: string, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=85&auto=format&fit=crop`;
@@ -181,7 +183,8 @@ const REDUCED_PROMO_SLUGS = new Set(['royal-manor', 'royal-lady', 'woodridge']);
 const freeMonthsFor = (slug: string): number =>
   REDUCED_PROMO_SLUGS.has(slug) ? 1 : 2;
 const promoText = (freeMonths: number): string =>
-  `Up to ${freeMonths} month${freeMonths === 1 ? '' : 's'} free on a 12-month lease`;
+  (freeMonths === 1 ? PAGES.property.promo.offerSingular : PAGES.property.promo.offerPlural)
+    .replace('{count}', String(freeMonths));
 const netEffective = (base: number, freeMonths: number): number =>
   Math.floor((base * (LEASE_MONTHS - freeMonths)) / LEASE_MONTHS);
 
@@ -267,9 +270,9 @@ const CURATED: Record<string, { features: string[]; amenities: string[] }> =
 // coming-soon imagery managed via content/photos.json.)
 
 function bedroomLabel(opts: number[]): string {
-  const parts = opts.map((b) => (b === 0 ? 'Studio' : String(b)));
+  const parts = opts.map((b) => (b === 0 ? SITE.propertyCard.studioLabel : String(b)));
   const onlyStudio = opts.length === 1 && opts[0] === 0;
-  return parts.join(' · ') + (onlyStudio ? '' : ' Bedrooms');
+  return parts.join(SITE.propertyCard.bedroomSeparator) + (onlyStudio ? '' : SITE.propertyCard.bedroomsSuffix);
 }
 
 /** Per-building photo sets synced into public/assets/<slug>/ and managed by
@@ -483,7 +486,7 @@ export const featuredResidences = (): Residence[] =>
 export const formatPrice = (n: number): string => '$' + n.toLocaleString('en-US');
 
 export function bedroomShort(opts: number[]): string {
-  const parts = opts.map((b) => (b === 0 ? 'Studio' : String(b)));
+  const parts = opts.map((b) => (b === 0 ? SITE.propertyCard.studioLabel : String(b)));
   const onlyStudio = opts.length === 1 && opts[0] === 0;
-  return parts.join(' · ') + (onlyStudio ? '' : ' Bedrooms');
+  return parts.join(SITE.propertyCard.bedroomSeparator) + (onlyStudio ? '' : SITE.propertyCard.bedroomsSuffix);
 }

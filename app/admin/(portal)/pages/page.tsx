@@ -1,108 +1,21 @@
 'use client';
 
-/* BALTO CMS — Pages: the site-copy editor for the four marketing pages
-   (Homepage, About, Why Balto, Careers). Edits content/pages.json as ONE
-   document: a single draft + snapshot spans all four tabs, so switching
-   tabs never loses work and one Save publishes everything.
+/* BALTO CMS - Pages: the site-copy editor for the public marketing pages.
+   Edits content/pages.json as ONE document: a single draft + snapshot spans
+   every tab, so switching tabs never loses work and one Save publishes the lot.
 
-   The forms are driven by a section config (SECTION_TABS below) so each
-   field carries a human label instead of its camelCase key. Array lengths
-   are structural — the public layouts are designed for exactly N items —
-   so lists render fixed, numbered sub-blocks with no add/remove. */
+   This file is CONFIG ONLY. The form machinery - loading, validation, image
+   upload, growable lists, the save bar - lives in the shared ContentEditor
+   engine. To expose a new field to the client, add it to SECTION_TABS below
+   and make sure the public page reads it from lib/pages.ts. */
 
-import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  commitStaged,
-  getContent,
-  uploadLibraryFiles,
-  type StagedFile,
-} from '@/components/admin/api';
-import { IconSpinner, IconUpload, IconX } from '@/components/admin/icons';
-import { Field, PageHead, useToast } from '@/components/admin/ui';
-import type { PagesContent } from '@/lib/pages';
-
-/* ============================================================
-   Draft helpers (path-based read/write on the pages document)
-   ============================================================ */
-
-type Path = ReadonlyArray<string | number>;
-
-function getAt(obj: unknown, path: Path): unknown {
-  let cur: unknown = obj;
-  for (const key of path) {
-    if (cur === null || typeof cur !== 'object') return undefined;
-    cur = (cur as Record<string | number, unknown>)[key];
-  }
-  return cur;
-}
-
-function setAt<T>(obj: T, path: Path, value: string): T {
-  const head = path[0];
-  if (head === undefined) return value as unknown as T;
-  const rest = path.slice(1);
-  if (Array.isArray(obj)) {
-    const copy = [...(obj as unknown[])];
-    copy[head as number] = setAt(copy[head as number], rest, value);
-    return copy as unknown as T;
-  }
-  const rec = { ...(obj as Record<string | number, unknown>) };
-  rec[head] = setAt(rec[head], rest, value);
-  return rec as T;
-}
-
-/** Counts strings anywhere in the document that are empty after trimming. */
-function countEmpty(v: unknown): number {
-  if (typeof v === 'string') return v.trim() === '' ? 1 : 0;
-  if (Array.isArray(v)) return v.reduce((n: number, x) => n + countEmpty(x), 0);
-  if (v !== null && typeof v === 'object') {
-    return Object.values(v).reduce((n: number, x) => n + countEmpty(x), 0);
-  }
-  return 0;
-}
-
-/* ============================================================
-   Section config — human labels, no raw keys shown to the client
-   ============================================================ */
-
-type Kind = 'input' | 'textarea' | 'textareaWide' | 'image';
-
-interface FieldDef {
-  key: string;
-  label: string;
-  kind: Kind;
-  help?: string;
-}
-
-interface ListDef {
-  key: string;
-  itemLabel: string;
-  /** Fields per item; omit when the items are plain strings. */
-  fields?: FieldDef[];
-  /** Control used for plain-string items (default 'input'). */
-  stringKind?: Kind;
-}
-
-interface SectionDef {
-  title: string;
-  path: Path;
-  fields?: FieldDef[];
-  list?: ListDef;
-  /** Fields rendered below the list (matches the on-page order). */
-  fieldsAfter?: FieldDef[];
-}
-
-interface TabDef {
-  id: 'home' | 'about' | 'whyBalto' | 'careers';
-  label: string;
-  sections: SectionDef[];
-}
-
-const EYEBROW: FieldDef = {
-  key: 'eyebrow',
-  label: 'Eyebrow (small label above the title)',
-  kind: 'input',
-};
-const TITLE: FieldDef = { key: 'title', label: 'Title', kind: 'input' };
+  ContentEditor,
+  EYEBROW,
+  TITLE,
+  type FieldDef,
+  type TabDef,
+} from '@/components/admin/ContentEditor';
 
 const SECTION_TABS: TabDef[] = [
   {
@@ -123,7 +36,55 @@ const SECTION_TABS: TabDef[] = [
             kind: 'textarea',
           },
           { key: 'image', label: 'Hero image', kind: 'image' },
+          {
+            key: 'imageAlt',
+            label: 'Hero image description',
+            kind: 'input',
+            help: 'Read aloud by screen readers and shown if the photo fails to load. Describe what is in the picture.',
+          },
         ],
+      },
+      {
+        title: 'Hero search bar',
+        path: ['home', 'hero', 'search'],
+        fields: [
+          { key: 'cityLabel', label: 'City field label', kind: 'input' },
+          { key: 'cityAnyLabel', label: 'City field — "any city" option', kind: 'input' },
+          { key: 'rentLabel', label: 'Max rent field label', kind: 'input' },
+          { key: 'rentAnyLabel', label: 'Max rent field — "any price" option', kind: 'input' },
+          { key: 'bedsLabel', label: 'Bedrooms field label', kind: 'input' },
+          { key: 'bedsAnyLabel', label: 'Bedrooms field — "any size" option', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Hero search bar — rent bands',
+        path: ['home', 'hero', 'search'],
+        list: {
+          key: 'rentOptions',
+          itemLabel: 'Rent band',
+          growable: true,
+          min: 1,
+          help: 'The price ladder in the Max rent dropdown. The value is the ceiling in dollars; the label is what the visitor reads.',
+          fields: [
+            { key: 'value', label: 'Maximum rent (number only)', kind: 'input' },
+            { key: 'label', label: 'Option wording', kind: 'input' },
+          ],
+        },
+      },
+      {
+        title: 'Hero search bar — bedroom options',
+        path: ['home', 'hero', 'search'],
+        list: {
+          key: 'bedOptions',
+          itemLabel: 'Bedroom option',
+          growable: true,
+          min: 1,
+          help: 'Bedroom counts are matched by the search, so change the wording rather than the value.',
+          fields: [
+            { key: 'value', label: 'Bedrooms (number only)', kind: 'input' },
+            { key: 'label', label: 'Option wording', kind: 'input' },
+          ],
+        },
       },
       {
         title: 'Our cities',
@@ -135,6 +96,12 @@ const SECTION_TABS: TabDef[] = [
           { key: 'comingSoonBadge', label: 'Coming-soon badge', kind: 'input' },
           { key: 'comingSoonCta', label: 'Coming-soon link label', kind: 'input' },
           { key: 'liveCta', label: 'Live-city link label', kind: 'input' },
+          {
+            key: 'emptyMessage',
+            label: 'Message when no city is published',
+            kind: 'textarea',
+            help: 'Shown in place of the city grid if every city is hidden.',
+          },
         ],
       },
       {
@@ -144,6 +111,12 @@ const SECTION_TABS: TabDef[] = [
           EYEBROW,
           TITLE,
           { key: 'viewAllLabel', label: 'View-all button label', kind: 'input' },
+          {
+            key: 'emptyMessage',
+            label: 'Message when nothing is featured',
+            kind: 'textarea',
+            help: 'Shown in place of the cards if no residence is marked as featured.',
+          },
         ],
       },
       {
@@ -157,6 +130,9 @@ const SECTION_TABS: TabDef[] = [
         list: {
           key: 'items',
           itemLabel: 'Benefit',
+          growable: true,
+          min: 1,
+          help: 'Add, re-order or remove benefits — they fill the grid in this order.',
           fields: [
             TITLE,
             { key: 'body', label: 'Body', kind: 'textarea' },
@@ -167,7 +143,14 @@ const SECTION_TABS: TabDef[] = [
         title: 'How to rent',
         path: ['home', 'steps'],
         fields: [EYEBROW, TITLE],
-        list: { key: 'items', itemLabel: 'Step', stringKind: 'input' },
+        list: {
+          key: 'items',
+          itemLabel: 'Step',
+          stringKind: 'input',
+          growable: true,
+          min: 1,
+          help: 'Steps are numbered on the website in this order.',
+        },
       },
       {
         title: 'Our story',
@@ -177,10 +160,19 @@ const SECTION_TABS: TabDef[] = [
           TITLE,
           { key: 'paragraph', label: 'Paragraph', kind: 'textareaWide' },
           { key: 'image', label: 'Story image', kind: 'image' },
+          {
+            key: 'imageAlt',
+            label: 'Story image description',
+            kind: 'input',
+            help: 'Read aloud by screen readers and shown if the photo fails to load.',
+          },
         ],
         list: {
           key: 'timeline',
           itemLabel: 'Timeline entry',
+          growable: true,
+          min: 1,
+          help: 'The story timeline, oldest first.',
           fields: [
             { key: 'year', label: 'Year', kind: 'input' },
             { key: 'label', label: 'Label', kind: 'input' },
@@ -197,6 +189,24 @@ const SECTION_TABS: TabDef[] = [
           { key: 'body', label: 'Body', kind: 'textareaWide' },
           { key: 'primaryLabel', label: 'Primary button label', kind: 'input' },
           { key: 'secondaryLabel', label: 'Secondary button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Search engine listing',
+        path: ['home', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
         ],
       },
     ],
@@ -219,6 +229,13 @@ const SECTION_TABS: TabDef[] = [
           { key: 'titleRest', label: 'Title — remaining part', kind: 'input' },
           { key: 'subtitle', label: 'Subtitle', kind: 'textareaWide' },
           { key: 'image', label: 'Hero video poster image', kind: 'image' },
+          {
+            key: 'video',
+            label: 'Hero background film',
+            kind: 'input',
+            help: 'Path to the video file, e.g. /video/about-bg.mp4. Films are uploaded by your developer; the poster image above is what shows until it plays.',
+          },
+          { key: 'scrollCue', label: 'Scroll cue wording', kind: 'input' },
         ],
       },
       {
@@ -231,6 +248,8 @@ const SECTION_TABS: TabDef[] = [
         list: {
           key: 'cards',
           itemLabel: 'Card',
+          growable: true,
+          min: 1,
           fields: [
             { key: 'numeral', label: 'Numeral (I, II, III…)', kind: 'input' },
             { key: 'eyebrow', label: 'Eyebrow', kind: 'input' },
@@ -246,7 +265,13 @@ const SECTION_TABS: TabDef[] = [
         title: 'Standards',
         path: ['about', 'standards'],
         fields: [EYEBROW, TITLE],
-        list: { key: 'items', itemLabel: 'Standard', stringKind: 'textarea' },
+        list: {
+          key: 'items',
+          itemLabel: 'Standard',
+          stringKind: 'textarea',
+          growable: true,
+          min: 1,
+        },
       },
       {
         title: 'Figures',
@@ -259,6 +284,8 @@ const SECTION_TABS: TabDef[] = [
         list: {
           key: 'items',
           itemLabel: 'Figure',
+          growable: true,
+          min: 1,
           fields: [
             { key: 'value', label: 'Value (the large number)', kind: 'input' },
             { key: 'label', label: 'Label', kind: 'input' },
@@ -275,6 +302,24 @@ const SECTION_TABS: TabDef[] = [
           { key: 'buttonLabel', label: 'Button label', kind: 'input' },
         ],
       },
+      {
+        title: 'Search engine listing',
+        path: ['about', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
+        ],
+      },
     ],
   },
   {
@@ -288,6 +333,12 @@ const SECTION_TABS: TabDef[] = [
           EYEBROW,
           TITLE,
           { key: 'image', label: 'Hero background image', kind: 'image' },
+          {
+            key: 'imageAlt',
+            label: 'Hero image description',
+            kind: 'input',
+            help: 'Read aloud by screen readers and shown if the photo fails to load.',
+          },
         ],
       },
       {
@@ -306,11 +357,20 @@ const SECTION_TABS: TabDef[] = [
         list: {
           key: 'pillars',
           itemLabel: 'Pillar',
+          growable: true,
+          min: 1,
+          help: 'Each pillar is a full-width band with its own image, in this order.',
           fields: [
             { key: 'eyebrow', label: 'Eyebrow (numeral and theme)', kind: 'input' },
             TITLE,
             { key: 'body', label: 'Body', kind: 'textareaWide' },
             { key: 'image', label: 'Pillar image', kind: 'image' },
+            {
+              key: 'imageAlt',
+              label: 'Pillar image description',
+              kind: 'input',
+              help: 'Read aloud by screen readers and shown if the photo fails to load.',
+            },
           ],
         },
       },
@@ -320,6 +380,8 @@ const SECTION_TABS: TabDef[] = [
         list: {
           key: 'stats',
           itemLabel: 'Stat',
+          growable: true,
+          min: 1,
           fields: [
             { key: 'value', label: 'Value (the large number)', kind: 'input' },
             { key: 'label', label: 'Label', kind: 'input' },
@@ -332,6 +394,24 @@ const SECTION_TABS: TabDef[] = [
         fields: [
           TITLE,
           { key: 'buttonLabel', label: 'Button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Search engine listing',
+        path: ['whyBalto', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
         ],
       },
     ],
@@ -365,6 +445,12 @@ const SECTION_TABS: TabDef[] = [
             label: 'Contact line (shown before the email address)',
             kind: 'textarea',
           },
+          {
+            key: 'contactOutro',
+            label: 'Punctuation after the email address',
+            kind: 'input',
+            help: 'Closes the sentence after the email link — usually just a full stop.',
+          },
           { key: 'buttonLabel', label: 'Button label', kind: 'input' },
         ],
       },
@@ -372,605 +458,1074 @@ const SECTION_TABS: TabDef[] = [
         title: 'Key benefits',
         path: ['careers', 'benefits'],
         fields: [EYEBROW, TITLE],
-        list: { key: 'items', itemLabel: 'Benefit', stringKind: 'input' },
+        list: {
+          key: 'items',
+          itemLabel: 'Benefit',
+          stringKind: 'input',
+          growable: true,
+          min: 1,
+        },
+      },
+      {
+        title: 'Search engine listing',
+        path: ['careers', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'residences',
+    label: 'Residences list',
+    sections: [
+      {
+        title: 'Page title & result count',
+        path: ['residences'],
+        fields: [
+          { key: 'title', label: 'Page title', kind: 'input' },
+          {
+            key: 'resultCount',
+            label: 'Result line under the title',
+            kind: 'input',
+            help: 'Write {count} where the number of matching residences should appear and {total} for the total. Both must stay exactly as written, curly braces included.',
+          },
+        ],
+      },
+      {
+        title: 'Breadcrumb',
+        path: ['residences', 'breadcrumb'],
+        fields: [
+          { key: 'homeLabel', label: 'Link back to the homepage', kind: 'input' },
+          { key: 'currentLabel', label: 'Current page label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Search chip',
+        path: ['residences', 'searchChip'],
+        fields: [
+          {
+            key: 'prefix',
+            label: 'Text before the search term',
+            kind: 'input',
+            help: 'Shown above the results when someone arrives with a search, e.g. Searching “Riverbend”. The search term and its quote marks are added automatically.',
+          },
+        ],
+      },
+      {
+        title: 'Filters button',
+        path: ['residences', 'toolbar'],
+        fields: [
+          { key: 'showFiltersLabel', label: 'Button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'No results',
+        path: ['residences', 'emptyState'],
+        fields: [
+          { key: 'title', label: 'Message when nothing matches', kind: 'input' },
+          { key: 'clearLabel', label: 'Reset button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Map placeholder',
+        path: ['residences', 'loading'],
+        fields: [
+          {
+            key: 'mapLabel',
+            label: 'Screen-reader label while the map loads',
+            kind: 'input',
+            help: 'Not visible on screen — read aloud by screen readers in the moment before the map appears.',
+          },
+        ],
+      },
+      {
+        title: 'Filter panel',
+        path: ['residences', 'filters'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Panel heading (small label at the top)',
+            kind: 'input',
+          },
+          {
+            key: 'closeLabel',
+            label: 'Screen-reader label for the close button',
+            kind: 'input',
+            help: 'Not visible on screen — read aloud for the X that closes the panel.',
+          },
+          { key: 'clearLabel', label: 'Clear button label', kind: 'input' },
+          { key: 'applyLabel', label: 'Apply button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Filters — bedrooms',
+        path: ['residences', 'filters', 'bedrooms'],
+        fields: [
+          { key: 'heading', label: 'Section heading', kind: 'input' },
+        ],
+        list: {
+          key: 'options',
+          itemLabel: 'Bedroom button',
+          help: 'The four bedroom buttons, in the order they appear. What each button filters by is fixed in the design — only the wording is editable.',
+          fields: [
+            { key: 'label', label: 'Button text', kind: 'input' },
+          ],
+        },
+      },
+      {
+        title: 'Filters — price range',
+        path: ['residences', 'filters', 'price'],
+        fields: [
+          { key: 'heading', label: 'Section heading', kind: 'input' },
+          {
+            key: 'readoutPrefix',
+            label: 'Word before the lowest price',
+            kind: 'input',
+            help: 'The line reads: From $800 to $3,500 /mo.',
+          },
+          {
+            key: 'readoutSeparator',
+            label: 'Word between the two prices',
+            kind: 'input',
+          },
+          {
+            key: 'readoutSuffix',
+            label: 'Text after the highest price',
+            kind: 'input',
+            help: 'Keep the space at the start — it separates the price from /mo.',
+          },
+        ],
+      },
+      {
+        title: 'Filters — amenities',
+        path: ['residences', 'filters', 'amenities'],
+        fields: [
+          { key: 'heading', label: 'Section heading', kind: 'input' },
+        ],
+        list: {
+          key: 'options',
+          itemLabel: 'Amenity',
+          growable: true,
+          min: 1,
+          help: 'The amenity checkboxes, in the order they appear. Add, re-order or remove them freely — a checkbox shows a residence when the match word appears in that residence’s amenities or features.',
+          fields: [
+            { key: 'label', label: 'Checkbox text', kind: 'input' },
+            {
+              key: 'key',
+              label: 'Match word',
+              kind: 'input',
+              help: 'The word looked for in each residence’s amenities and features, ignoring capitals — “parking” matches “Heated underground parking”. Keep it short. Changing it also changes the link people get when they share a filtered search.',
+            },
+          ],
+        },
+      },
+      {
+        title: 'Sort menu',
+        path: ['residences', 'sort'],
+        fields: [
+          {
+            key: 'triggerPrefix',
+            label: 'Text on the sort button, before the choice',
+            kind: 'input',
+            help: 'Reads: Sort by: Alphabetical (A–Z).',
+          },
+        ],
+        list: {
+          key: 'options',
+          itemLabel: 'Sort option',
+          help: 'The four sort choices, in menu order. What each one sorts by is fixed in the design — only the wording is editable.',
+          fields: [
+            { key: 'label', label: 'Option text', kind: 'input' },
+          ],
+        },
+      },
+      {
+        title: 'Search engine listing',
+        path: ['residences', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'city',
+    label: 'City pages',
+    sections: [
+      {
+        title: 'Breadcrumb',
+        path: ['city', 'breadcrumb'],
+        fields: [
+          { key: 'homeLabel', label: '"Home" link', kind: 'input' },
+          { key: 'residencesLabel', label: '"Residences" link', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Coming-soon city (register interest)',
+        path: ['city', 'comingSoon'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the city name)',
+            kind: 'input',
+            help: '{province} is replaced with the province. Keep the · character.',
+          },
+          {
+            key: 'title',
+            label: 'Title',
+            kind: 'input',
+            help: '{city} is replaced with the city name.',
+          },
+          { key: 'body', label: 'Intro paragraph', kind: 'textareaWide' },
+          { key: 'emailPlaceholder', label: 'Email field placeholder', kind: 'input' },
+          { key: 'submitLabel', label: 'Submit button label', kind: 'input' },
+          {
+            key: 'successMessage',
+            label: 'Thank-you message (replaces the form once sent)',
+            kind: 'textarea',
+          },
+          {
+            key: 'footnote',
+            label: 'Fine print under the form',
+            kind: 'input',
+            help: 'Keep the · character.',
+          },
+        ],
+      },
+      {
+        title: 'Standard city listing',
+        path: ['city', 'listing'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: '{city} is replaced with the city name.',
+          },
+          {
+            key: 'countSingular',
+            label: 'Result count — one residence',
+            kind: 'input',
+            help: '{count} is replaced with the number found.',
+          },
+          {
+            key: 'countPlural',
+            label: 'Result count — several residences',
+            kind: 'input',
+            help: '{count} is replaced with the number found.',
+          },
+          { key: 'showFiltersLabel', label: 'Filters button label', kind: 'input' },
+          { key: 'emptyTitle', label: 'No-results message', kind: 'input' },
+          { key: 'emptyClearLabel', label: 'No-results button label', kind: 'input' },
+          {
+            key: 'paginationLabel',
+            label: 'Pagination line',
+            kind: 'input',
+            help: 'Static placeholder — pagination is not wired up on this page yet.',
+          },
+        ],
+      },
+      {
+        title: 'Portfolio city — cover',
+        path: ['city', 'portfolio', 'cover'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the city name)',
+            kind: 'input',
+            help: '{province} is replaced with the province. Keep the · character.',
+          },
+          {
+            key: 'title',
+            label: 'Title',
+            kind: 'input',
+            help: '{city} is replaced with the city name.',
+          },
+          {
+            key: 'imageAlt',
+            label: 'Cover photo description (for screen readers)',
+            kind: 'input',
+            help: '{city} and {province} are replaced automatically.',
+          },
+        ],
+      },
+      {
+        title: 'Portfolio city — filter bar',
+        path: ['city', 'portfolio', 'toolbar'],
+        fields: [
+          {
+            key: 'countSingular',
+            label: 'Result count — one residence',
+            kind: 'input',
+            help: '{count} and {city} are replaced automatically.',
+          },
+          {
+            key: 'countPlural',
+            label: 'Result count — several residences',
+            kind: 'input',
+            help: '{count} and {city} are replaced automatically.',
+          },
+          {
+            key: 'countAreaSuffix',
+            label: 'Added to the count during a map-area search',
+            kind: 'input',
+            help: 'A space is added before this automatically — do not start with one.',
+          },
+          { key: 'showFiltersLabel', label: 'Filters button label', kind: 'input' },
+          {
+            key: 'moreFiltersLabel',
+            label: '"More filters" button label (map layout)',
+            kind: 'input',
+          },
+          {
+            key: 'cityFilterLabel',
+            label: 'City dropdown name (for screen readers)',
+            kind: 'input',
+          },
+          {
+            key: 'allCitiesLabel',
+            label: 'City dropdown — all-cities option',
+            kind: 'input',
+          },
+          {
+            key: 'bedroomsFilterLabel',
+            label: 'Bedrooms dropdown name (for screen readers)',
+            kind: 'input',
+          },
+          {
+            key: 'allBedroomsLabel',
+            label: 'Bedrooms dropdown — all-sizes option',
+            kind: 'input',
+          },
+          {
+            key: 'bedroomStudioLabel',
+            label: 'Bedrooms — studio option',
+            kind: 'input',
+          },
+          {
+            key: 'bedroomSingular',
+            label: 'Bedrooms — one bedroom',
+            kind: 'input',
+            help: '{count} is replaced with the number of bedrooms.',
+          },
+          {
+            key: 'bedroomPlural',
+            label: 'Bedrooms — two bedrooms',
+            kind: 'input',
+            help: '{count} is replaced with the number of bedrooms.',
+          },
+          { key: 'bedroomMaxLabel', label: 'Bedrooms — three or more', kind: 'input' },
+          {
+            key: 'viewToggleLabel',
+            label: 'List/map toggle name (for screen readers)',
+            kind: 'input',
+          },
+          { key: 'listViewLabel', label: 'List view button label', kind: 'input' },
+          { key: 'mapViewLabel', label: 'Map view button label', kind: 'input' },
+          { key: 'hideMapLabel', label: 'Hide-map button label', kind: 'input' },
+          { key: 'showMapLabel', label: 'Show-map button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Portfolio city — residence rows',
+        path: ['city', 'portfolio', 'row'],
+        fields: [
+          {
+            key: 'imageLabel',
+            label: 'Photo link description (for screen readers)',
+            kind: 'input',
+            help: '{name} and {city} are replaced automatically.',
+          },
+          {
+            key: 'placeholderCaption',
+            label: 'Caption when a photo is missing',
+            kind: 'input',
+            help: '{name} is replaced with the residence name. Keep the · character.',
+          },
+          { key: 'suitesLabel', label: '"Suites" label', kind: 'input' },
+          { key: 'priceFromLabel', label: '"From" label above the rent', kind: 'input' },
+          { key: 'priceSuffix', label: 'Unit shown after the rent', kind: 'input' },
+          {
+            key: 'unavailableValue',
+            label: 'Shown when a building has no units on file',
+            kind: 'input',
+            help: 'Currently an em dash (—).',
+          },
+          {
+            key: 'viewResidenceLabel',
+            label: 'View-residence button label',
+            kind: 'input',
+          },
+        ],
+      },
+      {
+        title: 'Portfolio city — rows beside the map',
+        path: ['city', 'portfolio', 'splitRow'],
+        fields: [
+          { key: 'featuredBadge', label: 'Badge on featured buildings', kind: 'input' },
+          { key: 'priceFromLabel', label: '"From" label above the rent', kind: 'input' },
+          { key: 'priceSuffix', label: 'Unit shown after the rent', kind: 'input' },
+          {
+            key: 'noPriceLabel',
+            label: 'Shown instead of a rent when none is on file',
+            kind: 'input',
+          },
+          {
+            key: 'viewLabel',
+            label: 'Arrow button description (for screen readers)',
+            kind: 'input',
+            help: '{name} is replaced with the residence name.',
+          },
+        ],
+      },
+      {
+        title: 'Portfolio city — no results',
+        path: ['city', 'portfolio', 'empty'],
+        fields: [
+          { key: 'title', label: 'No-results message (filters)', kind: 'input' },
+          {
+            key: 'clearLabel',
+            label: 'No-results button label (filters)',
+            kind: 'input',
+          },
+          {
+            key: 'inAreaTitle',
+            label: 'No-results message (map area search)',
+            kind: 'input',
+          },
+          {
+            key: 'clearAreaLabel',
+            label: 'No-results button label (map area search)',
+            kind: 'input',
+          },
+        ],
+      },
+      {
+        title: 'Search engine listing',
+        path: ['city', 'meta'],
+        fields: [
+          {
+            key: 'titleTemplate',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters. Use {city} or {name} where the residence or city should appear.',
+          },
+          {
+            key: 'descriptionTemplate',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters. Use {city} or {name} where the residence or city should appear.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'property',
+    label: 'Residence pages',
+    sections: [
+      {
+        title: 'Breadcrumb',
+        path: ['property', 'breadcrumb'],
+        fields: [
+          { key: 'home', label: 'Home link', kind: 'input' },
+          { key: 'residences', label: 'Residences link', kind: 'input' },
+          {
+            key: 'separator',
+            label: 'Divider between links',
+            kind: 'input',
+            help: 'Drawn between every breadcrumb link.',
+          },
+        ],
+      },
+      {
+        title: 'Page header',
+        path: ['property', 'header'],
+        fields: [
+          {
+            key: 'eyebrowSeparator',
+            label: 'City / neighbourhood divider',
+            kind: 'input',
+            help: 'Sits between the city and the neighbourhood, e.g. "Edmonton · Oliver".',
+          },
+          {
+            key: 'title',
+            label: 'Heading pattern',
+            kind: 'input',
+            help: '{name} is replaced with the residence name. The full stop is part of the house style.',
+          },
+        ],
+      },
+      {
+        title: 'Photo gallery',
+        path: ['property', 'gallery'],
+        fields: [
+          { key: 'viewAllLabel', label: 'View-all button label', kind: 'input' },
+          {
+            key: 'mainPhotoAlt',
+            label: 'Main photo alt text',
+            kind: 'input',
+            help: '{name} = residence name. Read aloud by screen readers.',
+          },
+          {
+            key: 'thumbPhotoAlt',
+            label: 'Thumbnail alt text',
+            kind: 'input',
+            help: '{name} = residence name, {number} = photo position.',
+          },
+          {
+            key: 'emptyThumbCaption',
+            label: 'Empty thumbnail glyph',
+            kind: 'input',
+            help: 'Placeholder shown in a thumbnail tile with no photo.',
+          },
+          {
+            key: 'unitModalEyebrow',
+            label: 'Unit photos pop-up eyebrow',
+            kind: 'input',
+          },
+          {
+            key: 'unitModalTitle',
+            label: 'Unit photos pop-up heading',
+            kind: 'input',
+            help: '{name} = residence name, {unit} = unit label (e.g. "Unit 305").',
+          },
+        ],
+      },
+      {
+        title: 'Photo lightbox (also used in the staff portal)',
+        path: ['property', 'lightbox'],
+        fields: [
+          { key: 'closeLabel', label: 'Close button (screen readers)', kind: 'input' },
+          {
+            key: 'previousLabel',
+            label: 'Previous button (screen readers)',
+            kind: 'input',
+          },
+          { key: 'nextLabel', label: 'Next button (screen readers)', kind: 'input' },
+          {
+            key: 'photoAlt',
+            label: 'Photo alt text',
+            kind: 'input',
+            help: '{label} = building or unit label, {number} = photo position.',
+          },
+          {
+            key: 'photoAltFallback',
+            label: 'Photo alt text — no label',
+            kind: 'input',
+            help: '{number} = photo position.',
+          },
+          {
+            key: 'counter',
+            label: 'Photo counter',
+            kind: 'input',
+            help: '{current} = current photo, {total} = total photos.',
+          },
+        ],
+      },
+      {
+        title: 'Price line',
+        path: ['property', 'price'],
+        fields: [
+          { key: 'fromPrefix', label: 'Price prefix', kind: 'input' },
+          { key: 'perMonthSuffix', label: 'Price suffix', kind: 'input' },
+          {
+            key: 'bedroomsSeparator',
+            label: 'Divider before bedroom summary',
+            kind: 'input',
+          },
+        ],
+      },
+      {
+        title: 'Promotion banner',
+        path: ['property', 'promo'],
+        fields: [
+          { key: 'tag', label: 'Banner tag', kind: 'input' },
+          {
+            key: 'offerSingular',
+            label: 'Offer wording — one free month',
+            kind: 'input',
+            help: '{count} = number of free months.',
+          },
+          {
+            key: 'offerPlural',
+            label: 'Offer wording — several free months',
+            kind: 'input',
+            help: '{count} = number of free months.',
+          },
+        ],
+      },
+      {
+        title: 'Quick stats',
+        path: ['property', 'quickStats'],
+        fields: [
+          { key: 'bedroomsLabel', label: 'Bedrooms label', kind: 'input' },
+          {
+            key: 'bedroomsNoneValue',
+            label: 'Bedrooms value — nothing available',
+            kind: 'input',
+          },
+          { key: 'availabilityLabel', label: 'Availability label', kind: 'input' },
+          {
+            key: 'availabilityNoneValue',
+            label: 'Availability — nothing available',
+            kind: 'input',
+          },
+          {
+            key: 'availabilityNowValue',
+            label: 'Availability — available now',
+            kind: 'input',
+          },
+          {
+            key: 'availabilitySoonValue',
+            label: 'Availability — coming soon',
+            kind: 'input',
+          },
+        ],
+      },
+      {
+        title: 'Section headings',
+        path: ['property', 'sections'],
+        fields: [
+          { key: 'overviewTitle', label: 'Overview heading', kind: 'input' },
+          {
+            key: 'incentivesTitle',
+            label: 'Heading when the building lists incentives',
+            kind: 'input',
+          },
+          {
+            key: 'featuresTitle',
+            label: 'Heading when it lists features instead',
+            kind: 'input',
+          },
+          {
+            key: 'unitPhotosTitle',
+            label: 'Heading when the building lists unit photos',
+            kind: 'input',
+          },
+          {
+            key: 'amenitiesTitle',
+            label: 'Heading when it lists amenities instead',
+            kind: 'input',
+          },
+          { key: 'suitesTitle', label: 'Available suites heading', kind: 'input' },
+          { key: 'locationTitle', label: 'Location heading', kind: 'input' },
+          { key: 'nearbyEyebrow', label: 'Nearby list eyebrow', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Available suites table',
+        path: ['property', 'suites'],
+        fields: [
+          {
+            key: 'emptyMessage',
+            label: 'Message when nothing is available',
+            kind: 'textarea',
+          },
+          { key: 'disclaimer', label: 'Rent disclaimer', kind: 'textareaWide' },
+          { key: 'unitNumberHeader', label: 'Column — unit number', kind: 'input' },
+          { key: 'unitTypeHeader', label: 'Column — unit type', kind: 'input' },
+          { key: 'rentHeader', label: 'Column — rent', kind: 'input' },
+          { key: 'imagesHeader', label: 'Column — images', kind: 'input' },
+          {
+            key: 'applyColumnLabel',
+            label: 'Apply column name (screen readers)',
+            kind: 'input',
+          },
+          {
+            key: 'unitNumberUnknownValue',
+            label: 'Unit number when unknown',
+            kind: 'input',
+            help: 'Placeholder shown when the sheet has no unit number for a row.',
+          },
+          { key: 'rentSuffix', label: 'Rent suffix', kind: 'input' },
+          { key: 'viewLabel', label: 'View photos link label', kind: 'input' },
+          {
+            key: 'noPhotosValue',
+            label: 'Images cell when there are no photos',
+            kind: 'input',
+          },
+          { key: 'applyLabel', label: 'Apply button label', kind: 'input' },
+          {
+            key: 'unitPhotosLabel',
+            label: 'Unit photo set label',
+            kind: 'input',
+            help: '{unit} = unit number.',
+          },
+        ],
+      },
+      {
+        title: 'Booking sidebar',
+        path: ['property', 'sidebar'],
+        fields: [
+          {
+            key: 'planEyebrowFallback',
+            label: 'Price eyebrow when no plan is selected',
+            kind: 'input',
+          },
+          { key: 'perMonthSuffix', label: 'Price suffix', kind: 'input' },
+          { key: 'availableNowLine', label: 'Status — available now', kind: 'input' },
+          { key: 'comingSoonLine', label: 'Status — coming soon', kind: 'input' },
+          { key: 'netEffectiveNote', label: 'Net-effective note', kind: 'textarea' },
+          { key: 'floorPlansEyebrow', label: 'Floor plans eyebrow', kind: 'input' },
+          { key: 'planPriceSuffix', label: 'Floor plan price suffix', kind: 'input' },
+          { key: 'noSuitesEyebrow', label: 'No-suites card eyebrow', kind: 'input' },
+          { key: 'noSuitesTitle', label: 'No-suites card heading', kind: 'input' },
+          { key: 'noSuitesBody', label: 'No-suites card body', kind: 'textareaWide' },
+          { key: 'bookViewingLabel', label: 'Book a viewing button', kind: 'input' },
+          { key: 'residentPortalLabel', label: 'Resident portal link', kind: 'input' },
+          {
+            key: 'residentPortalComingSoonLabel',
+            label: 'Resident portal — no link yet',
+            kind: 'input',
+          },
+          { key: 'maintenanceLabel', label: 'Maintenance request link', kind: 'input' },
+          {
+            key: 'maintenanceComingSoonLabel',
+            label: 'Maintenance request — no link yet',
+            kind: 'input',
+          },
+          { key: 'favoritesLabel', label: 'Save to favourites label', kind: 'input' },
+          { key: 'contactEyebrow', label: 'Contact eyebrow', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Similar residences',
+        path: ['property', 'similar'],
+        fields: [
+          { key: 'eyebrow', label: 'Eyebrow', kind: 'input' },
+          { key: 'title', label: 'Heading', kind: 'input', help: '{city} = city name.' },
+        ],
+      },
+      {
+        title: 'Search engine listing',
+        path: ['property', 'meta'],
+        fields: [
+          {
+            key: 'titleTemplate',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters. Use {city} or {name} where the residence or city should appear.',
+          },
+          {
+            key: 'descriptionTemplate',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters. Use {city} or {name} where the residence or city should appear.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'inquire',
+    label: 'Contact & enquiries',
+    sections: [
+      {
+        title: 'Hero',
+        path: ['inquire', 'hero'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the title)',
+            kind: 'input',
+          },
+          {
+            key: 'titleLine1',
+            label: 'Title, first line',
+            kind: 'input',
+            help: 'The title is set on two lines. This is the top line.',
+          },
+          { key: 'titleLine2', label: 'Title, second line', kind: 'input' },
+          { key: 'intro', label: 'Intro paragraph', kind: 'textareaWide' },
+        ],
+      },
+      {
+        title: 'Contact details (labels)',
+        path: ['inquire', 'contact'],
+        fields: [
+          {
+            key: 'emailLabel',
+            label: 'Email label',
+            kind: 'input',
+            help: 'Label only. The email address itself is edited in Settings.',
+          },
+          {
+            key: 'phoneLabel',
+            label: 'Telephone label',
+            kind: 'input',
+            help: 'Label only. The phone number itself is edited in Settings.',
+          },
+          {
+            key: 'officeLabel',
+            label: 'Office label',
+            kind: 'input',
+            help: 'Label only. The office location itself is edited in Settings.',
+          },
+          {
+            key: 'officeHoursLabel',
+            label: 'Office hours label',
+            kind: 'input',
+            help: 'Label only. The hours themselves are edited in Settings.',
+          },
+        ],
+      },
+      {
+        title: 'Inquiry form',
+        path: ['inquire', 'form'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the form)',
+            kind: 'input',
+          },
+          { key: 'nameLabel', label: 'Full name field label', kind: 'input' },
+          { key: 'emailLabel', label: 'Email field label', kind: 'input' },
+          { key: 'phoneLabel', label: 'Telephone field label', kind: 'input' },
+          {
+            key: 'phonePlaceholder',
+            label: 'Telephone field placeholder',
+            kind: 'input',
+            help: 'Grey hint text shown in the empty field.',
+          },
+          { key: 'cityLabel', label: 'City field label', kind: 'input' },
+          {
+            key: 'cityAriaLabel',
+            label: 'City field, screen-reader name',
+            kind: 'input',
+            help: 'Read aloud by screen readers. Keep it in sentence case and in step with the city field label.',
+          },
+          {
+            key: 'cityPlaceholderOption',
+            label: 'City dropdown, first option',
+            kind: 'input',
+            help: 'Shown before a city is chosen. The cities in the list come from the live-city data, not from here.',
+          },
+          { key: 'moveInLabel', label: 'Move-in date field label', kind: 'input' },
+          {
+            key: 'moveInAriaLabel',
+            label: 'Move-in date field, screen-reader name',
+            kind: 'input',
+            help: 'Read aloud by screen readers. Keep it in sentence case and in step with the move-in date label.',
+          },
+          {
+            key: 'moveInPlaceholder',
+            label: 'Move-in date field placeholder',
+            kind: 'input',
+          },
+          { key: 'residenceLabel', label: 'Residence field label', kind: 'input' },
+          {
+            key: 'residencePlaceholder',
+            label: 'Residence field placeholder',
+            kind: 'input',
+          },
+          { key: 'messageLabel', label: 'Message field label', kind: 'input' },
+          {
+            key: 'submitLabel',
+            label: 'Submit button label',
+            kind: 'input',
+            help: 'An arrow is drawn after this label automatically.',
+          },
+        ],
+      },
+      {
+        title: 'After the form is sent',
+        path: ['inquire', 'thankYou'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the title)',
+            kind: 'input',
+          },
+          { key: 'title', label: 'Title', kind: 'input' },
+          { key: 'body', label: 'Message', kind: 'textareaWide' },
+        ],
+      },
+      {
+        title: 'Residence inquiry pop-up',
+        path: ['inquire', 'modal'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the residence name)',
+            kind: 'input',
+          },
+          {
+            key: 'intro',
+            label: 'Intro line',
+            kind: 'textarea',
+            help: 'Shown under the residence name. The residence name comes from the property, not from here.',
+          },
+          {
+            key: 'closeAriaLabel',
+            label: 'Close button, screen-reader name',
+            kind: 'input',
+            help: 'The close button is an X icon, so this is the only text screen readers announce for it.',
+          },
+          { key: 'nameLabel', label: 'Full name field label', kind: 'input' },
+          { key: 'emailLabel', label: 'Email field label', kind: 'input' },
+          { key: 'messageLabel', label: 'Message field label', kind: 'input' },
+          {
+            key: 'messageDefault',
+            label: 'Pre-filled message',
+            kind: 'textarea',
+            help: 'Write {residence} where the residence name should appear. It is filled in automatically.',
+          },
+          { key: 'submitLabel', label: 'Submit button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Pop-up, after the form is sent',
+        path: ['inquire', 'modal', 'thankYou'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the title)',
+            kind: 'input',
+          },
+          { key: 'title', label: 'Title', kind: 'input' },
+          { key: 'body', label: 'Message', kind: 'textarea' },
+          { key: 'closeLabel', label: 'Close button label', kind: 'input' },
+        ],
+      },
+      {
+        title: 'Search engine listing',
+        path: ['inquire', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'favorites',
+    label: 'Favorites',
+    sections: [
+      {
+        title: 'Favorites page — heading & saved count',
+        path: ['favorites'],
+        fields: [
+          {
+            key: 'eyebrow',
+            label: 'Eyebrow (small label above the title)',
+            kind: 'input',
+          },
+          { key: 'title', label: 'Title', kind: 'input' },
+          { key: 'countNone', label: 'Line shown when nothing is saved', kind: 'input' },
+          {
+            key: 'countSingular',
+            label: 'Count line — one saved residence',
+            kind: 'input',
+            help: 'Write {count} where the number should appear.',
+          },
+          {
+            key: 'countPlural',
+            label: 'Count line — two or more saved residences',
+            kind: 'input',
+            help: 'Write {count} where the number should appear.',
+          },
+        ],
+      },
+      {
+        title: 'Empty state (nothing saved yet)',
+        path: ['favorites', 'empty'],
+        fields: [
+          {
+            key: 'quote',
+            label: 'Empty-state message',
+            kind: 'textarea',
+            help: 'Shown inside quote marks — don\'t type your own quotes.',
+          },
+          {
+            key: 'ctaLabel',
+            label: 'Button label',
+            kind: 'input',
+            help: 'The button always goes to the residences page.',
+          },
+        ],
+      },
+      {
+        title: 'Heart button (screen-reader labels)',
+        path: ['favorites', 'heart'],
+        fields: [
+          {
+            key: 'saveLabel',
+            label: 'Label before a residence is saved',
+            kind: 'input',
+          },
+          {
+            key: 'removeLabel',
+            label: 'Label once a residence is saved',
+            kind: 'input',
+          },
+        ],
+      },
+      {
+        title: 'Search engine listing',
+        path: ['favorites', 'meta'],
+        fields: [
+          {
+            key: 'title',
+            label: 'Page title',
+            kind: 'input',
+            help: 'Shown in the browser tab and as the blue headline in Google results. Aim for under 60 characters.',
+          },
+          {
+            key: 'description',
+            label: 'Search result description',
+            kind: 'textareaWide',
+            help: 'The grey summary under the headline in Google results. Aim for 140-160 characters.',
+          },
+        ],
       },
     ],
   },
 ];
 
-/* ============================================================
-   Field + section renderers
-   ============================================================ */
-
-type UpdateFn = (path: Path, value: string) => void;
-
-function CopyField({
-  def,
-  path,
-  draft,
-  onChange,
-}: {
-  def: FieldDef;
-  path: Path;
-  draft: PagesContent;
-  onChange: UpdateFn;
-}) {
-  const full = [...path, def.key];
-  const raw = getAt(draft, full);
-  const value = typeof raw === 'string' ? raw : '';
-  const empty = value.trim() === '';
-  const wide = def.kind === 'textareaWide';
-  return (
-    <Field label={def.label} help={def.help} span2={wide} required>
-      {def.kind === 'input' ? (
-        <input
-          className="adm-input"
-          type="text"
-          value={value}
-          aria-invalid={empty || undefined}
-          onChange={(e) => onChange(full, e.target.value)}
-        />
-      ) : (
-        <textarea
-          className="adm-textarea"
-          value={value}
-          aria-invalid={empty || undefined}
-          onChange={(e) => onChange(full, e.target.value)}
-        />
-      )}
-      {empty && <span className="adm-error-text">This field cannot be empty.</span>}
-    </Field>
-  );
-}
-
-function StringItemField({
-  label,
-  kind,
-  path,
-  draft,
-  onChange,
-}: {
-  label: string;
-  kind: Kind;
-  path: Path;
-  draft: PagesContent;
-  onChange: UpdateFn;
-}) {
-  const raw = getAt(draft, path);
-  const value = typeof raw === 'string' ? raw : '';
-  const empty = value.trim() === '';
-  return (
-    <Field label={label} span2={kind === 'textareaWide'} required>
-      {kind === 'input' ? (
-        <input
-          className="adm-input"
-          type="text"
-          value={value}
-          aria-invalid={empty || undefined}
-          onChange={(e) => onChange(path, e.target.value)}
-        />
-      ) : (
-        <textarea
-          className="adm-textarea"
-          value={value}
-          aria-invalid={empty || undefined}
-          onChange={(e) => onChange(path, e.target.value)}
-        />
-      )}
-      {empty && <span className="adm-error-text">This field cannot be empty.</span>}
-    </Field>
-  );
-}
-
-/* ---------- Image field ---------- */
-
-interface ImageControls {
-  /** Local object-URLs for freshly uploaded (not-yet-saved) images. */
-  previews: Record<string, string>;
-  /** JSON.stringify(path) of the image currently uploading, or null. */
-  uploadingKey: string | null;
-  onUpload: (path: Path, file: File) => void;
-  onPick: (path: Path) => void;
-}
-
-function ImageField({
-  def,
-  path,
-  draft,
-  controls,
-}: {
-  def: FieldDef;
-  path: Path;
-  draft: PagesContent;
-  controls: ImageControls;
-}) {
-  const full = [...path, def.key];
-  const raw = getAt(draft, full);
-  const value = typeof raw === 'string' ? raw : '';
-  const src = controls.previews[value] ?? value;
-  const uploading = controls.uploadingKey === JSON.stringify(full);
-  const inputRef = useRef<HTMLInputElement>(null);
-  return (
-    <Field label={def.label} help={def.help} span2>
-      <div className="adm-row" style={{ gap: 16, alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-        <div
-          style={{
-            width: 132,
-            height: 96,
-            flex: 'none',
-            border: '1px solid var(--adm-hairline)',
-            background: 'var(--adm-cream, #efe8dc)',
-            overflow: 'hidden',
-          }}
-        >
-          {src && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          )}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <input
-            ref={inputRef}
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) controls.onUpload(full, f);
-              e.target.value = '';
-            }}
-          />
-          <button
-            type="button"
-            className="adm-btn ghost sm"
-            disabled={uploading}
-            onClick={() => inputRef.current?.click()}
-          >
-            {uploading ? <IconSpinner /> : <IconUpload />}
-            {uploading ? 'Uploading…' : 'Upload new'}
-          </button>
-          <button
-            type="button"
-            className="adm-btn ghost sm"
-            onClick={() => controls.onPick(full)}
-          >
-            Choose from Library
-          </button>
-        </div>
-      </div>
-    </Field>
-  );
-}
-
-/* ---------- Library image picker ---------- */
-
-interface MediaItem {
-  path: string;
-  name: string;
-  group: string;
-}
-
-function LibraryPicker({
-  open,
-  onClose,
-  onSelect,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onSelect: (path: string) => void;
-}) {
-  const [items, setItems] = useState<MediaItem[] | null>(null);
-  useEffect(() => {
-    if (!open) return;
-    setItems(null);
-    fetch('/api/admin/site-media', { cache: 'no-store' })
-      .then((r) => r.json())
-      .then((d) => setItems(Array.isArray(d?.items) ? d.items : []))
-      .catch(() => setItems([]));
-  }, [open]);
-  if (!open) return null;
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(10,25,41,0.55)',
-        zIndex: 400,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: 'var(--adm-bone, #fff)',
-          width: 'min(900px, 96vw)',
-          maxHeight: '85vh',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          className="adm-card-head"
-          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-        >
-          <h2 className="adm-card-title">Choose an image from the Library</h2>
-          <button type="button" className="adm-btn-bare" aria-label="Close" onClick={onClose}>
-            <IconX />
-          </button>
-        </div>
-        <div style={{ padding: 20, overflowY: 'auto' }}>
-          {items === null ? (
-            <p className="adm-muted">
-              <IconSpinner style={{ verticalAlign: '-0.15em', marginRight: 8 }} />
-              Loading…
-            </p>
-          ) : items.length === 0 ? (
-            <p className="adm-muted">No images in the Library yet. Upload one instead.</p>
-          ) : (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-                gap: 12,
-              }}
-            >
-              {items.map((it) => (
-                <button
-                  key={it.path}
-                  type="button"
-                  onClick={() => onSelect(it.path)}
-                  title={`${it.name} · ${it.group}`}
-                  style={{
-                    border: '1px solid var(--adm-hairline)',
-                    background: 'var(--adm-cream, #efe8dc)',
-                    padding: 0,
-                    cursor: 'pointer',
-                    overflow: 'hidden',
-                    textAlign: 'left',
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={it.path}
-                    alt=""
-                    loading="lazy"
-                    style={{ width: '100%', height: 100, objectFit: 'cover', display: 'block' }}
-                  />
-                  <div
-                    className="adm-caption"
-                    style={{
-                      padding: '6px 8px',
-                      fontSize: 11,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {it.name}
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SectionCard({
-  section,
-  draft,
-  onChange,
-  controls,
-}: {
-  section: SectionDef;
-  draft: PagesContent;
-  onChange: UpdateFn;
-  controls: ImageControls;
-}) {
-  const renderField = (f: FieldDef, fieldPath: Path) =>
-    f.kind === 'image' ? (
-      <ImageField key={f.key} def={f} path={fieldPath} draft={draft} controls={controls} />
-    ) : (
-      <CopyField key={f.key} def={f} path={fieldPath} draft={draft} onChange={onChange} />
-    );
-  const list = section.list;
-  const listFields = list?.fields;
-  const listPath = list ? [...section.path, list.key] : null;
-  const rawItems = listPath ? getAt(draft, listPath) : null;
-  const items: unknown[] = Array.isArray(rawItems) ? rawItems : [];
-
-  return (
-    <div className="adm-card" style={{ marginBottom: 22 }}>
-      <div className="adm-card-head">
-        <h2 className="adm-card-title">{section.title}</h2>
-      </div>
-      <div className="adm-card-pad">
-        {section.fields && section.fields.length > 0 && (
-          <div className="adm-form-grid">
-            {section.fields.map((f) => renderField(f, section.path))}
-          </div>
-        )}
-
-        {list && listPath && (
-          <>
-            <p
-              className="adm-help"
-              style={{ margin: section.fields ? '18px 0 0' : '0' }}
-            >
-              The design uses exactly {items.length} items — edit the text, the
-              layout stays fixed.
-            </p>
-            {listFields ? (
-              items.map((_, i) => (
-                <div key={i} style={{ marginTop: 16 }}>
-                  <span
-                    className="adm-label"
-                    style={{ display: 'block', marginBottom: 10 }}
-                  >
-                    {list.itemLabel} {i + 1}
-                  </span>
-                  <div className="adm-form-grid">
-                    {listFields.map((f) => renderField(f, [...listPath, i]))}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="adm-form-grid" style={{ marginTop: 16 }}>
-                {items.map((_, i) => (
-                  <StringItemField
-                    key={i}
-                    label={`${list.itemLabel} ${i + 1}`}
-                    kind={list.stringKind ?? 'input'}
-                    path={[...listPath, i]}
-                    draft={draft}
-                    onChange={onChange}
-                  />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-
-        {section.fieldsAfter && section.fieldsAfter.length > 0 && (
-          <div className="adm-form-grid" style={{ marginTop: 16 }}>
-            {section.fieldsAfter.map((f) => renderField(f, section.path))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ============================================================
-   Page
-   ============================================================ */
-
 export default function PagesPage() {
-  const toast = useToast();
-  const [snapshot, setSnapshot] = useState<PagesContent | null>(null);
-  const [value, setValue] = useState<PagesContent | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [tab, setTab] = useState<TabDef['id']>('home');
-  /* Page-image editing: staged uploads publish alongside the pages JSON in one
-     commit; previews render freshly-uploaded images before they're saved. */
-  const [stagedFiles, setStagedFiles] = useState<StagedFile[]>([]);
-  const [previews, setPreviews] = useState<Record<string, string>>({});
-  const previewsRef = useRef<Record<string, string>>({});
-  previewsRef.current = previews;
-  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
-  const [pickerPath, setPickerPath] = useState<Path | null>(null);
-
-  /* Free object URLs when the page unmounts. */
-  useEffect(
-    () => () => {
-      for (const u of Object.values(previewsRef.current)) URL.revokeObjectURL(u);
-    },
-    []
-  );
-
-  useEffect(() => {
-    let cancelled = false;
-    getContent<PagesContent>('pages')
-      .then((p) => {
-        if (cancelled) return;
-        setSnapshot(p);
-        setValue(p);
-      })
-      .catch((err: unknown) => {
-        if (cancelled) return;
-        setError(err instanceof Error ? err.message : 'Failed to load page copy.');
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const dirty = useMemo(
-    () => !!value && !!snapshot && JSON.stringify(value) !== JSON.stringify(snapshot),
-    [value, snapshot]
-  );
-
-  const emptyCount = useMemo(() => (value ? countEmpty(value) : 0), [value]);
-
-  const update: UpdateFn = (path, v) =>
-    setValue((cur) => (cur ? setAt(cur, path, v) : cur));
-
-  const uploadImage = async (path: Path, file: File) => {
-    if (!file.type.startsWith('image/')) return;
-    setUploadingKey(JSON.stringify(path));
-    try {
-      const result = await uploadLibraryFiles([file]);
-      const added = result.added[0];
-      if (!added) throw new Error('Upload did not return an image path.');
-      setValue((cur) => (cur ? setAt(cur, path, added) : cur));
-      setStagedFiles((prev) => [...prev, ...result.staged]);
-      setPreviews((prev) => ({ ...prev, [added]: URL.createObjectURL(file) }));
-    } catch (err) {
-      toast('error', err instanceof Error ? err.message : 'Upload failed.');
-    } finally {
-      setUploadingKey(null);
-    }
-  };
-
-  const controls: ImageControls = {
-    previews,
-    uploadingKey,
-    onUpload: (path, file) => void uploadImage(path, file),
-    onPick: (path) => setPickerPath(path),
-  };
-
-  const selectImage = (imgPath: string) => {
-    setValue((cur) => (cur && pickerPath ? setAt(cur, pickerPath, imgPath) : cur));
-    setPickerPath(null);
-  };
-
-  const save = async () => {
-    if (!value || saving || emptyCount > 0) return;
-    setSaving(true);
-    try {
-      await commitStaged({
-        message: 'update pages',
-        files: stagedFiles,
-        content: [{ name: 'pages', data: value }],
-      });
-      setSnapshot(value);
-      setStagedFiles([]);
-      toast('success', 'Pages saved. Live in about 2 minutes on the deployed site.');
-    } catch (err) {
-      toast('error', err instanceof Error ? err.message : 'Failed to save the pages.');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const head = (
-    <PageHead
+  return (
+    <ContentEditor
+      file="pages"
+      tabs={SECTION_TABS}
       eyebrow="Site copy"
       title="Pages"
-      lede="Edit the wording of the Homepage, About, Why Balto and Careers pages; layout and photos stay as designed."
+      lede="Edit the wording, links and images of every public page. The first four tabs are individual pages; the rest are templates whose labels drive every residence, city and enquiry form."
+      commitMessage="update pages"
+      savedMessage="Pages saved. Live in about 2 minutes on the deployed site."
     />
-  );
-
-  if (error) {
-    return (
-      <>
-        {head}
-        <div className="adm-card">
-          <div className="adm-empty">
-            <div className="t">Something went wrong</div>
-            <p>{error}</p>
-          </div>
-        </div>
-      </>
-    );
-  }
-
-  if (!value) {
-    return (
-      <>
-        {head}
-        <p className="adm-muted">Loading…</p>
-      </>
-    );
-  }
-
-  const active = SECTION_TABS.find((t) => t.id === tab) ?? SECTION_TABS[0];
-
-  return (
-    <>
-      {head}
-
-      <div className="adm-tabs" role="tablist" aria-label="Pages">
-        {SECTION_TABS.map((t) => (
-          <button
-            key={t.id}
-            id={`pages-tab-${t.id}`}
-            role="tab"
-            aria-selected={tab === t.id}
-            aria-controls={`pages-panel-${t.id}`}
-            className={`adm-tab${tab === t.id ? ' active' : ''}`}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      <div
-        role="tabpanel"
-        id={`pages-panel-${active.id}`}
-        aria-labelledby={`pages-tab-${active.id}`}
-      >
-        {active.sections.map((s) => (
-          <SectionCard
-            key={s.title}
-            section={s}
-            draft={value}
-            onChange={update}
-            controls={controls}
-          />
-        ))}
-      </div>
-
-      {(dirty || stagedFiles.length > 0) && (
-        <div className="adm-savebar">
-          <span>
-            You have unsaved changes
-            {emptyCount > 0 && (
-              <span
-                className="adm-error-text"
-                style={{ display: 'block', marginTop: 4, color: '#e8a79b' }}
-              >
-                {emptyCount === 1
-                  ? '1 field is empty'
-                  : `${emptyCount} fields are empty`}
-                {' — every field needs text before you can save.'}
-              </span>
-            )}
-          </span>
-          <div className="adm-row" style={{ flexWrap: 'nowrap' }}>
-            <button
-              className="adm-btn ghost"
-              style={{
-                borderColor: 'rgba(247,243,236,0.4)',
-                color: 'var(--adm-ivory)',
-                background: 'transparent',
-              }}
-              onClick={() => {
-                setValue(snapshot);
-                setStagedFiles([]);
-                for (const u of Object.values(previews)) URL.revokeObjectURL(u);
-                setPreviews({});
-              }}
-              disabled={saving}
-            >
-              Discard
-            </button>
-            <button
-              className="adm-btn gold"
-              onClick={() => void save()}
-              disabled={saving || emptyCount > 0}
-            >
-              {saving && <IconSpinner />}
-              {saving ? 'Saving…' : 'Save changes'}
-            </button>
-          </div>
-        </div>
-      )}
-
-      <LibraryPicker
-        open={pickerPath !== null}
-        onClose={() => setPickerPath(null)}
-        onSelect={selectImage}
-      />
-    </>
   );
 }

@@ -2,13 +2,14 @@
 import { useState } from 'react';
 import { ChevronDown } from './icons';
 import type { Filters } from './FiltersPanel';
+import { PAGES } from '@/lib/pages';
 
-const OPTIONS: { v: Filters['sort']; label: string }[] = [
-  { v: 'name', label: 'Alphabetical (A–Z)' },
-  { v: 'price-asc', label: 'Price (low to high)' },
-  { v: 'price-desc', label: 'Price (high to low)' },
-  { v: 'bedrooms', label: 'Bedrooms' },
-];
+const RESIDENCES_PAGE = PAGES.residences;
+
+const OPTIONS = RESIDENCES_PAGE.sort.options as {
+  value: Filters['sort'];
+  label: string;
+}[];
 
 interface Props {
   value: Filters['sort'];
@@ -17,7 +18,7 @@ interface Props {
 
 export function SortDropdown({ value, onChange }: Props) {
   const [open, setOpen] = useState(false);
-  const current = OPTIONS.find((o) => o.v === value) || OPTIONS[0];
+  const current = OPTIONS.find((o) => o.value === value) || OPTIONS[0];
 
   return (
     <div style={{ position: 'relative' }}>
@@ -26,7 +27,7 @@ export function SortDropdown({ value, onChange }: Props) {
         className="btn btn-ghost btn-sm"
         style={{ borderColor: 'var(--hairline-strong)' }}
       >
-        Sort by: {current.label} <ChevronDown size={12} />
+        {RESIDENCES_PAGE.sort.triggerPrefix} {current.label} <ChevronDown size={12} />
       </button>
       {open && (
         <>
@@ -47,9 +48,9 @@ export function SortDropdown({ value, onChange }: Props) {
           >
             {OPTIONS.map((o) => (
               <button
-                key={o.v}
+                key={o.value}
                 onClick={() => {
-                  onChange(o.v);
+                  onChange(o.value);
                   setOpen(false);
                 }}
                 className="dropdown-item"

@@ -1,5 +1,8 @@
 'use client';
 import dynamic from 'next/dynamic';
+import { PAGES } from '@/lib/pages';
+
+const RESIDENCES_PAGE = PAGES.residences;
 
 export const MapView = dynamic(() => import('./MapView'), {
   ssr: false,
@@ -10,7 +13,7 @@ export const MapView = dynamic(() => import('./MapView'), {
         height: '100%',
         background: '#F4F1EA',
       }}
-      aria-label="Loading map"
+      aria-label={RESIDENCES_PAGE.loading.mapLabel}
     />
   ),
 });

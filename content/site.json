@@ -1,0 +1,207 @@
+{
+  "brand": {
+    "homeHref": "/",
+    "homeAriaLabel": "Balto Capital, home",
+    "logoAlt": "Balto Capital",
+    "logoLight": "/brand/balto-logo-navy.png",
+    "logoDark": "/brand/balto-logo-white.png",
+    "logoFooter": "/brand/balto-logo-white.png"
+  },
+  "meta": {
+    "title": "Balto Capital | Apartment homes across Western Canada",
+    "description": "Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way."
+  },
+  "header": {
+    "navAriaLabel": "Primary",
+    "nav": [
+      {
+        "key": "properties",
+        "label": "Properties",
+        "href": "/residences"
+      },
+      {
+        "key": "whyBalto",
+        "label": "Why Balto",
+        "href": "/why-balto"
+      },
+      {
+        "key": "about",
+        "label": "About",
+        "href": "/about"
+      },
+      {
+        "key": "community",
+        "label": "Community Involvement",
+        "href": ""
+      },
+      {
+        "key": "careers",
+        "label": "Careers",
+        "href": "/careers"
+      },
+      {
+        "key": "contact",
+        "label": "Contact Us",
+        "href": "/inquire"
+      }
+    ],
+    "propertiesMenu": {
+      "comingSoonSuffix": " · Coming soon"
+    },
+    "favorites": {
+      "href": "/favorites",
+      "label": "Favorites",
+      "ariaLabel": "Favorites ({count})"
+    },
+    "tenantPortal": {
+      "label": "Tenant Portal",
+      "ariaLabel": "Tenant portal",
+      "allHref": "/tenant-portal"
+    },
+    "mobile": {
+      "openLabel": "Open menu",
+      "closeLabel": "Close menu",
+      "comingSoonSuffix": " (Coming soon)",
+      "careersSubLine": "No openings · check back soon"
+    }
+  },
+  "footer": {
+    "blurb": "Apartment homes owned and operated across Western Canada, kept and cared for by the same family team that answers your call.",
+    "copyright": "© 2026 Balto Capital. All rights reserved.",
+    "columns": {
+      "residences": {
+        "heading": "Residences",
+        "comingSoonSuffix": " · Coming soon",
+        "links": [
+          {
+            "label": "All residences",
+            "href": "/residences"
+          }
+        ]
+      },
+      "residents": {
+        "heading": "Residents",
+        "links": [
+          {
+            "label": "Resident Portal",
+            "href": "/residences"
+          },
+          {
+            "label": "Maintenance Request",
+            "href": "/residences"
+          }
+        ]
+      },
+      "company": {
+        "heading": "Company",
+        "links": [
+          {
+            "label": "Why Balto",
+            "href": "/why-balto"
+          },
+          {
+            "label": "About",
+            "href": "/about"
+          },
+          {
+            "label": "Careers",
+            "href": "/careers"
+          },
+          {
+            "label": "Inquire",
+            "href": "/inquire"
+          }
+        ]
+      },
+      "connect": {
+        "heading": "Connect",
+        "links": [
+          {
+            "label": "Facebook",
+            "social": "facebook"
+          },
+          {
+            "label": "Instagram",
+            "social": "instagram"
+          },
+          {
+            "label": "LinkedIn",
+            "social": "linkedin"
+          }
+        ]
+      }
+    },
+    "inquiries": {
+      "heading": "Inquiries"
+    },
+    "legal": {
+      "separator": " · ",
+      "labels": [
+        "Privacy",
+        "Terms",
+        "Accessibility"
+      ]
+    }
+  },
+  "propertyCard": {
+    "pricePrefix": "From",
+    "perMonthSuffix": "/mo net",
+    "perMonthShortSuffix": "/mo",
+    "noPriceDash": "—",
+    "bookingCta": "Book a viewing →",
+    "featuredBadge": "Featured",
+    "comingSoonBadge": "Coming soon",
+    "placeholderCaption": "{name} · exterior",
+    "imageAlt": "{name}",
+    "cardAriaLabel": "{name}, {city}",
+    "studioLabel": "Studio",
+    "bedroomSeparator": " · ",
+    "bedroomsSuffix": " Bedrooms"
+  },
+  "map": {
+    "legendAvailable": "Available properties",
+    "legendFeatured": "Featured property",
+    "searchAreaLabel": "Search this area"
+  },
+  "ui": {
+    "closeLabel": "Close",
+    "dropdownPlaceholder": "Select…",
+    "datePicker": {
+      "placeholder": "Select a date",
+      "ariaLabel": "Choose a date",
+      "previousMonthLabel": "Previous month",
+      "nextMonthLabel": "Next month",
+      "clearLabel": "Clear date",
+      "dayAriaLabel": "{month} {day}, {year}",
+      "weekdays": [
+        "Su",
+        "Mo",
+        "Tu",
+        "We",
+        "Th",
+        "Fr",
+        "Sa"
+      ],
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
+    },
+    "gallery": {
+      "eyebrow": "GALLERY",
+      "photoCountSingular": "{count} photo",
+      "photoCountPlural": "{count} photos",
+      "photoAlt": "{title} · {number}"
+    }
+  }
+}

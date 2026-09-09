@@ -6,6 +6,7 @@ import { Providers } from './providers';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { SITE } from '@/lib/site';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -23,9 +24,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Balto Capital | Apartment homes across Western Canada',
-  description:
-    'Family-operated apartment homes across Western Canada, renovated, secured, and locally managed. Browse residences in Edmonton, Saskatoon, and Regina, with more on the way.',
+  title: SITE.meta.title,
+  description: SITE.meta.description,
 };
 
 export default function RootLayout({

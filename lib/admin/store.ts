@@ -36,6 +36,7 @@ export const CONTENT_FILES = [
   'media',
   'pages',
   'tenant-portal',
+  'site',
 ] as const;
 
 export type ContentFile = (typeof CONTENT_FILES)[number];

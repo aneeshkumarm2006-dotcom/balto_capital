@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Eyebrow } from './Eyebrow';
 import { CloseIcon } from './icons';
 import { formatPrice } from '@/lib/data';
+import { PAGES } from '@/lib/pages';
+
+const RESIDENCES_PAGE = PAGES.residences;
 
 export interface Filters {
   beds: number[];
@@ -22,30 +25,14 @@ export const DEFAULT_FILTERS: Filters = {
   sort: 'name',
 };
 
-// Every amenity the client provided (plus In-suite laundry, a feature renters
-// filter by). `match` is a lowercase substring tested against each building's
-// features + amenities. Near-duplicates are grouped: "Balcony" catches
-// Balconies + Private balconies; "Shared mail area" catches both mail-area
-// wordings.
-// Real amenities/features across the portfolio. Roof terrace is excluded
-// everywhere per the client (not a real amenity in any building).
-const ALL_AMENITIES: { label: string; match: string }[] = [
-  { label: 'In-suite laundry', match: 'in-suite laundry' },
-  { label: 'Communal laundry', match: 'communal laundry' },
-  { label: 'Surface parking', match: 'surface parking' },
-  { label: 'Heated underground parking', match: 'heated underground parking' },
-  { label: 'Pet-friendly', match: 'pet-friendly' },
-  { label: 'Balcony', match: 'balcon' },
-  { label: 'Elevator', match: 'elevator' },
-  { label: 'Storage lockers', match: 'storage locker' },
-  { label: 'Resident lounge', match: 'resident lounge' },
-  { label: 'Resident concierge', match: 'resident concierge' },
-  { label: 'Mail & parcel concierge', match: 'mail and parcel concierge' },
-  { label: 'Shared mail area', match: 'shared mail' },
-  { label: 'Updated common areas', match: 'updated common areas' },
-  { label: 'Newly renovated suites', match: 'newly renovated suites' },
-  { label: 'Heat & hot water', match: 'heat and hot water' },
-];
+// The amenity checkboxes now live in the CMS (content/pages.json →
+// residences.filters.amenities.options). `key` is the lowercase substring
+// tested against each building's features + amenities and is not client-
+// editable; near-duplicates stay grouped: "balcon" catches Balconies +
+// Private balconies, "shared mail" catches both mail-area wordings. Roof
+// terrace is excluded everywhere per the client (not a real amenity in any
+// building).
+const ALL_AMENITIES = RESIDENCES_PAGE.filters.amenities.options;
 
 interface PriceRangeProps {
   min: number;
@@ -155,9 +142,9 @@ export function FiltersPanel({
             marginBottom: 32,
           }}
         >
-          <Eyebrow>FILTERS</Eyebrow>
+          <Eyebrow>{RESIDENCES_PAGE.filters.eyebrow}</Eyebrow>
           <button
-            aria-label="Close"
+            aria-label={RESIDENCES_PAGE.filters.closeLabel}
             onClick={onClose}
             style={{ background: 'transparent', border: 0 }}
           >
@@ -165,14 +152,11 @@ export function FiltersPanel({
           </button>
         </div>
 
-        <h3 className="h3 serif" style={{ marginBottom: 16 }}>Bedrooms</h3>
+        <h3 className="h3 serif" style={{ marginBottom: 16 }}>
+          {RESIDENCES_PAGE.filters.bedrooms.heading}
+        </h3>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 36 }}>
-          {[
-            { n: 0, label: 'Studio' },
-            { n: 1, label: '1' },
-            { n: 2, label: '2' },
-            { n: 3, label: '3+' },
-          ].map(({ n, label }) => (
+          {RESIDENCES_PAGE.filters.bedrooms.options.map(({ beds: n, label }) => (
             <button
               key={n}
               className={'pill' + (filters.beds.includes(n) ? ' active' : '')}
@@ -183,10 +167,15 @@ export function FiltersPanel({
           ))}
         </div>
 
-        <h3 className="h3 serif" style={{ marginBottom: 8 }}>Price range</h3>
+        <h3 className="h3 serif" style={{ marginBottom: 8 }}>
+          {RESIDENCES_PAGE.filters.price.heading}
+        </h3>
         <div className="caption muted" style={{ marginBottom: 12 }}>
-          From {formatPrice(filters.priceMin)} to {formatPrice(filters.priceMax)}
-          <span style={{ fontFamily: 'var(--sans)' }}> /mo</span>
+          {RESIDENCES_PAGE.filters.price.readoutPrefix} {formatPrice(filters.priceMin)}{' '}
+          {RESIDENCES_PAGE.filters.price.readoutSeparator} {formatPrice(filters.priceMax)}
+          <span style={{ fontFamily: 'var(--sans)' }}>
+            {RESIDENCES_PAGE.filters.price.readoutSuffix}
+          </span>
         </div>
         <PriceRange
           min={800}
@@ -197,7 +186,9 @@ export function FiltersPanel({
         />
         <div style={{ height: 24 }} />
 
-        <h3 className="h3 serif" style={{ marginBottom: 16 }}>Amenities</h3>
+        <h3 className="h3 serif" style={{ marginBottom: 16 }}>
+          {RESIDENCES_PAGE.filters.amenities.heading}
+        </h3>
         <div
           style={{
             display: 'flex',
@@ -208,7 +199,7 @@ export function FiltersPanel({
         >
           {ALL_AMENITIES.map((a) => (
             <label
-              key={a.match}
+              key={a.key}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -219,8 +210,8 @@ export function FiltersPanel({
             >
               <input
                 type="checkbox"
-                checked={filters.amenities.includes(a.match)}
-                onChange={() => toggleAmenity(a.match)}
+                checked={filters.amenities.includes(a.key)}
+                onChange={() => toggleAmenity(a.key)}
                 style={{ accentColor: 'var(--ink)', width: 16, height: 16 }}
               />
               {a.label}
@@ -231,10 +222,10 @@ export function FiltersPanel({
         <div className="divider" style={{ margin: '12px 0 24px' }} />
         <div style={{ display: 'flex', gap: 12 }}>
           <button className="btn btn-ghost" style={{ flex: 1 }} onClick={onClear}>
-            Clear
+            {RESIDENCES_PAGE.filters.clearLabel}
           </button>
           <button className="btn btn-primary" style={{ flex: 1 }} onClick={onApply}>
-            Apply
+            {RESIDENCES_PAGE.filters.applyLabel}
           </button>
         </div>
       </aside>

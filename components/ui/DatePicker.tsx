@@ -11,12 +11,25 @@ import {
   useState,
   type CSSProperties,
 } from 'react';
+import { SITE } from '@/lib/site';
 
-const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-const MONTHS = [
+/* Day and month names come from content/site.json so the client can reword or
+   translate the calendar. Lengths are load-bearing - 7 columns, 12 months - so
+   a short list falls back to the shipped names rather than rendering a broken
+   calendar. */
+const DEFAULT_WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+const DEFAULT_MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ];
+const WEEKDAYS =
+  SITE.ui.datePicker.weekdays?.length === 7
+    ? SITE.ui.datePicker.weekdays
+    : DEFAULT_WEEKDAYS;
+const MONTHS =
+  SITE.ui.datePicker.months?.length === 12
+    ? SITE.ui.datePicker.months
+    : DEFAULT_MONTHS;
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const toKey = (y: number, m: number, d: number) => `${y}-${pad(m + 1)}-${pad(d)}`;
@@ -38,9 +51,9 @@ export function DatePicker({
   value,
   onChange,
   min,
-  placeholder = 'Select a date',
+  placeholder = SITE.ui.datePicker.placeholder,
   variant = 'site',
-  ariaLabel = 'Choose a date',
+  ariaLabel = SITE.ui.datePicker.ariaLabel,
   clearable = true,
   style,
 }: {
@@ -135,7 +148,7 @@ export function DatePicker({
             <button
               type="button"
               className="bd-cal-nav"
-              aria-label="Previous month"
+              aria-label={SITE.ui.datePicker.previousMonthLabel}
               onClick={() => shiftMonth(-1)}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m15 18-6-6 6-6" /></svg>
@@ -146,7 +159,7 @@ export function DatePicker({
             <button
               type="button"
               className="bd-cal-nav"
-              aria-label="Next month"
+              aria-label={SITE.ui.datePicker.nextMonthLabel}
               onClick={() => shiftMonth(1)}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m9 18 6-6-6-6" /></svg>
@@ -172,7 +185,7 @@ export function DatePicker({
                     toKey(view.y, view.m, d) === todayKey ? 'today' : '',
                   ].join(' ').trim()}
                   disabled={isDisabled(d)}
-                  aria-label={`${MONTHS[view.m]} ${d}, ${view.y}`}
+                  aria-label={SITE.ui.datePicker.dayAriaLabel.replace('{month}', MONTHS[view.m]).replace('{day}', String(d)).replace('{year}', String(view.y))}
                   aria-pressed={toKey(view.y, view.m, d) === value}
                   onClick={() => {
                     onChange(toKey(view.y, view.m, d));
@@ -195,7 +208,7 @@ export function DatePicker({
                   close();
                 }}
               >
-                Clear date
+                {SITE.ui.datePicker.clearLabel}
               </button>
             </div>
           )}

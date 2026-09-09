@@ -1345,9 +1345,43 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 /* The list/map switch is the mobile answer; side by side it is meaningless. */
 .portfolio-view-toggle { display: none; }
 
+/* Dismissing the map. Side by side the map is a second pane the visitor may
+   not want; stacked, the list/map toggle already does this job, so the button
+   drops away at the same breakpoint the toggle appears. */
+.portfolio-map-toggle { white-space: nowrap; }
+.portfolio-split[data-map='hidden'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.portfolio-split[data-map='hidden'] .portfolio-split-map { display: none; }
+/* Full width, one listing row per line reads as a stretched band, so the rows
+   flow into as many columns as the width will take at a comfortable measure —
+   and the column itself stays on the site's container width. */
+.portfolio-split[data-map='hidden'] .portfolio-split-list {
+  max-width: 1480px;
+  margin: 0 auto;
+  width: 100%;
+}
+.portfolio-split[data-map='hidden'] .portfolio-listing {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 540px), 1fr));
+  align-items: start;
+}
+
 @media (max-width: 1180px) {
-  .portfolio-split { grid-template-columns: 1fr; }
+  .portfolio-split,
+  .portfolio-split[data-map='hidden'] { grid-template-columns: 1fr; }
   .portfolio-view-toggle { display: inline-flex; }
+  .portfolio-map-toggle { display: none; }
+  /* Stacked, data-view is in charge again — a map dismissed on a wide
+     screen must not keep the map view empty after a resize. */
+  .portfolio-split[data-map='hidden'] .portfolio-split-map { display: block; }
+  .portfolio-split[data-map='hidden'] .portfolio-split-list {
+    max-width: none;
+    margin: 0;
+  }
+  .portfolio-split[data-map='hidden'] .portfolio-listing {
+    display: flex;
+  }
   .portfolio-split-map {
     position: static;
     height: 72vh;

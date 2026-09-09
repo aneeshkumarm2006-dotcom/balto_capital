@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  /* A build normally writes to .next, which a running `next dev` is also using —
+     on Windows the two corrupt each other ("Cannot find module './1682.js'").
+     Set NEXT_DIST_DIR to build into a scratch directory instead:
+       NEXT_DIST_DIR=.next-build npx next build                                */
+  ...(process.env.NEXT_DIST_DIR ? { distDir: process.env.NEXT_DIST_DIR } : {}),
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },

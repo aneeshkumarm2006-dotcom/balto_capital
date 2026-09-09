@@ -14,6 +14,7 @@ import {
   type CSSProperties,
   type KeyboardEvent,
 } from 'react';
+import { SITE } from '@/lib/site';
 
 export interface DropdownOption {
   value: string;
@@ -24,7 +25,7 @@ export function Dropdown({
   value,
   onChange,
   options,
-  placeholder = 'Select…',
+  placeholder = SITE.ui.dropdownPlaceholder,
   variant = 'site',
   ariaLabel,
   disabled,

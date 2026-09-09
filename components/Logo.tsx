@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { SITE } from '@/lib/site';
 
 interface LogoProps {
   /** "light" = navy mark on ivory/light bg, "dark" = white mark on navy/dark bg */
@@ -11,12 +12,12 @@ interface LogoProps {
 export function Logo({ variant = 'light', height = 30 }: LogoProps) {
   const router = useRouter();
   const isDark = variant === 'dark';
-  const src = isDark ? '/brand/balto-logo-white.png' : '/brand/balto-logo-navy.png';
+  const src = isDark ? SITE.brand.logoDark : SITE.brand.logoLight;
   return (
     <button
       type="button"
-      onClick={() => router.push('/')}
-      aria-label="Balto Capital, home"
+      onClick={() => router.push(SITE.brand.homeHref)}
+      aria-label={SITE.brand.homeAriaLabel}
       style={{
         background: 'transparent',
         border: 0,
@@ -30,7 +31,7 @@ export function Logo({ variant = 'light', height = 30 }: LogoProps) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
-        alt="Balto Capital"
+        alt={SITE.brand.logoAlt}
         style={{
           height,
           width: 'auto',
