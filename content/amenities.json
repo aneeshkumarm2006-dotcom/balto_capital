@@ -377,21 +377,16 @@
     ]
   },
   "woodridge": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "New appliances"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Pet-friendly",
       "Private balconies",
       "Updated common areas",
-      "Communal laundry",
-      "Resident concierge",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Parking available",
+      "24/7 Security patrol",
+      "In-house residence manager",
+      "On-Floor Laundry"
     ]
   },
   "britnell-landing": {
