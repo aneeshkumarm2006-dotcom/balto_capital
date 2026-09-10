@@ -88,7 +88,8 @@
     "slug": "grandview-manor",
     "name": "Grandview Manor",
     "city": "edmonton",
-    "address": "11705 83 ST NW, Edmonton, AB T5B 2Z1"
+    "address": "11705 83 ST NW, Edmonton, AB T5B 2Z1",
+    "featured": true
   },
   {
     "slug": "cedar-manor",
