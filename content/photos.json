@@ -726,7 +726,10 @@
       "/assets/edge-living/11.jpg",
       "/assets/edge-living/12.jpg"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/edge-living/01.jpg",
+      "/assets/edge-living/12.jpg"
+    ]
   },
   "pioneer": {
     "hero": "/assets/pioneer/uploads/1785177451913-01.jpg",
