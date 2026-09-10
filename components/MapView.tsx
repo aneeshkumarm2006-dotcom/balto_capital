@@ -29,16 +29,16 @@ type PinVariant = keyof typeof PIN_FILL;
    hover lift and the active scale actually transition. */
 function pinSvg(variant: PinVariant): string {
   return `<span class="pin"><svg width="32" height="44" viewBox="0 0 32 44" xmlns="http://www.w3.org/2000/svg">
-      <path d="${PIN_PATH}" fill="${PIN_FILL[variant]}" stroke="#F7F3EC" stroke-width="1.2" />
-      <circle cx="16" cy="16" r="4.5" fill="#F7F3EC" />
+      <path d="${PIN_PATH}" fill="${PIN_FILL[variant]}" stroke="#FFFFFF" stroke-width="1.2" />
+      <circle cx="16" cy="16" r="4.5" fill="#FFFFFF" />
     </svg></span>`;
 }
 
 function PinGlyph({ variant }: { variant: PinVariant }) {
   return (
     <svg viewBox="0 0 32 44" aria-hidden focusable="false">
-      <path d={PIN_PATH} fill={PIN_FILL[variant]} stroke="#F7F3EC" strokeWidth="1.2" />
-      <circle cx="16" cy="16" r="4.5" fill="#F7F3EC" />
+      <path d={PIN_PATH} fill={PIN_FILL[variant]} stroke="#FFFFFF" strokeWidth="1.2" />
+      <circle cx="16" cy="16" r="4.5" fill="#FFFFFF" />
     </svg>
   );
 }
@@ -337,7 +337,7 @@ export default function MapView({
     >
       <div
         ref={containerRef}
-        style={{ width: '100%', height: '100%', background: '#F4F1EA' }}
+        style={{ width: '100%', height: '100%', background: '#F2F5F9' }}
       />
 
       {onSearchArea && areaDirty && (

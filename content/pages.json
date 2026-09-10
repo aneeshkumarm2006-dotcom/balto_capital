@@ -11,26 +11,14 @@
       "search": {
         "cityLabel": "City",
         "cityAnyLabel": "All cities",
-        "rentLabel": "Max rent",
-        "rentAnyLabel": "Any",
-        "rentOptions": [
-          {
-            "value": "1400",
-            "label": "Up to $1,400"
-          },
-          {
-            "value": "1600",
-            "label": "Up to $1,600"
-          },
-          {
-            "value": "1800",
-            "label": "Up to $1,800"
-          },
-          {
-            "value": "2200",
-            "label": "Up to $2,200"
-          }
-        ],
+        "rentLabel": "Price",
+        "rentAnyLabel": "Any price",
+        "rentMin": "800",
+        "rentMax": "3500",
+        "rentStep": "50",
+        "rentMinInputLabel": "Min",
+        "rentMaxInputLabel": "Max",
+        "rentSummaryTemplate": "{min} - {max}",
         "bedsLabel": "Bedrooms",
         "bedsAnyLabel": "Any",
         "bedOptions": [

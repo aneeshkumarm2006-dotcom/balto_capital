@@ -46,7 +46,16 @@ export interface HomeHeroSearch {
   cityAnyLabel: string;
   rentLabel: string;
   rentAnyLabel: string;
-  rentOptions: HomeSearchOption[];
+  /** Bounds for the price slider, read through lib/price.ts, which also feeds
+   *  the /residences filters panel. Optional with fallbacks so restoring an
+   *  older snapshot from the CMS History cannot break the build. */
+  rentMin?: string;
+  rentMax?: string;
+  rentStep?: string;
+  rentMinInputLabel?: string;
+  rentMaxInputLabel?: string;
+  /** Wording once a range is set; {min} and {max} are filled with the prices. */
+  rentSummaryTemplate?: string;
   bedsLabel: string;
   bedsAnyLabel: string;
   bedOptions: HomeSearchOption[];

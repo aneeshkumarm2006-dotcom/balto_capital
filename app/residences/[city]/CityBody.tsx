@@ -62,7 +62,7 @@ function ComingSoonCity({ city }: { city: City }) {
             </h1>
             <p
               className="body"
-              style={{ color: 'rgba(247,243,236,0.88)', fontSize: 18, maxWidth: 540, marginBottom: 28 }}
+              style={{ color: 'rgb(var(--ivory-rgb) / 0.88)', fontSize: 18, maxWidth: 540, marginBottom: 28 }}
             >
               {T.comingSoon.body}
             </p>
@@ -93,7 +93,7 @@ function ComingSoonCity({ city }: { city: City }) {
                 </button>
               </form>
             )}
-            <p className="small" style={{ color: 'rgba(247,243,236,0.55)', marginTop: 16 }}>
+            <p className="small" style={{ color: 'rgb(var(--ivory-rgb) / 0.55)', marginTop: 16 }}>
               {T.comingSoon.footnote}
             </p>
           </div>

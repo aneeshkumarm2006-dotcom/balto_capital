@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Eyebrow } from '@/components/Eyebrow';
 import { FavoriteHeart } from '@/components/FavoriteHeart';
@@ -91,6 +91,26 @@ export function PropertyBody({
   // Per-unit photo viewer: tile grid modal + its own lightbox.
   const [unitGallery, setUnitGallery] = useState<{ photos: string[]; label: string } | null>(null);
   const [unitLightbox, setUnitLightbox] = useState<number | null>(null);
+  const suitesRef = useRef<HTMLHeadingElement>(null);
+
+  /* Picking a floor plan in the sidebar scrolls the page to the suites that
+     match it — on a long detail page the sidebar sits well above the table,
+     so selecting a plan otherwise looks like nothing happened. Offset by the
+     sticky header, the same measure PortfolioCity's scrollToToolbar uses. */
+  const scrollToSuites = () => {
+    const el = suitesRef.current;
+    if (!el) return;
+    const headerH =
+      parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-h'),
+        10,
+      ) || 92;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.scrollY - headerH - 16,
+      behavior: reduce ? 'auto' : 'smooth',
+    });
+  };
 
   useEffect(() => {
     if (!r) router.push('/residences');
@@ -365,7 +385,7 @@ export function PropertyBody({
 
             <div className="divider" style={{ margin: '64px 0 40px' }} />
 
-            <h2 className="h2 serif" style={{ marginBottom: 12 }}>{P.sections.suitesTitle}</h2>
+            <h2 ref={suitesRef} className="h2 serif" style={{ marginBottom: 12 }}>{P.sections.suitesTitle}</h2>
             {!hasUnits ? (
               <p className="small muted" style={{ marginTop: 16 }}>
                 {P.suites.emptyMessage}
@@ -451,14 +471,15 @@ export function PropertyBody({
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1.2fr 1fr',
+                gridTemplateColumns: '1.6fr 1fr',
                 gap: 32,
               }}
               className="grid-3-md1"
             >
               <div
                 style={{
-                  aspectRatio: '4 / 3',
+                  aspectRatio: '16 / 10',
+                  minHeight: 460,
                   border: '1px solid var(--hairline)',
                 }}
               >
@@ -546,7 +567,10 @@ export function PropertyBody({
                     {plans.map((p, i) => (
                       <button
                         key={i}
-                        onClick={() => setSelectedPlan(i)}
+                        onClick={() => {
+                          setSelectedPlan(i);
+                          scrollToSuites();
+                        }}
                         style={{
                           background:
                             i === selectedPlan ? 'var(--cream)' : 'transparent',

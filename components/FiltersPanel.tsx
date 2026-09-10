@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
 import { Eyebrow } from './Eyebrow';
 import { CloseIcon } from './icons';
 import { formatPrice } from '@/lib/data';
 import { PAGES } from '@/lib/pages';
+import { PRICE_BOUNDS } from '@/lib/price';
+import { PriceRange } from './ui/PriceRange';
 
 const RESIDENCES_PAGE = PAGES.residences;
 
@@ -18,8 +19,8 @@ export interface Filters {
 
 export const DEFAULT_FILTERS: Filters = {
   beds: [],
-  priceMin: 800,
-  priceMax: 3500,
+  priceMin: PRICE_BOUNDS.min,
+  priceMax: PRICE_BOUNDS.max,
   availability: 'any',
   amenities: [],
   sort: 'name',
@@ -33,65 +34,6 @@ export const DEFAULT_FILTERS: Filters = {
 // terrace is excluded everywhere per the client (not a real amenity in any
 // building).
 const ALL_AMENITIES = RESIDENCES_PAGE.filters.amenities.options;
-
-interface PriceRangeProps {
-  min: number;
-  max: number;
-  step: number;
-  value: [number, number];
-  onChange: (next: [number, number]) => void;
-}
-
-function PriceRange({ min, max, step, value, onChange }: PriceRangeProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [drag, setDrag] = useState<'a' | 'b' | null>(null);
-
-  const pctA = ((value[0] - min) / (max - min)) * 100;
-  const pctB = ((value[1] - min) / (max - min)) * 100;
-
-  useEffect(() => {
-    if (!drag) return;
-    const move = (e: PointerEvent) => {
-      const track = trackRef.current;
-      if (!track) return;
-      const rect = track.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      const raw = min + pct * (max - min);
-      const snapped = Math.round(raw / step) * step;
-      if (drag === 'a') {
-        onChange([Math.min(snapped, value[1] - step), value[1]]);
-      } else {
-        onChange([value[0], Math.max(snapped, value[0] + step)]);
-      }
-    };
-    const up = () => setDrag(null);
-    window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', up);
-    return () => {
-      window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', up);
-    };
-  }, [drag, value, onChange, min, max, step]);
-
-  return (
-    <div className="range-track" ref={trackRef}>
-      <div
-        className="range-fill"
-        style={{ left: `${pctA}%`, width: `${pctB - pctA}%` }}
-      />
-      <div
-        className="range-handle"
-        style={{ left: `${pctA}%` }}
-        onPointerDown={() => setDrag('a')}
-      />
-      <div
-        className="range-handle"
-        style={{ left: `${pctB}%` }}
-        onPointerDown={() => setDrag('b')}
-      />
-    </div>
-  );
-}
 
 interface FiltersPanelProps {
   open: boolean;
@@ -178,9 +120,7 @@ export function FiltersPanel({
           </span>
         </div>
         <PriceRange
-          min={800}
-          max={3500}
-          step={50}
+          {...PRICE_BOUNDS}
           value={[filters.priceMin, filters.priceMax]}
           onChange={([a, b]) => update({ priceMin: a, priceMax: b })}
         />

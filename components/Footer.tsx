@@ -28,16 +28,16 @@ export function Footer() {
               src={SITE.brand.logoFooter}
               alt={SITE.brand.logoAlt}
               style={{
-                height: 140,
+                height: 88,
                 width: 'auto',
                 display: 'block',
-                marginBottom: 24,
+                marginBottom: 16,
               }}
             />
             <p
               style={{
                 fontSize: 14,
-                color: 'rgba(247,243,236,0.7)',
+                color: 'rgb(var(--ivory-rgb) / 0.7)',
                 lineHeight: 1.7,
                 maxWidth: 320,
                 margin: 0,
@@ -93,10 +93,10 @@ export function Footer() {
             </ul>
             <div style={{ marginTop: 24 }}>
               <h4 style={{ marginBottom: 10 }}>{SITE.footer.inquiries.heading}</h4>
-              <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
+              <div style={{ fontSize: 14, color: 'rgb(var(--ivory-rgb) / 0.7)' }}>
                 {SETTINGS.contactEmail}
               </div>
-              <div style={{ fontSize: 14, color: 'rgba(247,243,236,0.7)' }}>
+              <div style={{ fontSize: 14, color: 'rgb(var(--ivory-rgb) / 0.7)' }}>
                 {SETTINGS.contactPhone}
               </div>
             </div>

@@ -169,7 +169,7 @@ export function WhyBaltoBody() {
                 >
                   {s.value}
                 </div>
-                <Eyebrow style={{ color: 'rgba(247,243,236,0.7)' }}>
+                <Eyebrow style={{ color: 'rgb(var(--ivory-rgb) / 0.7)' }}>
                   {s.label}
                 </Eyebrow>
               </div>

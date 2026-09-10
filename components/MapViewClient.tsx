@@ -11,7 +11,7 @@ export const MapView = dynamic(() => import('./MapView'), {
       style={{
         width: '100%',
         height: '100%',
-        background: '#F4F1EA',
+        background: '#F2F5F9',
       }}
       aria-label={RESIDENCES_PAGE.loading.mapLabel}
     />

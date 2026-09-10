@@ -598,7 +598,7 @@ export default function PropertyImagesPage() {
             options={tagOptions}
             onChange={setTagChoice}
             style={{ width: 200 }}
-            menuStyle={{ maxHeight: 200 }}
+            maxHeight={200}
           />
           <button type="button" className="adm-btn" onClick={applyTag}>
             Apply tag

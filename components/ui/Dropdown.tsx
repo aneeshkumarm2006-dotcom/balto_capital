@@ -14,7 +14,9 @@ import {
   type CSSProperties,
   type KeyboardEvent,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { SITE } from '@/lib/site';
+import { useAnchorPosition } from './useAnchorPosition';
 
 export interface DropdownOption {
   value: string;
@@ -31,6 +33,7 @@ export function Dropdown({
   disabled,
   style,
   menuStyle,
+  maxHeight = 300,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -41,6 +44,8 @@ export function Dropdown({
   disabled?: boolean;
   style?: CSSProperties;
   menuStyle?: CSSProperties;
+  /** Ceiling for the menu; the viewport budget can still shrink it. */
+  maxHeight?: number;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
@@ -57,10 +62,24 @@ export function Dropdown({
     setActive(-1);
   }, []);
 
+  /* The menu is portaled to <body>, so its position is measured off the
+     trigger rather than inherited — see useAnchorPosition for why. `.bd-select`
+     is width:100%, so its rect is already the field width, and a caller's
+     explicit width is picked up for free. */
+  const box = useAnchorPosition(rootRef, open, {
+    maxHeight,
+    onEscapeViewport: close,
+  });
+
   useEffect(() => {
     if (!open) return;
     const onDocDown = (e: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) close();
+      const t = e.target as Node;
+      if (rootRef.current?.contains(t)) return;
+      // The menu is portaled out of the trigger's subtree, so it needs its own
+      // check — otherwise this closes it before an option's onClick can fire.
+      if (listRef.current?.contains(t)) return;
+      close();
     };
     document.addEventListener('pointerdown', onDocDown);
     return () => document.removeEventListener('pointerdown', onDocDown);
@@ -153,6 +172,9 @@ export function Dropdown({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={open ? listboxId : undefined}
+        aria-activedescendant={
+          open && active >= 0 ? listboxId + '-' + active : undefined
+        }
         aria-label={ariaLabel}
         disabled={disabled}
         onClick={() => (open ? close() : openMenu())}
@@ -175,18 +197,30 @@ export function Dropdown({
         </svg>
       </button>
 
-      {open && (
+      {open && box && typeof document !== 'undefined' &&
+        createPortal(
         <ul
           ref={listRef}
           id={listboxId}
-          className="bd-menu"
+          className={
+            'bd-menu bd-menu-' + variant + (box.placement === 'above' ? ' up' : '')
+          }
           role="listbox"
           aria-label={ariaLabel}
-          style={menuStyle}
+          style={{
+            // Caller styling first; the measured box always wins on layout.
+            ...menuStyle,
+            left: box.left,
+            top: box.top,
+            bottom: box.bottom,
+            width: box.width,
+            maxHeight: box.maxHeight,
+          }}
         >
           {options.map((o, i) => (
             <li
               key={o.value}
+              id={listboxId + '-' + i}
               role="option"
               aria-selected={o.value === value}
               className={`bd-option${i === active ? ' active' : ''}`}
@@ -209,7 +243,8 @@ export function Dropdown({
               )}
             </li>
           ))}
-        </ul>
+        </ul>,
+        document.body,
       )}
     </div>
   );

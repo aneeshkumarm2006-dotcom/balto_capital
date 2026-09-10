@@ -914,7 +914,7 @@ function MediaTab({
             onChange={setTarget}
             options={targetOptions}
             style={{ width: 240 }}
-            menuStyle={{ maxHeight: 220 }}
+            maxHeight={220}
           />
           <button
             className="adm-btn gold"

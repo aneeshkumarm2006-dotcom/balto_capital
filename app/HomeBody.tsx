@@ -7,6 +7,7 @@ import { PropertyCard } from '@/components/PropertyCard';
 import { useTilt } from '@/components/useTilt';
 import { ArrowRight, SearchIcon } from '@/components/icons';
 import { Dropdown } from '@/components/ui/Dropdown';
+import { PriceField } from '@/components/ui/PriceField';
 import {
   COMING_SOON_CITIES,
   IMAGES,
@@ -15,6 +16,7 @@ import {
   type City,
 } from '@/lib/data';
 import { PAGES } from '@/lib/pages';
+import { PRICE_BOUNDS } from '@/lib/price';
 
 /* ------------------------------------------------------------------ */
 /* 02 · Hero + rental search bar                                       */
@@ -24,10 +26,6 @@ const CITY_OPTIONS = [
   { value: '', label: SEARCH.cityAnyLabel },
   ...LIVE_CITIES.map((c) => ({ value: c.slug, label: c.label })),
 ];
-const RENT_OPTIONS = [
-  { value: '', label: SEARCH.rentAnyLabel },
-  ...SEARCH.rentOptions,
-];
 const BED_OPTIONS = [
   { value: '', label: SEARCH.bedsAnyLabel },
   ...SEARCH.bedOptions,
@@ -36,10 +34,17 @@ const BED_OPTIONS = [
 function CinematicHero({
   onSearch,
 }: {
-  onSearch: (v: { city: string; maxRent: string; beds: string }) => void;
+  onSearch: (v: {
+    city: string;
+    price: [number, number];
+    beds: string;
+  }) => void;
 }) {
   const [city, setCity] = useState('');
-  const [maxRent, setMaxRent] = useState('');
+  const [price, setPrice] = useState<[number, number]>([
+    PRICE_BOUNDS.min,
+    PRICE_BOUNDS.max,
+  ]);
   const [beds, setBeds] = useState('');
 
   return (
@@ -100,7 +105,7 @@ function CinematicHero({
           className="body hero-rise"
           style={{
             ['--rise-delay' as string]: '400ms',
-            color: 'rgba(247,243,236,0.88)',
+            color: 'rgb(var(--ivory-rgb) / 0.88)',
             fontWeight: 300,
             marginTop: 22,
             fontSize: 19,
@@ -114,7 +119,7 @@ function CinematicHero({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onSearch({ city, maxRent, beds });
+            onSearch({ city, price, beds });
           }}
           className="hero-search hero-rise"
           style={{
@@ -137,7 +142,16 @@ function CinematicHero({
           <span className="hero-search-div" />
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
             <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>{SEARCH.rentLabel}</span>
-            <Dropdown variant="site" ariaLabel={SEARCH.rentLabel} value={maxRent} onChange={setMaxRent} options={RENT_OPTIONS} />
+            <PriceField
+              ariaLabel={SEARCH.rentLabel}
+              {...PRICE_BOUNDS}
+              value={price}
+              onChange={setPrice}
+              anyLabel={SEARCH.rentAnyLabel}
+              minLabel={SEARCH.rentMinInputLabel ?? 'Min'}
+              maxLabel={SEARCH.rentMaxInputLabel ?? 'Max'}
+              summaryTemplate={SEARCH.rentSummaryTemplate ?? '{min} - {max}'}
+            />
           </label>
           <span className="hero-search-div" />
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
@@ -157,7 +171,7 @@ function CinematicHero({
           style={{
             ['--rise-delay' as string]: '700ms',
             marginTop: 14,
-            color: 'rgba(247,243,236,0.7)',
+            color: 'rgb(var(--ivory-rgb) / 0.7)',
             fontSize: 12.5,
           }}
         >
@@ -197,14 +211,14 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
         </div>
       )}
       <div className="label">
-        <div className="eyebrow" style={{ color: 'rgba(247,243,236,0.7)' }}>
+        <div className="eyebrow" style={{ color: 'rgb(var(--ivory-rgb) / 0.7)' }}>
           {c.province}
         </div>
         <div className="serif" style={{ fontSize: 32, fontWeight: 500, marginTop: 4 }}>
           {c.label}
         </div>
         <div className="gold-rule" />
-        <div className="small" style={{ color: 'rgba(247,243,236,0.82)', marginTop: 6 }}>
+        <div className="small" style={{ color: 'rgb(var(--ivory-rgb) / 0.82)', marginTop: 6 }}>
           {comingSoon ? PAGES.home.cities.comingSoonCta : PAGES.home.cities.liveCta}
         </div>
       </div>
@@ -452,10 +466,22 @@ function InquireCTA() {
 export function HomeBody() {
   const router = useRouter();
 
-  const onSearch = ({ city, maxRent, beds }: { city: string; maxRent: string; beds: string }) => {
+  const onSearch = ({
+    city,
+    price,
+    beds,
+  }: {
+    city: string;
+    price: [number, number];
+    beds: string;
+  }) => {
     const sp = new URLSearchParams();
     if (city) sp.set('q', city);
-    if (maxRent) sp.set('maxRent', maxRent);
+    /* Omitted when untouched, matching how /residences normalises its own URL
+       (ResidencesBody) — otherwise a full-range search would arrive looking
+       like an active filter. */
+    if (price[0] !== PRICE_BOUNDS.min) sp.set('priceMin', String(price[0]));
+    if (price[1] !== PRICE_BOUNDS.max) sp.set('priceMax', String(price[1]));
     if (beds) sp.set('beds', beds);
     const qs = sp.toString();
     router.push(qs ? `/residences?${qs}` : '/residences');
