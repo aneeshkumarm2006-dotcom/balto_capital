@@ -694,7 +694,11 @@
       "/assets/greyson/28.jpg",
       "/assets/greyson/29.jpg"
     ],
-    "hidden": []
+    "hidden": [
+      "/assets/greyson/01-main.jpg",
+      "/assets/greyson/25.jpg",
+      "/assets/greyson/03.jpg"
+    ]
   },
   "edge": {
     "hero": "/assets/edge-living/01-main.jpg",
