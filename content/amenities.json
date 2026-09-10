@@ -132,20 +132,15 @@
     ]
   },
   "chicklet-house": {
-    "features": [
-      "Tall casement windows",
-      "Updated kitchens and baths",
-      "Quartz counters, panel-front appliances",
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes"
-    ],
+    "features": [],
     "amenities": [
       "Surface parking",
       "Shared mail and parcel area",
       "Communal laundry",
       "Bicycle storage",
       "Pet-friendly",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths"
     ]
   },
   "copper-manor": {
