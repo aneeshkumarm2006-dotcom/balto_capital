@@ -28,7 +28,7 @@ const SITE_TABS: TabDef[] = [
         list: {
           key: 'nav',
           itemLabel: 'Navigation link',
-          help: 'The six top-level links, in order. Each has its own layout, so items cannot be added or removed here — only reworded or repointed.',
+          help: 'The header links, in order. "Company" is a dropdown holding "About" and "Why Balto", so those two are edited here but shown inside it. Each entry has its own layout, so items cannot be added or removed here — only reworded or repointed.',
           fields: [
             { key: 'label', label: 'Label', kind: 'input' },
             {

@@ -33,8 +33,11 @@ export interface SiteMeta {
 
 export interface SiteNavItem {
   /** Fixed lookup key the header JSX reads. Each entry has its own layout
-   *  (city dropdown, careers dropdown, plain link, placeholder), so the list
-   *  is fixed: keys may not be added, removed or renamed. */
+   *  (city dropdown, company dropdown, careers dropdown, plain link,
+   *  placeholder), so the list is fixed: keys may not be added, removed or
+   *  renamed. 'company' groups 'about' and 'whyBalto' as its two sub links —
+   *  those two no longer appear at the top level, but their labels and
+   *  destinations are still edited through their own entries. */
   key: string;
   label: string;
   /** Empty string = a placeholder that renders as plain text, not a link. */

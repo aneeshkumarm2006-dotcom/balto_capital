@@ -20,14 +20,24 @@
         "href": "/residences"
       },
       {
-        "key": "whyBalto",
-        "label": "Why Balto",
-        "href": "/why-balto"
+        "key": "company",
+        "label": "Company",
+        "href": ""
       },
       {
         "key": "about",
         "label": "About",
         "href": "/about"
+      },
+      {
+        "key": "whyBalto",
+        "label": "Why Balto",
+        "href": "/why-balto"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "href": ""
       },
       {
         "key": "community",

@@ -58,6 +58,7 @@ export function Header() {
   const { count } = useFavorites();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [companyOpen, setCompanyOpen] = useState(false);
   const [careersOpen, setCareersOpen] = useState(false);
   const [portalOpen, setPortalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -173,18 +174,57 @@ export function Header() {
                 ))}
               </div>
             </div>
-            <Link
-              href={NAV.whyBalto.href}
-              className={'nav-item ' + (isActive(NAV.whyBalto.href) ? 'active' : '')}
+            {/* Company has no landing page of its own — the tab is only a way
+                into About and Why Balto, so the trigger is a button rather than
+                a link, and it carries the active mark while either child is
+                the current page. Click toggles it for touch and keyboard;
+                hover opens it the way the other menus do. */}
+            <div
+              className={
+                'nav-item has-dropdown ' +
+                (isActive(NAV.about.href) || isActive(NAV.whyBalto.href) ? 'active' : '')
+              }
+              onMouseEnter={() => setCompanyOpen(true)}
+              onMouseLeave={() => setCompanyOpen(false)}
             >
-              {NAV.whyBalto.label}
-            </Link>
-            <Link
-              href={NAV.about.href}
-              className={'nav-item ' + (isActive(NAV.about.href) ? 'active' : '')}
-            >
-              {NAV.about.label}
-            </Link>
+              <button
+                type="button"
+                aria-haspopup="true"
+                aria-expanded={companyOpen}
+                onClick={() => setCompanyOpen((o) => !o)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  color: 'inherit',
+                  font: 'inherit',
+                  letterSpacing: 'inherit',
+                  background: 'transparent',
+                  border: 0,
+                  padding: 0,
+                }}
+              >
+                {NAV.company.label} <ChevronDown size={14} />
+              </button>
+              <div
+                className="dropdown"
+                style={{
+                  opacity: companyOpen ? 1 : undefined,
+                  pointerEvents: companyOpen ? 'auto' : undefined,
+                }}
+              >
+                <Link className="dropdown-item" href={NAV.about.href}>
+                  {NAV.about.label}
+                </Link>
+                <Link className="dropdown-item" href={NAV.whyBalto.href}>
+                  {NAV.whyBalto.label}
+                </Link>
+              </div>
+            </div>
+            {/* Placeholder, destination pending client direction on content. */}
+            <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
+              {NAV.team.label}
+            </span>
             {/* Placeholder, destination pending client direction on content. */}
             <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
               {NAV.community.label}
@@ -362,8 +402,15 @@ export function Header() {
               {c.comingSoon && SITE.header.mobile.comingSoonSuffix}
             </Link>
           ))}
-          <Link href={NAV.whyBalto.href}>{NAV.whyBalto.label}</Link>
-          <Link href={NAV.about.href}>{NAV.about.label}</Link>
+          <span aria-disabled="true">{NAV.company.label}</span>
+          <Link className="sub" href={NAV.about.href}>
+            {NAV.about.label}
+          </Link>
+          <Link className="sub" href={NAV.whyBalto.href}>
+            {NAV.whyBalto.label}
+          </Link>
+          {/* Placeholder, destination pending client direction on content. */}
+          <span aria-disabled="true">{NAV.team.label}</span>
           {/* Placeholder, destination pending client direction on content. */}
           <span aria-disabled="true">{NAV.community.label}</span>
           <Link href={NAV.careers.href}>{NAV.careers.label}</Link>
