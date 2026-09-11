@@ -5,6 +5,8 @@ import { FiltersPanel, DEFAULT_FILTERS, type Filters } from '@/components/Filter
 import { SortDropdown } from '@/components/SortDropdown';
 import { PropertyCard } from '@/components/PropertyCard';
 import { MapView } from '@/components/MapViewClient';
+import { ParallaxImage } from '@/components/ParallaxImage';
+import { Eyebrow } from '@/components/Eyebrow';
 import { CloseIcon, MapIcon, SlidersIcon } from '@/components/icons';
 import { RESIDENCES } from '@/lib/data';
 import { applyFilters } from '@/lib/filter';
@@ -128,7 +130,7 @@ function ResidencesAllInner() {
   );
 
   return (
-    <main className="page-enter">
+    <main className="page-enter has-overlay-hero">
       <FiltersPanel
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
@@ -138,6 +140,60 @@ function ResidencesAllInner() {
         onClear={() => setFilters(DEFAULT_FILTERS)}
       />
 
+      {/* Full-bleed cover — same treatment as the portfolio city pages */}
+      <section className="portfolio-cover">
+        <ParallaxImage
+          src={RESIDENCES_PAGE.cover.image}
+          alt={RESIDENCES_PAGE.cover.imageAlt}
+          eager
+          kenBurns
+          speed={0.12}
+        />
+        <div className="portfolio-cover-scrim" />
+        <div className="container portfolio-cover-inner">
+          <div
+            className="breadcrumb portfolio-cover-crumbs hero-rise"
+            style={{ ['--rise-delay' as string]: '120ms' }}
+          >
+            <a className="text-link" onClick={() => router.push('/')}>
+              {RESIDENCES_PAGE.breadcrumb.homeLabel}
+            </a>
+            <span className="sep">/</span>
+            <span>{RESIDENCES_PAGE.breadcrumb.currentLabel}</span>
+          </div>
+
+          <div className="portfolio-cover-copy">
+            <Eyebrow
+              className="hero-rise"
+              style={{
+                ['--rise-delay' as string]: '260ms',
+                marginBottom: 18,
+                display: 'block',
+              }}
+            >
+              {RESIDENCES_PAGE.cover.eyebrow}
+            </Eyebrow>
+            <h1
+              className="display portfolio-cover-title hero-rise"
+              style={{ ['--rise-delay' as string]: '380ms' }}
+            >
+              {RESIDENCES_PAGE.cover.title}
+            </h1>
+            <div
+              className="portfolio-cover-rule hero-rise"
+              style={{ ['--rise-delay' as string]: '520ms' }}
+              aria-hidden="true"
+            />
+            <p
+              className="portfolio-cover-blurb body hero-rise"
+              style={{ ['--rise-delay' as string]: '620ms' }}
+            >
+              {RESIDENCES_PAGE.cover.blurb}
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div
         style={{
           display: 'grid',
@@ -146,16 +202,6 @@ function ResidencesAllInner() {
         className="residences-layout"
       >
         <div style={{ padding: 'clamp(28px, 4vw, 56px) clamp(20px, 5vw, 64px)' }}>
-          <div className="breadcrumb" style={{ marginBottom: 24 }}>
-            <a className="text-link" onClick={() => router.push('/')}>
-              {RESIDENCES_PAGE.breadcrumb.homeLabel}
-            </a>
-            <span className="sep">/</span>
-            <span>{RESIDENCES_PAGE.breadcrumb.currentLabel}</span>
-          </div>
-          <h1 className="h1 serif" style={{ marginBottom: 10 }}>
-            {RESIDENCES_PAGE.title}
-          </h1>
           <p className="small muted" style={{ marginBottom: 36 }}>
             {RESIDENCES_PAGE.resultCount
               .replace('{count}', String(filtered.length))

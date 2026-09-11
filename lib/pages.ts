@@ -278,6 +278,14 @@ export interface ResidencesSortOption {
 export interface ResidencesContent {
   /** Browser-tab title and search-result description. */
   meta: PageMeta;
+  /** Full-bleed cover image and copy at the top of the All Properties page. */
+  cover: {
+    image: string;
+    imageAlt: string;
+    eyebrow: string;
+    title: string;
+    blurb: string;
+  };
   breadcrumb: {
     homeLabel: string;
     currentLabel: string;

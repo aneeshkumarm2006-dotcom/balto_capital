@@ -17,9 +17,7 @@ import { PAGES, TENANT_PORTAL } from '@/lib/pages';
 import { SITE } from '@/lib/site';
 
 
-/* Routes whose first section is a full-bleed film that runs edge to edge —
-   the header sits over it, transparent, until the visitor scrolls past. */
-const OVERLAY_HERO_ROUTES = ['/', '/about', '/why-balto'];
+const OVERLAY_HERO_ROUTES = ['/', '/about', '/why-balto', '/residences'];
 
 /* Navigation labels and destinations come from content/site.json. The entries
    are looked up by key rather than mapped over, because each one has its own

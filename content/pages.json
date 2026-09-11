@@ -305,6 +305,13 @@
     }
   },
   "residences": {
+    "cover": {
+      "image": "/assets/city-montreal.jpg",
+      "imageAlt": "Panoramic view across Western Canada — Balto Capital portfolio",
+      "eyebrow": "WESTERN CANADA · PORTFOLIO",
+      "title": "All properties.",
+      "blurb": "Thoughtfully maintained apartment homes across Western Canada, owned and run by the same family team that answers your call."
+    },
     "breadcrumb": {
       "homeLabel": "Home",
       "currentLabel": "Residences"
