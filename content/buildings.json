@@ -3,7 +3,10 @@
     "slug": "chicklet-house",
     "name": "Chicklet House",
     "city": "edmonton",
-    "address": "10304 107 Ave NW, Edmonton, AB T5H 0V8"
+    "address": "10304 107 Ave NW, Edmonton, AB T5H 0V8",
+    "bedrooms": [
+      1
+    ]
   },
   {
     "slug": "woodridge",
