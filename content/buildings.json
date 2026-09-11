@@ -5,7 +5,8 @@
     "city": "edmonton",
     "address": "10304 107 Ave NW, Edmonton, AB T5H 0V8",
     "bedrooms": [
-      1
+      1,
+      2
     ]
   },
   {
