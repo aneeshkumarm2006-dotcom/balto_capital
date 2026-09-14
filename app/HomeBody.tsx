@@ -211,7 +211,13 @@ function CityCard({ c, comingSoon }: { c: City; comingSoon?: boolean }) {
         </div>
       )}
       <div className="label">
-        <div className="eyebrow" style={{ color: 'rgb(var(--ivory-rgb) / 0.7)' }}>
+        {/* The province reads over photography, so it carries more weight and
+            less transparency than a plain eyebrow — the client found the old
+            70%-opacity medium hard to read against a bright city card. */}
+        <div
+          className="eyebrow"
+          style={{ color: 'rgb(var(--ivory-rgb) / 0.92)', fontWeight: 700 }}
+        >
           {c.province}
         </div>
         <div className="serif" style={{ fontSize: 32, fontWeight: 500, marginTop: 4 }}>

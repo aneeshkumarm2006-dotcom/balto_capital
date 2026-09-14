@@ -23,6 +23,7 @@ interface Building {
   address: string;
   featured?: boolean;
   featuredRank?: number;
+  hideFeaturedBadge?: boolean;
   archived?: boolean;
   hideDetailGallery?: boolean;
   incentives?: string[];
@@ -72,6 +73,8 @@ interface Draft {
   city: string;
   featured: boolean;
   featuredRank: string;
+  /** Opt out of the gold "Featured" treatment on the listing pages. */
+  hideFeaturedBadge: boolean;
   hideDetailGallery: boolean;
   /** Bedroom types the building offers (0=Studio, 1..3). Advertised on the
    *  listing whether or not a suite of that size is currently vacant. */
@@ -280,6 +283,7 @@ export default function PropertyDetailsPage() {
             typeof building.featuredRank === 'number' && building.featuredRank >= 1
               ? String(building.featuredRank)
               : '',
+          hideFeaturedBadge: building.hideFeaturedBadge === true,
           hideDetailGallery: building.hideDetailGallery === true,
           bedrooms: asBedroomList(building.bedrooms),
           incentives: asStringArray(building.incentives),
@@ -355,6 +359,8 @@ export default function PropertyDetailsPage() {
         else delete merged.featured;
         if (rankValid) merged.featuredRank = rank;
         else delete merged.featuredRank;
+        if (draft.featured && draft.hideFeaturedBadge) merged.hideFeaturedBadge = true;
+        else delete merged.hideFeaturedBadge;
         if (draft.hideDetailGallery) merged.hideDetailGallery = true;
         else delete merged.hideDetailGallery;
         if (draft.bedrooms.length > 0) merged.bedrooms = draft.bedrooms;
@@ -657,6 +663,25 @@ export default function PropertyDetailsPage() {
                 Featured on homepage
               </label>
             </div>
+            {draft.featured && (
+              <div className="adm-field">
+                <span className="adm-label">Featured on property pages</span>
+                <label className="adm-switch">
+                  <input
+                    type="checkbox"
+                    checked={!draft.hideFeaturedBadge}
+                    onChange={(e) => patch({ hideFeaturedBadge: !e.target.checked })}
+                  />
+                  <span className="track" />
+                  Show the Featured mark on the property pages
+                </label>
+                <span className="adm-help">
+                  The gold “Featured” badge on the city listing rows and the gold pin
+                  on the map. Turn this off to keep the building on the homepage
+                  without singling it out on the listings.
+                </span>
+              </div>
+            )}
             {draft.featured && (
               <Field
                 label="Featured order"

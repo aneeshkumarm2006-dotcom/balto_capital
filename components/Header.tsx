@@ -173,14 +173,18 @@ export function Header() {
               </div>
             </div>
             {/* Company has no landing page of its own — the tab is only a way
-                into About and Why Balto, so the trigger is a button rather than
-                a link, and it carries the active mark while either child is
-                the current page. Click toggles it for touch and keyboard;
-                hover opens it the way the other menus do. */}
+                into About, Why Balto and Team, so the trigger is a button
+                rather than a link, and it carries the active mark while any
+                child is the current page. Click toggles it for touch and
+                keyboard; hover opens it the way the other menus do. */}
             <div
               className={
                 'nav-item has-dropdown ' +
-                (isActive(NAV.about.href) || isActive(NAV.whyBalto.href) ? 'active' : '')
+                (isActive(NAV.about.href) ||
+                isActive(NAV.whyBalto.href) ||
+                isActive(NAV.team.href)
+                  ? 'active'
+                  : '')
               }
               onMouseEnter={() => setCompanyOpen(true)}
               onMouseLeave={() => setCompanyOpen(false)}
@@ -217,12 +221,24 @@ export function Header() {
                 <Link className="dropdown-item" href={NAV.whyBalto.href}>
                   {NAV.whyBalto.label}
                 </Link>
+                {/* Team has no page yet. Until Content Studio gives the entry a
+                    destination it sits in the menu as plain, non-clickable text
+                    rather than a link to nowhere. */}
+                {NAV.team.href ? (
+                  <Link className="dropdown-item" href={NAV.team.href}>
+                    {NAV.team.label}
+                  </Link>
+                ) : (
+                  <span
+                    className="dropdown-item"
+                    aria-disabled="true"
+                    style={{ cursor: 'default', opacity: 0.55 }}
+                  >
+                    {NAV.team.label}
+                  </span>
+                )}
               </div>
             </div>
-            {/* Placeholder, destination pending client direction on content. */}
-            <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
-              {NAV.team.label}
-            </span>
             {/* Placeholder, destination pending client direction on content. */}
             <span className="nav-item" aria-disabled="true" style={{ cursor: 'default' }}>
               {NAV.community.label}
@@ -407,8 +423,17 @@ export function Header() {
           <Link className="sub" href={NAV.whyBalto.href}>
             {NAV.whyBalto.label}
           </Link>
-          {/* Placeholder, destination pending client direction on content. */}
-          <span aria-disabled="true">{NAV.team.label}</span>
+          {/* Team sits under Company here too. No destination yet, so it stays
+              plain text at the sub level. */}
+          {NAV.team.href ? (
+            <Link className="sub" href={NAV.team.href}>
+              {NAV.team.label}
+            </Link>
+          ) : (
+            <span className="sub" aria-disabled="true">
+              {NAV.team.label}
+            </span>
+          )}
           {/* Placeholder, destination pending client direction on content. */}
           <span aria-disabled="true">{NAV.community.label}</span>
           <Link href={NAV.careers.href}>{NAV.careers.label}</Link>

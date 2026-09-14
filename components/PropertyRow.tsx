@@ -2,11 +2,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Residence } from '@/lib/data';
-import { formatPrice } from '@/lib/data';
+import { bedroomShort, formatPrice } from '@/lib/data';
 import { FavoriteHeart } from './FavoriteHeart';
 import { ArrowRight } from './icons';
 import { PlaceholderImg } from './SmartImage';
 import { PAGES } from '@/lib/pages';
+import { SITE } from '@/lib/site';
 
 const T = PAGES.city.portfolio.splitRow;
 
@@ -57,7 +58,11 @@ export function PropertyRow({
             {r.name.charAt(0)}
           </PlaceholderImg>
         )}
-        {r.featured && <span className="portfolio-listing-badge">{T.featuredBadge}</span>}
+        {/* Featured on the homepage does not automatically mean a gold badge
+            here — the building can be opted out of the listing treatment. */}
+        {r.featured && !r.hideFeaturedBadge && (
+          <span className="portfolio-listing-badge">{T.featuredBadge}</span>
+        )}
       </a>
 
       <div className="portfolio-listing-copy">
@@ -72,6 +77,14 @@ export function PropertyRow({
           {r.name}
         </a>
         <p className="portfolio-listing-address small muted">{r.address}</p>
+        {/* The suite mix sits beside the rent the way it does on the property
+            card, so the split listing carries the same two facts the rest of
+            the site leads with. */}
+        <p className="portfolio-listing-beds small">
+          {r.bedroomTypes.length
+            ? bedroomShort(r.bedroomTypes)
+            : SITE.propertyCard.noPriceDash}
+        </p>
         <p className="portfolio-listing-price">
           {hasUnits ? (
             <>

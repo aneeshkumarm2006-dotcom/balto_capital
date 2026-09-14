@@ -80,6 +80,59 @@ function sortCities(list: City[]): City[] {
 
 type Cities = Record<string, City>;
 
+/* The All Properties page (/residences) has no city record of its own, so its
+   full-bleed cover lives in pages.json. It is edited from the Cities tab
+   alongside the city cards, because that is where every other cover on the
+   site is managed. Only the fields the Cities tab touches are typed here —
+   the rest of pages.json is carried through untouched on save. */
+interface AllPropertiesCover {
+  image: string;
+  imageAlt: string;
+  eyebrow: string;
+  title: string;
+  blurb: string;
+}
+
+interface PagesContent {
+  residences?: { cover?: Partial<AllPropertiesCover> } & Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+const EMPTY_COVER: AllPropertiesCover = {
+  image: '',
+  imageAlt: '',
+  eyebrow: '',
+  title: '',
+  blurb: '',
+};
+
+/** Key the Library media picker uses for the All Properties cover. City slugs
+ *  are kebab-case, so the leading colon can never collide with one. */
+const ALL_PROPERTIES_KEY = ':all-properties';
+
+const coverOf = (pages: PagesContent): AllPropertiesCover => {
+  const raw = pages.residences?.cover ?? {};
+  return {
+    image: typeof raw.image === 'string' ? raw.image : '',
+    imageAlt: typeof raw.imageAlt === 'string' ? raw.imageAlt : '',
+    eyebrow: typeof raw.eyebrow === 'string' ? raw.eyebrow : '',
+    title: typeof raw.title === 'string' ? raw.title : '',
+    blurb: typeof raw.blurb === 'string' ? raw.blurb : '',
+  };
+};
+
+/** Merge a cover patch back into the whole pages.json object. */
+const withCover = (
+  pages: PagesContent,
+  patch: Partial<AllPropertiesCover>
+): PagesContent => ({
+  ...pages,
+  residences: {
+    ...(pages.residences ?? {}),
+    cover: { ...coverOf(pages), ...patch },
+  },
+});
+
 interface Tier {
   value: string;
   label: string;
@@ -319,6 +372,11 @@ export default function LibraryPage() {
   const [citiesSaved, setCitiesSaved] = useState<Cities>({});
   const [citiesDraft, setCitiesDraft] = useState<Cities>({});
 
+  /* pages.json, held only so the Cities tab can edit the All Properties
+     cover. Everything else in the file is round-tripped unchanged. */
+  const [pagesSaved, setPagesSaved] = useState<PagesContent>({});
+  const [pagesDraft, setPagesDraft] = useState<PagesContent>({});
+
   /* ONE shared taxonomies draft + snapshot — edited by both the Property
      types tab and the Tags tab so they never clobber each other. */
   const [taxSaved, setTaxSaved] = useState<Taxonomies>(EMPTY_TAXONOMIES);
@@ -354,13 +412,14 @@ export default function LibraryPage() {
       getContent<Units>('units'),
       getContent<Copy>('copy'),
       getContent<Cities>('cities'),
+      getContent<PagesContent>('pages').catch(() => ({}) as PagesContent),
       getContent<Taxonomies>('taxonomies'),
       /* media.json may not exist yet — start the register empty then. */
       getContent<unknown>('media').catch(() => []),
       /* Same for tenant-portal.json on installs that predate the feature. */
       getContent<TenantPortal>('tenant-portal').catch(() => EMPTY_TENANT),
     ])
-      .then(([m, p, b, u, c, cities, tax, md, tenant]) => {
+      .then(([m, p, b, u, c, cities, pages, tax, md, tenant]) => {
         if (cancelled) return;
         setMedia(m);
         setPhotos(p && typeof p === 'object' ? p : {});
@@ -370,6 +429,9 @@ export default function LibraryPage() {
         const safeCities = cities && typeof cities === 'object' ? cities : {};
         setCitiesSaved(safeCities);
         setCitiesDraft(safeCities);
+        const safePages = pages && typeof pages === 'object' ? pages : {};
+        setPagesSaved(safePages);
+        setPagesDraft(safePages);
         const safeTenant: TenantPortal = {
           eyebrow: tenant?.eyebrow ?? '',
           title: tenant?.title ?? '',
@@ -539,6 +601,10 @@ export default function LibraryPage() {
             saved={citiesSaved}
             setDraft={setCitiesDraft}
             setSaved={setCitiesSaved}
+            pagesDraft={pagesDraft}
+            pagesSaved={pagesSaved}
+            setPagesDraft={setPagesDraft}
+            setPagesSaved={setPagesSaved}
             buildings={buildings}
             staged={staged}
             mediaDraft={mediaDraft}
@@ -1115,6 +1181,10 @@ function CitiesTab({
   saved,
   setDraft,
   setSaved,
+  pagesDraft,
+  pagesSaved,
+  setPagesDraft,
+  setPagesSaved,
   buildings,
   staged,
   mediaDraft,
@@ -1127,6 +1197,10 @@ function CitiesTab({
   saved: Cities;
   setDraft: (c: Cities | ((c: Cities) => Cities)) => void;
   setSaved: (c: Cities) => void;
+  pagesDraft: PagesContent;
+  pagesSaved: PagesContent;
+  setPagesDraft: (p: PagesContent | ((p: PagesContent) => PagesContent)) => void;
+  setPagesSaved: (p: PagesContent) => void;
   buildings: Building[];
   staged: StagedFile[];
   mediaDraft: MediaUpload[];
@@ -1147,9 +1221,15 @@ function CitiesTab({
   const [addingCity, setAddingCity] = useState(false);
 
   const dirty = useMemo(
-    () => JSON.stringify(draft) !== JSON.stringify(saved),
-    [draft, saved]
+    () =>
+      JSON.stringify(draft) !== JSON.stringify(saved) ||
+      JSON.stringify(pagesDraft) !== JSON.stringify(pagesSaved),
+    [draft, saved, pagesDraft, pagesSaved]
   );
+
+  const cover = coverOf(pagesDraft);
+  const updateCover = (patch: Partial<AllPropertiesCover>) =>
+    setPagesDraft((p) => withCover(p, patch));
 
   const usageCount = (slug: string) =>
     buildings.filter((b) => b.city === slug).length;
@@ -1265,10 +1345,14 @@ function CitiesTab({
         files: staged,
         content: [
           { name: 'cities', data: draft },
+          /* The All Properties cover lives in pages.json, so that file rides
+             along in the same commit as the city cards. */
+          { name: 'pages', data: pagesDraft },
           { name: 'media', data: mediaDraft },
         ],
       });
       setSaved(draft);
+      setPagesSaved(pagesDraft);
       onPoolPublished();
       toast('success', 'Cities saved.');
     } catch (err) {
@@ -1288,9 +1372,10 @@ function CitiesTab({
         <div className="adm-card">
           <div className="adm-card-pad adm-row" style={{ gap: 14 }}>
             <span className="adm-help adm-grow" style={{ margin: 0 }}>
-              Cities appear on the site in this order — the homepage grid, the
-              Properties menu and the footer. Use the arrows on each card to
-              rearrange them.{' '}
+              The All properties cover sits first, then the cities in the order
+              they appear on the site — the homepage grid, the Properties menu
+              and the footer. Use the arrows on each city card to rearrange
+              them.{' '}
               {customOrder
                 ? 'A custom order is in place.'
                 : 'They are currently in alphabetical order.'}
@@ -1306,6 +1391,14 @@ function CitiesTab({
             </button>
           </div>
         </div>
+
+        <AllPropertiesCard
+          cover={cover}
+          previews={previews}
+          onChange={updateCover}
+          onUpload={onUpload}
+          onPickFromLibrary={() => setPickerSlug(ALL_PROPERTIES_KEY)}
+        />
 
         {cityList.map((city, i) => (
           <CityCard
@@ -1366,7 +1459,16 @@ function CitiesTab({
         </div>
       </div>
 
-      {dirty && <SaveBar saving={saving} onDiscard={() => setDraft(saved)} onSave={() => void save()} />}
+      {dirty && (
+        <SaveBar
+          saving={saving}
+          onDiscard={() => {
+            setDraft(saved);
+            setPagesDraft(pagesSaved);
+          }}
+          onSave={() => void save()}
+        />
+      )}
 
       <MediaPicker
         open={pickerSlug !== null}
@@ -1374,7 +1476,8 @@ function CitiesTab({
         previews={previews}
         onClose={() => setPickerSlug(null)}
         onSelect={(path) => {
-          if (pickerSlug) updateCity(pickerSlug, { image: path });
+          if (pickerSlug === ALL_PROPERTIES_KEY) updateCover({ image: path });
+          else if (pickerSlug) updateCity(pickerSlug, { image: path });
           setPickerSlug(null);
         }}
       />
@@ -1545,6 +1648,173 @@ function MediaPicker({
               ))}
             </div>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* The All Properties page (/residences) is not a city, but it opens on the
+   same kind of full-bleed cover, so it is edited here rather than buried in
+   the Pages screen. Writes pages.json → residences.cover. */
+function AllPropertiesCard({
+  cover,
+  previews,
+  onChange,
+  onUpload,
+  onPickFromLibrary,
+}: {
+  cover: AllPropertiesCover;
+  previews: Record<string, string>;
+  onChange: (patch: Partial<AllPropertiesCover>) => void;
+  onUpload: (files: File[]) => Promise<string[]>;
+  onPickFromLibrary: () => void;
+}) {
+  const toast = useToast();
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const uploadImage = async (files: File[]) => {
+    const images = files.filter((f) => f.type.startsWith('image/'));
+    if (images.length === 0) return;
+    setUploading(true);
+    try {
+      const added = await onUpload(images.slice(0, 1));
+      if (added.length === 0) throw new Error('Upload returned no files.');
+      onChange({ image: added[0] });
+      toast(
+        'success',
+        'Image uploaded and set as the cover — press Save changes to publish.'
+      );
+    } catch (err) {
+      toast('error', err instanceof Error ? err.message : 'Upload failed.');
+    } finally {
+      setUploading(false);
+      if (imageRef.current) imageRef.current.value = '';
+    }
+  };
+
+  const imageSrc = previews[cover.image] ?? cover.image;
+
+  return (
+    <div className="adm-card">
+      <div
+        className="adm-card-head adm-row"
+        style={{ justifyContent: 'space-between', gap: 12 }}
+      >
+        <div className="adm-row" style={{ gap: 10 }}>
+          <h2 className="adm-card-title">All properties</h2>
+          <span className="adm-muted" style={{ fontSize: 12.5 }}>
+            /residences
+          </span>
+        </div>
+      </div>
+      <div className="adm-card-pad">
+        <p className="adm-help" style={{ margin: '0 0 16px' }}>
+          The page every city links back to. This is its cover — the photograph
+          and the words over it. The city cards below are unaffected.
+        </p>
+        <div className="adm-form-grid">
+          <Field label="Eyebrow" help="The small line above the title.">
+            <input
+              className="adm-input"
+              value={cover.eyebrow}
+              onChange={(e) => onChange({ eyebrow: e.target.value })}
+            />
+          </Field>
+          <Field label="Title">
+            <input
+              className="adm-input"
+              value={cover.title}
+              onChange={(e) => onChange({ title: e.target.value })}
+            />
+          </Field>
+          <Field label="Blurb" span2>
+            <textarea
+              className="adm-textarea"
+              value={cover.blurb}
+              onChange={(e) => onChange({ blurb: e.target.value })}
+            />
+          </Field>
+          <Field
+            label="Cover image"
+            help="Fills the top of the All properties page. A wide, landscape photograph works best."
+            span2
+          >
+            <div
+              className="adm-row"
+              style={{ gap: 16, alignItems: 'flex-start', flexWrap: 'nowrap' }}
+            >
+              <div
+                style={{
+                  width: 132,
+                  height: 96,
+                  flex: 'none',
+                  border: '1px solid var(--adm-hairline)',
+                  background: 'var(--adm-cream, #efe8dc)',
+                  overflow: 'hidden',
+                }}
+              >
+                {imageSrc && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={imageSrc}
+                    alt=""
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
+              </div>
+              <div
+                className="adm-grow"
+                style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
+              >
+                <input
+                  className="adm-input"
+                  value={cover.image}
+                  onChange={(e) => onChange({ image: e.target.value })}
+                  placeholder="/assets/library/…"
+                  aria-label="All properties cover image path"
+                />
+                <div className="adm-row" style={{ gap: 8 }}>
+                  <button
+                    className="adm-btn sm ghost"
+                    onClick={() => imageRef.current?.click()}
+                    disabled={uploading}
+                  >
+                    {uploading ? <IconSpinner /> : <IconUpload />}
+                    {uploading ? 'Uploading…' : 'Upload new'}
+                  </button>
+                  <button
+                    type="button"
+                    className="adm-btn sm ghost"
+                    onClick={onPickFromLibrary}
+                  >
+                    Choose from Library
+                  </button>
+                </div>
+              </div>
+              <input
+                ref={imageRef}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  void uploadImage(Array.from(e.target.files ?? []))
+                }
+              />
+            </div>
+          </Field>
+          <Field
+            label="Cover image alt text"
+            help="Read aloud by screen readers in place of the photograph."
+            span2
+          >
+            <input
+              className="adm-input"
+              value={cover.imageAlt}
+              onChange={(e) => onChange({ imageAlt: e.target.value })}
+            />
+          </Field>
         </div>
       </div>
     </div>

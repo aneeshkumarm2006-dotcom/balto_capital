@@ -131,6 +131,10 @@ export interface Residence {
   promo?: string;
   availability: Availability;
   featured: boolean;
+  /** Suppress the gold "Featured" treatment on the property listing pages —
+   *  the badge on the city listing rows and the gold map pin. Independent of
+   *  `featured`, which governs the homepage cards. */
+  hideFeaturedBadge?: boolean;
   /** Build Spec neighbourhood label (shown as the property-page tag). */
   neighbourhood?: string;
   /** Description tier, drives the condition voice on the property page. */
@@ -224,6 +228,9 @@ interface RawAsset {
   archived?: boolean;
   /** Homepage featured-card order (lower first). Unranked featured go last. */
   featuredRank?: number;
+  /** Keep the building off the gold "Featured" treatment on the listing
+   *  pages (badge + gold map pin) while it still runs on the homepage. */
+  hideFeaturedBadge?: boolean;
 }
 
 // NOTE: `slug` is the stable URL + asset-folder key, keep it fixed across
@@ -472,6 +479,7 @@ function makeResidence(raw: RawAsset, _idx: number): Residence {
     promo,
     availability,
     featured,
+    hideFeaturedBadge: raw.hideFeaturedBadge,
     hideDetailGallery: raw.hideDetailGallery,
     incentives: raw.incentives,
     unitLabels: raw.unitLabels,

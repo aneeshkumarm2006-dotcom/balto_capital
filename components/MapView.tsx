@@ -88,6 +88,11 @@ export default function MapView({
   onSearchArea,
   fitToken,
 }: MapViewProps) {
+  /* A building can be featured on the homepage but opted out of the gold
+     treatment on the listing pages, so the pin colour checks both flags. */
+  const showsAsFeatured = (r: Residence) =>
+    featuredPins && r.featured && !r.hideFeaturedBadge;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const markersRef = useRef<Record<string, Marker>>({});
@@ -209,7 +214,7 @@ export default function MapView({
       residences.forEach((r) => {
         const icon = L.divIcon({
           className: 'balto-pin-wrap',
-          html: pinSvg(featuredPins && r.featured ? 'featured' : 'default'),
+          html: pinSvg(showsAsFeatured(r) ? 'featured' : 'default'),
           iconSize: [32, 44],
           iconAnchor: [16, 44],
         });
@@ -328,7 +333,7 @@ export default function MapView({
     ? residences.find((r) => r.id === previewId)
     : null;
 
-  const hasFeatured = featuredPins && residences.some((r) => r.featured);
+  const hasFeatured = residences.some(showsAsFeatured);
 
   return (
     <div

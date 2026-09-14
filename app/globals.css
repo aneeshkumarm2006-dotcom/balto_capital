@@ -1325,6 +1325,14 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 }
 .portfolio-listing-row:hover .portfolio-listing-name { color: var(--gold); }
 .portfolio-listing-address { margin: 0 0 12px; }
+/* Suite mix, above the rent. The hairline over it repeats the rule that
+   separates the same two facts on the property card. */
+.portfolio-listing-beds {
+  margin: 0 0 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+  color: var(--ink);
+}
 .portfolio-listing-price {
   margin: 0;
   font-family: var(--sans);
