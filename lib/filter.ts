@@ -22,6 +22,9 @@ export function applyFilters(
 ): Residence[] {
   let out = residences.slice();
 
+  if (filters.cities.length) {
+    out = out.filter((r) => filters.cities.includes(r.city));
+  }
   if (filters.beds.length) {
     // Match against actual available suites, not the building's advertised
     // bedroom mix: a residence only appears under a bedroom filter when it has

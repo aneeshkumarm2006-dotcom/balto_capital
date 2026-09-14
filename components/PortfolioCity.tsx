@@ -5,22 +5,20 @@ import { DEFAULT_FILTERS, FiltersPanel, type Filters } from './FiltersPanel';
 import { SortDropdown } from './SortDropdown';
 import { MapView } from './MapViewClient';
 import type { MapBounds } from './MapView';
-import { Dropdown } from './ui/Dropdown';
+import { ListingEmptyState, ListingSplit } from './ListingSplit';
 import { Eyebrow } from './Eyebrow';
 import { FavoriteHeart } from './FavoriteHeart';
 import { ParallaxImage } from './ParallaxImage';
-import { PropertyRow } from './PropertyRow';
 import { PlaceholderImg } from './SmartImage';
-import { ArrowRight, ListIcon, MapIcon, MapOffIcon, SlidersIcon } from './icons';
+import { ArrowRight, ListIcon, MapIcon, SlidersIcon } from './icons';
 import {
   bedroomShort,
   formatPrice,
   residencesByCity,
-  LIVE_CITIES,
   type City,
   type Residence,
 } from '@/lib/data';
-import { applyFilters, unitBeds } from '@/lib/filter';
+import { applyFilters } from '@/lib/filter';
 import { PAGES } from '@/lib/pages';
 
 const T = PAGES.city;
@@ -180,45 +178,12 @@ function PortfolioRow({ r, index }: { r: Residence; index: number }) {
   );
 }
 
-function EmptyState({
-  onClear,
-  onClearArea,
-  inArea,
-}: {
-  onClear: () => void;
-  onClearArea?: () => void;
-  inArea?: boolean;
-}) {
-  return (
-    <div className="portfolio-empty">
-      <p className="serif italic" style={{ fontSize: 22, margin: 0 }}>
-        {inArea
-          ? T.portfolio.empty.inAreaTitle
-          : T.portfolio.empty.title}
-      </p>
-      {inArea && onClearArea ? (
-        <button className="btn btn-ghost btn-sm" style={{ marginTop: 24 }} onClick={onClearArea}>
-          {T.portfolio.empty.clearAreaLabel}
-        </button>
-      ) : (
-        <button className="btn btn-ghost btn-sm" style={{ marginTop: 24 }} onClick={onClear}>
-          {T.portfolio.empty.clearLabel}
-        </button>
-      )}
-    </div>
-  );
-}
-
 export function PortfolioCity({ city }: { city: City }) {
   const router = useRouter();
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [view, setView] = useState<'list' | 'map'>('list');
-  /* Desktop split only: the map column can be dismissed so the listings take
-     the full width. Below the breakpoint the panes stack and `view` rules. */
-  const [mapVisible, setMapVisible] = useState(true);
   const [selected, setSelected] = useState<string | null>(null);
-  const [hovered, setHovered] = useState<string | null>(null);
   const [area, setArea] = useState<MapBounds | null>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
 
@@ -255,20 +220,6 @@ export function PortfolioCity({ city }: { city: City }) {
     [city.slug, filters]
   );
 
-  /* Bedroom sizes that actually exist in this market. A building with no
-     units on file is excluded by any bedroom filter (lib/filter.ts), so
-     offering a size nothing can match would just empty the page. */
-  const bedOptions = useMemo(() => {
-    const seen = new Set<number>();
-    all.forEach((r) =>
-      (r.units ?? []).forEach((u) => {
-        const b = unitBeds(u.type);
-        if (b >= 0) seen.add(b >= 3 ? 3 : b);
-      })
-    );
-    return Array.from(seen).sort((a, b) => a - b);
-  }, [all]);
-
   const clearAll = () => {
     // Sort lives inside Filters; clearing the filters should not silently
     // re-sort the list back to A–Z under the visitor.
@@ -295,34 +246,9 @@ export function PortfolioCity({ city }: { city: City }) {
     scrollToToolbar();
   };
 
-  /* Dismissing the map also drops any viewport search: the list would
-     otherwise stay narrowed by an area the visitor can no longer see. */
-  const toggleMap = () => {
-    if (mapVisible) setArea(null);
-    setMapVisible(!mapVisible);
-    scrollToToolbar();
-  };
-
-  const cityOptions = [
-    { value: '', label: T.portfolio.toolbar.allCitiesLabel },
-    ...LIVE_CITIES.map((c) => ({ value: c.slug, label: c.label })),
-  ];
-
-  const bedLabel = (b: number) =>
-    b === 0
-      ? T.portfolio.toolbar.bedroomStudioLabel
-      : b >= 3
-        ? T.portfolio.toolbar.bedroomMaxLabel
-        : fill(
-            b === 1
-              ? T.portfolio.toolbar.bedroomSingular
-              : T.portfolio.toolbar.bedroomPlural,
-            { count: String(b) },
-          );
-
   const viewToggle = (
     <div
-      className={'view-toggle' + (mapListing ? ' portfolio-view-toggle' : '')}
+      className="view-toggle"
       role="group"
       aria-label={T.portfolio.toolbar.viewToggleLabel}
     >
@@ -364,73 +290,7 @@ export function PortfolioCity({ city }: { city: City }) {
     </p>
   );
 
-  /* The split lays the controls out the way the reference does: filters on
-     their own row, then the count and the sort facing each other under it.
-     Side by side the column is too narrow for one row of everything. */
-  const toolbar = mapListing ? (
-    <div className="portfolio-toolbar" ref={toolbarRef}>
-      <div className="portfolio-toolbar-inner is-split">
-        <div className="portfolio-filter-row">
-          {/* On a single-city page a city FILTER can only ever return
-              everything or nothing, so the control navigates instead. */}
-          <div className="filter-pill">
-            <Dropdown
-              ariaLabel={T.portfolio.toolbar.cityFilterLabel}
-              value={city.slug}
-              options={cityOptions}
-              onChange={(v) => router.push(v ? `/residences/${v}` : '/residences')}
-            />
-          </div>
-          {bedOptions.length > 0 && (
-            <div className="filter-pill">
-              <Dropdown
-                ariaLabel={T.portfolio.toolbar.bedroomsFilterLabel}
-                value={filters.beds.length === 1 ? String(filters.beds[0]) : ''}
-                options={[
-                  { value: '', label: T.portfolio.toolbar.allBedroomsLabel },
-                  ...bedOptions.map((b) => ({
-                    value: String(b),
-                    label: bedLabel(b),
-                  })),
-                ]}
-                onChange={(v) =>
-                  setFilters({ ...filters, beds: v === '' ? [] : [Number(v)] })
-                }
-              />
-            </div>
-          )}
-          <button
-            className="btn btn-ghost btn-sm filter-more"
-            onClick={() => setFiltersOpen(true)}
-            style={{ borderColor: 'var(--hairline-strong)' }}
-          >
-            <SlidersIcon size={14} /> {T.portfolio.toolbar.moreFiltersLabel}
-          </button>
-          <button
-            className="btn btn-ghost btn-sm portfolio-map-toggle"
-            onClick={toggleMap}
-            aria-pressed={!mapVisible}
-            style={{ borderColor: 'var(--hairline-strong)' }}
-          >
-            {mapVisible ? (
-              <>
-                <MapOffIcon size={14} /> {T.portfolio.toolbar.hideMapLabel}
-              </>
-            ) : (
-              <>
-                <MapIcon size={14} /> {T.portfolio.toolbar.showMapLabel}
-              </>
-            )}
-          </button>
-          {viewToggle}
-        </div>
-        <div className="portfolio-count-row">
-          {count}
-          {sort}
-        </div>
-      </div>
-    </div>
-  ) : (
+  const toolbar = (
     <div className="portfolio-toolbar" ref={toolbarRef}>
       <div className="container portfolio-toolbar-inner">
         {count}
@@ -453,8 +313,6 @@ export function PortfolioCity({ city }: { city: City }) {
     <MapView
       residences={shown}
       selectedId={selected}
-      hoverId={hovered}
-      onHover={setHovered}
       showPreview={false}
       featuredPins
       showLegend
@@ -543,36 +401,16 @@ export function PortfolioCity({ city }: { city: City }) {
 
       {mapListing ? (
         /* 02 · Split: the residences as a scrolling column beside a map of the
-               city that stays pinned under the header. `data-view` only bites
-               below the breakpoint, where the two panes stack. */
-        <div
-          className="portfolio-split"
-          data-view={view}
-          data-map={mapVisible ? 'shown' : 'hidden'}
-        >
-          <div className="portfolio-split-list">
-            {toolbar}
-            {shown.length === 0 ? (
-              <EmptyState
-                onClear={clearAll}
-                onClearArea={() => setArea(null)}
-                inArea={Boolean(area) && filtered.length > 0}
-              />
-            ) : (
-              <div className="portfolio-listing">
-                {shown.map((r) => (
-                  <PropertyRow
-                    key={r.id}
-                    residence={r}
-                    active={hovered === r.id || selected === r.id}
-                    onHover={setHovered}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="portfolio-split-map">{map}</div>
-        </div>
+               city that stays pinned under the header. Shared verbatim with
+               /residences and the default city layout — see ListingSplit. */
+        <ListingSplit
+          residences={all}
+          citySlug={city.slug}
+          filters={filters}
+          setFilters={setFilters}
+          onOpenFilters={() => setFiltersOpen(true)}
+          onClearAll={clearAll}
+        />
       ) : (
         <>
           {/* 02 · Toolbar — filters, list/map view, sort */}
@@ -581,7 +419,7 @@ export function PortfolioCity({ city }: { city: City }) {
           {/* 03 · The residences */}
           {shown.length === 0 ? (
             <div className="container" style={{ padding: '80px 0 120px' }}>
-              <EmptyState onClear={clearAll} />
+              <ListingEmptyState onClear={clearAll} />
             </div>
           ) : view === 'map' ? (
             <div className="portfolio-map">{map}</div>

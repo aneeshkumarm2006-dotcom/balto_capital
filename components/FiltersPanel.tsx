@@ -9,6 +9,10 @@ import { PriceRange } from './ui/PriceRange';
 const RESIDENCES_PAGE = PAGES.residences;
 
 export interface Filters {
+  /** City slugs. Empty means every market — the all-markets index (/residences)
+   *  is the only page that filters on it; a city page is already scoped by its
+   *  route, so its toolbar navigates instead. */
+  cities: string[];
   beds: number[];
   priceMin: number;
   priceMax: number;
@@ -18,6 +22,7 @@ export interface Filters {
 }
 
 export const DEFAULT_FILTERS: Filters = {
+  cities: [],
   beds: [],
   priceMin: PRICE_BOUNDS.min,
   priceMax: PRICE_BOUNDS.max,

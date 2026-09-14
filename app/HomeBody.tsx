@@ -6,7 +6,7 @@ import { SmartImage } from '@/components/SmartImage';
 import { PropertyCard } from '@/components/PropertyCard';
 import { useTilt } from '@/components/useTilt';
 import { ArrowRight, SearchIcon } from '@/components/icons';
-import { Dropdown } from '@/components/ui/Dropdown';
+import { MultiDropdown } from '@/components/ui/MultiDropdown';
 import { PriceField } from '@/components/ui/PriceField';
 import {
   COMING_SOON_CITIES,
@@ -22,30 +22,26 @@ import { PRICE_BOUNDS } from '@/lib/price';
 /* 02 · Hero + rental search bar                                       */
 /* ------------------------------------------------------------------ */
 const SEARCH = PAGES.home.hero.search;
-const CITY_OPTIONS = [
-  { value: '', label: SEARCH.cityAnyLabel },
-  ...LIVE_CITIES.map((c) => ({ value: c.slug, label: c.label })),
-];
-const BED_OPTIONS = [
-  { value: '', label: SEARCH.bedsAnyLabel },
-  ...SEARCH.bedOptions,
-];
+/* Both dropdowns take several answers at once, so the "any" wording is the
+   menu's own first row (MultiDropdown renders it) rather than an option. */
+const CITY_OPTIONS = LIVE_CITIES.map((c) => ({ value: c.slug, label: c.label }));
+const BED_OPTIONS = SEARCH.bedOptions;
 
 function CinematicHero({
   onSearch,
 }: {
   onSearch: (v: {
-    city: string;
+    cities: string[];
     price: [number, number];
-    beds: string;
+    beds: string[];
   }) => void;
 }) {
-  const [city, setCity] = useState('');
+  const [cities, setCities] = useState<string[]>([]);
   const [price, setPrice] = useState<[number, number]>([
     PRICE_BOUNDS.min,
     PRICE_BOUNDS.max,
   ]);
-  const [beds, setBeds] = useState('');
+  const [beds, setBeds] = useState<string[]>([]);
 
   return (
     /* Full screen, edge to edge and behind the navigation — the same treatment
@@ -119,7 +115,7 @@ function CinematicHero({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onSearch({ city, price, beds });
+            onSearch({ cities, price, beds });
           }}
           className="hero-search hero-rise"
           style={{
@@ -137,7 +133,15 @@ function CinematicHero({
         >
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
             <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>{SEARCH.cityLabel}</span>
-            <Dropdown variant="site" ariaLabel={SEARCH.cityLabel} value={city} onChange={setCity} options={CITY_OPTIONS} />
+            <MultiDropdown
+              variant="site"
+              ariaLabel={SEARCH.cityLabel}
+              values={cities}
+              onChange={setCities}
+              options={CITY_OPTIONS}
+              allLabel={SEARCH.cityAnyLabel}
+              summaryTemplate={SEARCH.citySummaryTemplate ?? '{count} cities'}
+            />
           </label>
           <span className="hero-search-div" />
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
@@ -156,7 +160,15 @@ function CinematicHero({
           <span className="hero-search-div" />
           <label style={{ flex: 1, minWidth: 150, display: 'flex', flexDirection: 'column' }}>
             <span className="eyebrow" style={{ padding: '8px 16px 0', fontSize: 10 }}>{SEARCH.bedsLabel}</span>
-            <Dropdown variant="site" ariaLabel={SEARCH.bedsLabel} value={beds} onChange={setBeds} options={BED_OPTIONS} />
+            <MultiDropdown
+              variant="site"
+              ariaLabel={SEARCH.bedsLabel}
+              values={beds}
+              onChange={setBeds}
+              options={BED_OPTIONS}
+              allLabel={SEARCH.bedsAnyLabel}
+              summaryTemplate={SEARCH.bedsSummaryTemplate ?? '{count} sizes'}
+            />
           </label>
           <button
             type="submit"
@@ -473,22 +485,22 @@ export function HomeBody() {
   const router = useRouter();
 
   const onSearch = ({
-    city,
+    cities,
     price,
     beds,
   }: {
-    city: string;
+    cities: string[];
     price: [number, number];
-    beds: string;
+    beds: string[];
   }) => {
     const sp = new URLSearchParams();
-    if (city) sp.set('q', city);
+    if (cities.length) sp.set('cities', cities.join(','));
     /* Omitted when untouched, matching how /residences normalises its own URL
        (ResidencesBody) — otherwise a full-range search would arrive looking
        like an active filter. */
     if (price[0] !== PRICE_BOUNDS.min) sp.set('priceMin', String(price[0]));
     if (price[1] !== PRICE_BOUNDS.max) sp.set('priceMax', String(price[1]));
-    if (beds) sp.set('beds', beds);
+    if (beds.length) sp.set('beds', beds.join(','));
     const qs = sp.toString();
     router.push(qs ? `/residences?${qs}` : '/residences');
   };

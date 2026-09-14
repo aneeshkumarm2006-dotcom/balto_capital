@@ -62,15 +62,19 @@ export function Field({
   help,
   children,
   span2,
+  locked,
 }: {
   label: string;
   required?: boolean;
   help?: string;
   children: ReactNode;
   span2?: boolean;
+  /** Greys the label/help while the control inside is disabled — used for
+   *  sub-options that stay visible but only apply once their parent is on. */
+  locked?: boolean;
 }) {
   return (
-    <div className={`adm-field${span2 ? ' span-2' : ''}`}>
+    <div className={`adm-field${span2 ? ' span-2' : ''}${locked ? ' is-locked' : ''}`}>
       <span className="adm-label">
         {label}
         {required && <span className="req">*</span>}

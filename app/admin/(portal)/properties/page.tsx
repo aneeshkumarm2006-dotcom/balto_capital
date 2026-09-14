@@ -5,9 +5,9 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { getContent } from '@/components/admin/api';
+import { getContent, putContent } from '@/components/admin/api';
 import { IconPlus, IconSearch } from '@/components/admin/icons';
-import { PageHead } from '@/components/admin/ui';
+import { PageHead, useToast } from '@/components/admin/ui';
 import { Dropdown, type DropdownOption } from '@/components/ui/Dropdown';
 
 interface Building {
@@ -17,6 +17,10 @@ interface Building {
   address: string;
   featured?: boolean;
   archived?: boolean;
+  /* Cleared alongside `featured` by the inline toggle below. Every other key
+     in buildings.json rides through the spread untouched. */
+  featuredRank?: number;
+  hideFeaturedBadge?: boolean;
 }
 
 interface Unit {
@@ -38,6 +42,8 @@ export default function PropertiesPage() {
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [city, setCity] = useState('all');
+  const [pendingFeature, setPendingFeature] = useState<string | null>(null);
+  const toast = useToast();
 
   useEffect(() => {
     let cancelled = false;
@@ -68,6 +74,39 @@ export default function PropertiesPage() {
       cancelled = true;
     };
   }, []);
+
+  /* Feature / unfeature straight from the table so the control is available on
+     every property, not only the ones already carrying the badge. Writes the
+     whole buildings file back the way the detail editor does; the rank and
+     badge sub-options stay where they are and keep being edited there. */
+  const toggleFeatured = async (slug: string, next: boolean) => {
+    if (!buildings || pendingFeature) return;
+    const previous = buildings;
+    const updated = buildings.map((b) => {
+      if (b.slug !== slug) return b;
+      const merged: Building = { ...b };
+      if (next) {
+        merged.featured = true;
+      } else {
+        delete merged.featured;
+        delete merged.featuredRank;
+        delete merged.hideFeaturedBadge;
+      }
+      return merged;
+    });
+    setPendingFeature(slug);
+    setBuildings(updated);
+    try {
+      await putContent('buildings', updated);
+      const name = previous.find((b) => b.slug === slug)?.name ?? 'Property';
+      toast('success', next ? `${name} is now featured.` : `${name} is no longer featured.`);
+    } catch (err: unknown) {
+      setBuildings(previous);
+      toast('error', err instanceof Error ? err.message : 'Could not update the property.');
+    } finally {
+      setPendingFeature(null);
+    }
+  };
 
   const cityOptions: DropdownOption[] = useMemo(
     () => [
@@ -166,6 +205,7 @@ export default function PropertiesPage() {
                 <th scope="col">City</th>
                 <th scope="col" className="num">Units</th>
                 <th scope="col">Status</th>
+                <th scope="col">Featured</th>
                 <th scope="col">
                   <span style={{ position: 'absolute', clip: 'rect(0 0 0 0)', width: 1, height: 1, overflow: 'hidden' }}>
                     Actions
@@ -188,10 +228,27 @@ export default function PropertiesPage() {
                   <td className="num">{units[b.slug]?.length ?? 0}</td>
                   <td>
                     <div className="adm-row" style={{ gap: 6 }}>
-                      {b.archived && <span className="adm-badge danger">Archived</span>}
-                      {b.featured && <span className="adm-badge gold">Featured</span>}
-                      {!b.archived && !b.featured && <span className="adm-muted">—</span>}
+                      {b.archived ? (
+                        <span className="adm-badge danger">Archived</span>
+                      ) : (
+                        <span className="adm-muted">Live</span>
+                      )}
                     </div>
+                  </td>
+                  <td>
+                    <label className="adm-switch">
+                      <input
+                        type="checkbox"
+                        checked={b.featured === true}
+                        disabled={pendingFeature !== null}
+                        aria-label={`Feature ${b.name} on the homepage`}
+                        onChange={(e) => toggleFeatured(b.slug, e.target.checked)}
+                      />
+                      <span className="track" />
+                      <span className={b.featured ? undefined : 'adm-muted'}>
+                        {b.featured ? 'Featured' : 'Not featured'}
+                      </span>
+                    </label>
                   </td>
                   <td>
                     <div className="adm-row" style={{ flexWrap: 'nowrap', gap: 8, justifyContent: 'flex-end' }}>

@@ -663,40 +663,44 @@ export default function PropertyDetailsPage() {
                 Featured on homepage
               </label>
             </div>
-            {draft.featured && (
-              <div className="adm-field">
-                <span className="adm-label">Featured on property pages</span>
-                <label className="adm-switch">
-                  <input
-                    type="checkbox"
-                    checked={!draft.hideFeaturedBadge}
-                    onChange={(e) => patch({ hideFeaturedBadge: !e.target.checked })}
-                  />
-                  <span className="track" />
-                  Show the Featured mark on the property pages
-                </label>
-                <span className="adm-help">
-                  The gold “Featured” badge on the city listing rows and the gold pin
-                  on the map. Turn this off to keep the building on the homepage
-                  without singling it out on the listings.
-                </span>
-              </div>
-            )}
-            {draft.featured && (
-              <Field
-                label="Featured order"
-                help="Lower numbers appear first on the homepage; leave empty for last."
-              >
+            <div className={`adm-field${draft.featured ? '' : ' is-locked'}`}>
+              <span className="adm-label">Featured on property pages</span>
+              <label className="adm-switch">
                 <input
-                  className="adm-input"
-                  type="number"
-                  min={1}
-                  style={{ width: 110 }}
-                  value={draft.featuredRank}
-                  onChange={(e) => patch({ featuredRank: e.target.value })}
+                  type="checkbox"
+                  disabled={!draft.featured}
+                  checked={draft.featured && !draft.hideFeaturedBadge}
+                  onChange={(e) => patch({ hideFeaturedBadge: !e.target.checked })}
                 />
-              </Field>
-            )}
+                <span className="track" />
+                Show the Featured mark on the property pages
+              </label>
+              <span className="adm-help">
+                The gold “Featured” badge on the city listing rows and the gold pin
+                on the map. Turn this off to keep the building on the homepage
+                without singling it out on the listings.
+                {!draft.featured && ' Available once the building is featured on the homepage.'}
+              </span>
+            </div>
+            <Field
+              label="Featured order"
+              locked={!draft.featured}
+              help={
+                draft.featured
+                  ? 'Lower numbers appear first on the homepage; leave empty for last.'
+                  : 'Lower numbers appear first on the homepage. Available once the building is featured on the homepage.'
+              }
+            >
+              <input
+                className="adm-input"
+                type="number"
+                min={1}
+                disabled={!draft.featured}
+                style={{ width: 110 }}
+                value={draft.featured ? draft.featuredRank : ''}
+                onChange={(e) => patch({ featuredRank: e.target.value })}
+              />
+            </Field>
             <div className="adm-field">
               <span className="adm-label">Photo gallery</span>
               <label className="adm-switch">

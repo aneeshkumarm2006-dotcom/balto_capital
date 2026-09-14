@@ -424,6 +424,20 @@
 .adm-switch input:checked + .track::after { transform: translateX(18px); }
 .adm-switch input:focus-visible + .track { outline: 2px solid var(--adm-gold); outline-offset: 2px; }
 
+/* Sub-options that stay on screen for every property but only bite once the
+   parent toggle is on — greyed rather than hidden, so the control is always
+   discoverable. */
+.adm-switch input:disabled + .track { opacity: 0.4; }
+.adm-switch:has(input:disabled) { cursor: default; color: var(--adm-muted); }
+
+.adm-field.is-locked > .adm-label,
+.adm-field.is-locked .adm-help { opacity: 0.6; }
+.adm-field.is-locked .adm-input:disabled {
+  background: var(--adm-ivory);
+  color: var(--adm-muted);
+  cursor: default;
+}
+
 /* ---------- Chips (amenities / features editor) ---------- */
 
 .adm-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }

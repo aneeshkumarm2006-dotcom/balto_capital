@@ -2,14 +2,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiltersPanel, DEFAULT_FILTERS, type Filters } from '@/components/FiltersPanel';
-import { SortDropdown } from '@/components/SortDropdown';
-import { PropertyCard } from '@/components/PropertyCard';
-import { MapView } from '@/components/MapViewClient';
+import { ListingSplit } from '@/components/ListingSplit';
 import { PortfolioCity } from '@/components/PortfolioCity';
 import { Eyebrow } from '@/components/Eyebrow';
-import { SlidersIcon, ArrowRight } from '@/components/icons';
+import { ArrowRight } from '@/components/icons';
 import { CITIES, residencesByCity, type City, type CitySlug } from '@/lib/data';
-import { applyFilters } from '@/lib/filter';
 import { PAGES } from '@/lib/pages';
 
 const T = PAGES.city;
@@ -112,15 +109,10 @@ export function CityBody({
   const city = CITIES[params.city as CitySlug];
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
 
   const all = useMemo(
     () => (city ? residencesByCity(params.city) : []),
     [city, params.city]
-  );
-  const filtered = useMemo(
-    () => applyFilters(all, filters, ''),
-    [filters, all]
   );
 
   useEffect(() => {
@@ -133,7 +125,7 @@ export function CityBody({
   if (city.comingSoon) return <ComingSoonCity city={city} />;
 
   // Markets switched to the portfolio layout in the Content Studio get the
-  // cover-image + editorial-rows treatment instead of the grid + sticky map.
+  // cover-image + editorial-rows treatment instead.
   if (city.portfolioLayout) return <PortfolioCity city={city} />;
 
   return (
@@ -147,122 +139,44 @@ export function CityBody({
         onClear={() => setFilters(DEFAULT_FILTERS)}
       />
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) 480px',
-        }}
-        className="residences-layout"
-      >
-        <div style={{ padding: 'clamp(28px, 4vw, 56px) clamp(20px, 5vw, 64px)' }}>
-          <div className="breadcrumb" style={{ marginBottom: 24 }}>
-            <a className="text-link" onClick={() => router.push('/')}>{T.breadcrumb.homeLabel}</a>
-            <span className="sep">/</span>
-            <a className="text-link" onClick={() => router.push('/residences')}>
-              {T.breadcrumb.residencesLabel}
-            </a>
-            <span className="sep">/</span>
-            <span>{city.label}</span>
-          </div>
-          <Eyebrow style={{ marginBottom: 16 }}>{city.province}</Eyebrow>
-          <h1 className="h1 serif" style={{ marginBottom: 14 }}>
-            {fill(T.listing.title, { city: city.label })}
-          </h1>
-          <p
-            className="body muted"
-            style={{ maxWidth: 560, marginBottom: 16, fontSize: 17 }}
-          >
-            {city.blurb}
-          </p>
-          <p className="small muted" style={{ marginBottom: 36 }}>
-            {fill(filtered.length === 1 ? T.listing.countSingular : T.listing.countPlural, {
-              count: String(filtered.length),
+      <div className="container" style={{ paddingTop: 'clamp(28px, 4vw, 56px)' }}>
+        <div className="breadcrumb" style={{ marginBottom: 24 }}>
+          <a className="text-link" onClick={() => router.push('/')}>{T.breadcrumb.homeLabel}</a>
+          <span className="sep">/</span>
+          <a className="text-link" onClick={() => router.push('/residences')}>
+            {T.breadcrumb.residencesLabel}
+          </a>
+          <span className="sep">/</span>
+          <span>{city.label}</span>
+        </div>
+        <Eyebrow style={{ marginBottom: 16 }}>{city.province}</Eyebrow>
+        <h1 className="h1 serif" style={{ marginBottom: 14 }}>
+          {fill(T.listing.title, { city: city.label })}
+        </h1>
+        <p
+          className="body muted"
+          style={{ maxWidth: 560, marginBottom: 8, fontSize: 17 }}
+        >
+          {city.blurb}
+        </p>
+      </div>
+
+      {/* The same split, toolbar and map every other listing renders. */}
+      <ListingSplit
+        residences={all}
+        citySlug={city.slug}
+        filters={filters}
+        setFilters={setFilters}
+        onOpenFilters={() => setFiltersOpen(true)}
+        onClearAll={() => setFilters({ ...DEFAULT_FILTERS, sort: filters.sort })}
+        renderCount={(shown) => (
+          <p className="small muted" style={{ margin: 0 }}>
+            {fill(shown === 1 ? T.listing.countSingular : T.listing.countPlural, {
+              count: String(shown),
             })}
           </p>
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 36,
-              flexWrap: 'wrap',
-              gap: 12,
-            }}
-          >
-            <button
-              className="btn btn-ghost btn-sm"
-              onClick={() => setFiltersOpen(true)}
-              style={{ borderColor: 'var(--hairline-strong)' }}
-            >
-              <SlidersIcon size={14} /> {T.listing.showFiltersLabel}
-            </button>
-            <SortDropdown
-              value={filters.sort}
-              onChange={(s) => setFilters({ ...filters, sort: s })}
-            />
-          </div>
-
-          {filtered.length === 0 ? (
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '80px 24px',
-                background: 'var(--cream)',
-                border: '1px solid var(--hairline)',
-              }}
-            >
-              <p className="serif italic" style={{ fontSize: 22 }}>
-                {T.listing.emptyTitle}
-              </p>
-              <button
-                className="btn btn-ghost btn-sm"
-                style={{ marginTop: 24 }}
-                onClick={() => setFilters(DEFAULT_FILTERS)}
-              >
-                {T.listing.emptyClearLabel}
-              </button>
-            </div>
-          ) : (
-            <div className="cards-grid">
-              {filtered.map((r) => (
-                <PropertyCard key={r.id} residence={r} hideCity />
-              ))}
-            </div>
-          )}
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: 56,
-              gap: 24,
-            }}
-          >
-            <span className="small muted">{T.listing.paginationLabel}</span>
-          </div>
-        </div>
-
-        <div
-          style={{
-            position: 'sticky',
-            top: 'var(--header-h)',
-            height: 'calc(100vh - var(--header-h))',
-            borderLeft: '1px solid var(--hairline)',
-          }}
-          className="residences-map"
-        >
-          <MapView
-            residences={filtered}
-            selectedId={selected}
-            onSelect={(id, navigateTo) => {
-              const r = filtered.find((x) => x.id === id);
-              if (navigateTo && r) router.push(`/residences/${r.city}/${r.slug}`);
-              else setSelected(id);
-            }}
-          />
-        </div>
-      </div>
+        )}
+      />
     </main>
   );
 }

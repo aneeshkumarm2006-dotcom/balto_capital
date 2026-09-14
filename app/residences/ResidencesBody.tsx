@@ -1,15 +1,12 @@
 'use client';
-import { Suspense, useMemo, useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FiltersPanel, DEFAULT_FILTERS, type Filters } from '@/components/FiltersPanel';
-import { SortDropdown } from '@/components/SortDropdown';
-import { PropertyCard } from '@/components/PropertyCard';
-import { MapView } from '@/components/MapViewClient';
+import { ListingSplit } from '@/components/ListingSplit';
 import { ParallaxImage } from '@/components/ParallaxImage';
 import { Eyebrow } from '@/components/Eyebrow';
-import { CloseIcon, MapIcon, SlidersIcon } from '@/components/icons';
+import { CloseIcon } from '@/components/icons';
 import { RESIDENCES } from '@/lib/data';
-import { applyFilters } from '@/lib/filter';
 import { PAGES } from '@/lib/pages';
 
 const RESIDENCES_PAGE = PAGES.residences;
@@ -27,6 +24,7 @@ function ResidencesAllInner() {
   const search = useSearchParams();
 
   const [filters, setFilters] = useState<Filters>(() => {
+    const qCities = search.get('cities');
     const qBeds = search.get('beds');
     const qPriceMin = search.get('priceMin');
     const qPriceMax = search.get('priceMax') || search.get('maxRent');
@@ -35,6 +33,7 @@ function ResidencesAllInner() {
     const qSort = search.get('sort');
 
     return {
+      cities: qCities ? qCities.split(',').filter(Boolean) : [],
       beds: qBeds
         ? qBeds.split(',').map(Number).filter((n) => !Number.isNaN(n))
         : [],
@@ -48,10 +47,10 @@ function ResidencesAllInner() {
   
   const [query, setQuery] = useState(() => search.get('q') ?? '');
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
 
   // Sync state from URL when the URL changes (e.g. Back button)
   useEffect(() => {
+    const qCities = search.get('cities');
     const qBeds = search.get('beds');
     const qPriceMin = search.get('priceMin');
     const qPriceMax = search.get('priceMax') || search.get('maxRent');
@@ -60,6 +59,7 @@ function ResidencesAllInner() {
     const qSort = search.get('sort');
     const qQuery = search.get('q') ?? '';
 
+    const newCities = qCities ? qCities.split(',').filter(Boolean) : [];
     const newBeds = qBeds ? qBeds.split(',').map(Number).filter((n) => !Number.isNaN(n)) : [];
     const newPriceMin = qPriceMin ? Number(qPriceMin) : DEFAULT_FILTERS.priceMin;
     const newPriceMax = qPriceMax ? Number(qPriceMax) : DEFAULT_FILTERS.priceMax;
@@ -68,6 +68,7 @@ function ResidencesAllInner() {
     const newSort = (qSort as any) || DEFAULT_FILTERS.sort;
 
     setFilters((prev) => {
+      const citiesChanged = prev.cities.join(',') !== newCities.join(',');
       const bedsChanged = prev.beds.join(',') !== newBeds.join(',');
       const minChanged = prev.priceMin !== newPriceMin;
       const maxChanged = prev.priceMax !== newPriceMax;
@@ -75,8 +76,9 @@ function ResidencesAllInner() {
       const amenChanged = prev.amenities.join(',') !== newAmenities.join(',');
       const sortChanged = prev.sort !== newSort;
 
-      if (bedsChanged || minChanged || maxChanged || availChanged || amenChanged || sortChanged) {
+      if (citiesChanged || bedsChanged || minChanged || maxChanged || availChanged || amenChanged || sortChanged) {
         return {
+          cities: newCities,
           beds: newBeds,
           priceMin: newPriceMin,
           priceMax: newPriceMax,
@@ -95,6 +97,7 @@ function ResidencesAllInner() {
   useEffect(() => {
     const sp = new URLSearchParams();
     if (query) sp.set('q', query);
+    if (filters.cities.length) sp.set('cities', filters.cities.join(','));
     if (filters.beds.length) sp.set('beds', filters.beds.join(','));
     if (filters.priceMin !== DEFAULT_FILTERS.priceMin) sp.set('priceMin', String(filters.priceMin));
     if (filters.priceMax !== DEFAULT_FILTERS.priceMax) sp.set('priceMax', String(filters.priceMax));
@@ -123,11 +126,6 @@ function ResidencesAllInner() {
       return () => clearTimeout(timeoutId);
     }
   }, [filters, query]);
-
-  const filtered = useMemo(
-    () => applyFilters(RESIDENCES, filters, query),
-    [filters, query]
-  );
 
   return (
     <main className="page-enter has-overlay-hero">
@@ -194,27 +192,37 @@ function ResidencesAllInner() {
         </div>
       </section>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) 480px',
+      {/* The same split, toolbar and map the city pages render — this page is
+          simply scoped to every market at once, so the city control sits on
+          "All cities" and each row prints the market it is in. */}
+      <ListingSplit
+        residences={RESIDENCES}
+        filters={filters}
+        setFilters={setFilters}
+        onOpenFilters={() => setFiltersOpen(true)}
+        onClearAll={() => {
+          // Sort lives inside Filters; clearing should not silently re-sort
+          // the list back to A–Z under the visitor.
+          setFilters({ ...DEFAULT_FILTERS, sort: filters.sort });
+          setQuery('');
         }}
-        className="residences-layout"
-      >
-        <div style={{ padding: 'clamp(28px, 4vw, 56px) clamp(20px, 5vw, 64px)' }}>
-          <p className="small muted" style={{ marginBottom: 36 }}>
+        query={query}
+        showRowCity
+        renderCount={(shown) => (
+          <p className="small muted" style={{ margin: 0 }}>
             {RESIDENCES_PAGE.resultCount
-              .replace('{count}', String(filtered.length))
+              .replace('{count}', String(shown))
               .replace('{total}', String(RESIDENCES.length))}
           </p>
-
-          {query && (
+        )}
+        banner={
+          query ? (
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
-                marginBottom: 24,
+                marginTop: 20,
                 padding: '12px 16px',
                 background: 'var(--cream)',
                 border: '1px solid var(--hairline)',
@@ -226,6 +234,7 @@ function ResidencesAllInner() {
               </span>
               <button
                 onClick={() => setQuery('')}
+                aria-label={RESIDENCES_PAGE.filters.closeLabel}
                 style={{
                   marginLeft: 'auto',
                   background: 'transparent',
@@ -236,85 +245,9 @@ function ResidencesAllInner() {
                 <CloseIcon size={14} />
               </button>
             </div>
-          )}
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 36,
-              flexWrap: 'wrap',
-              gap: 12,
-            }}
-          >
-            <button
-              className="btn btn-ghost btn-sm"
-              onClick={() => setFiltersOpen(true)}
-              style={{ borderColor: 'var(--hairline-strong)' }}
-            >
-              <SlidersIcon size={14} /> {RESIDENCES_PAGE.toolbar.showFiltersLabel}
-            </button>
-            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-              <SortDropdown
-                value={filters.sort}
-                onChange={(s) => setFilters({ ...filters, sort: s })}
-              />
-            </div>
-          </div>
-
-          {filtered.length === 0 ? (
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '80px 24px',
-                background: 'var(--cream)',
-                border: '1px solid var(--hairline)',
-              }}
-            >
-              <p className="serif italic" style={{ fontSize: 22 }}>
-                {RESIDENCES_PAGE.emptyState.title}
-              </p>
-              <button
-                className="btn btn-ghost btn-sm"
-                style={{ marginTop: 24 }}
-                onClick={() => {
-                  setFilters(DEFAULT_FILTERS);
-                  setQuery('');
-                }}
-              >
-                {RESIDENCES_PAGE.emptyState.clearLabel}
-              </button>
-            </div>
-          ) : (
-            <div className="cards-grid">
-              {filtered.map((r) => (
-                <PropertyCard key={r.id} residence={r} />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div
-          style={{
-            position: 'sticky',
-            top: 'var(--header-h)',
-            height: 'calc(100vh - var(--header-h))',
-            borderLeft: '1px solid var(--hairline)',
-          }}
-          className="residences-map"
-        >
-          <MapView
-            residences={filtered}
-            selectedId={selected}
-            onSelect={(id, navigateTo) => {
-              const r = filtered.find((x) => x.id === id);
-              if (navigateTo && r) router.push(`/residences/${r.city}/${r.slug}`);
-              else setSelected(id);
-            }}
-          />
-        </div>
-      </div>
+          ) : null
+        }
+      />
     </main>
   );
 }

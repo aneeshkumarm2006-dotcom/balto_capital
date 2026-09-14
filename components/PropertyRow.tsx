@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Residence } from '@/lib/data';
 import { bedroomShort, formatPrice } from '@/lib/data';
+import { Eyebrow } from './Eyebrow';
 import { FavoriteHeart } from './FavoriteHeart';
 import { ArrowRight } from './icons';
 import { PlaceholderImg } from './SmartImage';
@@ -19,10 +20,14 @@ export function PropertyRow({
   residence: r,
   active,
   onHover,
+  showCity = false,
 }: {
   residence: Residence;
   active?: boolean;
   onHover?: (id: string | null) => void;
+  /** Prints the market above the name. On for the all-markets index, where the
+   *  row is otherwise the only card on the site that does not say where it is. */
+  showCity?: boolean;
 }) {
   const router = useRouter();
   const [imgErrored, setImgErrored] = useState(false);
@@ -66,6 +71,11 @@ export function PropertyRow({
       </a>
 
       <div className="portfolio-listing-copy">
+        {showCity && (
+          <Eyebrow style={{ fontSize: 10, marginBottom: 8, display: 'block' }}>
+            {r.cityLabel}
+          </Eyebrow>
+        )}
         <a
           className="portfolio-listing-name h3 serif"
           href={to}

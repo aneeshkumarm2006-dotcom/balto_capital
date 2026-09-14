@@ -44,6 +44,9 @@ export interface HomeSearchOption {
 export interface HomeHeroSearch {
   cityLabel: string;
   cityAnyLabel: string;
+  /** Wording once more than one city is ticked; `{count}` is replaced.
+   *  Optional with a fallback so an older CMS snapshot still builds. */
+  citySummaryTemplate?: string;
   rentLabel: string;
   rentAnyLabel: string;
   /** Bounds for the price slider, read through lib/price.ts, which also feeds
@@ -58,6 +61,8 @@ export interface HomeHeroSearch {
   rentSummaryTemplate?: string;
   bedsLabel: string;
   bedsAnyLabel: string;
+  /** Wording once more than one size is ticked; `{count}` is replaced. */
+  bedsSummaryTemplate?: string;
   bedOptions: HomeSearchOption[];
 }
 
@@ -408,9 +413,14 @@ export interface CityPortfolioToolbar {
   /** Accessible name for the city dropdown. */
   cityFilterLabel: string;
   allCitiesLabel: string;
+  /** Wording once more than one city is ticked; `{count}` is replaced.
+   *  Optional with a fallback so an older CMS snapshot still builds. */
+  citiesSummaryTemplate?: string;
   /** Accessible name for the bedrooms dropdown. */
   bedroomsFilterLabel: string;
   allBedroomsLabel: string;
+  /** Wording once more than one size is ticked; `{count}` is replaced. */
+  bedroomsSummaryTemplate?: string;
   bedroomStudioLabel: string;
   /** `{count}` is replaced with the bedroom count. */
   bedroomSingular: string;

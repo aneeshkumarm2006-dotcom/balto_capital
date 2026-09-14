@@ -50,6 +50,12 @@ const SECTION_TABS: TabDef[] = [
         fields: [
           { key: 'cityLabel', label: 'City field label', kind: 'input' },
           { key: 'cityAnyLabel', label: 'City field — "any city" option', kind: 'input' },
+          {
+            key: 'citySummaryTemplate',
+            label: 'City field wording once several cities are ticked',
+            kind: 'input',
+            help: 'Use {count} — it is replaced with how many cities are ticked, e.g. "{count} cities". One city on its own shows its own name.',
+          },
           { key: 'rentLabel', label: 'Price field label', kind: 'input' },
           { key: 'rentAnyLabel', label: 'Price field — wording when no price is set', kind: 'input' },
           { key: 'rentMinInputLabel', label: 'Price popover — "minimum" label', kind: 'input' },
@@ -70,6 +76,12 @@ const SECTION_TABS: TabDef[] = [
           { key: 'rentStep', label: 'Slider increment in dollars (number only)', kind: 'input' },
           { key: 'bedsLabel', label: 'Bedrooms field label', kind: 'input' },
           { key: 'bedsAnyLabel', label: 'Bedrooms field — "any size" option', kind: 'input' },
+          {
+            key: 'bedsSummaryTemplate',
+            label: 'Bedrooms field wording once several sizes are ticked',
+            kind: 'input',
+            help: 'Use {count} — it is replaced with how many sizes are ticked, e.g. "{count} sizes". One size on its own shows its own wording.',
+          },
         ],
       },
       {
@@ -812,6 +824,12 @@ const SECTION_TABS: TabDef[] = [
             kind: 'input',
           },
           {
+            key: 'citiesSummaryTemplate',
+            label: 'City dropdown wording once several cities are ticked',
+            kind: 'input',
+            help: 'Use {count} — it is replaced with how many cities are ticked, e.g. "{count} cities". One city on its own shows its own name.',
+          },
+          {
             key: 'bedroomsFilterLabel',
             label: 'Bedrooms dropdown name (for screen readers)',
             kind: 'input',
@@ -820,6 +838,12 @@ const SECTION_TABS: TabDef[] = [
             key: 'allBedroomsLabel',
             label: 'Bedrooms dropdown — all-sizes option',
             kind: 'input',
+          },
+          {
+            key: 'bedroomsSummaryTemplate',
+            label: 'Bedrooms dropdown wording once several sizes are ticked',
+            kind: 'input',
+            help: 'Use {count} — it is replaced with how many sizes are ticked, e.g. "{count} sizes". One size on its own shows its own wording.',
           },
           {
             key: 'bedroomStudioLabel',

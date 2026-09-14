@@ -952,10 +952,6 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 @media (max-width: 1280px) {
   .featured-grid { grid-template-columns: repeat(3, 1fr); }
 }
-@media (max-width: 1180px) {
-  .residences-layout { grid-template-columns: 1fr !important; }
-  .residences-map { display: none; }
-}
 @media (max-width: 980px) {
   .featured-grid { grid-template-columns: repeat(2, 1fr); }
   .portfolio-grid { grid-template-columns: 1fr !important; }
@@ -2059,6 +2055,33 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .bd-option.active { background: var(--cream); }
 .bd-option[aria-selected='true'] { color: var(--gold-deep); font-weight: 500; }
 .bd-option svg { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Multi-select rows (ui/MultiDropdown) ---------- */
+/* The tick the single-select menu trails on the right becomes a leading
+   checkbox: with several rows checked at once, a right-hand column of ticks
+   reads as decoration, while a box in the gutter reads as state. */
+.bd-option-multi { justify-content: flex-start; }
+
+.bd-check {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline-strong);
+  background: #fff;
+  color: transparent;
+  transition: background-color 140ms var(--ease), border-color 140ms var(--ease);
+}
+.bd-check.on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ivory);
+}
+.bd-check svg { width: 11px; height: 11px; }
+/* Hover pre-figures the click without pretending the row is already on. */
+.bd-option-multi.active .bd-check:not(.on) { border-color: var(--gold); }
 
 /* ---------- Price popover (hero search) ---------- */
 /* Same anchored-layer machinery as .bd-menu: portaled to <body> and positioned

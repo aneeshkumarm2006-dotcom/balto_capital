@@ -483,11 +483,15 @@ export function PropertyBody({
                   border: '1px solid var(--hairline)',
                 }}
               >
+                {/* Same pin language as the listings: a featured building is
+                    gold here too, and the key names what the colour means. */}
                 <MapView
                   residences={[r]}
                   selectedId={r.id}
                   height="100%"
                   showPreview={false}
+                  featuredPins
+                  showLegend
                 />
               </div>
               <div>

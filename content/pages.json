@@ -11,6 +11,7 @@
       "search": {
         "cityLabel": "City",
         "cityAnyLabel": "All cities",
+        "citySummaryTemplate": "{count} cities",
         "rentLabel": "Price",
         "rentAnyLabel": "Any price",
         "rentMin": "800",
@@ -21,6 +22,7 @@
         "rentSummaryTemplate": "{min} - {max}",
         "bedsLabel": "Bedrooms",
         "bedsAnyLabel": "Any",
+        "bedsSummaryTemplate": "{count} sizes",
         "bedOptions": [
           {
             "value": "0",
@@ -492,8 +494,10 @@
         "moreFiltersLabel": "More filters",
         "cityFilterLabel": "City",
         "allCitiesLabel": "All cities",
+        "citiesSummaryTemplate": "{count} cities",
         "bedroomsFilterLabel": "Bedrooms",
         "allBedroomsLabel": "All bedrooms",
+        "bedroomsSummaryTemplate": "{count} sizes",
         "bedroomStudioLabel": "Studio",
         "bedroomSingular": "{count} bedroom",
         "bedroomPlural": "{count} bedrooms",
