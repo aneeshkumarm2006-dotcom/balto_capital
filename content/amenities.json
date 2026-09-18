@@ -259,21 +259,17 @@
     ]
   },
   "palisades": {
-    "features": [
-      "Walk-in wardrobes",
-      "Updated kitchens and baths",
-      "Soaker tubs in primary baths",
-      "Restored mouldings and trim",
-      "Oak floors throughout",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "rivergate": {
