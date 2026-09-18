@@ -120,7 +120,8 @@
     "name": "Oakwood Manor",
     "city": "edmonton",
     "address": "11348 97 ST NW, Edmonton, AB T5G 1X4",
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "royal-manor",
