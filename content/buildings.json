@@ -112,7 +112,8 @@
     "bedrooms": [
       1
     ],
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "oakwood-manor",
