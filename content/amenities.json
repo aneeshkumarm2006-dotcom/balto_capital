@@ -293,20 +293,17 @@
     ]
   },
   "royal-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "New appliances"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
       "Pet-friendly",
       "Updated common areas",
-      "Communal laundry",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol",
+      "Updated kitchens and baths"
     ]
   },
   "sky-manor": {
