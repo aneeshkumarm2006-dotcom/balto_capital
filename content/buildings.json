@@ -24,7 +24,9 @@
     "bedrooms": [
       1,
       2
-    ]
+    ],
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "hamlet",
