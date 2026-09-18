@@ -101,7 +101,8 @@
     "bedrooms": [
       1
     ],
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "courts-manor",
