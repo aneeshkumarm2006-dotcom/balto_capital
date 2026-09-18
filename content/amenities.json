@@ -145,19 +145,18 @@
     ]
   },
   "copper-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "New appliances"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
       "Communal laundry",
       "Pet-friendly",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated common areas",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "courts-manor": {
