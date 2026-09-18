@@ -210,7 +210,8 @@
     "name": "The Edge",
     "city": "edmonton",
     "address": "3005 James Mowatt Trail SW, Edmonton, AB T6W 3P3",
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "cielo",
