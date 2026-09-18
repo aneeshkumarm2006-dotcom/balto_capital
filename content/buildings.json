@@ -76,7 +76,8 @@
       1,
       2
     ],
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "sky-manor",
