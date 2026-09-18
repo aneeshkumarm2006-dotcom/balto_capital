@@ -346,21 +346,17 @@
     ]
   },
   "britnell-landing": {
-    "features": [
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Marble fireplace mantels (select suites)",
-      "Custom millwork",
-      "Oak floors throughout",
-      "Tall casement windows"
-    ],
+    "features": [],
     "amenities": [
       "Mail and parcel concierge",
       "Resident concierge",
-      "Bicycle storage",
-      "Heated underground parking",
-      "Surface parking",
-      "Pet-friendly"
+      "Pet-friendly",
+      "24/7 Security patrol",
+      "Parking available",
+      "private balcony",
+      "In-suite Laundry",
+      "Elevators",
+      "Updated kitchens and baths"
     ]
   },
   "edge": {
