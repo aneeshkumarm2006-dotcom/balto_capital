@@ -106,7 +106,8 @@
     "address": "12239 82 ST NW, Edmonton, AB T5B 2W9",
     "bedrooms": [
       1
-    ]
+    ],
+    "featured": true
   },
   {
     "slug": "oakwood-manor",
