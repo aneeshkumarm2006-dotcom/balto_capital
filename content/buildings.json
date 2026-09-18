@@ -75,7 +75,8 @@
     "bedrooms": [
       1,
       2
-    ]
+    ],
+    "featured": true
   },
   {
     "slug": "sky-manor",
