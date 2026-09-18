@@ -252,21 +252,17 @@
     ]
   },
   "rivergate": {
-    "features": [
-      "Custom millwork",
-      "Oak floors throughout",
-      "Tall casement windows",
-      "Updated kitchens and baths",
-      "Quartz counters, panel-front appliances"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Courtyard garden",
-      "Bicycle storage",
-      "Surface parking",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "Pet-friendly",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "strathearn": {
