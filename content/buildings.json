@@ -224,7 +224,8 @@
     "name": "Greyson",
     "city": "saskatoon",
     "address": "241 Willis Crescent, Saskatoon, SK",
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "lawson-village",
