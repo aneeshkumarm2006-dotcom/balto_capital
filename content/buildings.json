@@ -84,7 +84,8 @@
     "name": "Sky Manor",
     "city": "edmonton",
     "address": "9612 156 ST NW, Edmonton, AB T5P 2N7",
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "grandview-manor",
