@@ -96,7 +96,8 @@
     "address": "12040 82 ST NW, Edmonton, AB T5B 2W6",
     "bedrooms": [
       1
-    ]
+    ],
+    "featured": true
   },
   {
     "slug": "courts-manor",
