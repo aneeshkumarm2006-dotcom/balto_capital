@@ -349,20 +349,18 @@
     ]
   },
   "royal-lady": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Pet-friendly",
-      "Private balconies",
       "Updated common areas",
-      "Communal laundry",
       "Resident concierge",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Shared mail and parcel area",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "woodridge": {
