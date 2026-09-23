@@ -197,7 +197,8 @@
     "slug": "ten-one-26-154",
     "name": "Aurora West",
     "city": "edmonton",
-    "address": "10126 154 St, Edmonton, AB T5P 2H3"
+    "address": "10126 154 St, Edmonton, AB T5P 2H3",
+    "archived": true
   },
   {
     "slug": "britnell-landing",
