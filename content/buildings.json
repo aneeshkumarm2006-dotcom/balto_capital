@@ -278,5 +278,11 @@
     "name": "Hudson",
     "city": "saskatoon",
     "address": "5023 48 Street, Yellowknife, NT X1A 1N4"
+  },
+  {
+    "slug": "dorset",
+    "name": "Dorset",
+    "city": "yellowknife",
+    "address": "5123 53 Street, Yellowknife NT X1A 1V7"
   }
 ]
