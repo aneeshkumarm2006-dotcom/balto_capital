@@ -805,5 +805,10 @@
       "/assets/test-one/uploads/1783752350199-01.jpg"
     ],
     "hidden": []
+  },
+  "norseman": {
+    "hero": null,
+    "gallery": [],
+    "hidden": []
   }
 }
