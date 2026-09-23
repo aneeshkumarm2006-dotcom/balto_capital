@@ -266,5 +266,11 @@
     "name": "Simpson",
     "city": "saskatoon",
     "address": "5201 51 Street, Yellowknife NT X1A 1S9"
+  },
+  {
+    "slug": "carlton",
+    "name": "Carlton",
+    "city": "saskatoon",
+    "address": "5215 51 Street, Yellowknife NT X1A 1S9"
   }
 ]
