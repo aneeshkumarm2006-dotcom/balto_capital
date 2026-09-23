@@ -451,5 +451,9 @@
   "hudson": {
     "features": [],
     "amenities": []
+  },
+  "carlton": {
+    "features": [],
+    "amenities": []
   }
 }
