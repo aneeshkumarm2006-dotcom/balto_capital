@@ -663,12 +663,12 @@
     "hidden": []
   },
   "greyson": {
-    "hero": "/assets/greyson/01-main.jpg",
+    "hero": "/assets/greyson/05.jpg",
     "gallery": [
+      "/assets/greyson/01-main.jpg",
       "/assets/greyson/02.jpg",
       "/assets/greyson/03.jpg",
       "/assets/greyson/04.jpg",
-      "/assets/greyson/05.jpg",
       "/assets/greyson/06.jpg",
       "/assets/greyson/07.jpg",
       "/assets/greyson/08.jpg",
