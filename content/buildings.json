@@ -260,5 +260,11 @@
     "name": "Crestview",
     "city": "yellowknife",
     "address": "5001- 52 Avenue, Yellowknife NT X1A 1H1"
+  },
+  {
+    "slug": "simpson",
+    "name": "Simpson",
+    "city": "saskatoon",
+    "address": "5201 51 Street, Yellowknife NT X1A 1S9"
   }
 ]
