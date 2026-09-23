@@ -825,5 +825,10 @@
     "hero": null,
     "gallery": [],
     "hidden": []
+  },
+  "hudson": {
+    "hero": null,
+    "gallery": [],
+    "hidden": []
   }
 }
