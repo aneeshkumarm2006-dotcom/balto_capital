@@ -447,5 +447,9 @@
       "Resident lounge",
       "Courtyard garden"
     ]
+  },
+  "hudson": {
+    "features": [],
+    "amenities": []
   }
 }
