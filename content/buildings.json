@@ -254,5 +254,11 @@
     "name": "Norseman",
     "city": "yellowknife",
     "address": "5009 52 Avenue, Yellowknife NT X1A 1H1"
+  },
+  {
+    "slug": "crestview",
+    "name": "Crestview",
+    "city": "yellowknife",
+    "address": "5001- 52 Avenue, Yellowknife NT X1A 1H1"
   }
 ]
