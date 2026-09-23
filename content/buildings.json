@@ -272,5 +272,11 @@
     "name": "Carlton",
     "city": "saskatoon",
     "address": "5215 51 Street, Yellowknife NT X1A 1S9"
+  },
+  {
+    "slug": "hudson",
+    "name": "Hudson",
+    "city": "saskatoon",
+    "address": "5023 48 Street, Yellowknife, NT X1A 1N4"
   }
 ]
