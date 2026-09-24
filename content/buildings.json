@@ -285,5 +285,11 @@
     "name": "Dorset",
     "city": "yellowknife",
     "address": "5123 53 Street, Yellowknife NT X1A 1V7"
+  },
+  {
+    "slug": "127-north-residences",
+    "name": "127  North Residences",
+    "city": "edmonton",
+    "address": "12929 127 ST NW EDMONTON AB  T5L 1B1"
   }
 ]
