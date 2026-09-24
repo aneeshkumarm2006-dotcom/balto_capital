@@ -477,6 +477,7 @@ export function PropertyBody({
               className="grid-3-md1"
             >
               <div
+                className="detail-map-frame"
                 style={{
                   aspectRatio: '16 / 10',
                   minHeight: 460,

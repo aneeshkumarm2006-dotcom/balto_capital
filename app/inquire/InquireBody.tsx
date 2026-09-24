@@ -103,6 +103,7 @@ export function InquireBody() {
                 <form onSubmit={submit}>
                   <Eyebrow style={{ marginBottom: 32 }}>{PAGES.inquire.form.eyebrow}</Eyebrow>
                   <div
+                    className="grid-2-md1"
                     style={{
                       display: 'grid',
                       gridTemplateColumns: '1fr 1fr',

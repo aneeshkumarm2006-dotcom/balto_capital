@@ -917,9 +917,21 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
 .full-w { width: 100%; }
 
 @media (max-width: 880px) {
-  .grid-3-md1 { grid-template-columns: 1fr; }
-  .grid-4-md1 { grid-template-columns: 1fr; }
-  .grid-4-md2 { grid-template-columns: 1fr 1fr; }
+  /* !important is required, not laziness: these grids set their column count
+     with an inline style="grid-template-columns: …" in the page components, and
+     an inline style outranks any class rule. Without it these overrides never
+     applied and the pages scrolled sideways on phones. */
+  /* Collapsing the columns is only half the fix: grid items default to
+     min-width:auto and refuse to shrink below their content, so a "1fr" track
+     can still resolve far wider than its container. min-width:0 lets it bind. */
+  .grid-2-md1 > *,
+  .grid-3-md1 > *,
+  .grid-4-md1 > *,
+  .grid-4-md2 > * { min-width: 0; }
+  .grid-2-md1 { grid-template-columns: 1fr !important; }
+  .grid-3-md1 { grid-template-columns: 1fr !important; }
+  .grid-4-md1 { grid-template-columns: 1fr !important; }
+  .grid-4-md2 { grid-template-columns: 1fr 1fr !important; }
   .hide-md { display: none; }
 }
 
@@ -957,10 +969,26 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .portfolio-grid { grid-template-columns: 1fr !important; }
   .city-carousel-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .detail-grid { grid-template-columns: 1fr !important; }
+  /* Grid items default to min-width:auto, so they refuse to shrink below their
+     content's min-content width. Collapsing the columns above was not enough on
+     its own — the single track still resolved to 736px inside a 350px container
+     and the page scrolled sideways. min-width:0 lets the track actually bind. */
+  .detail-grid > * { min-width: 0; }
+  .detail-grid .quick-stats { grid-template-columns: repeat(2, 1fr) !important; }
   .detail-gallery-grid { grid-template-columns: 1fr !important; height: auto !important; grid-template-rows: auto !important; }
   .detail-gallery-main { height: auto !important; aspect-ratio: 16 / 10; }
   .detail-gallery-thumbs { grid-template-columns: repeat(4, 1fr) !important; grid-template-rows: auto !important; height: auto !important; }
   .detail-sidebar { position: static !important; }
+  /* The map frame sets aspect-ratio 16/10 with min-height:460 and no definite
+     width, so the browser derived its WIDTH from that height — 460 x 16/10 =
+     736px — and the property page scrolled sideways on every phone. Giving it a
+     definite width makes the ratio drive the height instead, which is the way
+     round it was meant to work. */
+  .detail-map-frame {
+    width: 100% !important;
+    min-height: 300px !important;
+    aspect-ratio: 4 / 3 !important;
+  }
   .hero-split { grid-template-columns: 1fr !important; }
   .hero-c-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
   .quick-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 32px !important; }
@@ -969,10 +997,11 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .grid-2up { grid-template-columns: 1fr; }
   .featured-grid { grid-template-columns: 1fr; }
   .city-carousel-grid { grid-template-columns: 1fr !important; }
-  .grid-4-md2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4-md2 { grid-template-columns: repeat(2, 1fr) !important; }
   .gallery-modal-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media (max-width: 480px) {
+  .grid-4-md2 { grid-template-columns: 1fr !important; }
   .gallery-modal-grid { grid-template-columns: 1fr !important; }
 }
 
