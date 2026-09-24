@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { PAGES } from '@/lib/pages';
 import { CITIES, type CitySlug } from '@/lib/data';
 import { CityBody } from './CityBody';
@@ -62,5 +63,8 @@ export default function CityListingPage({
 }: {
   params: { city: string };
 }) {
+  // Unknown city: 404 rather than bouncing to /residences under a 200.
+  if (!CITIES[params.city as CitySlug]) notFound();
+
   return <CityBody params={params} />;
 }
