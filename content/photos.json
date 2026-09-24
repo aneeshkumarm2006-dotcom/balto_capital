@@ -532,7 +532,8 @@
       "/assets/parkdale/03.png",
       "/assets/parkdale/uploads/1783953761619-01.jpg",
       "/assets/parkdale/04.png",
-      "/assets/parkdale/uploads/1783953763216-01.jpg"
+      "/assets/parkdale/uploads/1783953763216-01.jpg",
+      "/assets/parkdale/uploads/1790287182048-01.jpg"
     ],
     "hidden": [
       "/assets/coming-soon.png"
@@ -546,7 +547,8 @@
       "/assets/parkdale/uploads/1783953764569-01.jpg": "Kitchen",
       "/assets/parkdale/uploads/1783953761619-01.jpg": "1 Bedroom",
       "/assets/parkdale/uploads/1783953763216-01.jpg": "2 Bedroom",
-      "/assets/parkdale/uploads/1784648232081-01.jpg": "Exterior"
+      "/assets/parkdale/uploads/1784648232081-01.jpg": "Exterior",
+      "/assets/parkdale/uploads/1790287182048-01.jpg": "Bathroom"
     }
   },
   "strathearn": {
