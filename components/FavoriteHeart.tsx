@@ -26,6 +26,7 @@ export function FavoriteHeart({ id, size = 20, onClick }: FavoriteHeartProps) {
   return (
     <button
       onClick={handle}
+      className="favorite-heart"
       aria-label={
         filled
           ? PAGES.favorites.heart.removeLabel

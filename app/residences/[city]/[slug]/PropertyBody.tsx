@@ -255,7 +255,7 @@ export function PropertyBody({
           </div>
           <button
             onClick={() => setGalleryOpen(true)}
-            className="btn btn-ghost btn-sm"
+            className="btn btn-ghost btn-sm detail-gallery-cta"
             style={{
               position: 'absolute',
               bottom: 18,

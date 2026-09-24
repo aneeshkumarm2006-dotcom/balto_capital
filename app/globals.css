@@ -978,6 +978,15 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   .detail-gallery-grid { grid-template-columns: 1fr !important; height: auto !important; grid-template-rows: auto !important; }
   .detail-gallery-main { height: auto !important; aspect-ratio: 16 / 10; }
   .detail-gallery-thumbs { grid-template-columns: repeat(4, 1fr) !important; grid-template-rows: auto !important; height: auto !important; }
+  /* The CTA floats bottom-right over the 2x2 thumbnail block on desktop. Once
+     the gallery stacks it has nothing to float over and lands on top of the
+     thumbnails, so drop it back into flow as its own full-width row. */
+  .detail-gallery-cta {
+    position: static !important;
+    width: 100%;
+    margin-top: 12px;
+    min-height: 44px;
+  }
   .detail-sidebar { position: static !important; }
   /* The map frame sets aspect-ratio 16/10 with min-height:460 and no definite
      width, so the browser derived its WIDTH from that height — 460 x 16/10 =
@@ -2388,3 +2397,48 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   color: var(--gold); white-space: nowrap;
 }
 @media (max-width: 560px) { .tenant-portal-cta { display: none; } }
+
+/* ============================================================
+   Touch targets. Apple's HIG and WCAG 2.5.5 both put the minimum
+   at 44px; audited on a 390px viewport these controls came in at
+   30-41px, so they were fiddly to hit on a real phone. Inline text
+   links (breadcrumbs, "View") are deliberately excluded — the
+   guideline exempts links flowing inside text.
+   ============================================================ */
+@media (max-width: 980px) {
+  .menu-trigger,
+  .bd-trigger,
+  .filter-more,
+  .portfolio-listing-go,
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .menu-trigger,
+  .portfolio-listing-go {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* The heart keeps its small layout footprint on purpose (padding:6/margin:-6
+     inside a card's meta row), so growing the box pushed it past the card edge.
+     Expand the hit area with a pseudo-element instead — the touch target grows,
+     the layout does not. */
+  .favorite-heart { position: relative; }
+  .favorite-heart::after {
+    content: '';
+    position: absolute;
+    /* No overhang on the right: the heart sits flush to the card edge, and a
+       hit area spilling past it would catch taps outside the card. */
+    inset: -9px 0 -9px -9px;
+  }
+  /* Filter, sort and view-toggle bars */
+  .btn-sm { padding: 14px 20px; min-height: 44px; }
+  .view-toggle button,
+  .sort-trigger,
+  .bd-trigger,
+  /* matches the specificity of .filter-pill .bd-site .bd-trigger, which pins
+     an explicit 38px height; this block comes later so it wins */
+  .filter-pill .bd-site .bd-trigger { min-height: 44px; }
+}
