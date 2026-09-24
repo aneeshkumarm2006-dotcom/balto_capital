@@ -386,5 +386,11 @@
     "tier": "value-add",
     "description": "",
     "closeTo": []
+  },
+  "127-north-residences": {
+    "neighbourhood": "",
+    "tier": "value-add",
+    "description": "",
+    "closeTo": []
   }
 }
