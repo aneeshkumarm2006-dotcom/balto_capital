@@ -404,8 +404,9 @@
     }
   },
   "copper-manor": {
-    "hero": "/assets/copper-manor/uploads/1783957241055-01.jpg",
+    "hero": "/assets/copper-manor/uploads/1790275909065-01.jpg",
     "gallery": [
+      "/assets/copper-manor/uploads/1783957241055-01.jpg",
       "/assets/copper-manor/01-main.jpg",
       "/assets/copper-manor/uploads/1785255415211-01.jpg",
       "/assets/copper-manor/uploads/1785255380888-01.jpg",
@@ -423,7 +424,8 @@
     ],
     "hidden": [
       "/assets/copper-manor/01-main.jpg",
-      "/assets/copper-manor/uploads/1785255472379-01.jpg"
+      "/assets/copper-manor/uploads/1785255472379-01.jpg",
+      "/assets/copper-manor/uploads/1783957241055-01.jpg"
     ],
     "tags": {
       "/assets/copper-manor/uploads/1783957241055-01.jpg": "Exterior",
