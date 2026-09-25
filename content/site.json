@@ -64,8 +64,8 @@
       "ariaLabel": "Favorites ({count})"
     },
     "tenantPortal": {
-      "label": "Tenant Portal",
-      "ariaLabel": "Tenant portal",
+      "label": "Resident Portal",
+      "ariaLabel": "Resident portal",
       "allHref": "/tenant-portal"
     },
     "mobile": {

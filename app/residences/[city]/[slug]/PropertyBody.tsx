@@ -255,7 +255,7 @@ export function PropertyBody({
           </div>
           <button
             onClick={() => setGalleryOpen(true)}
-            className="btn btn-ghost btn-sm"
+            className="btn btn-ghost btn-sm detail-gallery-cta"
             style={{
               position: 'absolute',
               bottom: 18,
@@ -477,6 +477,7 @@ export function PropertyBody({
               className="grid-3-md1"
             >
               <div
+                className="detail-map-frame"
                 style={{
                   aspectRatio: '16 / 10',
                   minHeight: 460,

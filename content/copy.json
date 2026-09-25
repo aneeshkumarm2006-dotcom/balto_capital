@@ -368,5 +368,29 @@
       "schools",
       "downtown access"
     ]
+  },
+  "hudson": {
+    "neighbourhood": "",
+    "tier": "value-add",
+    "description": "",
+    "closeTo": []
+  },
+  "carlton": {
+    "neighbourhood": "",
+    "tier": "value-add",
+    "description": "",
+    "closeTo": []
+  },
+  "simpson": {
+    "neighbourhood": "",
+    "tier": "value-add",
+    "description": "",
+    "closeTo": []
+  },
+  "127-north-residences": {
+    "neighbourhood": "",
+    "tier": "value-add",
+    "description": "",
+    "closeTo": []
   }
 }

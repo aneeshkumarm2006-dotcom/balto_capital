@@ -1,134 +1,118 @@
 {
   "parkdale": {
-    "features": [
-      "In-suite laundry",
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "Spacious suites"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
       "Elevator",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "Covered Parking",
+      "24/7 Security patrol",
+      "In-house residence manager",
+      "Updated kitchens and baths",
+      "On-Floor Laundry"
     ]
   },
   "acadian": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
       "Pet-friendly",
-      "Communal laundry",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths",
+      "On site residence manager",
+      "24/7 Security patrol",
+      "On-Floor Laundry",
+      "Parking available"
     ]
   },
   "pioneer": {
     "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
       "Oak floors throughout"
     ],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Resident concierge",
-      "Bicycle storage",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "Pet-friendly",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "arbour-green": {
-    "features": [
-      "Custom millwork",
-      "Oak floors throughout",
-      "Tall casement windows",
-      "Updated kitchens and baths",
-      "Quartz counters, panel-front appliances"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "24/7 Security patrol",
+      "Parking available",
+      "In-house residence manager",
+      "On-Floor Laundry",
+      "Updated kitchens and baths"
     ]
   },
   "ten-one-26-154": {
-    "features": [
-      "Custom millwork",
-      "Oak floors throughout",
-      "Tall casement windows",
-      "Updated kitchens and baths",
-      "Quartz counters, panel-front appliances",
-      "In-suite laundry"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
-      "Resident concierge",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol",
+      "Pet-friendly",
+      "Updated kitchens and baths"
     ]
   },
   "balwin-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
-      "Communal laundry",
       "Private balconies",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Pet-friendly",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "catalina-estates": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
-      "Communal laundry",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "24/7 Security patrol",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available"
     ]
   },
   "cedar-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
       "Surface parking",
       "Shared mail and parcel area",
       "Communal laundry",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "Parking available",
+      "24/7 Security patrol",
+      "In-house residence manager"
     ]
   },
   "chicklet-house": {
@@ -146,100 +130,88 @@
     ]
   },
   "copper-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "New appliances"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
-      "Communal laundry",
       "Pet-friendly",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated common areas",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "courts-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
       "Surface parking",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "grandview-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
-      "Communal laundry",
       "Pet-friendly",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "Updated kitchens and baths",
+      "24/7 Security patrol",
+      "Parking available",
+      "In-house residence manager",
+      "On-Floor Laundry"
     ]
   },
   "hamlet": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "24/7 Security patrol",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available"
     ]
   },
   "kafa": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "24/7 Security patrol",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available"
     ]
   },
   "layali": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "New appliances"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
-      "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "24/7 Security patrol",
+      "Parking available",
+      "In-house residence manager",
+      "On-Floor Laundry",
+      "Updated kitchens and baths",
+      "Updated common areas"
     ]
   },
   "oakwood-manor": {
@@ -260,120 +232,104 @@
     ]
   },
   "palisades": {
-    "features": [
-      "Walk-in wardrobes",
-      "Updated kitchens and baths",
-      "Soaker tubs in primary baths",
-      "Restored mouldings and trim",
-      "Oak floors throughout",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Surface parking",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "rivergate": {
-    "features": [
-      "Custom millwork",
-      "Oak floors throughout",
-      "Tall casement windows",
-      "Updated kitchens and baths",
-      "Quartz counters, panel-front appliances"
-    ],
+    "features": [],
     "amenities": [
       "Shared mail and parcel area",
-      "Communal laundry",
-      "Courtyard garden",
-      "Bicycle storage",
-      "Surface parking",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "Pet-friendly",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "strathearn": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
-      "Communal laundry",
       "Pet-friendly",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "royal-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork",
-      "New appliances"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Shared mail and parcel area",
       "Pet-friendly",
       "Updated common areas",
-      "Communal laundry",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol",
+      "Updated kitchens and baths"
     ]
   },
   "sky-manor": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Pet-friendly",
       "Newly renovated suites",
       "Shared mail and parcel area",
       "Heat and hot water included",
-      "Private balconies"
+      "Private balconies",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol",
+      "Updated common areas"
     ]
   },
   "beverly": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Pet-friendly",
       "Private balconies",
       "Updated common areas",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol",
+      "Updated kitchens and baths"
     ]
   },
   "royal-lady": {
-    "features": [
-      "Soaker tubs in primary baths",
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Custom millwork"
-    ],
+    "features": [],
     "amenities": [
-      "Surface parking",
       "Pet-friendly",
-      "Private balconies",
       "Updated common areas",
-      "Communal laundry",
       "Resident concierge",
-      "Heat and hot water included"
+      "Heat and hot water included",
+      "Shared mail and parcel area",
+      "Updated kitchens and baths",
+      "On-Floor Laundry",
+      "In-house residence manager",
+      "Parking available",
+      "24/7 Security patrol"
     ]
   },
   "woodridge": {
@@ -390,21 +346,17 @@
     ]
   },
   "britnell-landing": {
-    "features": [
-      "Walk-in wardrobes",
-      "Restored mouldings and trim",
-      "Marble fireplace mantels (select suites)",
-      "Custom millwork",
-      "Oak floors throughout",
-      "Tall casement windows"
-    ],
+    "features": [],
     "amenities": [
       "Mail and parcel concierge",
       "Resident concierge",
-      "Bicycle storage",
-      "Heated underground parking",
-      "Surface parking",
-      "Pet-friendly"
+      "Pet-friendly",
+      "24/7 Security patrol",
+      "Parking available",
+      "private balcony",
+      "In-suite Laundry",
+      "Elevators",
+      "Updated kitchens and baths"
     ]
   },
   "edge": {
@@ -495,5 +447,21 @@
       "Resident lounge",
       "Courtyard garden"
     ]
+  },
+  "hudson": {
+    "features": [],
+    "amenities": []
+  },
+  "carlton": {
+    "features": [],
+    "amenities": []
+  },
+  "simpson": {
+    "features": [],
+    "amenities": []
+  },
+  "127-north-residences": {
+    "features": [],
+    "amenities": []
   }
 }

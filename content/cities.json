@@ -3,7 +3,7 @@
     "slug": "saskatoon",
     "label": "Saskatoon",
     "province": "Saskatchewan",
-    "image": "/assets/city-saskatoon.png",
+    "image": "/assets/library/1790189123223-01.jpg",
     "blurb": "Contemporary residences in Saskatoon’s sought-after south end and convenient north end.",
     "bounds": {
       "minLng": -106.685,
@@ -24,7 +24,7 @@
     "slug": "edmonton",
     "label": "Edmonton",
     "province": "Alberta",
-    "image": "/assets/city-edmonton.png",
+    "image": "/assets/library/1790187772535-01.jpg",
     "blurb": "The heart of the portfolio, renovated, updated residences across Edmonton’s most livable neighbourhoods, with local management in every building.",
     "bounds": {
       "minLng": -113.555,

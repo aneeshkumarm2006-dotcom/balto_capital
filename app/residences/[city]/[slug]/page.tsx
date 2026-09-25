@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { getCity, getResidence } from '@/lib/data';
 import { PAGES } from '@/lib/pages';
 import { PropertyBody } from './PropertyBody';
@@ -62,5 +63,12 @@ export default function ResidenceDetailPage({
 }: {
   params: PropertyParams;
 }) {
+  /* An unknown slug used to fall through to a client-side push to /residences,
+     so the URL answered 200 with the listing rendered under it. Search engines
+     indexed those phantom URLs and a mistyped link looked like it worked.
+     Answer 404 instead, and do it here so the status is right on first byte. */
+  const residence = getResidence(params.slug);
+  if (!residence || residence.city !== params.city) notFound();
+
   return <PropertyBody params={params} />;
 }

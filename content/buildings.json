@@ -3,7 +3,8 @@
     "slug": "chicklet-house",
     "name": "Chicklet House",
     "city": "edmonton",
-    "address": "10304 107 Ave NW, Edmonton, AB T5H 0V8"
+    "address": "10304 107 Ave NW, Edmonton, AB T5H 0V8",
+    "archived": true
   },
   {
     "slug": "woodridge",
@@ -23,7 +24,9 @@
     "bedrooms": [
       1,
       2
-    ]
+    ],
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "hamlet",
@@ -73,20 +76,22 @@
       1,
       2
     ],
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "sky-manor",
     "name": "Sky Manor",
     "city": "edmonton",
-    "address": "9612 156 ST NW, Edmonton, AB T5P 2N7"
+    "address": "9612 156 ST NW, Edmonton, AB T5P 2N7",
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "grandview-manor",
     "name": "Grandview Manor",
     "city": "edmonton",
-    "address": "11705 83 ST NW, Edmonton, AB T5B 2Z1",
-    "featured": true
+    "address": "11705 83 ST NW, Edmonton, AB T5B 2Z1"
   },
   {
     "slug": "cedar-manor",
@@ -96,7 +101,8 @@
     "bedrooms": [
       1
     ],
-    "featured": true
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "courts-manor",
@@ -105,20 +111,23 @@
     "address": "12239 82 ST NW, Edmonton, AB T5B 2W9",
     "bedrooms": [
       1
-    ]
+    ],
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "oakwood-manor",
     "name": "Oakwood Manor",
     "city": "edmonton",
-    "address": "11348 97 ST NW, Edmonton, AB T5G 1X4"
+    "address": "11348 97 ST NW, Edmonton, AB T5G 1X4",
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "royal-manor",
     "name": "Royal Manor",
     "city": "edmonton",
     "address": "10215 108 Ave NW, Edmonton, AB T5H 1A9",
-    "featured": true,
     "bedrooms": [
       1
     ]
@@ -137,8 +146,7 @@
     "bedrooms": [
       0,
       1
-    ],
-    "featured": true
+    ]
   },
   {
     "slug": "parkdale",
@@ -169,9 +177,9 @@
   },
   {
     "slug": "pioneer",
-    "name": "127 North Residences",
+    "name": "127 North Residences B",
     "city": "edmonton",
-    "address": "12929 / 12921 127 ST NW, Edmonton, AB T5L 1B1"
+    "address": "12921 127 ST NW, Edmonton, AB T5L 1B1"
   },
   {
     "slug": "rivergate",
@@ -189,7 +197,8 @@
     "slug": "ten-one-26-154",
     "name": "Aurora West",
     "city": "edmonton",
-    "address": "10126 154 St, Edmonton, AB T5P 2H3"
+    "address": "10126 154 St, Edmonton, AB T5P 2H3",
+    "archived": true
   },
   {
     "slug": "britnell-landing",
@@ -201,7 +210,9 @@
     "slug": "edge",
     "name": "The Edge",
     "city": "edmonton",
-    "address": "3005 James Mowatt Trail SW, Edmonton, AB T6W 3P3"
+    "address": "3005 James Mowatt Trail SW, Edmonton, AB T6W 3P3",
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "cielo",
@@ -213,7 +224,9 @@
     "slug": "greyson",
     "name": "Greyson",
     "city": "saskatoon",
-    "address": "241 Willis Crescent, Saskatoon, SK"
+    "address": "241 Willis Crescent, Saskatoon, SK",
+    "featured": true,
+    "hideFeaturedBadge": true
   },
   {
     "slug": "lawson-village",
@@ -236,5 +249,47 @@
       0
     ],
     "archived": true
+  },
+  {
+    "slug": "norseman",
+    "name": "Norseman",
+    "city": "yellowknife",
+    "address": "5009 52 Avenue, Yellowknife NT X1A 1H1"
+  },
+  {
+    "slug": "crestview",
+    "name": "Crestview",
+    "city": "yellowknife",
+    "address": "5001- 52 Avenue, Yellowknife NT X1A 1H1"
+  },
+  {
+    "slug": "simpson",
+    "name": "Simpson",
+    "city": "yellowknife",
+    "address": "5201 51 Street, Yellowknife NT X1A 1S9"
+  },
+  {
+    "slug": "carlton",
+    "name": "Carlton",
+    "city": "yellowknife",
+    "address": "5215 51 Street, Yellowknife NT X1A 1S9"
+  },
+  {
+    "slug": "hudson",
+    "name": "Hudson",
+    "city": "yellowknife",
+    "address": "5023 48 Street, Yellowknife, NT X1A 1N4"
+  },
+  {
+    "slug": "dorset",
+    "name": "Dorset",
+    "city": "yellowknife",
+    "address": "5123 53 Street, Yellowknife NT X1A 1V7"
+  },
+  {
+    "slug": "127-north-residences",
+    "name": "127  North Residences A",
+    "city": "edmonton",
+    "address": "12929 127 ST NW EDMONTON AB  T5L 1B1"
   }
 ]
