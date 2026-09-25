@@ -936,6 +936,10 @@ label.field .eyebrow { display: block; margin-bottom: 6px; font-size: 10.5px; }
   grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 260px), 1fr));
   gap: clamp(24px, 2.4vw, 40px);
 }
+/* Home "Properties available now": the client asked for these photos to match
+   the listing-row photo on /residences/<city> (~340 × 312), so they drop the
+   tall 4/5 portrait for that near-square ratio. */
+.cards-grid--listing-photo .property-card .image-wrap { aspect-ratio: 340 / 312; }
 
 /* Two-up editorial cards (About pull-quotes) — not property cards. */
 .grid-2up { display: grid; grid-template-columns: repeat(2, 1fr); }

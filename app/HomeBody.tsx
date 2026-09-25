@@ -314,7 +314,7 @@ function FeaturedResidences() {
             {PAGES.home.featured.emptyMessage}
           </p>
         ) : (
-          <div className="cards-grid">
+          <div className="cards-grid cards-grid--listing-photo">
             {featured.map((r) => (
               <PropertyCard key={r.id} residence={r} />
             ))}
