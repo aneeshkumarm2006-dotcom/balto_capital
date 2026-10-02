@@ -27,6 +27,7 @@
     "city": "edmonton",
     "address": "10825 113 ST NW, Edmonton, AB T5H 3J1",
     "bedrooms": [
+      0,
       1,
       2
     ],
