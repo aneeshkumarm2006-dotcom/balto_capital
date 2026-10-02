@@ -39,6 +39,7 @@
     "city": "edmonton",
     "address": "11647 124 ST NW, Edmonton, AB T5M 0K8",
     "bedrooms": [
+      0,
       1
     ]
   },
